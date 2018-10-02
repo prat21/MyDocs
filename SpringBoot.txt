@@ -34,6 +34,14 @@ https://facilethings.com/blog/en/convention-over-configuration
 4. Production ready 
 (ie, we do not have to configure anything extra,just package the application as jar and run it in production. No extra config needed.)
 
+5. AutoConfiguration:
+It auto configures many aspects of the application(using @EnableAutoConfiguration). Like if you have some database jar in your classpath, then it auto configures a dataSource for you. You can always override the default configs using "exclude" attribute of @EnableAutoConfiguration.
+
+@Configuration
+@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
+public class MyConfiguration {
+}
+
 
 SEE: Spring Boot Quick Start 5 - What Spring Boot gives us
 ----------------------------------------------------------------------------------------------------------------------------------------
