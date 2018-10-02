@@ -42,6 +42,10 @@ It auto configures many aspects of the application(using @EnableAutoConfiguratio
 public class MyConfiguration {
 }
 
+you can also control the list of auto-configuration classes to exclude by using the spring.autoconfigure.exclude property.
+SEE:https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-auto-configuration.html
+https://stackoverflow.com/questions/35005158/what-is-the-difference-between-componentscan-and-enableautoconfiguration-in-sp
+
 
 SEE: Spring Boot Quick Start 5 - What Spring Boot gives us
 ----------------------------------------------------------------------------------------------------------------------------------------
