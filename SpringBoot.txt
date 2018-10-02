@@ -1,3 +1,7 @@
+SEE:https://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/#getting-started-first-application and java brains
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
 The ideal way to setup spring boot application is to create a maven project and add the spring boot dependency into it. For example when we create the spring mvc using spring boot, we add the spring-boot-starter-web dependency. When maven encounters this dependency, it downloads all the jars related to that dependency and adds them to classpath. In this case maven downloads all the jars related to spring mvc (like spring-web and spring-web-mvc etc.) and add them to classpath.
 
 When SpringApplication.run() runs, it scans the classpath and according to the jars present in the classpath, it takes necessary configuration steps. For example in this case, when springboot encounters the spring mvc jars in the classpath, it intializes a DsiaptcherServlet and takes other steps necessary for bootstrapping spring mvc project.
@@ -61,6 +65,23 @@ What does the class SpringApplication.run(); does behind the scenes:
 SEE: Spring Boot Quick Start 10 - Spring Boot startup steps (Java Brains)
 
 ----------------------------------------------------------------------------------------------------------------------------------------
+From: https://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/#getting-started-first-application
+
+10.3.3 The “main” method
+
+The final part of our application is the main method. This is just a standard method that follows the Java convention for an application entry point. Our main method delegates to Spring Boot’s SpringApplication class by calling run. SpringApplication will bootstrap our application, starting Spring which will in turn start the auto-configured Tomcat web server. We need to pass Example.class as an argument to the run method to tell SpringApplication which is the primary Spring component. The args array is also passed through to expose any command-line arguments.
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+A snippet of log when spring boot starts:
+2018-10-02 12:51:37.583  INFO 7204 --- [ost-startStop-1] o.s.b.w.servlet.ServletRegistrationBean  : Servlet dispatcherServlet mapped to [/]
+
+Note that spring boot automatically registers and maps the DispatcherServlet to the url-mapping "/"(An example of auto configuration, when spring boot sees spring mvc jars in the classpath).
+
+Check the logs once when boot starts.
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
 
 Check how spring boot does the component scan. Whether we need to put the @Controller annotated classes on the same package hierarchy as the main() class or not.- Checked, the annotated classes has to be in the same package hierarchy as the main() class. This is the default configuration that spring boot configures(convention over configuration).
 
@@ -133,23 +154,66 @@ https://www.3pillarglobal.com/insights/building-a-microservice-architecture-with
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 
+From: https://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/#getting-started-first-application
 
+We generally recommend that you locate your main application class in a root package above other classes. The @EnableAutoConfiguration annotation is often placed on your main class, and it implicitly defines a base “search package” for certain items. For example, if you are writing a JPA application, the package of the @EnableAutoConfiguration annotated class will be used to search for @Entity items.
 
+Using a root package also allows the @ComponentScan annotation to be used without needing to specify a basePackage attribute.
 
+----------------------------------------------------------------------------------------------------------------------------------------
 
+From: https://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/#getting-started-first-application
 
+10.5 Creating an executable jar:
 
+Let’s finish our example by creating a completely self-contained executable jar file that we could run in production. Executable jars (sometimes called “fat jars”) are archives containing your compiled classes along with all of the jar dependencies that your code needs to run.
 
+To create an executable jar we need to add the spring-boot-maven-plugin to our pom.xml. Insert the following lines just below the dependencies section:
 
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+        </plugin>
+    </plugins>
+</build>
 
+Save your pom.xml and run mvn package from the command line.
 
+If you look in the target directory you should see myproject-0.0.1-SNAPSHOT.jar. The file should be around 10 Mb in size.
 
+You should also see a much smaller file named myproject-0.0.1-SNAPSHOT.jar.original in the target directory. This is the original jar file that Maven created before it was repackaged by Spring Boot.
 
+To run that application, use the java -jar command.
 
+Note: Executable jars and Java
 
+Java does not provide any standard way to load nested jar files (i.e. jar files that are themselves contained within a jar). This can be problematic if you are looking to distribute a self-contained application.
 
+To solve this problem, many developers use “shaded” jars. A shaded jar simply packages all classes, from all jars, into a single “uber jar”. The problem with shaded jars is that it becomes hard to see which libraries you are actually using in your application. It can also be problematic if the the same filename is used (but with different content) in multiple jars.
 
+Spring Boot takes a different approach and allows you to actually nest jars directly.
 
+----------------------------------------------------------------------------------------------------------------------------------------
+From: https://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/#getting-started-first-application
+
+10.4 Running the example
+
+Since we have used the spring-boot-starter-parent POM we have a useful run goal that we can use to start the application. Type "mvn spring-boot:run" from the root project directory to start the application:
+
+----------------------------------------------------------------------------------------------------------------------------------------
+We can override the default behaviour of spring boot by using the application.properties file. Like we can provide
+
+server.port=8081
+
+to change the default port of the tomcat.
+
+Spring Boot Quick Start 25 - Using application properties
+
+SEE: https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html for list of all configurable properties.
+
+Note: the file name has to be application.properties, otherwise it wont work.
 
 
 
