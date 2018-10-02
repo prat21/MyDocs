@@ -1,0 +1,148 @@
+The ideal way to setup spring boot application is to create a maven project and add the spring boot dependency into it. For example when we create the spring mvc using spring boot, we add the spring-boot-starter-web dependency. When maven encounters this dependency, it downloads all the jars related to that dependency and adds them to classpath. In this case maven downloads all the jars related to spring mvc (like spring-web and spring-web-mvc etc.) and add them to classpath.
+
+When SpringApplication.run() runs, it scans the classpath and according to the jars present in the classpath, it takes necessary configuration steps. For example in this case, when springboot encounters the spring mvc jars in the classpath, it intializes a DsiaptcherServlet and takes other steps necessary for bootstrapping spring mvc project.
+
+----------------------------------------------------------------------------------------------------------------------------------------
+@SpringBootApplication is a convenience annotation that adds all of the following:
+
+1. @Configuration tags the class as a source of bean definitions for the application context.
+
+2. @EnableAutoConfiguration tells Spring Boot to start adding beans based on classpath settings, other beans, and various property settings.
+
+3. Normally you would add @EnableWebMvc for a Spring MVC app, but Spring Boot adds it automatically when it sees spring-webmvc on the classpath. This flags the application as a web application and activates key behaviors such as setting up a DispatcherServlet.
+
+4. @ComponentScan tells Spring to look for other components, configurations, and services in the hello package (in the package that where the main() class resides and its sub-packges), allowing it to find the controllers.
+
+SEE: https://spring.io/guides/gs/spring-boot/
+
+----------------------------------------------------------------------------------------------------------------------------------------
+Spring Boot:
+
+"Spring Boot makes it easy to create stand-alone, production-grade Spring based Applications that you can "just run"."
+
+1. Opinionated 
+(it gives an opinion about a project, as in what should be the starting point of your project or what should be the intial structure of the project and creates that project and configurations for you. Having the default project with you, you are then free to make custom configrations in it.)
+
+2. Convention over Configuration
+(It configures a project using the default configuration assuming that the developer may want to use the default configs, ie it uses standard convention to setup a project and do the majority of the default work for the developer. If the developer wants to do some custom config, he is welcome to do so.)
+https://www.techopedia.com/definition/27478/convention-over-configuration
+https://facilethings.com/blog/en/convention-over-configuration
+
+3. Stand alone 
+(It does not a servlet container. It embeds a container of its own and while bootstraping the application using spring application context, it intializes the container and starts it. Hence it is stand alone.)
+
+4. Production ready 
+(ie, we do not have to configure anything extra,just package the application as jar and run it in production. No extra config needed.)
+
+
+SEE: Spring Boot Quick Start 5 - What Spring Boot gives us
+----------------------------------------------------------------------------------------------------------------------------------------
+Starting Spring Boot:
+
+What does the class SpringApplication.run(); does behind the scenes:
+
+1. Sets up default configuration (convention over configuration)
+2. Starts Spring Application Context (Starts the Application context, ie the Spring container which handles all the beans)
+3. Performs class path scan (It scans the class path for all the classes that are annotated with @Controller, @Service and so on)
+4. Starts Tomcat Server
+
+SEE: Spring Boot Quick Start 10 - Spring Boot startup steps (Java Brains)
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+Check how spring boot does the component scan. Whether we need to put the @Controller annotated classes on the same package hierarchy as the main() class or not.- Checked, the annotated classes has to be in the same package hierarchy as the main() class. This is the default configuration that spring boot configures(convention over configuration).
+
+SEE also: https://spring.io/guides/gs/spring-boot/
+
+@SpringBootApplication implicitly adds the @ComponentScan anntation and it scans all the classes in the package(and sub-packages) where the main() class resides.
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+Spring Boot: Bills of Materials
+
+Generally when we configure a Spring MVC using Spring Boot, we give the dependencies in the pom.xml like:
+
+	<parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.0.5.RELEASE</version>
+    </parent>
+    
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+    </dependencies>
+
+Instead of giving all the dependencies that is required to build the Spring MVC project without Spring Boot, we provide only:
+
+	<dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+    </dependencies>
+	
+This tells maven which jars to download, and this:
+
+	<parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.0.5.RELEASE</version>
+    </parent>
+
+
+tells maven what versions of those jars to download. The version of the parent(spring-boot-starter-parent) determines, what versions of the jars to download. These versions of the jars are compatible with each other and is known as "Bills of Materials". These preset version of jars are determined by the spring as to be compatible versions.
+
+SEE: Spring Boot Quick Start 13 - What's Happening Here: Bill Of Materials
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+Embedded Tomcat Server Advantages:
+
+1. Convenience
+2. Servlet Container config is now application config (ie Server related config can now be done in code itself)
+3. Standalone Application
+4. Useful for MicroService Architecture (In microservice architecture, deploying multiple modules in servers multiple times can be cumbersome. Whereas using Spring Boot, deploying a application is as simple as running a command and the application is up and running.)
+
+If we want other server than tomcat, we need to mention that in the pom.xml.
+
+Why Spring Boot for MicroServices?
+https://www.quora.com/What-are-microservices-How-is-it-related-with-Spring-Boot-for-Java
+
+SEE: Spring Boot Quick Start 14 - What's Happening Here: Embedded Servlet Container
+
+Also see later:
+https://spring.io/blog/2015/07/14/microservices-with-spring
+
+See what docker does,it is interesting.
+https://www.3pillarglobal.com/insights/building-a-microservice-architecture-with-spring-boot-and-docker-part-i
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

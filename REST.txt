@@ -1,0 +1,738 @@
+What RESTful Web Services should follow ideally:
+
+1. Resource based URIs (like weatherapp.com/country/brazil)
+2. HTTP Methods (GET,PUT,POST,DELETE)
+3. HTTP status codes (404 Not Found,500 Server Error etc)
+4. Messsage Headers (Determines what type of content is returned etc)
+
+-------------------------------------------------------------------------------------------
+
+Instance Resource URIs: returns a single instance of a resource like /messages/{messageId} returns a message with a particular messageId.
+Collection Resource URIs: returns a collections of resources like /messages returns all messages.
+We can filter resources in collection URIs like /messages?year=2014 gets all the messages of the year 2014.
+
+SEE: REST Web Services 04 - Collection URIs
+
+-------------------------------------------------------------------------------------------
+
+In order to get,delete or edit a message, same URI can be used in case of RESTful web services, ie /messages/10. The action to be performed is decided by the HTTP methods. In this case it will be GET,DELETE and PUT respectively. To create a new message we use the URI "/messages" with "POST" http method and this request returns a response with the id of the newly created message.
+
+SEE: REST Web Services 05 - HTTP Methods
+
+-------------------------------------------------------------------------------------------
+
+The GET method is read-only whereas PUT,POST and DELETE methods are write methods.
+We can repeat the methods GET, PUT and DELETE multiple times safely and it will get us the same result. These methods are idempotent. But we cannot repeat POST multiple times, since doing POST on /messages URI multiple times will result in a new message being created each time. So, POST is not idempotent.
+
+HTTP specification states that the methods GET,DELETE and PUT should always be idempotent and POST should be non-idempotent (these are standards and not strict rules). That is why updating a resource is done via PUT since updating a resource is idempotent and creating a resource is done via POST since creating a resource is non-idempotent.
+
+SEE: REST Web Services 06 - Method Idempotence
+
+-------------------------------------------------------------------------------------------
+
+Why REST is called Representational State Transfer? Because REST transfers, sends or receives, representaion(xml,json etc) of a resource.
+
+A client can know in what format the server has send the response by looking up the HTTP header ContentType and parse the same accordingly.
+
+SEE: REST Web Services 07 - REST Response
+
+-------------------------------------------------------------------------------------------
+
+We can write REST request and response using servlet only, but REST api java libraries makes things easy for us so that we dont have to write code by ourselves. One java library to write REST is Jersey. There are many libraries (like Jersey, RESTeasy, Restlet, WebSphere Application Server from IBM etc), but all implement the same set of interfaces and annotations, which is JAX-RS. JAX-RS is a specification for developing RESTful web services with java api. So, if we develop application using JAX-RS annotations and interfaces, we can plugin any library we want, in this case we use Jersey.
+
+SEE: REST Web Services 10 - What Is JAX RS?
+
+-------------------------------------------------------------------------------------------
+
+In order to write the rest applications using Jersey, A jersey bootstrap servlet needs to be configured in web.xml.
+
+	<servlet>
+        <servlet-name>Jersey Web Application</servlet-name>
+        <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+        <init-param>
+            <param-name>jersey.config.server.provider.packages</param-name>
+            <param-value>com.rest.myrest</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+	
+    <servlet-mapping>
+        <servlet-name>Jersey Web Application</servlet-name>
+        <url-pattern>/webapi/*</url-pattern>
+    </servlet-mapping>
+
+
+All the rest web services call will start with /webapi and will be bootstrapped using the jersey servletcontainer.
+
+Next we add a resource like below:
+
+package com.rest.myrest;
+
+@Path("/messages")
+public class MessageResource {
+
+	@GET
+    @Produces(MediaType.TEXT_PLAIN)
+    public String getMessages() {
+        return "Hello World!";
+    }
+}
+
+So, when we do a GET on "http://localhost:8080/myrest/webapi/messages", we get the response "Hello World!" in plain text(MediaType.TEXT_PLAIN) format.
+The jersey servlet knows where to look for resources by the init-param(jersey.config.server.provider.packages) defined in web.xml.
+
+SEE: REST Web Services 13 - Creating a Resource
+
+
+-------------------------------------------------------------------------------------------
+
+We create a model object "Message" and return a list of message instead of hardcoded text.
+
+@XmlRootElement									//This is a JAXB annotation and is required for JAX-RS to convert the Message object into xml.
+public class Message {
+	private int id;
+	private String message;
+	private String author;
+	
+	public Message() {							//This default no-args constructor is required for converting object to xml and vice-versa otherwise it will not work
+		
+	}
+	
+	public Message(int id, String message, String author) {
+		this.id = id;
+		this.message = message;
+		this.author = author;
+	}
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getMessage() {
+		return message;
+	}
+	public void setMessage(String message) {
+		this.message = message;
+	}
+	public String getAuthor() {
+		return author;
+	}
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+}
+
+A service class:
+
+public class MessageService {
+	
+	public List<Message> getAllMessages(){
+		Message m1 = new Message(1, "First Message", "Me");
+		Message m2 = new Message(2, "Second Message", "Me2");
+		
+		List<Message> list = new ArrayList<>();				//Diamond notation
+		list.add(m1);
+		list.add(m2);
+		
+		return list;
+	}
+}
+
+The main resource handler:
+
+@Path("/messages")
+public class MessageResource {
+	MessageService service = new MessageService();
+	
+	@GET
+    @Produces(MediaType.APPLICATION_XML)					//We are returning xml.
+    public List<Message> getAllMessages() {
+       return service.getAllMessages();
+    }
+}
+
+
+Note that if we do not put @XmlRootElement, then we will get the error: "MessageBodyWriter not found for media type=application/xml, type=class java.util.ArrayList, genericType=java.util.List<com.rest.myrest.model.Message>."
+
+
+SEE: REST Web Services 14 - Returning XML Response
+
+-------------------------------------------------------------------------------------------
+
+How to pass path parameter ito methods:
+
+@Path("/messages")
+public class MessageResource {
+	MessageService service = new MessageService();
+	
+	@GET
+    @Produces(MediaType.APPLICATION_XML)
+    public List<Message> getAllMessages() {
+       return service.getAllMessages();
+    }
+	
+	@GET
+	@Path("/{messageId}")
+	@Produces(MediaType.APPLICATION_XML)
+	public Message getMessage(@PathParam("messageId") int id) {
+		return service.getMessage(id);
+	}
+}
+
+Note that the attribute of @PathParam cannot be empty , unlike Spring MVC whose default behaviour is to match the param name with variable.
+
+
+SEE: REST Web Services 17 - Accessing Path params
+-------------------------------------------------------------------------------------------
+
+In order to set the response to JSON, we need to provide a jar to convert the class objects to JSON. One such jar is "jersey-media-moxy-2.16.jar". In case of XML, it is done by JAXB.
+Basically the jar contains implementations of MessageBodyWriter and MessageBodyReader that does the necessary conversion.
+
+SEE: REST Web Services 18 - Returning JSON Response
+
+-------------------------------------------------------------------------------------------
+
+Creating a POST request.
+
+In order to test a POST request, we need to send the request body, either in XML or JSON format. This can be done using REST client such as POSTMAN in chrome (SEE: REST Web Services 15 - Installing a REST API client)
+We need to set a request header "Content-Type" to let the server know the format of the request body.
+
+@Path("/messages")
+public class MessageResource {
+	MessageService service = new MessageService();
+	
+	@GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Message> getAllMessages() {
+       return service.getAllMessages();
+    }
+	
+	@GET
+	@Path("/{messageId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Message getMessage(@PathParam("messageId") int id) {
+		return service.getMessage(id);
+	}
+	
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)							//Consumes denote that this method consumes only JSON format. If say an xml is supplied then "415 – Unsupported Media Type" status code happens
+	public Message addMessage(Message message) {
+		return service.addMessage(message);
+	}
+}
+
+Note that POST is a non-idempotent method, so if you click the send button in POSTMAN multiple times with the same request body and URI, each time a new resource is created.
+
+SEE: REST Web Services 19 - Implementing POST Method
+-------------------------------------------------------------------------------------------
+
+Update and Delete:
+
+We do update by using the PUT http method. Note that PUT is an idempotent method.
+
+@Path("/messages")
+public class MessageResource {
+	MessageService service = new MessageService();
+	
+	@GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Message> getAllMessages() {
+       return service.getAllMessages();
+    }
+	
+	@GET
+	@Path("/{messageId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Message getMessage(@PathParam("messageId") int id) {
+		return service.getMessage(id);
+	}
+	
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Message addMessage(Message message) {
+		return service.addMessage(message);
+	}
+	
+	@PUT
+	@Path("/{messageId}")													//PUT takes the messageId as input to denote which message to update.
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Message updateMessage(@PathParam("messageId") int id, Message message) {
+		message.setId(id);												//We do not need to send the messageId in the request body. We just need to add the id in the URL as path parameter.
+		return service.updateMessage(message);
+	}
+}
+
+We do delete by using DELETE http method.
+
+@Path("/messages")
+public class MessageResource {
+	MessageService service = new MessageService();
+	
+	@GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Message> getAllMessages() {
+       return service.getAllMessages();
+    }
+	
+	@GET
+	@Path("/{messageId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Message getMessage(@PathParam("messageId") int id) {
+		return service.getMessage(id);
+	}
+	
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Message addMessage(Message message) {
+		return service.addMessage(message);
+	}
+	
+	@PUT
+	@Path("/{messageId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Message updateMessage(@PathParam("messageId") int id, Message message) {
+		message.setId(id);
+		return service.updateMessage(message);
+	}
+	
+	
+	@DELETE
+	@Path("/{messageId}")												//This does not consume or produce any output. It just takes an id and deletes the corresponding resource.
+	public void deletMessage(@PathParam("messageId") int id) {
+		service.deletMessage(id);
+	}
+}
+
+
+We can write the @produces and @consumes on top of the class instead of every method. Makes it more compact.
+
+SEE: REST Web Services 20 - Implementing Update and Delete
+
+
+-------------------------------------------------------------------------------------------
+
+Query Parameters:
+
+We can pass query parameters in the REST URI. Suppose we want to get all the messages for the year 2014. The URI will look something like this "http://localhost:8080/myrest/webapi/messages?year=2014". Obviously, the request is going to be GET. But we are not going to have different method based on different query parameters, since the base URI is the same. The same method is going to be called for this URI as well ie:
+
+	@GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Message> getAllMessages() {
+       return service.getAllMessages();
+	}
+ 
+ But, we can take the query parameters as input and based on that, perform operations like:
+ 
+ 
+	@GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Message> getAllMessages(@QueryParam("year") int year) {
+		if(year>0)
+    	   return service.getMesssagesByYear(year);							//Dummy method
+       return service.getAllMessages();
+	}
+
+
+-------------------------------------------------------------------------------------------
+@HeaderParam is used to access the request header of a rest request. Like:
+
+ public List<Message> getAllMessages(@HeaderParam("sessionId") String sessionId)
+
+
+@CookieParam is used to access cookie value. Like:
+
+public List<Message> getAllMessages(@CookieParam("sessionId") String sessionId)
+
+There is also @FormParam which captures form parameter values when a request is submitted to REST via a form submission. But it is not widely used, since it is not a good practice to access a web service through form submission.
+
+SEE: REST Web Services 23 - The Param Annotations
+
+-------------------------------------------------------------------------------------------
+
+@Context is used to retrieve information about the request URI, headers, cookies etc. @Context can be annotated only to special types (unlike other annotations which can be annotated to primitive types like String) like javax.ws.rs.core.UriInfo, javax.ws.rs.core.HttpHeaders etc.
+
+Annotating the @Context to uriinfo gives information about the uri like map of path parameters, query parameters and so on.
+
+public List<Message> getAllMessages(@Context UriInfo uriInfo)
+
+
+Annotating @Context to HttpHeaders gives information about the request headers and cookies and so on.
+
+public List<Message> getAllMessages(@Context HttpHeaders httpHeaders)
+
+
+@BeanParam is used to group all the above discussed parameters together in a single class and make the method signature cleaner. For example, instead of doing:
+
+ public List<Message> getAllMessages(@QueryParam("year") int year, 
+										@QueryParam("start") int start, 
+										@QueryParam("size") int size)
+ 
+ We can do:
+ 
+ class MessageBeanParam{
+	 private @QueryParam("year") int year;
+	 private @QueryParam("start") int start; 
+	 private @QueryParam("size") int size;
+
+	----getters and setters-------
+ }
+
+and then we can change the method signature to:
+
+public List<Message> getAllMessages(@BeanParam MessageBeanParam messageBeanParam){
+	messageBeanParam.getYear();
+	messageBeanParam.getStart();
+	messageBeanParam.getSize();
+	
+	------and so on-------
+}
+
+SEE: REST Web Services 24 - Using Context and BeanParam annotations
+
+-------------------------------------------------------------------------------------------
+SubResources:
+
+SubResources are resources that can be related to other resources. Like comments. Comments can be made to a particular message in a social media app. So comments are subresources of messages. We can retrieve comments of a particular message like "/messages/{messageId}/comments/{commentId}".
+
+Now we can create the comment resourcefinder like:
+
+@Path("/messages")
+public class MessageResource {
+	
+	
+	/*This delegates the call to the CommentResource class. So all the calls to /messages/{messageId}/comments will 
+	 * passed to CommentResource class*/
+	@Path("/{messageId}/comments")
+	public CommentResource getCommentResource() {
+		return new CommentResource();
+	}
+}
+
+
+and create a commentResource class like:
+
+public class CommentResource {
+
+	@GET
+	@Path("/{commentId}")
+	public String getComments() {
+		return "get comments";
+	}
+}
+
+
+So, a call to "/messages/{messageId}/comments/{commetId}" will be delegated to the "getComments" method of "CommentResource" class. We could have put the URIs for comments directly to the MessageResource class, but it would have made the MessageResource class clumsy and the operations for a particular resource(even for subresource) should be put in a different class.
+
+Also, we can access the path params of the parent resource from the subresource. like:
+
+public class CommentResource {
+
+	@GET
+	@Path("/{commentId}")
+	public String getComments(@PathParam("messageId") String messageId, @PathParam("commentId") String commentId) {
+		return "get comment:"+commentId+" for message : "+messageId;
+	}
+}
+
+Here "messageId" pathparam has been accessed from the subresource method, although the parameter is not declared in subresource, but rather in parent resource.
+
+I have implemented the whole CommentResource and CommentService in my "myrest" project. Upload it to git.
+
+SEE: REST Web Services 25 - Implementing Subresources
+
+
+-------------------------------------------------------------------------------------------
+
+There is an option in JAX-RS to customize the response(ie adding headers, changing status codes and so on) that is being generated, instead of passing a resource and let JAX-RS convert it to xml/json.
+The solution is to pass a "javax.ws.rs.core.Response" Object instead of the resource. PFB the code for POST, ie creating a resource:
+
+	@POST	
+	public Response addMessage(Message message,@Context UriInfo uriInfo) {
+		Message newMessage = service.addMessage(message);
+		String id = String.valueOf(newMessage.getId());
+		URI uri = uriInfo.getAbsolutePathBuilder().path(id).build();					
+		return Response.created(uri).entity(newMessage).build();
+	}
+
+
+The ideal status code for creating a resource is 201-Created. To set the status code, there is a method in Response called status(int status) that sets the status of the response. But there is a special method in Response object called "created()" which is suitable for this purpose and changes the status code to 201 as well as set the location of the newly created resource in the header, so that user can get hold of the URI of the newly created resource and do further operations on it. The location of the newly created reaource is passed as parameter in the "created()" function. The entity() method sets the response body and build() method builds the response and returns it.
+
+We create the URI of the newly created resource by taking the absolutepath of the current resource and adding the newly created id into it. @Context is used to get the absolutepath of the current URI.
+
+SEE: REST Web Services 26 - Sending Status Codes and Location Headers
+
+-------------------------------------------------------------------------------------------
+Handling Exception:
+
+In order to handle exception, we need to have an exceptionmapper in JAX-RS like below:
+
+@Provider
+public class DataNotFoundExceptionMapper implements ExceptionMapper<DataNotFoundException>{
+
+	@Override
+	public Response toResponse(DataNotFoundException exception) {
+		return Response.status(Status.NOT_FOUND)
+				.entity(new ExceptionModel(exception.getMessage(),404))
+				.build();
+	}
+
+}
+
+@Provider is used to register this class with JAX-RS. "ExceptionMapper" is a generic interface, and it takes the exception,that needs to be caught by this class, as type argument. The overloaded method returns a response back to the client. We can set the status code as well as entity(ie response body) in the "Response".It is good to send a xml/JSON(instead of the default html) response back to the developer, so that developer can parse it and take actions accordingly.
+
+To send a xml/JSON response back we create a custom model class and set the exception message and status codes as property of that class. We set the class as the entity, so that it gets rendered in JSON/xml format to the end user rather than deafult HTML page.
+
+
+@XmlRootElement
+public class ExceptionModel {
+	private String message;
+	private int statusCode;
+	
+	public ExceptionModel() {
+		
+	}
+	
+	public ExceptionModel(String message, int statusCode) {
+		this.message = message;
+		this.statusCode = statusCode;
+	}
+	
+	public String getMessage() {
+		return message;
+	}
+	public void setMessage(String message) {
+		this.message = message;
+	}
+	public int getStatusCode() {
+		return statusCode;
+	}
+	public void setStatusCode(int statusCode) {
+		this.statusCode = statusCode;
+	}
+	
+	
+}
+
+
+
+public class DataNotFoundException extends RuntimeException{
+
+	private static final long serialVersionUID = 1L;
+
+	public DataNotFoundException(String message) {
+		super(message);
+	}
+}
+
+/*****The Method from where the exception is thrown*****/
+public Message getMessage(int id) {
+		Message message = messages.get(id);
+		if(message==null)
+			throw new DataNotFoundException("Messsage with id : "+id+" not found");
+		return message;
+}
+	
+	
+	
+Response:
+
+{
+    "message": "Messsage with id : 33 not found",
+    "statusCode": 404
+}
+
+
+SEE: REST Web Services 27 - Handling Exceptions
+
+
+-------------------------------------------------------------------------------------------
+
+Content Negotiation:
+
+In content negotiation, the client asks the server to send the resource in a format that is best suited for the client. There are two types of content negotiation: server-driven and client-driven. Here we are discussing server-driven.
+
+In server-driven, the client sends an http header called "ACCEPT" (CONTENT-TYPE header defines the format of the request body) which contains the format requested by the client. If the server produces that format then it returns the resource in that format, otherwise it throws an 406-Not Acceptable response code to client.
+
+Consider the following example:
+
+@Path("/messages")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
+public class MessageResource {
+	MessageService service = new MessageService();
+	
+	@GET
+    public List<Message> getAllMessages(@QueryParam("year") int year,
+    									@QueryParam("start") int start,
+    									@QueryParam("size") int size) {
+       if(year>0)
+    	   System.out.println("The year is: "+year);
+       return service.getAllMessages();
+    }
+	
+	@GET
+	@Path("/{messageId}")
+	public Message getMessage(@PathParam("messageId") int id) {
+		return service.getMessage(id);
+	}
+	
+	@POST	
+	public Message addMessage(Message message) {
+		return service.addMessage(message);
+	}
+	
+	@PUT
+	@Path("/{messageId}")
+	public Message updateMessage(@PathParam("messageId") int id, Message message) {
+		message.setId(id);
+		return service.updateMessage(message);
+	}
+	
+	
+	@DELETE
+	@Path("/{messageId}")
+	public void deletMessage(@PathParam("messageId") int id) {
+		service.deletMessage(id);
+	}
+}
+
+Here the messageResource produces only application/json. So, if we request the URL "http://localhost:8080/myrest/webapi/messages" with the request header Accept:text/xml through postman, then we will get the error 406-Not Acceptable.
+
+But if we add text/xml as well in the @Produces annotation, then the above request will produce and return data to client in xml format.Note that, we already have necessary xml unmarshallers in place (ie @XmlRootElement).
+
+
+@Path("/messages")
+@Produces(value = { MediaType.APPLICATION_JSON , MediaType.TEXT_XML})
+@Consumes(MediaType.APPLICATION_JSON)
+public class MessageResource {
+	MessageService service = new MessageService();
+	
+	@GET
+    public List<Message> getAllMessages(@QueryParam("year") int year,
+    									@QueryParam("start") int start,
+    									@QueryParam("size") int size) {
+       if(year>0)
+    	   System.out.println("The year is: "+year);
+       return service.getAllMessages();
+    }
+	
+	@GET
+	@Path("/{messageId}")
+	public Message getMessage(@PathParam("messageId") int id) {
+		return service.getMessage(id);
+	}
+	
+	@POST	
+	public Message addMessage(Message message) {
+		return service.addMessage(message);
+	}
+	
+	@PUT
+	@Path("/{messageId}")
+	public Message updateMessage(@PathParam("messageId") int id, Message message) {
+		message.setId(id);
+		return service.updateMessage(message);
+	}
+	
+	
+	@DELETE
+	@Path("/{messageId}")
+	public void deletMessage(@PathParam("messageId") int id) {
+		service.deletMessage(id);
+	}
+}
+
+
+
+Response(in postman with Accept:text/xml):
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<messages>
+    <message>
+        <author>author1</author>
+        <id>1</id>
+        <message>First Message</message>
+    </message>
+    <message>
+        <author>author2</author>
+        <id>2</id>
+        <message>Second Message</message>
+    </message>
+</messages>
+
+
+Depending on the value in the Accept header, different methods may be called with same URI and http method. Consider the below example:
+
+@Path("/messages")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
+public class MessageResource {
+	MessageService service = new MessageService();
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)									//Overrides the @Produces defined on top of the class
+    public List<Message> getAllJSONMessages(@QueryParam("year") int year,
+    									@QueryParam("start") int start,
+    									@QueryParam("size") int size) {
+       if(year>0)
+    	   System.out.println("The year is: "+year);
+       System.out.println("In getAllJSONMessages");
+       return service.getAllMessages();
+    }
+	
+	@GET
+	@Produces(MediaType.TEXT_XML)											//Overrides the @Produces defined on top of the class
+    public List<Message> getAllXMLMessages(@QueryParam("year") int year,
+    									@QueryParam("start") int start,
+    									@QueryParam("size") int size) {
+       if(year>0)
+    	   System.out.println("The year is: "+year);
+       System.out.println("In getAllXMLMessages");
+       return service.getAllMessages();
+    }
+}
+
+If we call "http://localhost:8080/myrest/webapi/messages" with the request header Accept:text/xml, then the method getAllXMLMessages is called and the response is returned as text/xml. If we call "http://localhost:8080/myrest/webapi/messages" with the request header Accept:application/json, then the method getAllJSONMessages is called and the response is returned as application/json. It can be verified by seeing the system.out.println in console.
+
+
+SEE: REST Web Services 31 - Content Negotiation
+
+
+-------------------------------------------------------------------------------------------
+
+Difference between REST and SOAP:
+
+1. SOAP can work only with XML format whereas REST can work with different data format such as Plain text, HTML, XML, JSON, etc. But the most preferred format for transferring data is JSON. Parsing a JSON is easy compared to XML. Many javascripts call REST web services and JSON is easy to parse and convert to javascript object compared to XML.
+
+2. As REST API deploys multiple standards, so it takes fewer resources and bandwidth as compared to SOAP that uses XML for the creation of Payload and results in the large sized file.
+
+3. REST APIs are more convenient with JavaScript and can be implemented easily as well. SOAP APIs are also convenient with JavaScript but don't support for greater implementation.
+
+4. SOAP defines its own security. RESTful web services inherits security measures from the underlying transport.
+
+5. SOAP uses service interfaces to expose its functionality to client applications. In SOAP, the WSDL file provides the client with the necessary information which can be used to understand what services the web service can offer.
+REST use Uniform Service locators to access to the components on the hardware device. For example, if there is an object which represents the data of an employee hosted on a URL as http://demo.guru99 , the below are some of URI that can exist to access them
+
+http://demo.guru99.com/Employee
+
+http://demo.guru99.com/Employee/1
+
+Challenges with SOAP and REST, see: https://www.guru99.com/comparison-between-web-services.html
+
+Also see: https://dzone.com/articles/difference-between-rest-and-soap-api
+
+
+-----------------------------------------------------------------------------------------------------------
+
+
+
+
+
+

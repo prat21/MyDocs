@@ -1,0 +1,273 @@
+Spring MVC with java configuration:
+
+https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html
+
+See the following topics:
+
+1.1. DispatcherServlet
+Note: "Spring Boot follows a different initialization sequence. Rather than hooking into the lifecycle of the Servlet container, Spring Boot uses Spring configuration to bootstrap itself and the embedded Servlet container. Filter and Servlet declarations are detected in Spring configuration and registered with the Servlet container."
+	1.1.1. Context Hierarchy
+	1.1.2. Special Bean Types (especially HandlerMapping and ViewResolver)
+	1.1.3. Web MVC Config
+		See DispatcherServlet.properties which is available inside the package "org.springframework.web.servlet" of the spring-webmvc-4.0.1.RELEASE.jar
+		Note: "Spring Boot relies on the MVC Java configuration to configure Spring MVC and provides many extra convenient options."
+	1.1.4. Servlet Configuration
+	1.1.5. Processing
+		DispatcherServlet initialization parameters (especially contextClass and contextConfigLocation)
+	1.1.6. Interception (analyze later)
+	1.1.7. Exceptions (analyze later)
+	1.1.8. View Resolution (See "InternalResourceViewResolver")
+		SEE: Redirecting and Forwarding
+
+1.3. Annotated Controllers
+	1.3.1. Declaration
+	1.3.2. Request Mapping
+		SEE: URI patterns, Consumable Media Types
+	1.3.3. Handler Methods
+		SEE: Method Arguments, Return Values, Using @RequestParam, Using @RequestHeader, Using @CookieValue, Using @ModelAttribute, Redirect Attributes, Using @RequestBody, Using @ResponseBody
+		Note: "@ResponseBody is also supported at the class level, in which case it is inherited by all controller methods. This is the effect of @RestController, which is nothing more than a meta-annotation marked with @Controller and @ResponseBody."
+	1.3.4. Model
+	1.3.5. Using DataBinder
+	1.3.6. Exceptions
+		SEE: https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc (it is good. No need to go through HandlerExceptionResolver,SimpleMappingExceptionResolver,Extending SimpleMappingExceptionResolver, Extending ExceptionHandlerExceptionResolver. But see "Errors and REST")
+	1.3.7. Controller Advice
+1.10. MVC Config
+	SEE all the topics if possible, but cover these:
+	1.10.1. Enable MVC Configuration
+	1.10.2. The MVC Configuration API
+	1.10.8. View Controllers
+	1.10.9. View Resolvers
+	1.10.10. Static Resources		
+		
+		
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
+There are two ways to configure spring mvc using java configuration (instead of web.xml):
+
+1. By implementing the "WebApplicationInitializer" interface and using the "AnnotationConfigWebApplicationContext" class:
+
+public class MyWebApplicationInitializer implements WebApplicationInitializer {
+
+    @Override
+    public void onStartup(ServletContext servletCxt) {
+
+        // Load Spring web application configuration
+        AnnotationConfigWebApplicationContext ac = new AnnotationConfigWebApplicationContext();
+        ac.register(AppConfig.class);
+		ac.setServletContext(servletCxt);
+
+        // Create and register the DispatcherServlet
+        DispatcherServlet servlet = new DispatcherServlet(ac);
+        ServletRegistration.Dynamic registration = servletCxt.addServlet("app", servlet);
+        registration.setLoadOnStartup(1);
+        registration.addMapping("/app/*");
+    }
+}
+
+WebApplicationInitializer is an interface provided by Spring MVC that ensures your implementation is detected and automatically used to initialize any Servlet 3 container.
+
+2. By extending the "AbstractAnnotationConfigDispatcherServletInitializer" abstract class(which, under the hood, implements "WebApplicationInitializer" interface) and implementing its abstract methods:
+
+
+public class MyWebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+
+    @Override
+    protected Class<?>[] getRootConfigClasses() {
+        return null;
+    }
+
+    @Override
+    protected Class<?>[] getServletConfigClasses() {
+        return new Class<?>[] { MyWebConfig.class };				//The class that contains the configuration for spring mvc.
+    }
+
+    @Override
+    protected String[] getServletMappings() {
+        return new String[] { "/" };
+    }
+}
+
+
+If you use XML-based Spring configuration, you should extend directly from AbstractDispatcherServletInitializer, as the following example shows:
+
+
+public class MyWebAppInitializer extends AbstractDispatcherServletInitializer {
+
+    @Override
+    protected WebApplicationContext createRootApplicationContext() {
+        return null;
+    }
+
+    @Override
+    protected WebApplicationContext createServletApplicationContext() {
+        XmlWebApplicationContext cxt = new XmlWebApplicationContext();
+        cxt.setConfigLocation("/WEB-INF/spring/dispatcher-config.xml");
+        return cxt;
+    }
+
+    @Override
+    protected String[] getServletMappings() {
+        return new String[] { "/" };
+    }
+}
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+1.3.3. Handler Methods
+Using @ModelAttribute:
+
+
+You can use the @ModelAttribute annotation on a method argument to access an attribute from the model or have it be instantiated if not present. The model attribute is also overlain with values from HTTP Servlet request parameters whose names match to field names.
+
+The WebDataBinder class matches Servlet request parameter names (query parameters and form fields) to field names on the target Object. Matching fields are populated after type conversion is applied, where necessary.
+
+
+Data binding can result in errors. By default, a BindException is raised. However, to check for such errors in the controller method, you can add a BindingResult argument immediately next to the @ModelAttribute (Note that BindingResult has to be next to @ModelAttribute annotated parameter), as the following example shows:
+
+
+@PostMapping("/owners/{ownerId}/pets/{petId}/edit")
+public String processSubmit(@ModelAttribute("pet") Pet pet, BindingResult result) { 
+    if (result.hasErrors()) {
+        return "petForm";
+    }
+    // ...
+}
+
+
+In some cases, you may want access to a model attribute without data binding. For such cases, you can inject the Model into the controller and access it directly or, alternatively, set @ModelAttribute(binding=false), as the following example shows:
+
+
+@ModelAttribute
+public AccountForm setUpForm() {
+    return new AccountForm();
+}
+
+@ModelAttribute
+public Account findAccount(@PathVariable String accountId) {
+    return accountRepository.findOne(accountId);
+}
+
+@PostMapping("update")
+public String update(@Valid AccountUpdateForm form, BindingResult result,
+        @ModelAttribute(binding=false) Account account) { 
+    // ...
+}
+
+You can automatically apply validation after data binding by adding the javax.validation.Valid annotation or Spring’s @Validated annotation:
+
+@PostMapping("/owners/{ownerId}/pets/{petId}/edit")
+public String processSubmit(@Valid @ModelAttribute("pet") Pet pet, BindingResult result) { 
+    if (result.hasErrors()) {
+        return "petForm";
+    }
+    // ...
+}
+
+Note: @ModelAttribute methods are invoked before the controller methods annotated with @RequestMapping are invoked.
+Note: Note that using @ModelAttribute is optional (for example, to set its attributes). By default, any argument that is not a simple value type (as determined by BeanUtils#isSimpleProperty) and is not resolved by any other argument resolver is treated as if it were annotated with @ModelAttribute.
+
+SEE: https://www.baeldung.com/spring-mvc-and-the-modelattribute-annotation for more details on @ModelAttribute.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
+1.3.6. Exceptions:
+
+From https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc
+
+What to Use When?
+As usual, Spring likes to offer you choice, so what should you do? Here are some rules of thumb. However if you have a preference for XML configuration or Annotations, that’s fine too.
+
+1. For exceptions you write, consider adding @ResponseStatus to them.
+
+2. For all other exceptions implement an @ExceptionHandler method on a @ControllerAdvice class or use an instance of SimpleMappingExceptionResolver. You may well have SimpleMappingExceptionResolver configured for your application already, in which case it may be easier to add new exception classes to it than implement a @ControllerAdvice.
+
+3. For Controller specific exception handling add @ExceptionHandler methods to your controller.
+
+Warning: Be careful mixing too many of these options in the same application. If the same exception can be handed in more than one way, you may not get the behavior you wanted. @ExceptionHandler methods on the Controller are always selected before those on any @ControllerAdvice instance. It is undefined what order controller-advices are processed.
+
+Note: @RestControllerAdvice is also a meta-annotation marked with both @ControllerAdvice and @ResponseBody, which essentially means @ExceptionHandler methods are rendered to the response body through message conversion (versus view resolution or template rendering).
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
+Sample Spring MVC java config:
+
+@EnableWebMvc
+@Configuration
+public class ClientWebConfig implements WebMvcConfigurer {
+ 
+   @Override
+   public void addViewControllers(ViewControllerRegistry registry) {
+      registry.addViewController("/index").setViewName("index");
+   }
+ 
+   @Bean
+   public ViewResolver viewResolver() {						
+      InternalResourceViewResolver bean = new InternalResourceViewResolver();
+ 
+      bean.setViewClass(JstlView.class);		//In order for this to work, we need to download the jstl jar and add it to classpath,just like JSON. Otherwise we can just omit this.
+      bean.setPrefix("/WEB-INF/view/");
+      bean.setSuffix(".jsp");
+ 
+      return bean;
+   }
+}
+
+Note: Here, the method "viewResolver" is not an overriden method of WebMvcConfigurer, but rather a bean, just like we register in xml files.
+
+<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+	<property name="prefix" value="/WEB-INF/view/" />
+	<property name="suffix" value=".jsp" />
+</bean>
+
+Note: Before Spring 5: we had to use the "WebMvcConfigurerAdapter" class instead of the "WebMvcConfigurer" interface, because WebMvcConfigurer had several abstract methods and if we implement the WebMvcConfigurer interface, then we have to implement(although a blank implementaion) all the abstract methods. "WebMvcConfigurerAdapter" class implements the "WebMvcConfigurer" interface and gives blank implementations for all the abstract methods. So, we simply extend WebMvcConfigurerAdapter class and override only those methods which are of interest to us, for example "addViewControllers" method.
+
+After Spring 5: With the introduction of default methods in Java 8, "WebMvcConfigurer" interface has now default methods and can be implemented directly without the need for "WebMvcConfigurerAdapter" class. The class that is implementing the WebMvcConfigurer interface need only give implementations of the method that is required and all the other methods are default in the interface.
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
+HttpMessageConverter and Content-Negotiation:
+
+Message converters are used to marshall and unmarshall Java Objects to and from JSON, XML, etc – over HTTP.
+
+By default, the following HttpMessageConverters instances are pre-enabled:
+
+1. ByteArrayHttpMessageConverter – converts byte arrays
+2. StringHttpMessageConverter – converts Strings
+3. ResourceHttpMessageConverter – converts org.springframework.core.io.Resource for any type of octet stream
+4. SourceHttpMessageConverter – converts javax.xml.transform.Source
+5. FormHttpMessageConverter – converts form data to/from a MultiValueMap<String, String>.
+6. Jaxb2RootElementHttpMessageConverter – converts Java objects to/from XML (added only if JAXB2 is present on the classpath)
+7. MappingJackson2HttpMessageConverter – converts JSON (added only if Jackson 2 is present on the classpath)
+8. MappingJacksonHttpMessageConverter – converts JSON (added only if Jackson is present on the classpath)
+9. AtomFeedHttpMessageConverter – converts Atom feeds (added only if Rome is present on the classpath)
+10. RssChannelHttpMessageConverter – converts RSS feeds (added only if Rome is present on the classpath)
+
+
+High Level Content Negotiation:
+
+Each HttpMessageConverter implementation has one or several associated MIME Types.
+When receiving a new request, Spring will use of the “Accept” header to determine the media type that it needs to respond with.
+It will then try to find a registered converter that is capable of handling that specific media type – and it will use it to convert the entity and send back the response.
+The process is similar for receiving a request which contains JSON information – the framework will use the “Content-Type” header to determine the media type of the request body.
+It will then search for a HttpMessageConverter that can convert the body sent by the client to a Java Object.
+
+
+https://www.baeldung.com/spring-httpmessageconverter-rest
+
+Also see: http://www.jcombat.com/spring/understanding-http-message-converters-in-spring-framework
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	

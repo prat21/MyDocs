@@ -1,0 +1,1463 @@
+Factory Design Pattern (Spring uses factory pattern):
+
+https://www.journaldev.com/1392/factory-design-pattern-in-java
+https://www.tutorialspoint.com/design_pattern/factory_pattern.htm
+
+Factory Design Pattern Examples in JDK
+1. java.util.Calendar, ResourceBundle and NumberFormat getInstance() methods uses Factory pattern.
+2. valueOf() method in wrapper classes like Boolean, Integer etc.
+
+Factory Design Pattern Advantages
+1. Factory design pattern provides approach to code for interface rather than implementation.
+2. Factory pattern removes the instantiation of actual implementation classes from client code. Factory pattern makes our code more robust, less coupled and easy to extend. For example, we can easily change PC class implementation because client program is unaware of this.
+3. Factory pattern provides abstraction between implementation and client classes through inheritance
+-------Mine---------
+4. Factory pattern removes the complexity of creating an object. Suppose an object needs ten dependencies to be created and injected into it. Writing the code by ourselves for this can be very tedious. If we give this responsibililty to a factory method, then our code will be clean and we dont need to write the code every time we need an instance of the class. Spring uses the same concept.
+
+---------------------------------------------------------------------------------------------
+Inversion of control (IOC) and Dependency Injection (IJ):
+
+Inversion of Control:
+
+Here is an informal definition of IoC: “IoC is when you have someone else create objects for you.” So instead of writing “new MyObject” in your code, the object is created by someone else. This "someone else" is normally referred to as an IoC container.
+
+This simple explanation illustrates some very important ideas:
+
+1. It is called IoC because control of the object is inverted. It is not the programmer, but someone else who controls the object.
+2. IoC is relative in the sense that it only applies to some objects of the application. So there may be IoC for some objects, whereas others are under the direct control of the programmer.
+
+Apart from Spring, there are other examples of IoC like Java Servlets.
+
+The Details:
+
+Let’s delve a little more into the definition of IoC. IoC is much more than object creation: a Spring Context or a Servlet Container not only create objects, but manage their entire lifecycle. That includes creating objects, destroying them, and invoking certain methods of the object at different stages of its lifecycle.
+
+Another thing to consider is that, although programmers relinquish their control on the objects, they still need to define the templates used by the IoC container to create said objects.
+
+For instance, in Spring, classes are annotated with @Service or @Component (among many others) to indicate that the Spring Container is to manage the instances of those classes (it is also possible to use XML configuration instead of annotations).
+
+In a Servlet application, any class implementing the Servlet interface will be managed by the Servlet Container. (We never create an instance of servlet ourselves, like Servlet servlet=new HttpServlet(). The servlet container creates it for us.)
+
+Here is a quick summary of the ideas discussed so far:
+
+1. IoC containers control and manage the lifecycle of some objects: creation, destruction, and callback invocations.
+2. The programmer must identify the classes whose instances are to be managed by the IoC container. There are several ways to do this: with annotations, by extending some specific classes, using external configuration.
+3. The programmer can influence, to some extent, the way the objects are managed by the IoC container. Normally, this is achieved by overriding the default behavior of the object callbacks.
+
+SEE: https://dzone.com/articles/ioc-vs-di for Dependency Injection and IOC (it is good)
+
+
+
+---------------------------------------------------------------------------------------------
+
+In order for spring to inject a property into an object, one of the following has to satisfy:
+1. the property has a setter method, regardless of whether it is private or public.
+2. the property is a constructor argument of the object so that it can be injected as a constructor-arg, regardless of whether it is private or public.
+
+Even if the property is public, it cannot be injected if it does not have a setter and it is not a constructor argument of the object.
+
+While using @Autowired annotation though, a property does not necessarily need to have a setter if it is marked by @autowired, spring can inject the property reagardless of whether the setter is present or not.
+
+@Autowired can be applied on top of a field, setter method (not getter, since properties are injected via setter) or on top of constructor(for autowire by constructor).
+https://www.baeldung.com/constructor-injection-in-spring
+
+---------------------------------------------------------------------------------------------
+1. Triangle.java:
+
+public class Triangle {
+	private String type;
+	private int height;
+	
+	/*public Triangle() {
+		
+	}*/
+	
+	public Triangle(String type,int height) {
+		this.type = type;
+		this.height = height;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+	
+	public void draw() {
+		System.out.println(getType()+" triangle of height "+getHeight()+" is drawn");
+	}
+}
+
+
+2. spring.xml:
+
+<beans xmlns = "http://www.springframework.org/schema/beans"
+   xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation = "http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean id="triangle" class="com.spring.spring1.Triangle">
+ 		<property name="type" value="equilateral"/>
+ 	</bean>  
+</beans>
+
+3. App.java:
+
+public class App 
+{
+    public static void main( String[] args )
+    {
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        Triangle triangle = (Triangle) context.getBean("triangle");
+        
+        triangle.draw();
+    }
+}
+
+
+Output: Could not instantiate bean class [com.spring.spring1.Triangle]: No default constructor found;
+Uncomment the default constructor above and re-run,the program will run successfully.
+
+
+---------------------------------------------------------------------------------------------
+The above example with spring.xml changed as:
+
+<beans xmlns = "http://www.springframework.org/schema/beans"
+   xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation = "http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean id="triangle" class="com.spring.spring1.Triangle">
+ 		<constructor-arg name="type" value="equilateral"/>
+ 		<constructor-arg name="height" value="20t"/>
+ 	</bean>  
+</beans>
+
+Ouput: Error creating bean with name 'triangle' defined in class path resource [spring.xml]: Could not resolve matching constructor.
+Since there are no constructors with two strings as arguments.
+
+---------------------------------------------------------------------------------------------
+
+1. Triangle.java:
+
+package com.spring.spring1;
+
+public class Triangle {
+	private String type;
+	private int height;
+	
+	public Triangle(String type) {
+		this.type = type;
+	}
+	
+	public Triangle(int height) {
+		this.height = height;
+	}
+	
+	public Triangle(String type,int height) {
+		this.type = type;
+		this.height = height;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+	
+	public void draw() {
+		System.out.println(getType()+" triangle of height "+getHeight()+" is drawn");
+	}
+}
+
+
+2. spring.xml:
+
+<?xml version = "1.0" encoding = "UTF-8"?>
+
+<beans xmlns = "http://www.springframework.org/schema/beans"
+   xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation = "http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean id="triangle" class="com.spring.spring1.Triangle">
+ 		<constructor-arg value="20"/>
+ 	</bean>  
+</beans>
+
+3. App.java:
+
+public class App 
+{
+    public static void main( String[] args )
+    {
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        Triangle triangle = (Triangle) context.getBean("triangle");
+        
+        triangle.draw();
+    }
+}
+
+
+Output: 20 triangle of height 0 is drawn
+
+Since there is no type defined in the constructor-arg, hence spring will interpret "20" as string and set the type as 20.
+We can explicitly mention the type of constructor-arg in the spring.xml.
+
+
+<beans xmlns = "http://www.springframework.org/schema/beans"
+   xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation = "http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean id="triangle" class="com.spring.spring1.Triangle">
+ 		<constructor-arg value="20" type="int"/>
+ 	</bean>  
+</beans>
+
+
+This will call the constructor with int parameter and print "null triangle of height 20 is drawn". (null because we have not set the type of the triangle)
+
+---------------------------------------------------------------------------------------------
+We can arrange the constructor parameters using their argument names.
+
+Same Triangle.java and App.java as above.
+
+Spring.xml:
+
+<beans xmlns = "http://www.springframework.org/schema/beans"
+   xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation = "http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean id="triangle" class="com.spring.spring1.Triangle">
+ 		<constructor-arg value="20" name="height"/>
+ 		<constructor-arg value="equilateral" name="type"/>
+ 	</bean>  
+</beans>
+
+Output: equilateral triangle of height 20 is drawn.
+
+---------------------------------------------------------------------------------------------
+
+Autowiring:
+
+1. byname - autowires using the names (id) of the beans.
+2. bytype - autowirews using the type of the bean and the property. If there are multiple beans of the same type defined in the spring.xml then it will fail.
+3. constructor - same as autowire bytype, but instead of injecting the beans using setter methods it uses constructors to inject the beans. But again, the argument types of the constructor has to be different. If there are more than one argument of same type in constructor and more than one bean with same type in spring.xml, then autowiring by constructor will fail.
+
+---------------------------------------------------------------------------------------------
+
+
+Singleton Pattern in java:
+
+https://www.journaldev.com/1377/java-singleton-design-pattern-best-practices-examples
+
+
+---------------------------------------------------------------------------------------------
+
+Spring bean scopes:
+
+1. Singleton: If the bean scope is singleton, then spring creates the instance of that bean while intialization of the spring container (ie ApplicationContext). It does not wait for the getBean method call by an object.
+2. Prototype: If the bean scope is prototype, then the spring creates the instance of that bean only when the getBean method is called by some object. This type of bean is not intstantiated while spring container starts.
+
+---------------------------------------------------------------------------------------------
+
+Difference between spring singleton and java singleton:
+
+https://stackoverflow.com/questions/15252284/what-is-the-difference-between-a-spring-singleton-and-a-java-singeletondesign-p
+https://dzone.com/articles/an-interview-question-on-spring-singletons  (this is good.)
+
+
+---------------------------------------------------------------------------------------------
+
+1. Triangle.java:
+
+package com.spring.spring1;
+
+public class Triangle {
+	Point pointA;
+	Point pointB;
+	Point pointC;
+	
+	public Point getPointA() {
+		return pointA;
+	}
+
+	public void setPointA(Point pointA) {
+		this.pointA = pointA;
+	}
+
+	public Point getPointB() {
+		return pointB;
+	}
+
+	public void setPointB(Point pointB) {
+		this.pointB = pointB;
+	}
+
+	public Point getPointC() {
+		return pointC;
+	}
+
+	public void setPointC(Point pointC) {
+		this.pointC = pointC;
+	}
+
+	public void draw() {
+		System.out.println("PointA:"+getPointA().getX()+","+getPointA().getY());
+		System.out.println("PointB:"+getPointB().getX()+","+getPointB().getY());
+		System.out.println("PointC:"+getPointC().getX()+","+getPointC().getY());
+	}
+}
+
+
+2. Spring.xml:
+
+<bean id="triangle" class="com.spring.spring1.Triangle">
+ 		<property name="pointA" ref="zeroPoint"/>
+ 		<property name="pointB" ref="Point2"/>
+ 		<property name="pointC" ref="Point3"/>
+ 	</bean>  
+ 	
+ 	<bean id="zeroPoint" class="com.spring.spring1.Point" scope="prototype">
+ 		<property name="x" value="0"/>
+ 		<property name="y" value="0"/>
+ 	</bean>
+ 	
+ 	<bean id="Point2" class="com.spring.spring1.Point" scope="prototype">
+ 		<property name="x" value="20"/>
+ 		<property name="y" value="0"/>
+ 	</bean>
+ 	
+ 	<bean id="Point3" class="com.spring.spring1.Point" scope="prototype">
+ 		<property name="x" value="0"/>
+ 		<property name="y" value="-20"/>
+ 	</bean>
+
+Note that the triangle bean is singleton but the pointA,pointB and pointC beans are prototype.
+
+3. App.java:
+
+public class App 
+{
+    public static void main( String[] args )
+    {
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        Triangle triangle = (Triangle) context.getBean("triangle");
+        
+        System.out.println(triangle.getPointA());
+        System.out.println(triangle.getPointB());
+        System.out.println(triangle.getPointC());
+        System.out.println("----------------------------");
+        System.out.println(context.getBean("zeroPoint"));
+        System.out.println(context.getBean("Point2"));
+        System.out.println(context.getBean("Point3"));
+    }
+}
+
+Output: 
+com.spring.spring1.Point@68c4039c
+com.spring.spring1.Point@ae45eb6
+com.spring.spring1.Point@59f99ea
+----------------------------
+com.spring.spring1.Point@27efef64
+com.spring.spring1.Point@6f7fd0e6
+com.spring.spring1.Point@47c62251
+
+That is, since pointA,B and C beans are prototype, everytime we call getbean, a new instance is created. Initially when the triangle bean is created while loading the spring conatiner (since it is singleton), instances of pointA,B and C is created and injected into triangle. But when we call getBean on those point beans afterwards, since they are prototype, new instances are created and returned.
+
+---------------------------------------------------------------------------------------------
+
+Bean Definition Inheritance:
+
+1. Triangle.java:
+
+package com.spring.spring1;
+
+public class Triangle {
+	Point pointA;
+	Point pointB;
+	Point pointC;
+	
+	public Point getPointA() {
+		return pointA;
+	}
+
+	public void setPointA(Point pointA) {
+		this.pointA = pointA;
+	}
+
+	public Point getPointB() {
+		return pointB;
+	}
+
+	public void setPointB(Point pointB) {
+		this.pointB = pointB;
+	}
+
+	public Point getPointC() {
+		return pointC;
+	}
+
+	public void setPointC(Point pointC) {
+		this.pointC = pointC;
+	}
+
+	public void draw() {
+		System.out.println("PointA:"+getPointA().getX()+","+getPointA().getY());
+		System.out.println("PointB:"+getPointB().getX()+","+getPointB().getY());
+		System.out.println("PointC:"+getPointC().getX()+","+getPointC().getY());
+	}
+}
+
+2. Spring.xml:
+
+	<bean id="parenttriangle" class="com.spring.spring1.Triangle">
+ 		<property name="pointA" ref="zeroPoint"/>
+ 	</bean> 
+	
+	<bean id="triangle1" class="com.spring.spring1.Triangle" parent="parenttriangle">
+ 		<property name="pointB" ref="Point2"/>
+ 		<property name="pointC" ref="Point3"/>
+ 	</bean>
+ 	
+ 	<bean id="triangle2" class="com.spring.spring1.Triangle" parent="parenttriangle">
+ 		<property name="pointB" ref="Point2"/>
+ 	</bean> 
+ 	
+ 	<bean id="zeroPoint" class="com.spring.spring1.Point" scope="prototype">
+ 		<property name="x" value="0"/>
+ 		<property name="y" value="0"/>
+ 	</bean>
+ 	
+ 	<bean id="Point2" class="com.spring.spring1.Point" scope="prototype">
+ 		<property name="x" value="20"/>
+ 		<property name="y" value="0"/>
+ 	</bean>
+ 	
+ 	<bean id="Point3" class="com.spring.spring1.Point" scope="prototype">
+ 		<property name="x" value="0"/>
+ 		<property name="y" value="-20"/>
+ 	</bean>
+	
+	
+3. App.java:
+
+public class App 
+{
+    public static void main( String[] args )
+    {
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        Triangle triangle = (Triangle) context.getBean("triangle1");
+        
+        triangle.draw();
+        System.out.println("----------------------------------------");
+        triangle = (Triangle) context.getBean("triangle2");
+        triangle.draw();
+    }
+}
+
+
+Output:
+PointA:0,0
+PointB:20,0
+PointC:0,-20
+----------------------------------------
+PointA:0,0
+PointB:20,0
+java.lang.NullPointerException
+	at com.spring.spring1.Triangle.draw(Triangle.java:35)
+	at com.spring.spring1.App.main(App.java:20)
+
+This is because "traingle1" inherits pointA from parenttriangle and it has pointB and C defined. But triangle2 inherits from parenttriangle and it has pointB but not pointC. Hence the null pointer exception.
+
+
+If we change the spring.xml like this:
+
+	<bean id="parenttriangle" class="com.spring.spring1.Triangle">
+ 		<property name="pointA" ref="zeroPoint"/>
+ 	</bean> 
+	
+	<bean id="triangle1" class="com.spring.spring1.Triangle" parent="parenttriangle">
+ 		<property name="pointA" ref="Point2"/>
+		<property name="pointB" ref="Point2"/>
+ 		<property name="pointC" ref="Point3"/>
+ 	</bean>
+ 	
+ 	<bean id="triangle2" class="com.spring.spring1.Triangle" parent="parenttriangle">
+ 		<property name="pointB" ref="Point2"/>
+ 	</bean> 
+ 	
+ 	<bean id="zeroPoint" class="com.spring.spring1.Point" scope="prototype">
+ 		<property name="x" value="0"/>
+ 		<property name="y" value="0"/>
+ 	</bean>
+ 	
+ 	<bean id="Point2" class="com.spring.spring1.Point" scope="prototype">
+ 		<property name="x" value="20"/>
+ 		<property name="y" value="0"/>
+ 	</bean>
+ 	
+ 	<bean id="Point3" class="com.spring.spring1.Point" scope="prototype">
+ 		<property name="x" value="0"/>
+ 		<property name="y" value="-20"/>
+ 	</bean>
+ 
+ and App.java:
+ 
+ public class App 
+{
+    public static void main( String[] args )
+    {
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        Triangle triangle = (Triangle) context.getBean("triangle1");
+        
+        triangle.draw();
+    }
+}
+	
+Then output: PointA:20,0
+PointB:20,0
+PointC:0,-20
+
+That is we can override the inherited property in the child bean, just like we override the pointA property inherited from parettriangle in triangle1 bean.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+Bean Definition Inheritance with Collections:
+
+if spring.xml:
+
+	<bean id="parenttriangle" class="com.spring.spring1.Triangle">
+ 		<property name="points">
+ 			<list>
+ 				<ref bean="zeroPoint"/>
+ 			</list>
+ 		</property>
+ 	</bean> 
+	
+	<bean id="triangle1" class="com.spring.spring1.Triangle" parent="parenttriangle">
+		<property name="points">
+ 			<list>
+ 				<ref bean="Point2"/>
+ 			</list>
+ 		</property>
+ 	</bean>
+ 	
+ 	 	
+ 	<bean id="zeroPoint" class="com.spring.spring1.Point" scope="prototype">
+ 		<property name="x" value="0"/>
+ 		<property name="y" value="0"/>
+ 	</bean>
+ 	
+ 	<bean id="Point2" class="com.spring.spring1.Point" scope="prototype">
+ 		<property name="x" value="20"/>
+ 		<property name="y" value="0"/>
+ 	</bean>
+ 	
+ 	<bean id="Point3" class="com.spring.spring1.Point" scope="prototype">
+ 		<property name="x" value="0"/>
+ 		<property name="y" value="-20"/>
+ 	</bean>
+</beans>
+
+Then the "points" property of triangle1 overrides the "points" property of parenttriangle, ie the list "points" of triangle1 looks like [Point2].
+But if spring.xml is:
+
+	<bean id="parenttriangle" class="com.spring.spring1.Triangle">
+ 		<property name="points">
+ 			<list>
+ 				<ref bean="zeroPoint"/>
+ 			</list>
+ 		</property>
+ 	</bean> 
+	
+	<bean id="triangle1" class="com.spring.spring1.Triangle" parent="parenttriangle">
+		<property name="points">
+ 			<list merge="true">
+ 				<ref bean="Point2"/>
+ 			</list>
+ 		</property>
+ 	</bean>
+ 	
+ 	 	
+ 	<bean id="zeroPoint" class="com.spring.spring1.Point" scope="prototype">
+ 		<property name="x" value="0"/>
+ 		<property name="y" value="0"/>
+ 	</bean>
+ 	
+ 	<bean id="Point2" class="com.spring.spring1.Point" scope="prototype">
+ 		<property name="x" value="20"/>
+ 		<property name="y" value="0"/>
+ 	</bean>
+ 	
+ 	<bean id="Point3" class="com.spring.spring1.Point" scope="prototype">
+ 		<property name="x" value="0"/>
+ 		<property name="y" value="-20"/>
+ 	</bean>
+	
+Then the list "points" of triangle1 is merged with that of parenttriangle, ie now the list "points" of triangle1 contains [zeroPoint,Point2].
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+Bean Definition Inheritance:
+
+If spring.xml:
+
+	<bean id="parenttriangle" class="com.spring.spring1.Triangle" abstract="true">
+ 		<property name="points">
+ 			<list>
+ 				<ref bean="zeroPoint"/>
+ 			</list>
+ 		</property>
+ 	</bean>
+
+Then spring container uses the parenttriangle bean as template only and does not make an instance of that bean.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+Spring Bean LifeCycle CallBacks:
+
+There are couple of ways to implement life cycle call backs for spring beans:
+1. By implementing InitializingBean and DisposableBean interface and implementing their methods (afterPropertiesSet and destroy).
+2. Or by handling it in xml level. We can set the "init-method" and "destroy-method" attributes of a <bean> tag to set it for a particular bean or the "default-init-method" and "default-destroy-method" of the <beans> tag to set it globally so that the init and destroy method is set globally for all bean tags.
+(The second method is preferable since we do not have to implement any interface and tie our class to spring framework).
+
+If we apply both of the above methods, then the interface methods will be called first and then the xml init and destroy methods.
+
+
+Output:
+InitializingBean init
+init-methods init
+PointA:0,0
+PointB:20,0
+PointC:0,-20
+Jul 29, 2018 3:12:42 PM org.springframework.context.support.ClassPathXmlApplicationContext doClose
+INFO: Closing org.springframework.context.support.ClassPathXmlApplicationContext@6193b845: startup date [Sun Jul 29 15:12:42 IST 2018]; root of context hierarchy
+DisposableBean destroy
+destroy-method destroy
+
+If we apply both the "init-method", "destroy-method" methods and the "default-init-method", "default-destroy-method" methods, then the "init-method", "destroy-method" will take priority and the default methods will not execute at all.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+BeanPostProcessor interface:
+
+If a common set of code is to be executed after each bean initialization, then this interface can be used. (Note that there is no similar interface for destroy.)
+
+1. Triangle.java:
+
+package com.spring.coreSpring;
+
+public class Triangle{
+	Point pointA;
+	Point pointB;
+	Point pointC;
+	
+	public Point getPointA() {
+		return pointA;
+	}
+
+	public void setPointA(Point pointA) {
+		this.pointA = pointA;
+	}
+
+	public Point getPointB() {
+		return pointB;
+	}
+
+	public void setPointB(Point pointB) {
+		this.pointB = pointB;
+	}
+
+	public Point getPointC() {
+		return pointC;
+	}
+
+	public void setPointC(Point pointC) {
+		this.pointC = pointC;
+	}
+
+	public void draw() {
+		System.out.println("PointA:"+getPointA().getX()+","+getPointA().getY());
+		System.out.println("PointB:"+getPointB().getX()+","+getPointB().getY());
+		System.out.println("PointC:"+getPointC().getX()+","+getPointC().getY());
+	}	
+	
+}
+
+
+
+2. spring.xml:
+
+	<beans xmlns = "http://www.springframework.org/schema/beans"
+   xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation = "http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd" >
+
+	<bean id="triangle" class="com.spring.coreSpring.Triangle" >
+ 		<property name="pointA" ref="zeroPoint"/>
+ 		<property name="pointB" ref="Point2"/>
+ 		<property name="pointC" ref="Point3"/>
+ 	</bean>  
+ 	
+ 	<bean id="zeroPoint" class="com.spring.coreSpring.Point" >
+ 		<property name="x" value="0"/>
+ 		<property name="y" value="0"/>
+ 	</bean>
+ 	
+ 	<bean id="Point2" class="com.spring.coreSpring.Point" >
+ 		<property name="x" value="20"/>
+ 		<property name="y" value="0"/>
+ 	</bean>
+ 	
+ 	<bean id="Point3" class="com.spring.coreSpring.Point" >
+ 		<property name="x" value="0"/>
+ 		<property name="y" value="-20"/>
+ 	</bean>
+ 	
+ 	<bean class="com.spring.coreSpring.MyBeanPostProcessor"/>		//We need to register the bean, that implements BeanPostProcessor, in spring.xml
+</beans>
+
+
+3. MyBeanPostProcessor.java (that implements BeanPostProcessor)
+
+public class MyBeanPostProcessor implements BeanPostProcessor {
+
+	public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+		System.out.println("after intialization of "+beanName);
+		return bean;
+	}
+
+	public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+		System.out.println("before intialization of "+beanName);
+		return bean;
+	}
+
+}
+
+
+4. App.java:
+
+public class App 
+{
+    public static void main( String[] args )
+    {
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        Triangle triangle = (Triangle) context.getBean("triangle");
+        
+        triangle.draw();
+        
+    }
+}
+
+
+Output:
+before intialization of zeroPoint
+after intialization of zeroPoint
+before intialization of Point2
+after intialization of Point2
+before intialization of Point3
+after intialization of Point3
+before intialization of triangle
+after intialization of triangle
+PointA:0,0
+PointB:20,0
+PointC:0,-20
+
+In the method signature of the methods of BeanPostProcessor, the first argument is the bean itself and the second argument is the bean name. We can make changes to the bean in the method and return the modified bean. As a matter of fact, we can return any object from those methods. Lets test:
+
+a) If we return null from those methods:
+
+public class MyBeanPostProcessor implements BeanPostProcessor {
+
+	public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+		System.out.println("after intialization of "+beanName);
+		return null;
+	}
+
+	public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+		System.out.println("before intialization of "+beanName);
+		return null;
+	}
+
+}
+
+Output:
+
+before intialization of zeroPoint
+before intialization of Point2
+before intialization of Point3
+before intialization of triangle
+Exception in thread "main" java.lang.NullPointerException
+	at com.spring.coreSpring.App.main(App.java:18)
+	
+
+b) If we make some changes to the bean:
+
+public class MyBeanPostProcessor implements BeanPostProcessor {
+
+	public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+		System.out.println("after intialization of "+beanName);
+		if(beanName.contains("Point")) {
+			Point beanIsPoint = (Point) bean;
+			beanIsPoint.setX(-100);						// If bean is Point then change the x-ordinate to -100 and return the modified bean, else do nothing.
+			return beanIsPoint;
+		}
+		else
+			return bean;
+		
+	}
+
+	public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+		System.out.println("before intialization of "+beanName);
+		return bean;
+	}
+
+}
+
+
+Output:
+
+before intialization of zeroPoint
+after intialization of zeroPoint
+before intialization of Point2
+after intialization of Point2
+before intialization of Point3
+after intialization of Point3
+before intialization of triangle
+after intialization of triangle
+PointA:-100,0						//x-ordinates modified by BeanPostProcessor
+PointB:-100,0
+PointC:-100,-20
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+BeanFactoryPostProcessor and PropertyPlaceHolderConfigurer:
+
+BeanFactoryPostProcessor is an interface which provides methods to be called when the BeanFactory is initialized (Note that ApplicationContext is essentialy a BeanFactory). This method is called even before the beans are intialized or spring.xml is read by the BeanFactory.
+
+1. Triangle.java (same as before)
+2. spring.xml:
+
+	<bean id="triangle" class="com.spring.coreSpring.Triangle" >
+ 		<property name="pointA" ref="zeroPoint"/>
+ 		<property name="pointB" ref="Point2"/>
+ 		<property name="pointC" ref="Point3"/>
+ 	</bean>  
+ 	
+ 	<bean id="zeroPoint" class="com.spring.coreSpring.Point" >
+ 		<property name="x" value="0"/>
+ 		<property name="y" value="0"/>
+ 	</bean>
+ 	
+ 	<bean id="Point2" class="com.spring.coreSpring.Point" >
+ 		<property name="x" value="20"/>
+ 		<property name="y" value="0"/>
+ 	</bean>
+ 	
+ 	<bean id="Point3" class="com.spring.coreSpring.Point" >
+ 		<property name="x" value="0"/>
+ 		<property name="y" value="-20"/>
+ 	</bean>
+ 	
+ 	<bean class="com.spring.coreSpring.MyBeanFactoryPostProcessor"/>	//BeanFactoryPostProcessor has to be registered in the spring.xml so that spring container is aware about its existence.
+
+3. MyBeanFactoryPostProcessor.java
+
+public class MyBeanFactoryPostProcessor implements BeanFactoryPostProcessor {
+
+	public void postProcessBeanFactory(ConfigurableListableBeanFactory arg0) throws BeansException {
+		System.out.println("Inside my bean factory post processor");
+
+	}
+
+}
+
+
+4. App.java:
+
+public class App 
+{
+    public static void main( String[] args )
+    {
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        Triangle triangle = (Triangle) context.getBean("triangle");
+        
+        triangle.draw();
+        
+    }
+}
+
+
+Output:
+
+Inside my bean factory post processor
+
+Jul 29, 2018 4:13:54 PM org.springframework.beans.factory.support.DefaultListableBeanFactory preInstantiateSingletons
+INFO: Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@7c30a502: defining beans [triangle,zeroPoint,Point2,Point3,com.spring.coreSpring.MyBeanFactoryPostProcessor#0]; root of factory hierarchy
+
+PointA:0,0
+PointB:20,0
+PointC:0,-20
+
+
+
+PropertyPlaceHolderConfigurer is special type BeanFactoryPostProcessor which is being provided by the spring itself to configure the properties file.
+
+1. spring.xml:
+
+	<bean id="triangle" class="com.spring.coreSpring.Triangle" >
+ 		<property name="pointA" ref="zeroPoint"/>
+ 		<property name="pointB" ref="Point2"/>
+ 		<property name="pointC" ref="Point3"/>
+ 	</bean>  
+ 	
+ 	<bean id="zeroPoint" class="com.spring.coreSpring.Point" >
+ 		<property name="x" value="${zeroPoint.x}"/>						//Place Holder. The values are defined in spring.properties file
+ 		<property name="y" value="${zeroPoint.y}"/>
+ 	</bean>
+ 	
+ 	<bean id="Point2" class="com.spring.coreSpring.Point" >
+ 		<property name="x" value="20"/>
+ 		<property name="y" value="0"/>
+ 	</bean>
+ 	
+ 	<bean id="Point3" class="com.spring.coreSpring.Point" >
+ 		<property name="x" value="0"/>
+ 		<property name="y" value="-20"/>
+ 	</bean>
+ 	
+ 	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">			//PropertyPlaceHolderConfigurer
+ 		<property name="location" value="spring.properties"/>
+ 	</bean>
+
+
+2. spring.properties:
+
+zeroPoint.x=0
+zeroPoint.y=0
+
+3. App.java:
+
+public class App 
+{
+    public static void main( String[] args )
+    {
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        Triangle triangle = (Triangle) context.getBean("triangle");
+        
+        triangle.draw();
+        
+    }
+}
+
+
+Output:
+INFO: Loading XML bean definitions from class path resource [spring.xml]
+Jul 29, 2018 4:21:22 PM org.springframework.beans.factory.config.PropertyPlaceholderConfigurer loadProperties
+INFO: Loading properties file from class path resource [spring.properties]
+Jul 29, 2018 4:21:22 PM org.springframework.beans.factory.support.DefaultListableBeanFactory preInstantiateSingletons
+INFO: Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@7c30a502: defining beans [triangle,zeroPoint,Point2,Point3,org.springframework.beans.factory.config.PropertyPlaceholderConfigurer#0]; root of factory hierarchy
+PointA:0,0
+PointB:20,0
+PointC:0,-20
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+@Autowired annotation: It first tries to do autowire bytype and if it fails, then it tries to do autowire byname. If it fails, then other option is to use @Qualifier annotation.
+
+Now there are two ways to use @Qualifier annotation.
+1. To use <qualifier> tag inside <bean> tag. And use @Qualifier annotation with name equal to the "value" attribute of the <qualifier> tag.
+2. To use the @Qualifier annotation with name equal to the "id" of the bean tag.
+
+
+First Way:
+
+1. Triangle.java:
+
+package com.spring.coreSpring;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+
+public class Triangle{
+	
+	Point pointA;						//For demonstration, we have put only one point.
+	
+	public Point getPointA() {
+		return pointA;
+	}
+
+	@Autowired
+	@Qualifier("triangleQualifier")
+	public void setPointA(Point pointA) {
+		this.pointA = pointA;
+	}
+
+
+	public void draw() {
+		System.out.println("PointA:"+getPointA().getX()+","+getPointA().getY());
+	}	
+}
+
+
+2. spring.xml:
+
+	<beans xmlns = "http://www.springframework.org/schema/beans"
+   xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:context = "http://www.springframework.org/schema/context"
+   xsi:schemaLocation = "http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+   http://www.springframework.org/schema/context
+   http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<bean id="triangle" class="com.spring.coreSpring.Triangle" > 		
+ 		
+ 	</bean>  
+ 	
+ 	<bean id="zeroPoint" class="com.spring.coreSpring.Point" >
+ 		<qualifier value="triangleQualifier"/>						//Notice the qualifier tag
+ 		<property name="x" value="0"/>
+ 		<property name="y" value="0"/>
+ 	</bean>
+ 	
+ 	<bean id="Point2" class="com.spring.coreSpring.Point" >
+ 		<property name="x" value="20"/>
+ 		<property name="y" value="0"/>
+ 	</bean>
+ 	
+ 	<bean id="Point3" class="com.spring.coreSpring.Point" >
+ 		<property name="x" value="0"/>
+ 		<property name="y" value="-20"/>
+ 	</bean>
+ 	
+ 	<context:annotation-config/>									//This is required for the annotations to work
+ 	
+</beans>
+
+3. App.java:
+
+public class App 
+{
+    public static void main( String[] args )
+    {
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        Triangle triangle = (Triangle) context.getBean("triangle");
+        
+        triangle.draw();
+        
+    }
+}
+
+Output: PointA:0,0
+
+
+
+Second way:
+
+1. Triangle.java:
+
+package com.spring.coreSpring;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+
+public class Triangle{
+	
+	Point pointA;						//For demonstration, we have put only one point.
+	
+	public Point getPointA() {
+		return pointA;
+	}
+
+	@Autowired
+	@Qualifier("zeroPoint")					//We are using the id of a bean as qualifier
+	public void setPointA(Point pointA) {
+		this.pointA = pointA;
+	}
+
+
+	public void draw() {
+		System.out.println("PointA:"+getPointA().getX()+","+getPointA().getY());
+	}	
+}
+
+
+2. spring.xml:
+
+<beans xmlns = "http://www.springframework.org/schema/beans"
+   xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:context = "http://www.springframework.org/schema/context"
+   xsi:schemaLocation = "http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+   http://www.springframework.org/schema/context
+   http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<bean id="triangle" class="com.spring.coreSpring.Triangle" > 		
+ 		
+ 	</bean>  
+ 	
+ 	<bean id="zeroPoint" class="com.spring.coreSpring.Point" > 				//Note that there is no qaulifier tag
+ 		<property name="x" value="0"/>
+ 		<property name="y" value="0"/>
+ 	</bean>
+ 	
+ 	<bean id="Point2" class="com.spring.coreSpring.Point" >
+ 		<property name="x" value="20"/>
+ 		<property name="y" value="0"/>
+ 	</bean>
+ 	
+ 	<bean id="Point3" class="com.spring.coreSpring.Point" >
+ 		<property name="x" value="0"/>
+ 		<property name="y" value="-20"/>
+ 	</bean>
+ 	
+ 	<context:annotation-config/>
+ 	
+</beans>
+
+3. App.java: same
+
+Output: PointA:0,0
+
+
+Please note that if <qualifier> tag is present, then we have to give the value of the <qualifier> tag in the @Qualifier annotation. If we give the id of the bean tag in the @Qualifier annotation, although the <qualifier> tag is present, then it will not be able to autowire the dependency and throw an error.
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+JSR-250 annotations:
+
+@Resource: It is similar to @Autowired annotations. Difference is that, it first tries to autowire byname and then bytype.
+
+@Resource (name="somename") is similiar to @Autowired @Qualifier("somename").
+
+Difference between @Resource and @Autowired:
+https://stackoverflow.com/questions/4093504/resource-vs-autowired
+https://www.linkedin.com/pulse/difference-between-inject-vs-autowire-resource-pankaj-kumar
+
+"@Resource: annotation based on JSR-250. @Resource is quite similar to @Autowired and @Inject (JSR-330 annotation), but the main difference is the execution paths taken to find out the required bean to inject. @Resource will narrow down the search first by name then by type and finally by Qualifiers (ignored if match is found by name). @Autowired and @Inject will narrow down the search first by type then by qualifier and finally by the name."
+
+
+Since @Resource first matches the beans byname, what if the name is same but the type is different:
+
+1. Triangle.java:
+
+package com.spring.coreSpring;
+
+import javax.annotation.Resource;
+
+public class Triangle{
+	
+	Point pointA;
+	
+	public Point getPointA() {
+		return pointA;
+	}
+
+	@Resource
+	public void setPointA(Point pointA) {
+		this.pointA = pointA;
+	}
+
+	public void draw() {
+		System.out.println("PointA:"+getPointA().getX()+","+getPointA().getY());
+	}	
+	
+	
+}
+
+2. spring.xml:
+
+<?xml version = "1.0" encoding = "UTF-8"?>
+
+<beans xmlns = "http://www.springframework.org/schema/beans"
+   xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:context = "http://www.springframework.org/schema/context"
+   xsi:schemaLocation = "http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+   http://www.springframework.org/schema/context
+   http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<bean id="triangle" class="com.spring.coreSpring.Triangle" >	
+ 		
+ 	</bean>  
+ 	
+ 	<bean id="pointA" class="com.spring.coreSpring.App" > 		
+
+ 	</bean>
+ 	
+ 	<bean id="Point2" class="com.spring.coreSpring.Point" >
+ 		<property name="x" value="20"/>
+ 		<property name="y" value="0"/>
+ 	</bean>
+ 	
+ 	<bean id="Point3" class="com.spring.coreSpring.Point" >
+ 		<property name="x" value="0"/>
+ 		<property name="y" value="-20"/>
+ 	</bean>
+ 	
+ 	<context:annotation-config/>
+ 	
+</beans>
+
+
+
+3. App.java:
+
+{
+    public static void main( String[] args )
+    {
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        Triangle triangle = (Triangle) context.getBean("triangle");
+        
+        triangle.draw();
+        
+    }
+}
+
+
+Output: org.springframework.beans.factory.BeanNotOfRequiredTypeException: Bean named 'pointA' must be of type [com.spring.coreSpring.Point], but was actually of type [com.spring.coreSpring.App]
+
+
+
+There are two more JSR-250 annotations @PostConstruct and @PreDestroy,which are similar to init-method and destroy-method of spring.xml.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+@Component: This annotation is used to register a bean using the class definition itself, rather than declaring the bean in spring.xml.
+
+1. Triangle.java
+
+package com.spring.coreSpring;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Component;
+
+@Component							//This annotation is going to register this class as bean with id="triangle"
+public class Triangle{
+	
+	Point pointA;
+	
+	public Point getPointA() {
+		return pointA;
+	}
+
+	@Resource (name="zeroPoint")
+	public void setPointA(Point pointA) {
+		this.pointA = pointA;
+	}
+
+	public void draw() {
+		System.out.println("PointA:"+getPointA().getX()+","+getPointA().getY());
+	}	
+	
+}
+
+2. spring.xml:
+
+<beans xmlns = "http://www.springframework.org/schema/beans"
+   xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:context = "http://www.springframework.org/schema/context"
+   xsi:schemaLocation = "http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+   http://www.springframework.org/schema/context
+   http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<!-- <bean id="triangle" class="com.spring.coreSpring.Triangle" > 					//We have commented out since this definition is not required
+ 		
+ 	</bean>  --> 
+ 	
+ 	<bean id="zeroPoint" class="com.spring.coreSpring.Point" > 		
+ 		<property name="x" value="0"/>
+ 		<property name="y" value="0"/>
+ 	</bean>
+ 	
+ 	<bean id="Point2" class="com.spring.coreSpring.Point" >
+ 		<property name="x" value="20"/>
+ 		<property name="y" value="0"/>
+ 	</bean>
+ 	
+ 	<bean id="Point3" class="com.spring.coreSpring.Point" >
+ 		<property name="x" value="0"/>
+ 		<property name="y" value="-20"/>
+ 	</bean>
+ 	
+ 	<context:component-scan base-package="com.spring.coreSpring"/>		//Required for spring to scan the package for stereotype annotations like Component,Controller,Repository & Service
+ 	<context:annotation-config/>
+ 	
+</beans>
+
+3. App.java:
+
+public class App 
+{
+    public static void main( String[] args )
+    {
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        Triangle triangle = (Triangle) context.getBean("triangle");							//The name of the bean is going to be name of the class itself (the first letter in lowercase)
+        
+        triangle.draw();
+        
+    }
+}
+
+Output: PointA:0,0
+
+
+All the other stereotype annotations do the samething as Component. They are used as metadata and to signify the functionality of a particular class.
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+Spring JDBCtemplate:
+
+
+1. JDBC produces a lot of boiler plate code, such as opening/closing a connection to a database, handling sql exceptions etc. It makes the code extremely cumbersome and difficult to read.
+2. Implementing JDBC in the Spring Framework takes care of working with many low-level operations (opening/closing connections, executing SQL queries, etc.).
+3. Thanks to this, when working with the database in the Spring Framework, we only need to define the connection parameters from the database and register the SQL query, the rest of the work for us is performed by Spring.
+4. JDBC in Spring has several classes (several approaches) for interacting with the database. The most common of these is using the JdbcTemplate class. This is the base class that manages the processing of all events and database connections.
+5. The JdbcTemplate class executes SQL queries, iterates over the ResultSet, and retrieves the called values, updates the instructions and procedure calls, “catches” the exceptions, and translates them into the exceptions defined in the org.springframwork.dao package.
+Instances of the JdbcTemplate class are thread-safe. This means that by configuring a single instance of the JdbcTemplate class, we can then use it for several DAO objects.
+
+Methods:
+
+1)	public int update(String query)	is used to insert, update and delete records.
+2)	public int update(String query,Object... args)	is used to insert, update and delete records given arguments.
+3)	public void execute(String query)	is used to execute DDL query.
+4)	public List query(String sql, RowMapper rse) is used to fetch list of records using RowMapper.
+5)  public T queryForObject(String sql, Class<T> requiredType)  Execute a query for a single result object of type "requiredType", given static SQL.
+
+
+We can create the datasource as (in spring.xml):
+
+<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" destroy-method="close">
+    <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+    <property name="url" value="jdbc:mysql://localhost:3306/springjdbc"/>
+    <property name="username" value="guest_user"/>
+    <property name="password" value="guest_password"/>
+</bean>
+
+or in java configuration as:
+
+@Configuration
+@ComponentScan("org.baeldung.jdbc")
+public class SpringJdbcConfig {
+    @Bean
+    public DataSource mysqlDataSource() {
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/springjdbc");
+        dataSource.setUsername("guest_user");
+        dataSource.setPassword("guest_password");
+ 
+        return dataSource;
+    }
+}
+ 
+but "DriverManagerDataSource" does not give us the database connection pooling benefits. For each call to the "datasource.getConnection()", it returns a new connection which is not efficient. To use connection pooling benefits we use the apache commons dbcp datasource.
+
+<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+    <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+    <property name="url" value="jdbc:mysql://localhost:3306/springjdbc"/>
+    <property name="username" value="guest_user"/>
+    <property name="password" value="guest_password"/>
+	<property name="initialSize" value="2"/>
+	<property name="maxActive" value="5"/>
+</bean>
+
+spring tutorials 39-42
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+Spring NamedParameterJDBCtemplate:
+
+Same as jdbctemplate but uses named parameter instead of "?" placeholders.
+
+This wraps the JbdcTemplate and provides an alternative to the traditional syntax using “?” to specify parameters. Under the hood, it substitutes the named parameters to JDBC “?” placeholder and delegates to the wrapped JDCTemplate to execute the queries.
+
+SqlParameterSource:
+
+It is an object to pass the named parameters into the NamedParameterJDBCtemplate. Like: 
+
+SqlParameterSource namedParameters = new MapSqlParameterSource().addValue("id", 1);
+return namedParameterJdbcTemplate.queryForObject("SELECT FIRST_NAME FROM EMPLOYEE WHERE ID = :id", namedParameters, String.class); //String.class is the return type
+
+Also see BeanPropertySqlParameterSource in the below link.
+
+Also see: http://www.baeldung.com/spring-jdbc-jdbctemplate
+
+It has some good examples.
+
+SEE: Spring tutorial 43
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+Spring DAOSupport classes:
+
+These are support classes to externalize all the common code ,like initializing jdbctemplate with datasource, to an external class. There are 3 support classes, each for jdbcTemplate,NamedParameterJDBCtemplate and SimpleJdbcTemplate.
+
+
+SEE: spring tutorial 44
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+Property file using Spring:
+
+https://www.baeldung.com/properties-with-spring
+https://dzone.com/articles/properties-spring
+
+Spring 3.1 also introduces the new @PropertySource annotation, as a convenient mechanism of adding property sources to the environment. This annotation is to be used in conjunction with Java based configuration and the @Configuration annotation:
+
+@PropertySource("classpath:/com/foo/foo.properties")
+
+As opposed to using XML namespace element, the Java @PropertySource annotation does not automatically register a PropertySourcesPlaceholderConfigurer with Spring. Instead, the bean must be explicitly defined in the configuration to get the property resolution mechanism working.
+
+1. Before Spring 3.1:
+Defining a <context:property-placeholder> XML element automatically registers a new PropertyPlaceholderConfigurer bean in the Spring Context.
+
+2. In Spring 3.1:
+From Spring 3.1 onward, the XML <context:property-placeholder> will no longer register the old PropertyPlaceholderConfigurer but the newly introduced PropertySourcesPlaceholderConfigurer.
+
+
+new Environment APIs:
+@Autowired private Environment env; ... dataSource.setUrl(env.getProperty("jdbc.url"));
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+Spring java configuration:
+
+https://docs.spring.io/spring/docs/3.0.0.M4/reference/html/ch03s11.html
+https://springframework.guru/spring-framework-annotations/
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+SEE: Hibernate with Spring (spring tutorial 45) and spring java configuration (including propertyplaceholderconfigurer and all annotations)
+
+SEE: https://www.baeldung.com/spring-interview-questions
+
+
+
+
+
+

@@ -1,0 +1,519 @@
+In comparable docs of oracle:-
+
+All other things being equal, immutable types are the way to go, especially for objects that will be used as elements in Sets or as keys in Maps. These collections will break if you modify their elements or keys while they're in the collection.
+
+See: https://docs.oracle.com/javase/tutorial/collections/interfaces/order.html
+
+If you try to sort a list, the elements of which do not implement Comparable, Collections.sort(list) will throw a ClassCastException. Similarly, Collections.sort(list, comparator) will throw a ClassCastException if you try to sort a list whose elements cannot be compared to one another using the comparator.
+
+There are four restrictions on the behavior of the compareTo method, which we won't go into now because they're fairly technical and boring and are better left in the API documentation. It's really important that all classes that implement Comparable obey these restrictions, so read the documentation for Comparable if you're writing a class that implements it. Attempting to sort a list of objects that violate the restrictions has undefined behavior. Technically speaking, these restrictions ensure that the natural ordering is a total order on the objects of a class that implements it; this is necessary to ensure that sorting is well defined.
+
+https://en.wikipedia.org/wiki/Total_order
+
+The compare method has to obey the same four technical restrictions as Comparable's compareTo method for the same reason — a Comparator must induce a total order on the objects it compares.
+
+The Comparator in the preceding program works fine for sorting a List, but it does have one deficiency: It cannot be used to order a sorted collection, such as TreeSet, because it generates an ordering that is not compatible with equals. This means that this Comparator equates objects that the equals method does not. In particular, any two employees who were hired on the same date will compare as equal. When you're sorting a List, this doesn't matter; but when you're using the Comparator to order a sorted collection, it's fatal. If you use this Comparator to insert multiple employees hired on the same date into a TreeSet, only the first one will be added to the set; the second will be seen as a duplicate element and will be ignored.
+
+To fix this problem, simply tweak the Comparator so that it produces an ordering that is compatible with equals. In other words, tweak it so that the only elements seen as equal when using compare are those that are also seen as equal when compared using equals. The way to do this is to perform a two-part comparison (as for Name), where the first part is the one we're interested in — in this case, the hire date — and the second part is an attribute that uniquely identifies the object. Here the employee number is the obvious attribute. This is the Comparator that results.
+
+-----------------------------------------------------------------------------------------------------------------
+https://www.google.com/url?sa=i&source=imgres&cd=&cad=rja&uact=8&ved=2ahUKEwiolLSj7PPcAhUFtI8KHUpKBOMQjRx6BAgBEAU&url=https%3A%2F%2Fwww.edureka.co%2Fblog%2Fjava-collections%2F&psig=AOvVaw2v1Ntbjz1gp_Mg8n8s0Peb&ust=1534587020563491 (Collection Image)
+
+1. How Hashset Works?
+
+http://www.java67.com/2014/01/how-hashset-is-implemented-or-works-internally-java.html
+
+A hashset is internally backed up by a hashmap. If we are to add an object K to the set, then the pair <K,Constant> is put into the backing map. Since the existing structure of the map does not allow duplicate keys,hence this behavior has been used to create hashset.
+
+
+2. How HashMap works?
+
+https://javarevisited.blogspot.com/2011/02/how-hashmap-works-in-java.htm
+
+Hashmap maintains an array of linked list to store its elements. While inserting a key value pair K,V; it calculates the hash of the key K (If K is an object then it computes the hashcode() method of that object) and according to that hashcode generates an index and puts the pair in that bucket (or array position). Since the size of the array is limited, it may so happen that two different hashcodes map to the same index, ie hash collision. In that case, the new pair will inserted as a new node in the linked list of that index of the array (Internally, the node present in the ith index of the array stores the reference of the new node, thus maintaining a link to the new node). While placing the new node, the hashmap checks whether the key already exists or not in that linked list by using the equals() method of the object K (Since Keys are unique in hashmap).
+
+Kindly note that the node stores the key,value,hashcode as well as reference to the next node (if any).
+
+The keyset() method returns the set of keys by iterating through the array. The iteration happens over the entire array, regardless of whether a particular array entry contains elements or not.
+
+http://www.baeldung.com/java-hashmap (Read this, its nice)
+
+3. How TreeMap works?
+
+Unlike LinkedHashMap and HashMap, TreeMap does not use hashing for storing keys. It uses a data structure called Red-Black tree.
+
+http://www.thejavageek.com/2016/06/07/working-of-treemap/
+
+By default, TreeMap sorts all its entries according to their natural ordering. For an integer, this would mean ascending order and for strings, alphabetical order. TreeMap, unlike a hash map and linked hash map, does not employ the hashing principle anywhere since it does not use an array to store its entries.
+
+TreeMap implements NavigableMap interface and bases it’s internal working on the principles of red-black trees:
+
+The principle of red-black trees is beyond the scope of this article, however, there are key things to remember in order to understand how they fit into TreeMap.
+
+First of all, a red-black tree is a data structure that consists of nodes; picture an inverted mango tree with its root in the sky and the branches growing downward. The root will contain the first element added to the tree.
+
+The rule is that starting from the root, any element in the left branch of any node is always less than the element in the node itself. Those on the right are always greater. What defines greater or less than is determined by the natural ordering of the elements or the defined comparator at construction as we saw earlier.
+
+This rule guarantees that the entries of a treemap will always be in sorted and predictable order.
+
+Secondly, a red-black tree is a self-balancing binary search tree. This attribute and the above guarantee that basic operations like search, get, put and remove take logarithmic time O(log n).
+
+Being self-balancing is key here. As we keep inserting and deleting entries, picture the tree growing longer on one edge or shorter on the other.
+
+This would mean that an operation would take a shorter time on the shorter branch and longer time on the branch which is furthest from the root, something we would not want to happen.
+
+Therefore, this is taken care of in the design of red-black trees. For every insertion and deletion, the maximum height of the tree on any edge is maintained at O(log n) i.e. the tree balances itself continuously.
+
+Just like hash map and linked hash map, a tree map is not synchronized and therefore the rules for using it in a multi-threaded environment are similar to those in the other two map implementations.
+
+Important: Since treemap is red-black tree, iterating over treemap means printing the elements of the red-black tree in sorted order. This takes O(nlogn) time which is more than the iteration time of hashmap which is O(n). On the other side, the time taken for the operations like containsKey takes O(logn) time which less than that of the hashmap (Wrong, containsKey is just another get() operation which takes O(1) time to run). The only reason we would want to have treemap instead of hashmap, is when we want the keys to be in a sorted order. Otherwise runtime of all the operations is better in hashmap.
+
+
+4. How LinkedHashMap works?
+
+The LinkedHashMap class is very similar to HashMap in most aspects. However, the linked hash map is based on both hash table and linked list to enhance the functionality of hash map.
+
+It maintains a doubly-linked list running through all its entries in addition to an underlying array of default size 16.
+
+To maintain the order of elements, the linked hashmap modifies the Map.Entry class of HashMap by adding pointers to the next and previous entries.
+
+LinkedHashMap provides a special constructor which enables us to specify, among custom load factor (LF) and initial capacity, a different ordering mechanism/strategy called access-order:
+
+LinkedHashMap<Integer, String> map = new LinkedHashMap<>(16, .75f, true);
+
+The first parameter is the initial capacity, followed by the load factor and the last param is the ordering mode. So, by passing in true, we turned out access-order, whereas the default was insertion-order.
+
+This mechanism ensures that the order of iteration of elements is the order in which the elements were last accessed, from least-recently accessed to most-recently accessed.
+
+And so, building a Least Recently Used (LRU) cache is quite easy and practical with kind of a map.
+
+The difference with HashMap lies in what entails a structural modification. In access-ordered (in which access-order is the ordering mechanism) linked hash maps, merely calling the get API results in a structural modification. Alongside this, are operations like put and remove.
+
+Naturally, iteration over a view of the map does’t affect the order of iteration of the backing map; only explicit access operations on the map will affect the order.
+
+http://www.baeldung.com/java-linked-hashmap
+
+
+5. LinkedHashSet:
+
+Performance is likely to be just slightly below that of HashSet, due to the added expense of maintaining the linked list, with one exception: Iteration over a LinkedHashSet requires time proportional to the size of the set, regardless of its capacity. Iteration over a HashSet is likely to be more expensive, requiring time proportional to its capacity.
+
+Since hashset is backed up by a hashmap, it stores its elements in an array of linked list. Due to hashing, it may so happen that there are some array indices which are empty or null. While iterating, hashset traverses over the entire array and checks whether a value for a particular index is null or not. If not, then it returns it otherwise it ignores it. For this reason, iterating over a hashset is quite expensive.
+
+Linkedhashset on the other hand maintains a doubly linkedlist of the elements in the order in which it was inserted. Hence while iterating, the linkedhashset only need to traverse over the linked list ie its total capacity. Therefore it has less expensive iteration time.
+
+https://docs.oracle.com/javase/7/docs/api/java/util/LinkedHashSet.html
+
+LinkedHashSet maintains two kind of links or references. One link is to maintain the insertion order linked list and the other is to maintain the linked list of a particular bucket (or array index).
+
+http://javaconceptoftheday.com/how-linkedhashset-works-internally-in-java/
+
+LinkedHashSet uses LinkedHashMap object to store it’s elements. In LinkedHashMap, the same set of Entry objects (rather references to Entry objects) are arranged in two different manner. One is the HashMap and another one is Doubly linked list. The Entry objects just sit on heap memory, unaware of that they are part of two different data structures.
+
+-----------------------------------------------------------------------------------------------------------------
+
+Differences between TreeMap, HashMap and LinkedHashMap in Java:
+
+https://www.geeksforgeeks.org/differences-treemap-hashmap-linkedhashmap-java/
+
+-----------------------------------------------------------------------------------------------------------------
+See Queue Interface first
+
+6) PriorityQueue:
+
+A priority queue does not permit null elements. The head of this queue is the least element with respect to the specified ordering. If multiple elements are tied for least value, the head is one of those elements -- ties are broken arbitrarily. The queue retrieval operations poll, remove, peek, and element access the element at the head of the queue.
+
+Implementation note: this implementation provides O(log(n)) time for the enqueing and dequeing methods (Since enqueing and dequeing of a binary heap takes O(logn) time) (offer, poll, remove() and add); linear time for the remove(Object) and contains(Object) methods; and constant time for the retrieval methods (peek, element, and size).
+
+https://docs.oracle.com/javase/7/docs/api/java/util/PriorityQueue.html
+
+Priority queue is implemented by an array (see algorithms book).
+
+LinkedList implements Queue interface and applies FIFO rule. Also it implements Dequeue interface, since elements can be accessed from both ends.
+
+
+
+7) Dequeue interface:
+
+A linear collection that supports element insertion and removal at both ends. This interface defines methods to access the elements at both ends of the deque. Methods are provided to insert, remove, and examine the element. Each of these methods exists in two forms: one throws an exception if the operation fails, the other returns a special value (either null or false, depending on the operation).
+
+This interface extends the Queue interface. When a deque is used as a queue, FIFO (First-In-First-Out) behavior results. Elements are added at the end of the deque and removed from the beginning. 
+
+Deques can also be used as LIFO (Last-In-First-Out) stacks. This interface should be used in preference to the legacy Stack class. When a deque is used as a stack, elements are pushed and popped from the beginning of the deque. 
+
+This interface provides two methods to remove interior elements, removeFirstOccurrence and removeLastOccurrence.
+
+Unlike the List interface, this interface does not provide support for indexed access to elements.
+
+While Deque implementations are not strictly required to prohibit the insertion of null elements, they are strongly encouraged to do so. Users of any Deque implementations that do allow null elements are strongly encouraged not to take advantage of the ability to insert nulls. This is so because null is used as a special return value by various methods to indicated that the deque is empty.
+
+https://docs.oracle.com/javase/7/docs/api/java/util/Deque.html
+
+
+
+-----------------------------------------------------------------------------------------------------------------
+
+
+8) Arraylist:
+
+Resizable-array implementation of the List interface. Implements all optional list operations, and permits all elements, including null. In addition to implementing the List interface, this class provides methods to manipulate the size of the array that is used internally to store the list. (This class is roughly equivalent to Vector, except that it is unsynchronized.)
+
+The size, isEmpty, get, set, iterator, and listIterator operations run in constant time. The add operation runs in amortized constant time, that is, adding n elements requires O(n) time. All of the other operations run in linear time (roughly speaking). The constant factor is low compared to that for the LinkedList implementation.
+
+What is amortized constant time: https://stackoverflow.com/questions/200384/constant-amortized-time
+
+9) LinkedList:
+
+Doubly-linked list implementation of the List and Deque interfaces. Implements all optional list operations, and permits all elements (including null).
+All of the operations perform as could be expected for a doubly-linked list. Operations that index into the list will traverse the list from the beginning or the end, whichever is closer to the specified index.
+
+-----------------------------------------------------------------------------------------------------------------
+
+ConcurrentHashMap:
+
+https://www.geeksforgeeks.org/concurrenthashmap-in-java/
+https://www.geeksforgeeks.org/difference-hashmap-concurrenthashmap/
+http://www.java67.com/2012/08/difference-between-hashmap-and-concurrentHashMap-java-collection.html
+
+-----------------------------------------------------------------------------------------------------------------
+
+CopyOnWriteArrayList:
+
+A thread-safe variant of ArrayList in which all mutative operations (add, set, and so on) are implemented by making a fresh copy of the underlying array.
+
+This is ordinarily too costly, but may be more efficient than alternatives when traversal operations vastly outnumber mutations, and is useful when you cannot or don't want to synchronize traversals, yet need to preclude interference among concurrent threads. The "snapshot" style iterator method uses a reference to the state of the array at the point that the iterator was created. This array never changes during the lifetime of the iterator, so interference is impossible and the iterator is guaranteed not to throw ConcurrentModificationException. The iterator will not reflect additions, removals, or changes to the list since the iterator was created.
+
+Element-changing operations on iterators themselves (remove, set, and add) are not supported. These methods throw UnsupportedOperationException.
+
+All elements are permitted, including null.
+
+https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/CopyOnWriteArrayList.html
+https://www.geeksforgeeks.org/copyonwritearraylist-in-java/
+-----------------------------------------------------------------------------------------------------------------
+
+Difference between iterator and enumeration:
+
+https://javaconceptoftheday.com/differences-between-enumeration-vs-iterator-in-java/
+
+-----------------------------------------------------------------------------------------------------------------
+
+AutoCloseable interface and try-with-resources in java 7:
+
+In try-with-resources method there is no use of finally block. the file resource is opened in try block inside small brackets. Only the objects of those classes can be opened within the block which implements AutoCloseable interface and those object should also be local. The resource will be closed automatically regardless of whether try statement completes normally or abruptly.
+
+Multiple resources can be used inside a try-with-resources block and have them all automatically closed. In this case, the resources will be closed in the reverse order in which they were created inside the brackets.
+
+https://www.geeksforgeeks.org/automatic-resource-management-java/
+
+-----------------------------------------------------------------------------------------------------------------
+Difference between iterator and listiterator:
+
+Here are the differences between them:
+
+With iterator you can move only forward, but with ListIterator you can move backword also while reading the elements.
+With ListIterator you can obtain the index at any point while traversing, which is not possible with iterators.
+With iterator you can check only for next element available or not, but in listiterator you can check previous and next elements.
+With listiterator you can add new element at any point of time, while traversing. Not possible with iterator.
+
+https://stackoverflow.com/questions/10977992/difference-between-iterator-and-listiterator
+
+
+-----------------------------------------------------------------------------------------------------------------
+
+Classloader:
+
+http://www.baeldung.com/java-classloaders
+
+https://www.journaldev.com/349/java-classloader
+
+-----------------------------------------------------------------------------------------------------------------
+ 
+ BlockingQueue:
+ 
+ https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/BlockingQueue.html
+ 
+ https://www.journaldev.com/1034/java-blockingqueue-example
+ 
+ -----------------------------------------------------------------------------------------------------------------
+ 
+ Difference between Abstract Class and Interface in Java
+ 
+ https://www.geeksforgeeks.org/difference-between-abstract-class-and-interface-in-java/
+ https://stackoverflow.com/questions/1913098/what-is-the-difference-between-an-interface-and-abstract-class?page=1&tab=votes#tab-top
+ 
+-----------------------------------------------------------------------------------------------------------------
+
+Garbage Collection in Java:
+
+https://www.geeksforgeeks.org/garbage-collection-java/
+
+Island of isolation:
+
+https://www.geeksforgeeks.org/island-of-isolation-in-java/
+
+Garbage Collection Process:
+
+https://www.oracle.com/webfolder/technetwork/tutorials/obe/java/gc01/index.html (See "Describing Garbage Collection" and "The Generational Garbage Collection Process")
+
+"The Permanent generation contains metadata required by the JVM to describe the classes and methods used in the application. The permanent generation is populated by the JVM at runtime based on classes in use by the application. In addition, Java SE library classes and methods may be stored here."
+
+https://www.baeldung.com/java-string-pool (It has good explanation of String pool and garbage collection)
+
+Before Java 7, the JVM placed the Java String Pool in the PermGen space, which has a fixed size — it can’t be expanded at runtime and is not eligible for garbage collection.
+
+The risk of interning Strings in the PermGen (instead of the Heap) is that we can get an OutOfMemory error from the JVM if we intern too many Strings.
+
+From Java 7 onwards, the Java String Pool is stored in the Heap space, which is garbage collected by the JVM. The advantage of this approach is the reduced risk of OutOfMemory error because unreferenced Strings will be removed from the pool, thereby releasing memory.
+
+
+-----------------------------------------------------------------------------------------------------------------
+
+Methods in object class:
+
+wait(),notify(),notifyall(),
+equals(),hashcode(),tostring(),
+clone(),finalize(),getclass()
+
+-----------------------------------------------------------------------------------------------------------------
+
+concurrenthashmap vs hashtable:
+
+https://stackoverflow.com/questions/12646404/concurrenthashmap-and-hashtable-in-java
+
+ConcurrentHashMap uses multiple buckets to store data. This avoids read locks and greatly improves performance over a HashTable. Both are thread safe, but there are obvious performance wins with ConcurrentHashMap.
+
+When you read from a ConcurrentHashMap using get(), there are no locks, contrary to the HashTable for which all operations are simply synchronized. HashTable was released in old versions of Java whereas ConcurrentHashMap is a java 5+ thing.
+
+-----------------------------------------------------------------------------------------------------------------
+
+JDBC:
+
+https://www.javatpoint.com/jdbc-driver
+https://www.geeksforgeeks.org/jdbc-drivers/
+
+
+Q: Why we use Class.forName() while connecting to a database?
+A: https://stackoverflow.com/questions/20078586/why-we-use-class-forname-oracle-jdbc-driver-oracledriver-while-connecting-to
+
+
+Java Database Connectivity with 5 Steps:
+
+There are 5 steps to connect any java application with the database using JDBC. These steps are as follows:
+1. Register the driver class (Note: Since JDBC 4.0, explicitly registering the driver is optional. We just need to put vender's Jar in the classpath, and then JDBC driver manager can detect and load the driver automatically. See the above link for more details.)
+2. Creating connection
+3. Creating statement
+4. Executing queries
+5. Closing connection (Note: Since Java 7, JDBC has ability to use try-with-resources statement to automatically close resources of type Connection, ResultSet, and Statement.)
+
+
+	Connection conn = null;
+	Statement stmt = null;
+   try{
+      //STEP 1: Register JDBC driver
+      Class.forName("com.mysql.jdbc.Driver");
+
+      //STEP 2: Open a connection
+      conn = DriverManager.getConnection(DB_URL,USER,PASS);
+
+      //STEP 3: Creating statement
+      stmt = conn.createStatement();
+      String sql;
+      sql = "SELECT id, first, last, age FROM Employees";
+	  
+	  //STEP 4: Executing queries
+      ResultSet rs = stmt.executeQuery(sql);
+
+      while(rs.next()){
+         int id  = rs.getInt("id");
+         int age = rs.getInt("age");
+         String first = rs.getString("first");
+         String last = rs.getString("last");
+      }
+      //STEP 5: Clean-up environment
+      rs.close();
+      stmt.close();
+      conn.close();
+   }catch(SQLException se){
+      se.printStackTrace();
+   }catch(Exception e){
+      e.printStackTrace();
+   }finally{
+      try{
+         if(stmt!=null)
+            stmt.close();
+      }catch(SQLException se2){
+      }
+      try{
+         if(conn!=null)
+            conn.close();
+      }catch(SQLException se){
+         se.printStackTrace();
+      }
+   }
+
+   
+JDBC connection URL for Oracle: "jdbc:oracle:thin:@hostname:portNumber:databaseName"
+
+JDBC - Statements, PreparedStatement and CallableStatement:
+
+Interfaces			Recommended Use
+1.Statement			Use the for general-purpose access to your database. Useful when you are using static SQL statements at runtime. The Statement interface cannot accept parameters.
+2.PreparedStatement	Use the when you plan to use the SQL statements many times. The PreparedStatement interface accepts input parameters at runtime.
+3.CallableStatement	Use the when you want to access the database stored procedures. The CallableStatement interface can also accept runtime input parameters.
+
+See : https://www.tutorialspoint.com/jdbc/jdbc-statements.htm
+
+
+Once you've created a Statement object, you can then use it to execute an SQL statement with one of its three execute methods:
+
+1. boolean execute (String SQL): Returns a boolean value of true if a ResultSet object can be retrieved; otherwise, it returns false. Use this method to execute SQL DDL statements or when you need to use truly dynamic SQL.
+
+2. int executeUpdate (String SQL): Returns the number of rows affected by the execution of the SQL statement. Use this method to execute SQL statements for which you expect to get a number of rows affected - for example, an INSERT, UPDATE, or DELETE statement.
+
+3. ResultSet executeQuery (String SQL): Returns a ResultSet object. Use this method when you expect to get a result set, as you would with a SELECT statement.
+
+
+
+Advantages of a PreparedStatement:
+
+Precompilation and DB-side caching of the SQL statement leads to overall faster execution and the ability to reuse the same SQL statement in batches.
+
+Automatic prevention of SQL injection attacks by builtin escaping of quotes and other special characters. Note that this requires that you use any of the PreparedStatement setXxx() methods to set the values
+
+https://stackoverflow.com/questions/3271249/difference-between-statement-and-preparedstatement
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------
+
+See difference between association, composition and aggregation in java
+
+-----------------------------------------------------------------------------------------------------------------
+
+Reflection:
+https://www.geeksforgeeks.org/reflection-in-java/
+
+https://stackoverflow.com/questions/37628/what-is-reflection-and-why-is-it-useful
+
+One very common use case in Java is the usage with annotations. JUnit 4, for example, will use reflection to look through your classes for methods tagged with the @Test annotation, and will then call them when running the unit test. (Maybe, using getDeclaredAnnotations() of Class class)
+
+Drawbacks of Reflection
+
+Reflection is powerful, but should not be used indiscriminately. If it is possible to perform an operation without using reflection, then it is preferable to avoid using it. The following concerns should be kept in mind when accessing code via reflection.
+
+1. Performance Overhead
+Because reflection involves types that are dynamically resolved, certain Java virtual machine optimizations cannot be performed. Consequently, reflective operations have slower performance than their non-reflective counterparts and should be avoided in sections of code which are called frequently in performance-sensitive applications.
+
+2. Security Restrictions
+Reflection requires a runtime permission which may not be present when running under a security manager. This is in an important consideration for code which has to run in a restricted security context, such as in an Applet.
+
+3. Exposure of Internals
+Since reflection allows code to perform operations that would be illegal in non-reflective code, such as accessing private fields and methods, the use of reflection can result in unexpected side-effects, which may render code dysfunctional and may destroy portability. Reflective code breaks abstractions and therefore may change behavior with upgrades of the platform.
+-----------------------------------------------------------------------------------------------------------------
+
+Varargs:
+
+public class TestVarargs {
+
+	public static void varargsMeth(String s1,String... args) {
+		System.out.println("Single parameter: "+s1);
+		System.out.println("Varargs params: ");
+		
+		for(String v:args)
+			System.out.println(v);
+	}
+	
+	public static void main(String[] args) {
+		TestVarargs.varargsMeth("simple", "var1","var2","var3");
+
+	}
+
+}
+
+
+Output:
+Single parameter: simple
+Varargs params: 
+var1
+var2
+var3
+
+
+
+public class TestVarargs {
+
+	public static void varargsMeth(String... args,String s1) {			//Compile time error - "The variable argument type String of the method varargsMeth must be the last parameter"
+		System.out.println("Single parameter: "+s1);
+		System.out.println("Varargs params: ");
+		
+		for(String v:args)
+			System.out.println(v);
+	}
+	
+	public static void main(String[] args) {
+		//TestVarargs.varargsMeth("simple", "var1","var2","var3");
+
+	}
+
+}
+
+-----------------------------------------------------------------------------------------------------------------
+Exception:
+
+In order to create a custom exception, we need to extend either Exception or RunTimeException. We extend RuntimeException when we want to create an unchecked exception. If we extend Exception, then it becomes checked exception. (Write a program to verify the same)
+
+-----------------------------------------------------------------------------------------------------------------
+
+New Features in Java 1.5:
+
+1. Generics
+2. For/in loop
+3. Autoboxing/Unboxing
+4. Typesafe Enums
+5. Varargs
+6. Static Import
+7. Annotations (Metadata)
+8. ConcurrentHashMap, CopyOnWriteArrayList, CountDownLatch, ReentrantLock  (in java.util.concurrent package)
+
+New Features in Java 1.7:
+
+1. Binary Literals
+2. Strings in switch Statement
+3. Try with Resources or ARM (Automatic Resource Management)
+4. Multiple Exception Handling
+5. Suppressed Exceptions
+6. underscore in literals
+7. Type Inference for Generic Instance Creation using Diamond Syntax
+
+
+https://stackoverflow.com/questions/213958/new-features-in-java-7
+
+New Features in Java 1.8:
+
+1. Lambda expression − Adds functional processing capability to Java.
+2. Method references − Referencing functions by their names instead of invoking them directly. Using functions as parameter.
+3. Default method − Interface to have default method implementation.
+4. New tools − New compiler tools and utilities are added like ‘jdeps’ to figure out dependencies.
+5. Stream API − New stream API to facilitate pipeline processing.
+6. Date Time API − Improved date time API.
+7. Optional − Emphasis on best practices to handle null values properly.
+8. Nashorn, JavaScript Engine − A Java-based engine to execute JavaScript code.
+
+"There are no runtime benefits of using lambda expressions, so I will use it cautiously because I don’t mind writing few extra lines of code." SEE: https://www.journaldev.com/2389/java-8-features-with-examples#java8-collection
+https://www.tutorialspoint.com/java8/java8_lambda_expressions.htm
+https://www.baeldung.com/java-8-new-features
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+ 

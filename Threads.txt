@@ -1,0 +1,127 @@
+Difference between reentrantlock and synchronized:
+
+1) Significant difference between ReentrantLock and synchronized keyword is fairness. synchronized keyword doesn't support fairness. Any thread can acquire lock once released, no preference can be specified, on the other hand you can make ReentrantLock fair by specifying fairness property, while creating instance of ReentrantLock. Fairness property provides lock to longest waiting thread, in case of contention.
+
+2) Second difference between synchronized and Reentrant lock is tryLock() method. ReentrantLock provides convenient tryLock() method, which acquires lock only if its available or not held by any other thread. This reduce blocking of thread waiting for lock in Java application.
+
+3) One more worth noting difference between ReentrantLock and synchronized keyword in Java is, ability to interrupt Thread while waiting for Lock. In case of synchronized keyword, a thread can be blocked waiting for lock, for an indefinite period of time and there was no way to control that. ReentrantLock provides a method called lockInterruptibly(), which can be used to interrupt thread when it is waiting for lock. Similarly tryLock() with timeout can be used to timeout if lock is not available in certain time period.
+
+When a thread calls lockInterruptibly(), it may be interrupted while it is waiting for the lock, so, that it does not wait for the lock indefinitely.
+
+4) ReentrantLock also provides convenient method to get List of all threads waiting for lock.
+
+Read more: https://javarevisited.blogspot.com/2013/03/reentrantlock-example-in-java-synchronized-difference-vs-lock.html
+
+Note about tryLock: Even when this lock has been set to use a fair ordering policy, a call to tryLock() will immediately acquire the lock if it is available, whether or not other threads are currently waiting for the lock. This "barging" behavior can be useful in certain circumstances, even though it breaks fairness.
+
+https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/locks/ReentrantLock.html#tryLock()
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+CountDownLatch :
+https://www.baeldung.com/java-countdown-latch
+
+When to use join and CountDownLatch:
+
+1. You can only use Thread.join if you're handling the threads yourself. Most people choose not to deal with the minutia of thread handling directly, and instead use an ExecutorService to handle it for them. ExecutorServices do not directly reveal how they are executing tasks, so you would have to use a CountDownLatch: (Assuming you don't want to just shutdown the whole service, that is.)
+
+
+ExecutorService service = Executors.newFixedThreadPool(5);
+final CountDownLatch latch = new CountDownLatch(5);
+
+for(int x = 0; x < 5; x++) {
+    service.submit(new Runnable() {
+        public void run() {
+            // do something
+            latch.countDown();
+        }
+    });
+}
+
+latch.await();
+
+
+2. Another difference is after join(), thread can be unblocked only when joined thread has finished its execution while in CountDownLatch a thread can decrease the count anytime either on completion of thread or in between based on any condition.
+This way we can get better control over unblocking of the thread instead of solely depending on the completion of joined thread.
+
+https://stackoverflow.com/questions/12254704/what-is-the-difference-between-join-and-countdownlatch
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+BrokenBarrierException:
+
+A barrier breaks when any of the waiting thread leaves the barrier. This happens when one or more waiting thread is interrupted or when the waiting time is completed because the thread called the await() methods with a timeout as follows:
+
+newBarrier.await(1000, TimeUnit.MILLISECONDS);
+// thread calling this await() 
+// methods waits for only 1000 milliseconds.
+When the barrier breaks due to one of more participating threads, the await() methods of all the other threads throws a BrokenThreadException. Whereas, the threads that are already waiting in the barriers have their await() call terminated.
+
+Difference between a CyclicBarrier and a CountDownLatch
+
+A CountDownLatch can be used only once in a program(until it’s count reaches 0).
+A CyclicBarrier can be used again and again once all the threads in a barriers is released.
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+Mutex is the Semaphore with an access count of 1.
+
+See differnce between mutex,semaphore and binary semaphore.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+Q. How to prevent deadlock?
+
+A. The problem discussed before can be avoided by applying a suitable deadlock prevention technique. Following are some techniques available that help mitigate the deadlock problem:
+
+Non Overlapping Locks
+Lock Ordering
+Lock Timeout
+Single Thread
+
+http://www.javacreed.com/what-is-deadlock-and-how-to-prevent-it/
+
+
+Q. How do you detect deadlock in Java ?
+
+A. Though this could have many answers , my version is first I would look the code if I see nested synchronized block or calling one synchronized method from other or trying to get lock on different object then there is good chance of deadlock if developer is not very careful.
+
+Other way is to find it when you actually get locked while running the application , try to take thread dump , in Linux you can do this by command "kill -3" , this will print status of all the thread in application log file and you can see which thread is locked on which object. 
+
+Other way is to use jconsole, it will show you exactly which threads are get locked and on which object.
+
+Read more: https://javarevisited.blogspot.com/2010/10/what-is-deadlock-in-java-how-to-fix-it.html#ixzz5KmtRQPft
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+ExecutorService:
+
+https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/ExecutorService.html
+http://www.baeldung.com/java-executor-service-tutorial
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+Callable: Main difference between Runnable and Callable is that Runnable cannot return any value back to caller but Callable can return value. Another difference is that call() method from Callable can also throw checked exception which was not possible by run() method of Runnable interface. 
+
+Read more: https://javarevisited.blogspot.com/2015/06/how-to-use-callable-and-future-in-java.html#ixzz5LADCr7Rx
+
+
+Future:  You can use get() method of Future to retrieve result once computation is done. You can check if computation is finished or not by using isDone() method.
+You can cancel the computation by using Future.cancel() method.
+get() is a blocking call and it blocks until computation is completed.
+Future.get method is not asynchronous and waits till it gets actual result.
+
+Read more: https://javarevisited.blogspot.com/2015/06/how-to-use-callable-and-future-in-java.html#ixzz5LAEawaaf
+
+Java Callable tasks return java.util.concurrent.Future objects. Java Future provides a cancel() method to cancel the associated Callable task. This is an overloaded version of the get() method, where we can specify the time to wait for the result. It’s useful to avoid a current thread getting blocked for a longer time. Please note that the get method is a synchronous method. Until the callable finishes its task and returns a value, it will wait for a callable. There are also isDone() and isCancelled() methods to find out the current status of an associated Callable task
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+Difference between wait, sleep and yield:
+
+https://infinitescript.com/2014/09/difference-between-wait-and-sleep-yield-in-java/
+
+
+

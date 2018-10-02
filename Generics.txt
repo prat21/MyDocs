@@ -1,0 +1,314 @@
+Why Use Generics?
+
+1. Stronger type checks at compile time.
+A Java compiler applies strong type checking to generic code and issues errors if the code violates type safety. Fixing compile-time errors is easier than fixing runtime errors, which can be difficult to find.
+
+2. Elimination of casts.
+The following code snippet without generics requires casting:
+
+List list = new ArrayList();
+list.add("hello");
+String s = (String) list.get(0);
+
+When re-written to use generics, the code does not require casting:
+List<String> list = new ArrayList<String>();
+list.add("hello");
+String s = list.get(0);   // no cast
+
+
+3. Enabling programmers to implement generic algorithms.
+By using generics, programmers can implement generic algorithms that work on collections of different types, can be customized, and are type safe and easier to read.
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+The Diamond:
+
+In Java SE 7 and later, you can replace the type arguments required to invoke the constructor of a generic class with an empty set of type arguments (<>) as long as the compiler can determine, or infer, the type arguments from the context. This pair of angle brackets, <>, is informally called the diamond. For example, you can create an instance of Box<Integer> with the following statement:
+
+Box<Integer> integerBox = new Box<>();
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Parameterized Types:
+
+You can also substitute a type parameter (i.e., K or V) with a parameterized type (i.e., List<String>). For example, using the OrderedPair<K, V> example:
+
+OrderedPair<String, Box<Integer>> p = new OrderedPair<>("primes", new Box<Integer>(...));
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Raw Types:
+
+A raw type is the name of a generic class or interface without any type arguments. For example, given the generic Box class:
+
+public class Box<T> {
+    public void set(T t) { /* ... */ }
+    // ...
+}
+
+If the actual type argument is omitted, you create a raw type of Box<T>:
+
+Box rawBox = new Box();
+However, a non-generic class or interface type is not a raw type.
+
+For backward compatibility, assigning a parameterized type to its raw type is allowed:
+
+Box<String> stringBox = new Box<>();
+Box rawBox = stringBox;               // OK
+
+But if you assign a raw type to a parameterized type, you get a warning:
+
+Box rawBox = new Box();           // rawBox is a raw type of Box<T>
+Box<Integer> intBox = rawBox;     // warning: unchecked conversion
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Bounded Type Parameters:
+
+To declare a bounded type parameter, list the type parameter's name, followed by the extends keyword, followed by its upper bound, which in this example is Number. Note that, in this context, extends is used in a general sense to mean either "extends" (as in classes) or "implements" (as in interfaces). This means that whether you extend a class or implement an interface, you always mention the keywrod "extends".
+
+For example, a bounded type parameter, which implements Comparable interface, will be written as <T extends Comparable<T>>. Note that we do not write <T implements Comparable<T>>.
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Generics, Inheritance, and Subtypes:
+
+In generics,suppose we have a method in a genreric class like:
+
+class Box<T>{
+	public void add(T t){}
+}
+
+and if we initialize an object of Box<T> like:
+
+Box<Number> box = new Box<Number>();
+
+Then the below invocations of the method add() are legal:
+
+box.add(new Integer(10));
+box.add(new Double(12.23));
+
+Since Integer and Double are subtypes of Number class.
+
+Now consider the following method:
+
+public void boxTest(Box<Number> n) { /* ... */ }
+
+What type of argument does it accept? By looking at its signature, you can see that it accepts a single argument whose type is Box<Number>. But what does that mean? Are you allowed to pass in Box<Integer> or Box<Double>, as you might expect? The answer is "no", because Box<Integer> and Box<Double> are not subtypes of Box<Number>.
+
+Note: Given two concrete types A and B (for example, Number and Integer), MyClass<A> has no relationship to MyClass<B>, regardless of whether or not A and B are related. The common parent of MyClass<A> and MyClass<B> is Object.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Note: Consider the following declaration:
+
+class Box<T>{
+	public void add(T t) {
+		System.out.println("The type of t: "+t.getClass().getName());
+	}
+}
+
+public class GenricsTest {
+	public static void main(String[] args) {
+		Box<Number> box = new Box<>();
+		box.add(new Integer(10));
+		box.add(new Double(12.23));
+		box.<Integer>add(new Integer(12));  //A warning shows stating "Unused type arguments for the non generic method add(Number) of type Box<Number>; it should not be parameterized with arguments <Integer>". It means that, here the class is parametrized and not the method (like public <T> void add(T t){}) itself. So, passing parameter types in angular brackets while calling this method is not required.
+	}
+	
+}
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Generic Classes and Subtyping:
+
+You can subtype a generic class or interface by extending or implementing it.
+Using the Collections classes as an example, ArrayList<E> implements List<E>, and List<E> extends Collection<E>. So ArrayList<String> is a subtype of List<String>, which is a subtype of Collection<String>. So long as you do not vary the type argument, the subtyping relationship is preserved between the types.
+
+Now imagine we want to define our own list interface, PayloadList, that associates an optional value of generic type P with each element. Its declaration might look like:
+
+interface PayloadList<E,P> extends List<E> {
+  void setPayload(int index, P val);
+  ...
+}
+The following parameterizations of PayloadList are subtypes of List<String>:
+
+PayloadList<String,String>
+PayloadList<String,Integer>
+PayloadList<String,Exception>
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Type Inference:
+
+Type inference enables you to invoke a generic method as you would an ordinary method, without specifying a type between angle brackets. Consider the following example,
+
+public <U> void display(U u) {
+	System.out.println("Display method with u: "+u.getClass().getName());
+}
+
+Now,the below mentioned calls are valid:
+
+Box<Number> box = new Box<>();
+box.<Integer>display(new Integer(15));		//Valid
+box.display(new Integer(20));				//Valid
+box.<Number>display(new Integer(20));		//Valid, Since Integer is a subtype of Number
+box.<Double>display(new Integer(20));		//Invalid, since Integer is not related to Double. Compile time error "The parameterized method <Double>display(Double) of type Box<Number> is not applicable for the arguments (Integer)"
+
+So, Java compiler can infer the type parameters of a generic method call by looking up the types of argument passed in the method call.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Type Inference and Instantiation of Generic Classes:
+
+You can replace the type arguments required to invoke the constructor of a generic class with an empty set of type parameters (<>) as long as the compiler can infer the type arguments from the context. This pair of angle brackets is informally called the diamond.
+
+For example, consider the following variable declaration:
+
+Map<String, List<String>> myMap = new HashMap<String, List<String>>();
+
+You can substitute the parameterized type of the constructor with an empty set of type parameters (<>):
+
+Map<String, List<String>> myMap = new HashMap<>();
+
+Note that to take advantage of type inference during generic class instantiation, you must use the diamond. In the following example, the compiler generates an unchecked conversion warning because the HashMap() constructor refers to the HashMap raw type, not the Map<String, List<String>> type:
+
+Map<String, List<String>> myMap = new HashMap(); // unchecked conversion warning
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Type Inference and Generic Constructors of Generic and Non-Generic Classes:
+
+Note that constructors can be generic (in other words, declare their own formal type parameters) in both generic and non-generic classes. Consider the following example:
+
+class MyClass<X> {
+  <T> MyClass(T t) {
+    // ...
+  }
+}
+Consider the following instantiation of the class MyClass:
+
+new MyClass<Integer>("")
+This statement creates an instance of the parameterized type MyClass<Integer>; the statement explicitly specifies the type Integer for the formal type parameter, X, of the generic class MyClass<X>. Note that the constructor for this generic class contains a formal type parameter, T. The compiler infers the type String for the formal type parameter, T, of the constructor of this generic class (because the actual parameter of this constructor is a String object).
+
+Compilers from releases prior to Java SE 7 are able to infer the actual type parameters of generic constructors, similar to generic methods. However, compilers in Java SE 7 and later can infer the actual type parameters of the generic class being instantiated if you use the diamond (<>). Consider the following example:
+
+MyClass<Integer> myObject = new MyClass<>("");
+In this example, the compiler infers the type Integer for the formal type parameter, X, of the generic class MyClass<X>. It infers the type String for the formal type parameter, T, of the constructor of this generic class.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Upper Bounded WildCards:
+
+You can use an upper bounded wildcard to relax the restrictions on a variable. For example, say you want to write a method that works on List<Integer>, List<Double>, and List<Number>; you can achieve this by using an upper bounded wildcard.
+
+Important Note (Can be used as difference between T and ?): We cannot do "public void bounded(List<T extends Number> list) {}", it gives compile time error. But we can do, "public void bounded(List<? extends Number> list) {}". Wildcard helps to construct a subtype-like relationship between two generic classes when the type parameters are related. This solves the problem discussed in the "Generics, Inheritance, and Subtypes" section.
+
+For example consider the following method:
+
+public void bounded2(List<Number> list) {}
+
+For the above method, the calls are given below:
+
+box.bounded2(new ArrayList<Number>());			//Valid
+box.bounded2(new ArrayList<Integer>());			//Invalid, since List<Integer> is not related to List<Number>
+box.bounded2(new ArrayList<Double>());			//Invalid, since List<Double> is not a subtype of List<Number>
+
+Now, consider this method using upper bounded wildcard:
+
+public void bounded(List<? extends Number> list) {}
+
+For the above method, the calls are given below:
+
+box.bounded(new ArrayList<Integer>());			//Valid, since Integer extends Number
+box.bounded(new ArrayList<Double>());			//Valid, since Double extends Number
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Unbounded Wildcards:
+
+Consider the following method, printList:
+
+public static void printList(List<Object> list) {
+    for (Object elem : list)
+        System.out.println(elem + " ");
+    System.out.println();
+}
+
+The goal of printList is to print a list of any type, but it fails to achieve that goal — it prints only a list of Object instances; it cannot print List<Integer>, List<String>, List<Double>, and so on, because they are not subtypes of List<Object> [ie in this case, the call printList(new ArrayList<Integer>()) will give compile time error]. To write a generic printList method, use List<?>:
+
+public static void printList(List<?> list) {
+    for (Object elem: list)
+        System.out.print(elem + " ");
+    System.out.println();
+}
+Because for any concrete type A, List<A> is a subtype of List<?>, you can use printList to print a list of any type [ie in this case, the call printList(new ArrayList<Integer>()) will work]:
+
+List<Integer> li = Arrays.asList(1, 2, 3);
+List<String>  ls = Arrays.asList("one", "two", "three");
+printList(li);
+printList(ls);
+
+Note: The above point can be used as why we would use List<?> instead of List<Object>.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Lower Bounded Wildcards:
+
+A lower bounded wildcard is expressed using the wildcard character ('?'), following by the super keyword, followed by its lower bound: <? super A>.
+
+The following code adds the numbers 1 through 10 to the end of a list and works for List<Integer>,List<Number>,List<Object> and anyother supertype of Integer:
+
+public static void addNumbers(List<? super Integer> list) {
+    for (int i = 1; i <= 10; i++) {
+        list.add(i);
+    }
+}
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
