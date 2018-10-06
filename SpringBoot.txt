@@ -179,7 +179,7 @@ To create an executable jar we need to add the spring-boot-maven-plugin to our p
     </plugins>
 </build>
 
-Save your pom.xml and run mvn package from the command line.
+Save your pom.xml and run "mvn package" (or "mvn clean install") from the command line.
 
 If you look in the target directory you should see myproject-0.0.1-SNAPSHOT.jar. The file should be around 10 Mb in size.
 
@@ -215,6 +215,38 @@ SEE: https://docs.spring.io/spring-boot/docs/current/reference/html/common-appli
 
 Note: the file name has to be application.properties, otherwise it wont work.
 
+----------------------------------------------------------------------------------------------------------------------------------------
+
+We can create a deafult project structure, including pom.xml, using spring intializr tool (https://start.spring.io/)
+
+The project "myspringbootdata" (committed in git) has been created using this tool.
+
+SEE: Spring Boot Quick Start 22 - Using Spring Initializr
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+If we add the following dependency in pom.xml:
+
+		<dependency>
+			<groupId>org.apache.derby</groupId>
+			<artifactId>derby</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		
+Maven will download the necessary apache derby jars and add them to classpath. When we start the application using spring boot, the embedded database is also started. We do not need to provide any dataSource or connection strings in this case, since spring boot, on seeing the apache derby in the classpath, assumes that this is the database to which we need to connect.
+
+SEE: Spring Boot Quick Start 29 - Making Crud Operations with Repository (Also see CrudRepository of Spring Data in this tutorial)
+
+Go through the demo project "myspringbootdata" once. The project somehow does not work with apache derby, but works with h2 database.
+----------------------------------------------------------------------------------------------------------------------------------------
+
+Why Spring Boot for microservice. small explaination at the end of 
+Spring Boot Quick Start 32 - Packaging and running a Spring Boot app
+
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+SEE how to configure datasource in spring boot.
 
 
 
