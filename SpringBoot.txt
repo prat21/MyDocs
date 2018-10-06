@@ -246,7 +246,12 @@ Spring Boot Quick Start 32 - Packaging and running a Spring Boot app
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 
-SEE how to configure datasource in spring boot.
+SEE 
+
+1. how to configure datasource in spring boot.
+2. See service registry
+https://spring.io/blog/2015/01/20/microservice-registration-and-discovery-with-spring-cloud-and-netflix-s-eureka
+https://microservices.io/patterns/server-side-discovery.html
 
 
 
