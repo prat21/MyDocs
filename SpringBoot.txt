@@ -198,11 +198,93 @@ Spring Boot takes a different approach and allows you to actually nest jars dire
 ----------------------------------------------------------------------------------------------------------------------------------------
 From: https://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/#getting-started-first-application
 
-10.4 Running the example
+12.1.4 Using the Spring Boot Maven plugin
+Spring Boot includes a Maven plugin that can package the project as an executable jar. Add the plugin to your <plugins> section if you want to use it:
 
-Since we have used the spring-boot-starter-parent POM we have a useful run goal that we can use to start the application. Type "mvn spring-boot:run" from the root project directory to start the application:
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+        </plugin>
+    </plugins>
+</build>
 
 ----------------------------------------------------------------------------------------------------------------------------------------
+
+From: https://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/#getting-started-first-application
+
+10.4 Running the example
+
+Since we have used the spring-boot-starter-parent POM we have a useful run goal that we can use to start the application. Type "mvn spring-boot:run" from the root project directory to start the application.
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+SEE: https://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/#getting-started-first-application
+spring-boot-starter-data-jpa : Support for the “Java Persistence API” including spring-data-jpa, spring-orm and Hibernate.
+
+----------------------------------------------------------------------------------------------------------------------------------------
+SEE: https://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/#getting-started-first-application
+
+14.1 Importing additional configuration classes
+You don’t need to put all your @Configuration into a single class. The @Import annotation can be used to import additional configuration classes. Alternatively, you can use @ComponentScan to automatically pickup all Spring components, including @Configuration classes.
+
+----------------------------------------------------------------------------------------------------------------------------------------
+SEE: https://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/#getting-started-first-application
+15.1 Gradually replacing auto-configuration
+Auto-configuration is noninvasive, at any point you can start to define your own configuration to replace specific parts of the auto-configuration. For example, if you add your own DataSource bean, the default embedded database support will back away.
+
+----------------------------------------------------------------------------------------------------------------------------------------
+SEE: https://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/#getting-started-first-application-properties
+If you don’t like application.properties as the configuration file name you can switch to another by specifying a spring.config.name environment property. You can also refer to an explicit location using the spring.config.location environment property (comma-separated list of directory locations, or file paths).
+
+$ java -jar myproject.jar --spring.config.name=myproject
+or
+
+$ java -jar myproject.jar --spring.config.location=classpath:/default.properties,classpath:/override.properties
+
+----------------------------------------------------------------------------------------------------------------------------------------
+SEE: https://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/#getting-started-first-application-properties
+
+22. Profiles
+Spring Profiles provide a way to segregate parts of your application configuration and make it only available in certain environments. Any @Component or @Configuration can be marked with @Profile to limit when it is loaded:
+
+@Configuration
+@Profile("production")
+public class ProductionConfiguration {
+
+    // ...
+
+}
+In the normal Spring way, you can use a spring.profiles.active Environment property to specify which profiles are active. You can specify the property in any of the usual ways, for example you could include it in your application.properties:
+
+spring.profiles.active=dev,hsqldb
+or specify on the command line using the switch --spring.profiles.active=dev,hsqldb.
+
+----------------------------------------------------------------------------------------------------------------------------------------
+SEE: https://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/#getting-started-first-application-properties
+
+21.3 Profile specific properties
+In addition to application.properties files, profile specific properties can also be defined using the naming convention application-{profile}.properties.
+
+Profile specific properties are loaded from the same locations as standard application.properties, with profiles specific files overriding the default ones.
+
+----------------------------------------------------------------------------------------------------------------------------------------
+SEE: https://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/#getting-started-first-application-properties
+
+23.5 Custom log configuration
+The various logging systems can be activated by including the appropriate libraries on the classpath, and further customized by providing a suitable configuration file in the root of the classpath, or in a location specified by the Spring Environment property logging.config.
+
+----------------------------------------------------------------------------------------------------------------------------------------
+SEE: https://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/#getting-started-first-application-properties
+
+24.2.4 JSP limitations
+When running a Spring Boot application that uses an embedded servlet container (and is packaged as an executable archive), there are some limitations in the JSP support.
+
+With Tomcat it should work if you use war packaging, i.e. an executable war will work, and will also be deployable to a standard container (not limited to, but including Tomcat). An executable jar will not work because of a hard coded file pattern in Tomcat.
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
 We can override the default behaviour of spring boot by using the application.properties file. Like we can provide
 
 server.port=8081
