@@ -216,7 +216,7 @@ From: https://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/#gettin
 
 10.4 Running the example
 
-Since we have used the spring-boot-starter-parent POM we have a useful run goal that we can use to start the application. Type "mvn spring-boot:run" from the root project directory to start the application.
+Since we have used the spring-boot-starter-parent POM we have a useful run goal that we can use to start the application. Type "mvn spring-boot:run" from the root project directory to start the application. (If we use this command, no jar is created in the target folder)
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 
