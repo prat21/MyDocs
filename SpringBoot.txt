@@ -33,13 +33,13 @@ https://www.techopedia.com/definition/27478/convention-over-configuration
 https://facilethings.com/blog/en/convention-over-configuration
 
 3. Stand alone 
-(It does not a servlet container. It embeds a container of its own and while bootstraping the application using spring application context, it intializes the container and starts it. Hence it is stand alone.)
+(It does not need a servlet container. It embeds a container of its own and while bootstraping the application using spring application context, it intializes the container and starts it. Hence it is stand alone.)
 
 4. Production ready 
 (ie, we do not have to configure anything extra,just package the application as jar and run it in production. No extra config needed.)
 
 5. AutoConfiguration:
-It auto configures many aspects of the application(using @EnableAutoConfiguration). Like if you have some database jar in your classpath, then it auto configures a dataSource for you. You can always override the default configs using "exclude" attribute of @EnableAutoConfiguration.
+It auto configures many aspects of the application(using @EnableAutoConfiguration). Like if you have some embedded database in your classpath, then it auto configures a dataSource for you. You can always override the default configs using "exclude" attribute of @EnableAutoConfiguration.
 
 @Configuration
 @EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
@@ -270,6 +270,28 @@ In addition to application.properties files, profile specific properties can als
 Profile specific properties are loaded from the same locations as standard application.properties, with profiles specific files overriding the default ones.
 
 ----------------------------------------------------------------------------------------------------------------------------------------
+
+5. Properties with Spring Boot (https://www.baeldung.com/properties-with-spring)
+
+5.1. application.properties – the Default Property File
+Boot applies it’s typical convention over configuration approach to property files. This means that we can simply put an “application.properties” file in our “src/main/resources” directory, and it will be auto-detected. We can then inject any loaded properties from it as normal.
+
+So, by using this default file, we don’t have to explicitly register a PropertySource, or even provide a path to a property file.
+
+We can also configure a different file at runtime if we need to, using an environment property:
+java -jar app.jar --spring.config.location=classpath:/another-location.properties
+
+
+5.2. Environment Specific Properties File
+If we need to target different environments, there’s a build-in mechanism for that in Boot.
+
+We can simply define an “application-environment.properties” file in the “src/main/resources” directory – and then set a Spring profile with the same environment name.
+
+For example, if we define a “staging” environment, that means we’ll have to define a staging profile and then application-staging.properties.
+
+This env file will be loaded and will take precedence over the default property file. Note that the default file will still be loaded, it’s just that when there is a property collision the environment specific property file takes precedence.
+
+----------------------------------------------------------------------------------------------------------------------------------------
 SEE: https://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/#getting-started-first-application-properties
 
 23.5 Custom log configuration
@@ -480,7 +502,7 @@ SEE
 2. See service registry
 https://spring.io/blog/2015/01/20/microservice-registration-and-discovery-with-spring-cloud-and-netflix-s-eureka
 https://microservices.io/patterns/server-side-discovery.html
-3. See actuator of spring boot (last video in the tutorial)
+3. See actuator of spring boot (last video in the tutorial) (https://www.baeldung.com/spring-boot-actuators)
 
 
 
