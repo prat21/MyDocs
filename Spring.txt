@@ -15,7 +15,7 @@ Factory Design Pattern Advantages
 4. Factory pattern removes the complexity of creating an object. Suppose an object needs ten dependencies to be created and injected into it. Writing the code by ourselves for this can be very tedious. If we give this responsibililty to a factory method, then our code will be clean and we dont need to write the code every time we need an instance of the class. Spring uses the same concept.
 
 ---------------------------------------------------------------------------------------------
-Inversion of control (IOC) and Dependency Injection (IJ):
+Inversion of control (IOC) and Dependency Injection (DI):
 
 Inversion of Control:
 
@@ -43,6 +43,14 @@ Here is a quick summary of the ideas discussed so far:
 1. IoC containers control and manage the lifecycle of some objects: creation, destruction, and callback invocations.
 2. The programmer must identify the classes whose instances are to be managed by the IoC container. There are several ways to do this: with annotations, by extending some specific classes, using external configuration.
 3. The programmer can influence, to some extent, the way the objects are managed by the IoC container. Normally, this is achieved by overriding the default behavior of the object callbacks.
+
+
+Inversion of Control and Dependency Injection Playing Together:
+
+We just discussed the issue of managing hundreds of dependencies in a real-life application, possibly with very complicated dependency graphs.
+So here is where IoC comes to the rescue. With IoC, the dependencies are managed by the container, and the programmer is relieved of that burden.
+
+Using annotations like @Autowired, the container is asked to inject a dependency where it is needed, and the programmers do not need to create/manage those dependencies by themselves.
 
 SEE: https://dzone.com/articles/ioc-vs-di for Dependency Injection and IOC (it is good)
 
