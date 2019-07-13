@@ -24,6 +24,7 @@ https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging
 
 9. git status (to status)
 10. git init (to initialize a git repository)
+git add -A (Add all the unstage files to stage)
 
 11. How to untrack an existing file/folder.
 git rm -r --cached <file or folder name>
@@ -36,4 +37,4 @@ and then "git push"
 and afterwards, add the file or folder in .gitignore file and commit .gitignore (to add a folder in .gitignore, say the folder "target", add
 an entry like target/ in .gitignore)
 
-12. Create a .gitignore file using git bash: touch .gitignore
+12. Create a .gitignore file using git bash: "touch .gitignore"
