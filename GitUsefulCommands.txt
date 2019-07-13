@@ -1,0 +1,39 @@
+https://www.youtube.com/watch?v=HVsySz-h9r4
+
+Important git commands:
+
+1. git config --list --show-origin (To list all configs with origin i.e the file)
+2. Create a remote repository from local repository:
+https://help.github.com/en/articles/adding-an-existing-project-to-github-using-the-command-line
+3. git remote -v (to list all the remote repository URLs)
+4. git branch -a (to list all the branches)
+5. git remote add origin <url>(to add the <url> as the remote tracking repository)
+6. To create a branch(locally)
+
+git branch <branch-name>
+
+To push the branch to remote repository
+
+git push origin <branch-name>
+
+7. Add and commit using a single command:
+git commit -am <commit-message> (not aplicable for new and untracked files)
+
+8. Resolve Conflicts:
+https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging
+
+9. git status (to status)
+10. git init (to initialize a git repository)
+
+11. How to untrack an existing file/folder.
+git rm -r --cached <file or folder name>
+for example: git rm -r --cached target
+
+see "git status" once.
+then "git commit -m <message>"
+and then "git push"
+
+and afterwards, add the file or folder in .gitignore file and commit .gitignore (to add a folder in .gitignore, say the folder "target", add
+an entry like target/ in .gitignore)
+
+12. Create a .gitignore file using git bash: touch .gitignore
