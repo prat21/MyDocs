@@ -38,3 +38,17 @@ and afterwards, add the file or folder in .gitignore file and commit .gitignore 
 an entry like target/ in .gitignore)
 
 12. Create a .gitignore file using git bash: "touch .gitignore"
+
+13. Add an upstream branch : git push --set-upstream <remote-branch> OR
+git branch --set-upstream <remote-branch>
+https://stackoverflow.com/questions/18031946/what-does-set-upstream-do
+
+14. Checkout a remote branch:
+First: git fetch --all
+Then: git checkout <branch-name>
+
+15. Delete a branch locally:
+git branch -d <branch-name>
+
+Delete a branch remotely:
+git push origin --delete <branch-name>
