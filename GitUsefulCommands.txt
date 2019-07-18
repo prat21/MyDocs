@@ -22,9 +22,33 @@ git commit -am <commit-message> (not aplicable for new and untracked files)
 8. Resolve Conflicts:
 https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging
 
+------------Resolving Conflicts-----------------------------
+
+Anything that has merge conflicts and hasn’t been resolved is listed as unmerged. Git adds standard conflict-resolution markers to the files that have conflicts, so you can open them manually and resolve those conflicts. Your file contains a section that looks something like this:
+
+<<<<<<< HEAD:index.html
+<div id="footer">contact : email.support@github.com</div>
+=======
+<div id="footer">
+ please contact us at support@github.com
+</div>
+>>>>>>> iss53:index.html
+
+This means the version in HEAD (your master branch, because that was what you had checked out when you ran your merge command) is the top part of that block (everything above the =======), while the version in your iss53 branch looks like everything in the bottom part. In order to resolve the conflict, you have to either choose one side or the other or merge the contents yourself. For instance, you might resolve this conflict by replacing the entire block with this:
+
+<div id="footer">
+please contact us at email.support@github.com
+</div>
+
+This resolution has a little of each section, and the <<<<<<<, =======, and >>>>>>> lines have been completely removed. After you’ve resolved each of these sections in each conflicted file, run git add on each file to mark it as resolved. Staging the file marks it as resolved in Git.
+
+------------Resolving Conflicts--------------------------------------
+
 9. git status (to status)
 10. git init (to initialize a git repository)
 git add -A (Add all the unstage files to stage)
+
+--------------------------------------------------
 
 11. How to untrack an existing file/folder.
 git rm -r --cached <file or folder name>
@@ -36,6 +60,8 @@ and then "git push"
 
 and afterwards, add the file or folder in .gitignore file and commit .gitignore (to add a folder in .gitignore, say the folder "target", add
 an entry like target/ in .gitignore)
+
+--------------------------------------------------
 
 12. Create a .gitignore file using git bash: "touch .gitignore"
 
