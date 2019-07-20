@@ -78,10 +78,11 @@ git branch -d <branch-name>
 
 Delete a branch remotely:
 git push origin --delete <branch-name>
+Example: git push --delete origin branch1
 
 --------------------------------------------------
 
-16. Link a local branch with remote tracking:
+16. Link a local branch with remote tracking or vice-versa:
 https://www.git-tower.com/learn/git/faq/track-remote-upstream-branch
 
 --------------------------------------------------
