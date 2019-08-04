@@ -24,7 +24,9 @@ https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging
 
 ------------Resolving Conflicts-----------------------------
 
-Anything that has merge conflicts and hasn’t been resolved is listed as unmerged. Git adds standard conflict-resolution markers to the files that have conflicts, so you can open them manually and resolve those conflicts. Your file contains a section that looks something like this:
+Anything that has merge conflicts and hasn’t been resolved is listed as unmerged. 
+Git adds standard conflict-resolution markers to the files that have conflicts, 
+so you can open them manually and resolve those conflicts. Your file contains a section that looks something like this:
 
 <<<<<<< HEAD:index.html
 <div id="footer">contact : email.support@github.com</div>
