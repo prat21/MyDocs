@@ -12,5 +12,12 @@ https://medium.com/@suprajaraman/aws-understanding-root-device-volume-76df89d18e
 https://medium.com/awesome-cloud/aws-difference-between-ebs-and-instance-store-f030c4407387
 https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/RootDeviceStorage.html
 
+5. If you are not able to SSH into your EC2 instance...check the inbound rules and set the SSH option to my IP and save and retry.
+
+6. Making a spring boot app executable and deploying in EC2:
+https://www.youtube.com/watch?v=eCalW4OBpV8
+https://www.youtube.com/watch?v=Dz_y8w04dBk
+
+
 
 
