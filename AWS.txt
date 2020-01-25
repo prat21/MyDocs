@@ -1,0 +1,16 @@
+1. Creating an EC2 instance:
+https://www.guru99.com/creating-amazon-ec2-instance.html
+
+2. Connecting to your EC2 instance using SSH and SCP:
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html
+
+3. Deploying a spring boot app in AWS and other clouds:
+https://docs.spring.io/spring-boot/docs/current/reference/html/deployment.html
+
+4. Difference between EBS storage and an instance storage in AWS:
+https://medium.com/@suprajaraman/aws-understanding-root-device-volume-76df89d18ec4
+https://medium.com/awesome-cloud/aws-difference-between-ebs-and-instance-store-f030c4407387
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/RootDeviceStorage.html
+
+
+
