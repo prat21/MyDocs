@@ -67,9 +67,9 @@ SEE: Spring Boot Quick Start 10 - Spring Boot startup steps (Java Brains)
 ----------------------------------------------------------------------------------------------------------------------------------------
 From: https://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/#getting-started-first-application
 
-10.3.3 The “main” method
+10.3.3 The â€œmainâ€� method
 
-The final part of our application is the main method. This is just a standard method that follows the Java convention for an application entry point. Our main method delegates to Spring Boot’s SpringApplication class by calling run. SpringApplication will bootstrap our application, starting Spring which will in turn start the auto-configured Tomcat web server. We need to pass Example.class as an argument to the run method to tell SpringApplication which is the primary Spring component. The args array is also passed through to expose any command-line arguments.
+The final part of our application is the main method. This is just a standard method that follows the Java convention for an application entry point. Our main method delegates to Spring Bootâ€™s SpringApplication class by calling run. SpringApplication will bootstrap our application, starting Spring which will in turn start the auto-configured Tomcat web server. We need to pass Example.class as an argument to the run method to tell SpringApplication which is the primary Spring component. The args array is also passed through to expose any command-line arguments.
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 
@@ -156,7 +156,7 @@ https://www.3pillarglobal.com/insights/building-a-microservice-architecture-with
 
 From: https://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/#getting-started-first-application
 
-We generally recommend that you locate your main application class in a root package above other classes. The @EnableAutoConfiguration annotation is often placed on your main class, and it implicitly defines a base “search package” for certain items. For example, if you are writing a JPA application, the package of the @EnableAutoConfiguration annotated class will be used to search for @Entity items.
+We generally recommend that you locate your main application class in a root package above other classes. The @EnableAutoConfiguration annotation is often placed on your main class, and it implicitly defines a base â€œsearch packageâ€� for certain items. For example, if you are writing a JPA application, the package of the @EnableAutoConfiguration annotated class will be used to search for @Entity items.
 
 Using a root package also allows the @ComponentScan annotation to be used without needing to specify a basePackage attribute.
 
@@ -166,7 +166,7 @@ From: https://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/#gettin
 
 10.5 Creating an executable jar:
 
-Let’s finish our example by creating a completely self-contained executable jar file that we could run in production. Executable jars (sometimes called “fat jars”) are archives containing your compiled classes along with all of the jar dependencies that your code needs to run.
+Letâ€™s finish our example by creating a completely self-contained executable jar file that we could run in production. Executable jars (sometimes called â€œfat jarsâ€�) are archives containing your compiled classes along with all of the jar dependencies that your code needs to run.
 
 To create an executable jar we need to add the spring-boot-maven-plugin to our pom.xml. Insert the following lines just below the dependencies section:
 
@@ -191,7 +191,7 @@ Note: Executable jars and Java
 
 Java does not provide any standard way to load nested jar files (i.e. jar files that are themselves contained within a jar). This can be problematic if you are looking to distribute a self-contained application.
 
-To solve this problem, many developers use “shaded” jars. A shaded jar simply packages all classes, from all jars, into a single “uber jar”. The problem with shaded jars is that it becomes hard to see which libraries you are actually using in your application. It can also be problematic if the the same filename is used (but with different content) in multiple jars.
+To solve this problem, many developers use â€œshadedâ€� jars. A shaded jar simply packages all classes, from all jars, into a single â€œuber jarâ€�. The problem with shaded jars is that it becomes hard to see which libraries you are actually using in your application. It can also be problematic if the the same filename is used (but with different content) in multiple jars.
 
 Spring Boot takes a different approach and allows you to actually nest jars directly.
 
@@ -221,13 +221,13 @@ Since we have used the spring-boot-starter-parent POM we have a useful run goal 
 ----------------------------------------------------------------------------------------------------------------------------------------
 
 SEE: https://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/#getting-started-first-application
-spring-boot-starter-data-jpa : Support for the “Java Persistence API” including spring-data-jpa, spring-orm and Hibernate.
+spring-boot-starter-data-jpa : Support for the â€œJava Persistence APIâ€� including spring-data-jpa, spring-orm and Hibernate.
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 SEE: https://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/#getting-started-first-application
 
 14.1 Importing additional configuration classes
-You don’t need to put all your @Configuration into a single class. The @Import annotation can be used to import additional configuration classes. Alternatively, you can use @ComponentScan to automatically pickup all Spring components, including @Configuration classes.
+You donâ€™t need to put all your @Configuration into a single class. The @Import annotation can be used to import additional configuration classes. Alternatively, you can use @ComponentScan to automatically pickup all Spring components, including @Configuration classes.
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 SEE: https://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/#getting-started-first-application
@@ -236,7 +236,7 @@ Auto-configuration is noninvasive, at any point you can start to define your own
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 SEE: https://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/#getting-started-first-application-properties
-If you don’t like application.properties as the configuration file name you can switch to another by specifying a spring.config.name environment property. You can also refer to an explicit location using the spring.config.location environment property (comma-separated list of directory locations, or file paths).
+If you donâ€™t like application.properties as the configuration file name you can switch to another by specifying a spring.config.name environment property. You can also refer to an explicit location using the spring.config.location environment property (comma-separated list of directory locations, or file paths).
 
 $ java -jar myproject.jar --spring.config.name=myproject
 or
@@ -273,23 +273,23 @@ Profile specific properties are loaded from the same locations as standard appli
 
 5. Properties with Spring Boot (https://www.baeldung.com/properties-with-spring)
 
-5.1. application.properties – the Default Property File
-Boot applies it’s typical convention over configuration approach to property files. This means that we can simply put an “application.properties” file in our “src/main/resources” directory, and it will be auto-detected. We can then inject any loaded properties from it as normal.
+5.1. application.properties â€“ the Default Property File
+Boot applies itâ€™s typical convention over configuration approach to property files. This means that we can simply put an â€œapplication.propertiesâ€� file in our â€œsrc/main/resourcesâ€� directory, and it will be auto-detected. We can then inject any loaded properties from it as normal.
 
-So, by using this default file, we don’t have to explicitly register a PropertySource, or even provide a path to a property file.
+So, by using this default file, we donâ€™t have to explicitly register a PropertySource, or even provide a path to a property file.
 
 We can also configure a different file at runtime if we need to, using an environment property:
 java -jar app.jar --spring.config.location=classpath:/another-location.properties
 
 
 5.2. Environment Specific Properties File
-If we need to target different environments, there’s a build-in mechanism for that in Boot.
+If we need to target different environments, thereâ€™s a build-in mechanism for that in Boot.
 
-We can simply define an “application-environment.properties” file in the “src/main/resources” directory – and then set a Spring profile with the same environment name.
+We can simply define an â€œapplication-environment.propertiesâ€� file in the â€œsrc/main/resourcesâ€� directory â€“ and then set a Spring profile with the same environment name.
 
-For example, if we define a “staging” environment, that means we’ll have to define a staging profile and then application-staging.properties.
+For example, if we define a â€œstagingâ€� environment, that means weâ€™ll have to define a staging profile and then application-staging.properties.
 
-This env file will be loaded and will take precedence over the default property file. Note that the default file will still be loaded, it’s just that when there is a property collision the environment specific property file takes precedence.
+This env file will be loaded and will take precedence over the default property file. Note that the default file will still be loaded, itâ€™s just that when there is a property collision the environment specific property file takes precedence.
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 SEE: https://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/#getting-started-first-application-properties
@@ -439,7 +439,7 @@ Production database connections can also be auto-configured by using a pooling D
 2. Otherwise, if the Tomcat pooling DataSource is available, we use it.
 3. If neither HikariCP nor the Tomcat pooling datasource are available and if Commons DBCP2 is available, we use it.
 
-If you use the spring-boot-starter-jdbc or spring-boot-starter-data-jpa “starters”, you automatically get a dependency to HikariCP.
+If you use the spring-boot-starter-jdbc or spring-boot-starter-data-jpa â€œstartersâ€�, you automatically get a dependency to HikariCP.
 
 
 You can bypass that algorithm completely and specify the connection pool to use by setting the spring.datasource.type property.
@@ -459,7 +459,7 @@ You often do not need to specify the driver-class-name, since Spring Boot can de
 https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-sql.html
 
 29.2 Using JdbcTemplate
-Spring’s JdbcTemplate and NamedParameterJdbcTemplate classes are auto-configured, and you can @Autowire them directly into your own beans, as shown in the following example:
+Springâ€™s JdbcTemplate and NamedParameterJdbcTemplate classes are auto-configured, and you can @Autowire them directly into your own beans, as shown in the following example:
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -482,8 +482,8 @@ public class MyBean {
 ----------------------------------------------------------------------------------------------------------------------------------------
 https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-sql.html
 
-29.3 JPA and “Spring Data”
-The Java Persistence API is a standard technology that lets you “map” objects to relational databases. The spring-boot-starter-data-jpa POM provides a quick way to get started. It provides the following key dependencies:
+29.3 JPA and â€œSpring Dataâ€�
+The Java Persistence API is a standard technology that lets you â€œmapâ€� objects to relational databases. The spring-boot-starter-data-jpa POM provides a quick way to get started. It provides the following key dependencies:
 
 Hibernate: One of the most popular JPA implementations.
 Spring Data JPA: Makes it easy to implement JPA-based repositories.
@@ -505,7 +505,10 @@ https://microservices.io/patterns/server-side-discovery.html
 3. See actuator of spring boot (last video in the tutorial) (https://www.baeldung.com/spring-boot-actuators)
 
 
+----------------------------------------------------------------------------------------------------------------------------------------
 
 
+How configurations are loaded in spring boot:
 
+https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/ (Externalized Configuration)
 
