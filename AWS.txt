@@ -18,6 +18,10 @@ https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/RootDeviceStorage.html
 https://www.youtube.com/watch?v=eCalW4OBpV8
 https://www.youtube.com/watch?v=Dz_y8w04dBk
 
+7. AWS IAM:
+https://www.aws.training/Details/Video?id=16448
+https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html
+https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html
 
 
 
