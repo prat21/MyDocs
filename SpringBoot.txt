@@ -7,6 +7,12 @@ The ideal way to setup spring boot application is to create a maven project and 
 When SpringApplication.run() runs, it scans the classpath and according to the jars present in the classpath, it takes necessary configuration steps. For example in this case, when springboot encounters the spring mvc jars in the classpath, it intializes a DsiaptcherServlet and takes other steps necessary for bootstrapping spring mvc project.
 
 ----------------------------------------------------------------------------------------------------------------------------------------
+Starter POMs and Auto-Configuration
+
+Auto-configuration is designed to work well with “Starter POMs”, but the two concepts are not directly tied. You are free to pick-and-choose jar dependencies outside of the starter POMs and Spring Boot will still do its best to auto-configure your application.
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
 @SpringBootApplication is a convenience annotation that adds all of the following:
 
 1. @Configuration tags the class as a source of bean definitions for the application context.
