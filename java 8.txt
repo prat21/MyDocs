@@ -14,3 +14,9 @@ New Features in Java 1.8:
 https://www.tutorialspoint.com/java8/java8_lambda_expressions.htm
 https://www.baeldung.com/java-8-new-features
 https://www.baeldung.com/java-8-streams
+
+---------------------------------------------------------------------------------------------
+
+Optional:
+
+https://www.baeldung.com/java-optional
