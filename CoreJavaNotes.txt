@@ -204,6 +204,8 @@ In try-with-resources method there is no use of finally block. the file resource
 
 Multiple resources can be used inside a try-with-resources block and have them all automatically closed. In this case, the resources will be closed in the reverse order in which they were created inside the brackets.
 
+When we open any such AutoCloseable resource in special try-with-resource block, immediately after finishing the try block, JVM calls this.close() method on all resources initialized in try block.
+
 https://www.geeksforgeeks.org/automatic-resource-management-java/
 
 -----------------------------------------------------------------------------------------------------------------
