@@ -219,7 +219,7 @@ With iterator you can check only for next element available or not, but in listi
 With listiterator you can add new element at any point of time, while traversing. Not possible with iterator.
 
 https://stackoverflow.com/questions/10977992/difference-between-iterator-and-listiterator
-
+https://docs.oracle.com/javase/7/docs/api/java/util/ListIterator.html
 
 -----------------------------------------------------------------------------------------------------------------
 
