@@ -261,6 +261,8 @@ https://www.oracle.com/webfolder/technetwork/tutorials/obe/java/gc01/index.html 
 "The Permanent generation contains metadata required by the JVM to describe the classes and methods used in the application. The permanent generation is populated by the JVM at runtime based on classes in use by the application. In addition, Java SE library classes and methods may be stored here."
 
 https://www.baeldung.com/java-string-pool (It has good explanation of String pool and garbage collection)
+https://www.baeldung.com/java-string-immutable
+https://www.baeldung.com/java-string-interview-questions
 
 Before Java 7, the JVM placed the Java String Pool in the PermGen space, which has a fixed size — it can’t be expanded at runtime and is not eligible for garbage collection.
 
