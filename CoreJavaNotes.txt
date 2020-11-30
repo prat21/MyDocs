@@ -189,6 +189,7 @@ All elements are permitted, including null.
 
 https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/CopyOnWriteArrayList.html
 https://www.geeksforgeeks.org/copyonwritearraylist-in-java/
+https://www.baeldung.com/java-copy-on-write-arraylist
 -----------------------------------------------------------------------------------------------------------------
 
 Difference between iterator and enumeration:
