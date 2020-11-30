@@ -195,6 +195,7 @@ Difference between iterator and enumeration:
 
 https://javaconceptoftheday.com/differences-between-enumeration-vs-iterator-in-java/
 https://javaconceptoftheday.com/fail-fast-and-fail-safe-iterators-in-java-with-examples/
+https://www.baeldung.com/java-fail-safe-vs-fail-fast-iterator
 
 -----------------------------------------------------------------------------------------------------------------
 
