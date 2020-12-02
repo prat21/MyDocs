@@ -387,6 +387,7 @@ Precompilation and DB-side caching of the SQL statement leads to overall faster 
 
 Automatic prevention of SQL injection attacks by builtin escaping of quotes and other special characters. Note that this requires that you use any of the PreparedStatement setXxx() methods to set the values
 
+https://docs.oracle.com/javase/tutorial/jdbc/basics/prepared.html
 https://stackoverflow.com/questions/3271249/difference-between-statement-and-preparedstatement
 
 
@@ -395,6 +396,14 @@ https://stackoverflow.com/questions/3271249/difference-between-statement-and-pre
 -----------------------------------------------------------------------------------------------------------------
 
 See difference between association, composition and aggregation in java
+https://javarevisited.blogspot.com/2014/02/ifference-between-association-vs-composition-vs-aggregation.html
+https://www.baeldung.com/java-composition-aggregation-association
+https://www.baeldung.com/java-inheritance-composition
+
+See - Composition is also very much preferred in object-oriented design over inheritance
+
+https://javarevisited.blogspot.com/2013/06/why-favor-composition-over-inheritance-java-oops-design.html
+https://dzone.com/articles/composition-vs-inheritance
 
 -----------------------------------------------------------------------------------------------------------------
 
@@ -506,6 +515,13 @@ New Features in Java 1.8:
 6. Date Time API − Improved date time API.
 7. Optional − Emphasis on best practices to handle null values properly.
 8. Nashorn, JavaScript Engine − A Java-based engine to execute JavaScript code.
+
+------------------------------------------------------------------------------------------------
+
+Can we override static menthod in java?
+
+https://www.javatpoint.com/can-we-override-static-method-in-java#:~:text=Can%20we%20override%20a%20static,we%20cannot%20override%20static%20methods.
+https://docs.oracle.com/javase/tutorial/java/IandI/override.html
 
 
 
