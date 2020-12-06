@@ -410,6 +410,7 @@ https://dzone.com/articles/composition-vs-inheritance
 Reflection:
 https://www.geeksforgeeks.org/reflection-in-java/
 https://www.oracle.com/technical-resources/articles/java/javareflection.html
+https://docs.oracle.com/javase/tutorial/reflect/index.html
 
 https://stackoverflow.com/questions/37628/what-is-reflection-and-why-is-it-useful
 
