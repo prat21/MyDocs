@@ -578,3 +578,32 @@ public class Test {
 
 ------------------------------------------------------------------------------------------------
  
+Restrictions for the static method
+There are two main restrictions for the static method. They are:
+
+1. The static method can not use non static data member or call non-static method directly.
+2. this and super cannot be used in static context.
+
+------------------------------------------------------------------------------------------------
+Why java main method is static?
+
+Java main() method is always static, so that compiler can call it without the creation of an object or before the creation of an object of the class.
+
+1. In any Java program, the main() method is the starting point from where compiler starts program execution. So, the compiler needs to call the main() method.
+2. If the main() is allowed to be non-static, then while calling the main() method JVM has to instantiate its class.
+3. While instantiating it has to call the constructor of that class, There will be ambiguity if the constructor of that class takes an argument.
+4. Static method of a class can be called by using the class name only without creating an object of a class.
+5. The main() method in Java must be declared public, static and void. If any of these are missing, the Java program will compile but a runtime error will be thrown.
+
+------------------------------------------------------------------------------------------------
+Can we execute a program without main() method?
+Ans) No, one of the ways was the static block, but it was possible till JDK 1.6. Since JDK 1.7, it is not possible to execute a Java class without the
+
+------------------------------------------------------------------------------------------------
+
+Main method concepts:
+https://www.javatpoint.com/java-main-method
+
+------------------------------------------------------------------------------------------------
+
+
