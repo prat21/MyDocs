@@ -547,10 +547,34 @@ https://www.guru99.com/difference-compiler-vs-interpreter.html
 JIT Compiler
 https://stackoverflow.com/questions/95635/what-does-a-just-in-time-jit-compiler-do
 
+------------------------------------------------------------------------------------------------
+Can a constructor be made final?
 
+No, a constructor can’t be made final.
 
+A final method cannot be overridden by any subclasses. As mentioned previously, the final modifier prevents a method from being modified in a subclass.
 
+The main intention of making a method final would be that the content of the method should not be changed by any outsider.
 
+But, in inheritance sub class inherits the members of a super class except constructors.
 
- 
+In other words, constructors cannot be inherited in Java therefore, there is no need to write final before constructors. Therefore, java does not allow final keyword before a constructor. If you try a compile time error is generated
+
+------------------------------------------------------------------------------------------------
+
+public class Test {
+    String j;
+
+    static public void main(String[] args) {
+        String i;
+        System.out.println("Testing i: "+i);  //This will give a compile time error, as "i" is not initialized, and it is declared in static block.
+        
+    }
+
+    void dis(){
+        System.out.println(j); // This will compile fine, since the default contructor will assign the default value of null to the variable "j"
+    }
+}
+
+------------------------------------------------------------------------------------------------
  
