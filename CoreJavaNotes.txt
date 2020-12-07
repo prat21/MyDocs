@@ -533,10 +533,19 @@ https://docs.oracle.com/javase/tutorial/java/IandI/override.html
 https://docs.oracle.com/javase/tutorial/java/IandI/super.html
 https://docs.oracle.com/javase/tutorial/java/IandI/nogrow.html
 
+------------------------------------------------------------------------------------------------
+Difference between JDK, JRE and JVM
+https://www.guru99.com/difference-between-jdk-jre-jvm.html
+https://www.geeksforgeeks.org/differences-jdk-jre-jvm/
 
+------------------------------------------------------------------------------------------------
+Difference between compiler and interpreter
+https://www.programiz.com/article/difference-compiler-interpreter
+https://www.guru99.com/difference-compiler-vs-interpreter.html
 
-
-
+------------------------------------------------------------------------------------------------
+JIT Compiler
+https://stackoverflow.com/questions/95635/what-does-a-just-in-time-jit-compiler-do
 
 
 
