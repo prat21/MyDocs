@@ -651,4 +651,60 @@ As we know, that this refers to the current class object, therefore, it must be 
 this is a final variable. Therefore, this cannot be assigned to any new value whereas the current class object might not be final and can be changed.
 this can be used in the synchronized block.
 
+------------------------------------------------------------------------------------------------
+In java, method overloading is not possible by changing the return type of the method only because of ambiguity. Let's see how ambiguity may occur:
+
+class Adder{  
+	static int add(int a,int b){return a+b;}  
+	static double add(int a,int b){return a+b;}  
+}  
+class TestOverloading3{  
+	public static void main(String[] args){  
+	System.out.println(Adder.add(11,11));//ambiguity  
+}}  
+
+------------------------------------------------------------------------------------------------
+Example of Method Overloading with TypePromotion
+
+class OverloadingCalculation1{  
+  void sum(int a,long b){System.out.println(a+b);}  
+  void sum(int a,int b,int c){System.out.println(a+b+c);}  
+  
+  public static void main(String args[]){  
+  OverloadingCalculation1 obj=new OverloadingCalculation1();  
+  obj.sum(20,20);//now second int literal will be promoted to long, no complie time error
+  obj.sum(20,20,20);  
+  
+  }  
+}
+------------------------------------------------------------------------------------------------
+Ambiguity:--
+
+public class OverloadingTest {
+    void sum(int a,long b){System.out.println("first"+(a+b));}
+    void sum(int a,int b,int c){System.out.println("second"+(a+b+c));}
+    void sum(long a,int b){System.out.println("third"+(a+b));}
+
+    public static void main(String args[]){
+        OverloadingTest obj=new OverloadingTest();
+        obj.sum(20,20);//complie time error at this line, due to ambiguity
+        obj.sum(20,20,20);
+
+    }
+}
+------------------------------------------------------------------------------------------------
+Ambiguity:--
+
+public class OverloadingTest2 {
+    void sum(int a,int b){System.out.println("first"+(a+b));}
+    void sum(int a,int b,int c){System.out.println("second"+(a+b+c));}
+
+
+    public static void main(String args[]){
+        OverloadingTest2 obj=new OverloadingTest2();
+        obj.sum(20,20.23);//complie time error at this line, since float cant be promoted to int
+        obj.sum(20,20,20);
+
+    }
+}
 
