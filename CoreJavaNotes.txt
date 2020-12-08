@@ -723,7 +723,34 @@ class OverloadingCalculation2{
 ------------------------------------------------------------------------------------------------
 SEE: https://www.javatpoint.com/method-overloading-in-java ,for type promotion rule. ALways lower type can be promoted to higher type but not vice-versa.
 ------------------------------------------------------------------------------------------------
+Java Access Modifiers with Method Overriding:
 
+If you are overriding any method, overridden method (i.e. declared in subclass) must not be more restrictive.
 
+class A{  
+protected void msg(){System.out.println("Hello java");}  
+}  
+  
+public class Simple extends A{  
+void msg(){System.out.println("Hello java");}//C.T.Error  
+ public static void main(String args[]){  
+   Simple obj=new Simple();  
+   obj.msg();  
+   }  
+}
+
+The default modifier is more restrictive than protected. That is why, there is a compile-time error.
+------------------------------------------------------------------------------------------------
+ExceptionHandling with MethodOverriding in Java:--
+
+There are many rules if we talk about methodoverriding with exception handling. The Rules are as follows:
+
+1. If the superclass method does not declare an exception
+If the superclass method does not declare an exception, subclass overridden method cannot declare the checked exception but it can declare unchecked exception.
+
+2. If the superclass method declares an exception
+If the superclass method declares an exception, subclass overridden method can declare same, subclass exception or no exception but cannot declare parent exception.
+
+------------------------------------------------------------------------------------------------
 
 
