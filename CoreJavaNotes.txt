@@ -756,6 +756,9 @@ If the superclass method declares an exception, subclass overridden method can d
 
 No, because this() and super() must be the first statement in the class constructor.
 ------------------------------------------------------------------------------------------------
+Cloning:
 
+https://www.javatpoint.com/object-cloning
+https://howtodoinjava.com/java/cloning/a-guide-to-object-cloning-in-java/#cloning_using_serialization
 
 
