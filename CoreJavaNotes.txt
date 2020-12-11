@@ -752,5 +752,10 @@ If the superclass method does not declare an exception, subclass overridden meth
 If the superclass method declares an exception, subclass overridden method can declare same, subclass exception or no exception but cannot declare parent exception.
 
 ------------------------------------------------------------------------------------------------
+70) Can you use this() and super() both in a constructor?
+
+No, because this() and super() must be the first statement in the class constructor.
+------------------------------------------------------------------------------------------------
+
 
 
