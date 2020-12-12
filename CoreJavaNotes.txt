@@ -828,7 +828,43 @@ class Fin3{
         //this.var=10;
     }
 }
+------------------------------------------------------------------------------------------------
+public class FinalVariableTest4 {
+    public static void main(String[] args) {
+        final int j;
+        j=10;
+        System.out.println(j);
+    }
+    
+    void test(){
+        final int k;
+        k=10;
+    }
+}
+
+Compiles fine. Method "final" variables can be initialized only once after declaration.
+------------------------------------------------------------------------------------------------
+Java Runtime Polymorphism with Data Member:
+
+A method is overridden, not the data members, so runtime polymorphism can't be achieved by data members.
+
+In the example given below, both the classes have a data member speedlimit. We are accessing the data member by the reference variable of Parent class which refers to the subclass object. Since we are accessing the data member which is not overridden, hence it will access the data member of the Parent class always.
+
+class Bike{  
+ int speedlimit=90;  
+}  
+class Honda3 extends Bike{  
+ int speedlimit=150;  
+  
+ public static void main(String args[]){  
+  Bike obj=new Honda3();  
+  System.out.println(obj.speedlimit);//90  
+}  
+------------------------------------------------------------------------------------------------
+
+
 
 ------------------------------------------------------------------------------------------------
+
 
 
