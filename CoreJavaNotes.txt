@@ -761,4 +761,57 @@ Cloning:
 https://www.javatpoint.com/object-cloning
 https://howtodoinjava.com/java/cloning/a-guide-to-object-cloning-in-java/#cloning_using_serialization
 
+------------------------------------------------------------------------------------------------
+Covariant Return Type:
+
+The covariant return type specifies that the return type may vary in the same direction as the subclass.
+
+Java 5.0 onwards it is possible to have different return type for a overriding method in child class, but child’s return type should be sub-type of parent’s return type. 
+
+class A{  
+	A get(){return this;}  
+}  
+  
+class B1 extends A{  
+	B1 get(){return this;}  
+	void message(){System.out.println("welcome to covariant return type");}  
+  
+	public static void main(String args[]){  
+		new B1().get().message();  
+	}  
+}  
+------------------------------------------------------------------------------------------------
+
+class Fin2{
+    static final int var=10; //since static variables are created while class loading, hence static final variables has to be initialized
+                            // at declaration only
+
+    Fin2(int var){
+        //this.var=var;  //compile time error, since it is already initialized
+    }
+
+    void change(){
+        //this.var=10;
+    }
+}
+
+------------------------------------------------------------------------------------------------
+class Fin3{
+    static final int var;
+
+    static {
+        var=10;    // static variables can also be initialized in static blocks
+    }
+    
+    Fin3(int var){
+        //this.var=var;  //compile time error, since it is already initialized
+    }
+
+    void change(){
+        //this.var=10;
+    }
+}
+
+------------------------------------------------------------------------------------------------
+
 
