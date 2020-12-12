@@ -861,9 +861,13 @@ class Honda3 extends Bike{
   System.out.println(obj.speedlimit);//90  
 }  
 ------------------------------------------------------------------------------------------------
+Abstract class:
 
+https://docs.oracle.com/javase/tutorial/java/IandI/abstract.html
 
+An abstract class may have static fields and static methods. You can use these static members with a class reference (for example, AbstractClass.staticMethod()) as you would with any other class.
 
+An abstract class can have constructors as well.
 ------------------------------------------------------------------------------------------------
 
 
