@@ -868,6 +868,15 @@ https://docs.oracle.com/javase/tutorial/java/IandI/abstract.html
 An abstract class may have static fields and static methods. You can use these static members with a class reference (for example, AbstractClass.staticMethod()) as you would with any other class.
 
 An abstract class can have constructors as well.
+
+A class that is declared as abstract is known as an abstract class. It needs to be extended and its method implemented. It cannot be instantiated. It can have abstract methods, non-abstract methods, constructors, and static methods. It can also have the final methods which will force the subclass not to change the body of the method. Consider the following example.
+------------------------------------------------------------------------------------------------
+Difference between abstraction and encapulation:
+
+https://javarevisited.blogspot.com/2017/04/difference-between-abstraction-and-encapsulation-in-java-oop.html
+
+------------------------------------------------------------------------------------------------
+Since java 9, interface can have private methods.
 ------------------------------------------------------------------------------------------------
 
 
