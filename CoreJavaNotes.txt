@@ -1001,8 +1001,29 @@ https://docs.oracle.com/javase/tutorial/java/javaOO/anonymousclasses.html
 
 ------------------------------------------------------------------------------------------------
 
+Static Inner Class:
 
+A static class i.e. created inside a class is called static nested class in java. It cannot access non-static data members and methods. It can be accessed by outer class name.
 
+It can access static data members of outer class including private.
+Static nested class cannot access non-static (instance) data member or method.
+
+------------------------------------------------------------------------------------------------
+Nested interface:
+
+https://www.javatpoint.com/nested-interface
+
+------------------------------------------------------------------------------------------------
+188) How will you invoke any external process in Java?
+By Runtime.getRuntime().exec(?) method. Consider the following example.
+
+public class Runtime1{  
+ public static void main(String args[])throws Exception{  
+  Runtime.getRuntime().exec("firefox");		//will open firefox browser  
+ }  
+} 
+
+------------------------------------------------------------------------------------------------
 
 
 
