@@ -907,6 +907,17 @@ https://docs.oracle.com/javase/tutorial/java/javaOO/nested.html
 Inner classes cannot declare any static variables or methods, but can access the static method of the outer class, using syntax like "OuterClass.statMeth()", whereas accessing normal instance methods of the outer class from inner class requires syntax like "OuterClass.this.statMeth()".
 
 ------------------------------------------------------------------------------------------------
+
+Why Use Nested Classes?
+Compelling reasons for using nested classes include the following:
+
+It is a way of logically grouping classes that are only used in one place: If a class is useful to only one other class, then it is logical to embed it in that class and keep the two together. Nesting such "helper classes" makes their package more streamlined.
+
+It increases encapsulation: Consider two top-level classes, A and B, where B needs access to members of A that would otherwise be declared private. By hiding class B within class A, A's members can be declared private and B can access them. In addition, B itself can be hidden from the outside world.
+
+It can lead to more readable and maintainable code: Nesting small classes within top-level classes places the code closer to where it is used.
+
+------------------------------------------------------------------------------------------------
 Inner classes code example:
 
 public class InnerClassTest {
@@ -951,5 +962,18 @@ class OuterClass{
         }*/
     }
 }
+
+------------------------------------------------------------------------------------------------
+Local Inner class:
+
+https://www.javatpoint.com/local-inner-class
+https://docs.oracle.com/javase/tutorial/java/javaOO/localclasses.html
+
+------------------------------------------------------------------------------------------------
+
+Anonymous Inner classes:
+
+https://www.geeksforgeeks.org/anonymous-inner-class-java/
+https://docs.oracle.com/javase/tutorial/java/javaOO/anonymousclasses.html
 
 
