@@ -899,6 +899,57 @@ See the exception hierarchy in https://www.javatpoint.com/exception-handling-in-
 
 The finally block will not be executed if program exits(either by calling System.exit() or by causing a fatal error that causes the process to abort).
 
+------------------------------------------------------------------------------------------------
+Inner classes:
 
+https://docs.oracle.com/javase/tutorial/java/javaOO/nested.html
+
+Inner classes cannot declare any static variables or methods, but can access the static method of the outer class, using syntax like "OuterClass.statMeth()", whereas accessing normal instance methods of the outer class from inner class requires syntax like "OuterClass.this.statMeth()".
+
+------------------------------------------------------------------------------------------------
+Inner classes code example:
+
+public class InnerClassTest {
+    public static void main(String[] args) {
+        OuterClass out=new OuterClass("Pratik",26);
+        OuterClass.InnerClass inn=out.new InnerClass();
+        inn.display();
+    }
+}
+
+class OuterClass{
+    private String st;
+    private int i;
+
+    OuterClass(String st, int i){
+        this.st=st;
+        this.i=i;
+    }
+
+    private void display(){
+        System.out.println("st: "+this.st+", i: "+this.i);
+    }
+
+    public static void statTest(){
+        System.out.println("Inside outer static method");
+    }
+
+    class InnerClass{
+        public String st="InnerPrat";
+
+        void display(){
+            System.out.println("Inside inner display");
+            OuterClass.this.display();
+            System.out.println("Inner st: "+this.st+", Outer st: "+OuterClass.this.st);
+            OuterClass.statTest();  //Can access static methods of outer class
+        }
+
+        //Compile time error
+        // Inner classes cannot have static declarations
+        /*static void dis(){
+
+        }*/
+    }
+}
 
 
