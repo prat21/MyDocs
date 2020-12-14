@@ -918,6 +918,19 @@ It increases encapsulation: Consider two top-level classes, A and B, where B nee
 It can lead to more readable and maintainable code: Nesting small classes within top-level classes places the code closer to where it is used.
 
 ------------------------------------------------------------------------------------------------
+We declare inner classes if a class is necessary for the working of the outer class. 
+Like in the Linked List Data Structure, we have a Node inner class.
+
+public class LinkedList{
+	class Node{
+		int data;
+		Node next;
+	}
+
+}
+
+https://www.youth4work.com/Talent/Core-Java/Forum/120658-why-did-we-use-inner-classes-in-java-tell-me-the-real-answer
+------------------------------------------------------------------------------------------------
 Inner classes code example:
 
 public class InnerClassTest {
@@ -925,8 +938,10 @@ public class InnerClassTest {
         OuterClass out=new OuterClass("Pratik",26);
         OuterClass.InnerClass inn=out.new InnerClass();
         inn.display();
+        out.callInner();
     }
 }
+
 
 class OuterClass{
     private String st;
@@ -938,7 +953,13 @@ class OuterClass{
     }
 
     private void display(){
-        System.out.println("st: "+this.st+", i: "+this.i);
+        System.out.println("st: "+this.st+", i: "+this.i);        
+    }
+    
+    // Calling inner class is possible by creating the instance of the Inner only.
+    public void callInner(){
+        InnerClass inn2 = new InnerClass();
+        inn2.display();
     }
 
     public static void statTest(){
@@ -955,6 +976,7 @@ class OuterClass{
             OuterClass.statTest();  //Can access static methods of outer class
         }
 
+
         //Compile time error
         // Inner classes cannot have static declarations
         /*static void dis(){
@@ -962,6 +984,7 @@ class OuterClass{
         }*/
     }
 }
+
 
 ------------------------------------------------------------------------------------------------
 Local Inner class:
@@ -975,5 +998,11 @@ Anonymous Inner classes:
 
 https://www.geeksforgeeks.org/anonymous-inner-class-java/
 https://docs.oracle.com/javase/tutorial/java/javaOO/anonymousclasses.html
+
+------------------------------------------------------------------------------------------------
+
+
+
+
 
 
