@@ -1030,6 +1030,7 @@ https://www.javatpoint.com/serialization-in-java
 https://www.baeldung.com/java-serialization
 
 See NotSerializableException and InvalidClassException and SerialVersionUID.
+https://www.baeldung.com/java-serial-version-uid
 
 ------------------------------------------------------------------------------------------------
 Externalizable in java
