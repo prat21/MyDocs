@@ -1024,6 +1024,20 @@ public class Runtime1{
 } 
 
 ------------------------------------------------------------------------------------------------
+Serialization:
 
+https://www.javatpoint.com/serialization-in-java
+https://www.baeldung.com/java-serialization
+
+See NotSerializableException and InvalidClassException and SerialVersionUID.
+
+------------------------------------------------------------------------------------------------
+Externalizable in java
+The Externalizable interface provides the facility of writing the state of an object into a byte stream in compress format. It is not a marker interface.
+
+The Externalizable interface provides two methods:
+
+public void writeExternal(ObjectOutput out) throws IOException
+public void readExternal(ObjectInput in) throws IOException
 
 
