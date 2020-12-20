@@ -1043,4 +1043,21 @@ The Externalizable interface provides two methods:
 public void writeExternal(ObjectOutput out) throws IOException
 public void readExternal(ObjectInput in) throws IOException
 
+------------------------------------------------------------------------------------------------
+Autoboxing and Unboxing:
+
+It can occur whenever a wrapper class object is expected, and primitive data type is provided or vice versa.
+
+1. Adding primitive types into Collection like ArrayList in Java.
+2. Creating an instance of parameterized classes ,e.g., ThreadLocal which expect Type.
+3. Java automatically converts primitive to object whenever one is required and another is provided in the method calling.
+4. When a primitive type is assigned to an object type.
+
+https://docs.oracle.com/javase/tutorial/java/data/autoboxing.html
+------------------------------------------------------------------------------------------------
+
+
+
+
+
 
