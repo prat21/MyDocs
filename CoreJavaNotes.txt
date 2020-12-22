@@ -169,6 +169,11 @@ All of the operations perform as could be expected for a doubly-linked list. Ope
 
 Arraylist vs linkedlist
 https://stackoverflow.com/questions/322715/when-to-use-linkedlist-over-arraylist-in-java
+
+-----------------------------------------------------------------------------------------------------------------
+List vs Queue:
+
+List provides random access/addition/removal of elements through indexed access, whereas queue allows access/addition/removal only through one or two ends (head or tail).
 -----------------------------------------------------------------------------------------------------------------
 
 ConcurrentHashMap:
