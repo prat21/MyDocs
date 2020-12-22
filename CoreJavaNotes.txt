@@ -174,6 +174,10 @@ https://stackoverflow.com/questions/322715/when-to-use-linkedlist-over-arraylist
 List vs Queue:
 
 List provides random access/addition/removal of elements through indexed access, whereas queue allows access/addition/removal only through one or two ends (head or tail).
+
+List can be used as FIFO queue, if we use the standard add() and remove() methods of Collection interface. Because "add()" method adds at the end(tail) of the list (equivalent to addLast() mehod) and "remove()" method removes from the beginning(head) of the list (equivalent to removeFirst() mehod).
+
+If the List is used as stack data structure (LIFO), then there are pre-defined push(E e) and pop() methods. The push(E e) method inserts the element at the head of the list and pop() removes the element from the head of the list (equivalent to addFirst(E e) and removeFirst() methods).
 -----------------------------------------------------------------------------------------------------------------
 
 ConcurrentHashMap:
