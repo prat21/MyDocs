@@ -37,6 +37,7 @@ Kindly note that the node stores the key,value,hashcode as well as reference to 
 The keyset() method returns the set of keys by iterating through the array. The iteration happens over the entire array, regardless of whether a particular array entry contains elements or not.
 
 http://www.baeldung.com/java-hashmap (Read this, its nice)
+https://docs.oracle.com/javase/8/docs/api/java/util/HashMap.html
 
 3. How TreeMap works?
 
