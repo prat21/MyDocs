@@ -39,6 +39,10 @@ The keyset() method returns the set of keys by iterating through the array. The 
 http://www.baeldung.com/java-hashmap (Read this, its nice)
 https://docs.oracle.com/javase/8/docs/api/java/util/HashMap.html
 
+This implementation provides constant-time performance for the basic operations (get and put), assuming the hash function disperses the elements properly among the buckets. Iteration over collection views requires time proportional to the "capacity" of the HashMap instance (the number of buckets) plus its size (the number of key-value mappings). Thus, it's very important not to set the initial capacity too high (or the load factor too low) if iteration performance is important.
+
+As a general rule, the default load factor (.75) offers a good tradeoff between time and space costs. Higher values decrease the space overhead but increase the lookup cost (reflected in most of the operations of the HashMap class, including get and put). The expected number of entries in the map and its load factor should be taken into account when setting its initial capacity, so as to minimize the number of rehash operations. If the initial capacity is greater than the maximum number of entries divided by the load factor, no rehash operations will ever occur.
+
 3. How TreeMap works?
 
 Unlike LinkedHashMap and HashMap, TreeMap does not use hashing for storing keys. It uses a data structure called Red-Black tree.
