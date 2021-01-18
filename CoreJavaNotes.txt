@@ -215,6 +215,8 @@ https://javaconceptoftheday.com/differences-between-enumeration-vs-iterator-in-j
 https://javaconceptoftheday.com/fail-fast-and-fail-safe-iterators-in-java-with-examples/
 https://www.baeldung.com/java-fail-safe-vs-fail-fast-iterator
 
+The default iterator for the ConcurrentHashMap is weakly consistent. This means that this Iterator can tolerate concurrent modification, traverses elements as they existed when Iterator was constructed and may (but isn't guaranteed to) reflect modifications to the Collection after the construction of the Iterator.
+
 -----------------------------------------------------------------------------------------------------------------
 
 AutoCloseable interface and try-with-resources in java 7:
