@@ -258,6 +258,8 @@ https://www.journaldev.com/349/java-classloader
  
  https://www.journaldev.com/1034/java-blockingqueue-example
  
+A BlockingQueue may be capacity bounded. At any given time it may have a remainingCapacity beyond which no additional elements can be put without blocking. A BlockingQueue without any intrinsic capacity constraints always reports a remaining capacity of Integer.MAX_VALUE.
+ 
  -----------------------------------------------------------------------------------------------------------------
  
  Difference between Abstract Class and Interface in Java
