@@ -550,7 +550,7 @@ New Features in Java 1.8:
 Can we override static menthod in java?
 
 https://www.javatpoint.com/can-we-override-static-method-in-java#:~:text=Can%20we%20override%20a%20static,we%20cannot%20override%20static%20methods.
-https://docs.oracle.com/javase/tutorial/java/IandI/override.html
+https://docs.oracle.com/javase/tutorial/java/IandI/override.html - important
 https://docs.oracle.com/javase/tutorial/java/IandI/super.html
 https://docs.oracle.com/javase/tutorial/java/IandI/nogrow.html
 
