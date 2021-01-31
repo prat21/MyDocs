@@ -778,6 +778,8 @@ void msg(){System.out.println("Hello java");}//C.T.Error
 }
 
 The default modifier is more restrictive than protected. That is why, there is a compile-time error.
+
+The default methods cannot accessed from outside package,even if it is a sub-package or the class in extended.
 ------------------------------------------------------------------------------------------------
 ExceptionHandling with MethodOverriding in Java:--
 
