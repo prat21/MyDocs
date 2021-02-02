@@ -903,6 +903,10 @@ Difference between abstraction and encapulation:
 https://javarevisited.blogspot.com/2017/04/difference-between-abstraction-and-encapsulation-in-java-oop.html
 
 ------------------------------------------------------------------------------------------------
+SOLID prinicple:
+https://www.baeldung.com/solid-principles
+
+------------------------------------------------------------------------------------------------
 Since java 9, interface can have private methods.
 ------------------------------------------------------------------------------------------------
 Marker Interface:
