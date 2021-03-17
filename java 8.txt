@@ -18,7 +18,15 @@ https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html
 https://www.tutorialspoint.com/java8/java8_lambda_expressions.htm
 https://www.baeldung.com/java-8-new-features
 https://www.baeldung.com/java-8-streams
+---------------------------------------------------------------------------------------------
+STREAM:
 
+https://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html
+https://www.baeldung.com/java-8-streams
+https://docs.oracle.com/javase/8/docs/api/java/util/stream/Collectors.html#groupingBy-java.util.function.Function-
+https://www.baeldung.com/java-groupingby-collector
+
+An attempt to reuse a stream after calling the terminal operation will trigger the IllegalStateException.
 ---------------------------------------------------------------------------------------------
 
 Optional:
