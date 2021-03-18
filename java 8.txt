@@ -33,3 +33,12 @@ OPTIONAL:
 
 https://www.oracle.com/technical-resources/articles/java/java8-optional.html
 https://www.baeldung.com/java-optional
+
+---------------------------------------------------------------------------------------------
+Interface default methods:
+
+https://docs.oracle.com/javase/tutorial/java/IandI/defaultmethods.html
+https://docs.oracle.com/javase/tutorial/java/IandI/override.html
+
+Note: Static methods in interfaces are never inherited.
+
