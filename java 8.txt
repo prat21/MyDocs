@@ -27,8 +27,9 @@ https://docs.oracle.com/javase/8/docs/api/java/util/stream/Collectors.html#group
 https://www.baeldung.com/java-groupingby-collector
 
 An attempt to reuse a stream after calling the terminal operation will trigger the IllegalStateException.
+
 ---------------------------------------------------------------------------------------------
+OPTIONAL:
 
-Optional:
-
+https://www.oracle.com/technical-resources/articles/java/java8-optional.html
 https://www.baeldung.com/java-optional
