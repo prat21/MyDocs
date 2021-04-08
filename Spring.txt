@@ -64,7 +64,7 @@ In order for spring to inject a property into an object, one of the following ha
 
 Even if the property is public, it cannot be injected if it does not have a setter and it is not a constructor argument of the object.
 
-While using @Autowired annotation though, a property does not necessarily need to have a setter if it is marked by @autowired, spring can inject the property reagardless of whether the setter is present or not.
+While using @Autowired annotation though, a property does not necessarily need to have a setter if it is marked by @autowired, spring can inject the property reagardless of whether the setter is present or not. Spring uses reflection in case of private fields having no setters or constructor args.
 
 @Autowired can be applied on top of a field, setter method (not getter, since properties are injected via setter) or on top of constructor(for autowire by constructor).
 https://www.baeldung.com/constructor-injection-in-spring
