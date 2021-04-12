@@ -1,3 +1,7 @@
+Reference:
+https://docs.spring.io/spring-framework/docs/current/reference/html/
+https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#spring-core
+-----------------------------------------------------------------------------
 Factory Design Pattern (Spring uses factory pattern):
 
 https://www.journaldev.com/1392/factory-design-pattern-in-java
