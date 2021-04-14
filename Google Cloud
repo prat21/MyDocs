@@ -52,7 +52,7 @@ https://cloud.google.com/bigquery-ml/docs/introduction
 
 https://cloud.google.com/data-fusion/docs
 
-google Cloud dataflow uses apache beam and cloud dataproc uses apache spark and cloud composer uses apache airflow.
+google Cloud dataflow uses apache beam and cloud dataproc uses apache hadoop/spark and cloud composer uses apache airflow.
 
 https://cloud.google.com/solutions/build-a-data-lake-on-gcp
 
