@@ -497,6 +497,7 @@ Spring ORMs: Core ORM support from the Spring Framework.
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 https://spring.io/guides/gs/accessing-data-jpa/
+https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories
 
 By default, Spring Boot will enable JPA repository support and look in the package (and its subpackages) where @SpringBootApplication is located. If your configuration has JPA repository interface definitions located in a package not visible, you can point out alternate packages using @EnableJpaRepositories and its type-safe basePackageClasses=MyRepository.class parameter.
 
