@@ -1466,7 +1466,21 @@ https://springframework.guru/spring-framework-annotations/
 
 SEE: Hibernate with Spring (spring tutorial 45) and spring java configuration (including propertyplaceholderconfigurer and all annotations)
 
+https://www.baeldung.com/hibernate-5-spring
+https://www.baeldung.com/the-persistence-layer-with-spring-and-jpa
+
+Difference between sessionFactory and entityManagerFactory:
+https://stackoverflow.com/questions/5640778/hibernate-sessionfactory-vs-jpa-entitymanagerfactory
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+Transaction management in spring:
+
+https://www.baeldung.com/transaction-configuration-with-jpa-and-spring
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
 SEE: https://www.baeldung.com/spring-interview-questions
+
 
 
 
