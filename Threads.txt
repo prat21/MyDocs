@@ -91,6 +91,7 @@ Lock Timeout
 Single Thread
 
 http://www.javacreed.com/what-is-deadlock-and-how-to-prevent-it/
+http://tutorials.jenkov.com/java-concurrency/deadlock-prevention.html
 
 
 Q. How do you detect deadlock in Java ?
