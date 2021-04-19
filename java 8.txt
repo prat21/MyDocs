@@ -25,6 +25,7 @@ https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html
 ---------------------------------------------------------------------------------------------
 STREAM:
 
+https://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html
 https://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html
 https://www.baeldung.com/java-8-streams
 https://docs.oracle.com/javase/8/docs/api/java/util/stream/Collectors.html#groupingBy-java.util.function.Function-
