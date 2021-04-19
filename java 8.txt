@@ -19,6 +19,9 @@ SEE: https://www.journaldev.com/2389/java-8-features-with-examples#java8-collect
 https://www.tutorialspoint.com/java8/java8_lambda_expressions.htm
 https://www.baeldung.com/java-8-new-features
 https://www.baeldung.com/java-8-streams
+--------------------------------------------------------------------------------------------
+Method Reference:
+https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html
 ---------------------------------------------------------------------------------------------
 STREAM:
 
