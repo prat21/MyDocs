@@ -14,7 +14,8 @@ LAMDA EXPRESSION:
 
 https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html
 
-"There are no runtime benefits of using lambda expressions, so I will use it cautiously because I don’t mind writing few extra lines of code." SEE: https://www.journaldev.com/2389/java-8-features-with-examples#java8-collection
+"There are no runtime benefits of using lambda expressions, so I will use it cautiously because I don’t mind writing few extra lines of code." 
+SEE: https://www.journaldev.com/2389/java-8-features-with-examples#java8-collection
 https://www.tutorialspoint.com/java8/java8_lambda_expressions.htm
 https://www.baeldung.com/java-8-new-features
 https://www.baeldung.com/java-8-streams
