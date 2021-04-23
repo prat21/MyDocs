@@ -1,4 +1,5 @@
 SEE:https://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/#getting-started-first-application and java brains
+https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#deployment
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 
