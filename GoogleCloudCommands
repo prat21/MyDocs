@@ -3,7 +3,6 @@ Compute Engine VM instance:
 To create VM instance:
 gcloud compute instances create privatenet-us-vm --zone=us-central1-c --machine-type=f1-micro --subnet=privatesubnet-us --image-family=debian-10 --image-project=debian-cloud --boot-disk-size=10GB --boot-disk-type=pd-standard --boot-disk-device-name=privatenet-us-vm
 
-
 To list all the VM instances (sorted by zone):
 gcloud compute instances list --sort-by=ZONE
 
@@ -12,6 +11,9 @@ gcloud compute ssh vm-internal --zone us-central1-c
 
 SSH to a private VM instance using IAP tunnel:
 gcloud compute ssh vm-internal --zone us-central1-c --tunnel-through-iap
+
+Move a VM instance from one zone to another:
+gcloud compute instances move example-instance-1  --zone us-central1-b --destination-zone us-central1-f
 
 -------------------------------------------------------------------------
 VPC Network:
@@ -33,3 +35,9 @@ gcloud compute firewall-rules create privatenet-allow-icmp-ssh-rdp --direction=I
 
 To list all the firewall rules (sorted by VPC network):
 gcloud compute firewall-rules list --sort-by=NETWORK
+
+-------------------------------------------------------------------------
+Google Cloud Storage:
+
+To create a bucket:
+gsutil mb gs://BUCKET_NAME
