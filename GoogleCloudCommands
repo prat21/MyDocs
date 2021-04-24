@@ -1,0 +1,29 @@
+Compute Engine VM instance:
+
+To create VM instance:
+gcloud compute instances create privatenet-us-vm --zone=us-central1-c --machine-type=f1-micro --subnet=privatesubnet-us --image-family=debian-10 --image-project=debian-cloud --boot-disk-size=10GB --boot-disk-type=pd-standard --boot-disk-device-name=privatenet-us-vm
+
+
+To list all the VM instances (sorted by zone):
+gcloud compute instances list --sort-by=ZONE
+
+-------------------------------------------------------------------------
+VPC Network:
+
+To create a VPC network(custom mode):
+gcloud compute networks create privatenet --subnet-mode=custom
+
+To create subnet in a VPC network(say the VPC network name is "privatenet"):
+gcloud compute networks subnets create privatesubnet-us --network=privatenet --region=us-central1 --range=172.16.0.0/24
+
+To list VPC networks:
+gcloud compute networks list
+
+To list the available VPC subnets (sorted by VPC network):
+gcloud compute networks subnets list --sort-by=NETWORK
+
+To create a firewall rule:
+gcloud compute firewall-rules create privatenet-allow-icmp-ssh-rdp --direction=INGRESS --priority=1000 --network=privatenet --action=ALLOW --rules=icmp,tcp:22,tcp:3389 --source-ranges=0.0.0.0/0
+
+To list all the firewall rules (sorted by VPC network):
+gcloud compute firewall-rules list --sort-by=NETWORK
