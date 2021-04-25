@@ -48,3 +48,12 @@ gsutil ls gs://[YOUR_BUCKET_NAME]
 To upload a file in a bucket:
 gsutil cp setup.html gs://$BUCKET_NAME_1
 
+To get the acl list for an object in a bucket:
+gsutil acl get gs://$BUCKET_NAME_1/setup.html  > acl.txt
+
+To set the access list to private:
+gsutil acl set private gs://$BUCKET_NAME_1/setup.html
+
+To update the access list to make the file publicly readable:
+gsutil acl ch -u AllUsers:R gs://$BUCKET_NAME_1/setup.html
+
