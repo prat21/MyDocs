@@ -41,3 +41,10 @@ Google Cloud Storage:
 
 To create a bucket:
 gsutil mb gs://BUCKET_NAME
+
+To list items in a bucket:
+gsutil ls gs://[YOUR_BUCKET_NAME]
+
+To upload a file in a bucket:
+gsutil cp setup.html gs://$BUCKET_NAME_1
+
