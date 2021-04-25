@@ -57,3 +57,8 @@ gsutil acl set private gs://$BUCKET_NAME_1/setup.html
 To update the access list to make the file publicly readable:
 gsutil acl ch -u AllUsers:R gs://$BUCKET_NAME_1/setup.html
 
+To view the current lifecycle policy of a bucket:
+gsutil lifecycle get gs://$BUCKET_NAME_1
+
+To set the lifecycle policy of a bucket(using json):
+gsutil lifecycle set life.json gs://$BUCKET_NAME_1
