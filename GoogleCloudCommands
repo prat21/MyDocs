@@ -62,3 +62,22 @@ gsutil lifecycle get gs://$BUCKET_NAME_1
 
 To set the lifecycle policy of a bucket(using json):
 gsutil lifecycle set life.json gs://$BUCKET_NAME_1
+
+To view the current versioning status for the bucket:
+gsutil versioning get gs://$BUCKET_NAME_1
+
+To enable versioning of a bucket:
+gsutil versioning set on gs://$BUCKET_NAME_1
+
+To copy a file to the bucket with the versioning:
+gsutil cp -v setup.html gs://$BUCKET_NAME_1
+
+To list all versions of the file:
+gsutil ls -a gs://$BUCKET_NAME_1/setup.html
+
+To download an original version of a file from bucket:
+gsutil cp $VERSION_NAME recovered.txt
+
+To sync a local folder with cloud storage bucket:
+gsutil rsync -r ./firstlevel gs://$BUCKET_NAME_1/firstlevel
+(Where firstlevel is the local folder, whose contents will be copied into the bucket recursively)
