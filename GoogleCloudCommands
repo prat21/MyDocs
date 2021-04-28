@@ -81,3 +81,10 @@ gsutil cp $VERSION_NAME recovered.txt
 To sync a local folder with cloud storage bucket:
 gsutil rsync -r ./firstlevel gs://$BUCKET_NAME_1/firstlevel
 (Where firstlevel is the local folder, whose contents will be copied into the bucket recursively)
+
+-------------------------------------------------------------------
+
+Cloud VPN:
+
+Cloud VPN facilitates the connection of GCP resources present in a particular VPC network with other networks (either VPC network or external network), using a secured tunnel and internal IP addresses.
+
