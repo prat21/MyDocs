@@ -89,3 +89,6 @@ Cloud VPN:
 Cloud VPN facilitates the connection of GCP resources present in a particular VPC network with other networks (either VPC network or external network), using a secured tunnel and internal IP addresses.
 
 Dedicated and Partner Interconnect also facilitates the connection of on-premise resource with GCP resources using internal IP addresses.
+
+Direct and Carrier peering facilitates the connection of on-premise resources with GCP resources using Google's edge point of presence (PoP) using public IP address.
+
