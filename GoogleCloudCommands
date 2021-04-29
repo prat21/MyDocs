@@ -95,3 +95,8 @@ Direct and Carrier peering facilitates the connection of on-premise resources wi
 See: https://callcenterstudio.com/google-cloud-connection-blogs/
 
 Shared VPC and VPC peering is a way to establish direct connection between resources residing on seperate VPC networks using internal IP address. Cloud VPN is another way to achieve the same, but Shared VPC/VPC peering is more suitable for this type of scenario and comes with low network latency and low cost.
+
+-------------------------------------------------------------------
+Understanding the difference between TCP and HTTP:
+
+https://stackoverflow.com/questions/23157817/http-vs-tcp-ip-send-data-to-a-web-server
