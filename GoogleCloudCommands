@@ -100,3 +100,18 @@ Shared VPC and VPC peering is a way to establish direct connection between resou
 Understanding the difference between TCP and HTTP:
 
 https://stackoverflow.com/questions/23157817/http-vs-tcp-ip-send-data-to-a-web-server
+
+-------------------------------------------------------------------
+Deployment Manager:
+
+To create a deployment. The --preview flag gives a preview without actually starting the deployment.
+gcloud deployment-manager deployments create dminfra --config=config.yaml --preview
+
+To actually start a deployment which has been created using the command as shown above, use the below command. The update command commits the preview.
+gcloud deployment-manager deployments update dminfra
+
+To create and start the deployment at the same time, without previewing it, run the command.
+gcloud deployment-manager deployments create dminfra --config=config.yaml
+
+To delete a deployment.
+gcloud deployment-manager deployments delete dminfra
