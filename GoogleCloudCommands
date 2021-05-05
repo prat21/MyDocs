@@ -1,6 +1,15 @@
 Cheat Sheet
 https://cloud.google.com/sdk/gcloud/reference/cheat-sheet
 
+---------------------------------------
+Compute engine default config:
+
+To list the default configuration of a GCP project:
+gcloud compute project-info describe --project <your_project_ID>
+
+To get all the gcloud commands:
+gcloud -h OR gcloud --help
+
 --------------------------------------
 Compute Engine VM instance:
 
