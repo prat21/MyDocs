@@ -1,6 +1,14 @@
 Cheat Sheet
 https://cloud.google.com/sdk/gcloud/reference/cheat-sheet
 
+-------------------------------------
+To enable gcloud interactive mode:
+gcloud beta interactive
+
+When using the interactive mode, press TAB to complete file path and resource arguments. If a dropdown menu appears, press TAB to move through the list, and press the spacebar to select your choice.
+When using the interactive mode, press TAB to complete file path and resource arguments. If a dropdown menu appears, press TAB to move through the list, and press the spacebar to select your choice.
+gcloud compute instances describe <your_vm>
+
 ---------------------------------------
 Compute engine default config:
 
@@ -17,7 +25,7 @@ To see what your default region and zone settings are:
 gcloud config get-value compute/zone
 gcloud config get-value compute/region
 
-To list the default configuration of a GCP project:
+To list the default configuration(for compute engine) of a GCP project:
 gcloud compute project-info describe --project <your_project_ID>
 
 To get all the gcloud commands:
