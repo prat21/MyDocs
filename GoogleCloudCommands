@@ -4,6 +4,19 @@ https://cloud.google.com/sdk/gcloud/reference/cheat-sheet
 ---------------------------------------
 Compute engine default config:
 
+To View the list of configurations in your environment:
+gcloud config list
+
+To list all the properties:
+gcloud config list --all
+
+To list the default zone of compute in the config of your env:
+gcloud config list compute/zone
+
+To see what your default region and zone settings are:
+gcloud config get-value compute/zone
+gcloud config get-value compute/region
+
 To list the default configuration of a GCP project:
 gcloud compute project-info describe --project <your_project_ID>
 
