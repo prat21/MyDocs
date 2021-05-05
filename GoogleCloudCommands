@@ -21,6 +21,9 @@ gcloud config list --all
 To list the default zone of compute in the config of your env:
 gcloud config list compute/zone
 
+To set your default compute zone to us-central1-a:
+gcloud config set compute/zone us-central1-a
+
 To see what your default region and zone settings are:
 gcloud config get-value compute/zone
 gcloud config get-value compute/region
