@@ -152,3 +152,25 @@ gcloud deployment-manager deployments create dminfra --config=config.yaml
 
 To delete a deployment.
 gcloud deployment-manager deployments delete dminfra
+
+-------------------------------------------------------------------
+Google Kubernetes Engine:
+
+To create a kubernetes cluster:
+gcloud container clusters create [CLUSTER-NAME]
+
+To authenticate the cluster:
+gcloud container clusters get-credentials [CLUSTER-NAME]
+
+To create a deployment (deploy a conatainerized application):
+kubectl create deployment hello-server --image=gcr.io/google-samples/hello-app:1.0
+
+To create a Kubernetes Service, which is a Kubernetes resource that lets you expose your application to external traffic:
+kubectl expose deployment hello-server --type=LoadBalancer --port 8080
+
+To get the list of kubernetes services:
+kubectl get service
+
+To delete a cluster:
+gcloud container clusters delete [CLUSTER-NAME]
+
