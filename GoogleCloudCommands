@@ -1,6 +1,5 @@
 Cheat Sheet
 https://cloud.google.com/sdk/gcloud/reference/cheat-sheet
-
 -------------------------------------
 To enable gcloud interactive mode:
 gcloud beta interactive
@@ -72,6 +71,9 @@ gcloud compute firewall-rules create privatenet-allow-icmp-ssh-rdp --direction=I
 
 To list all the firewall rules (sorted by VPC network):
 gcloud compute firewall-rules list --sort-by=NETWORK
+
+To create a static external IP address:
+gcloud compute addresses create network-lb-ip-1 --region us-central1
 
 -------------------------------------------------------------------------
 Google Cloud Storage:
