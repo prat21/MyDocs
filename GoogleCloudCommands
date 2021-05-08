@@ -51,6 +51,15 @@ gcloud compute ssh vm-internal --zone us-central1-c --tunnel-through-iap
 Move a VM instance from one zone to another:
 gcloud compute instances move example-instance-1  --zone us-central1-b --destination-zone us-central1-f
 
+To create target pools:
+gcloud compute target-pools create www-pool --region us-central1 --http-health-check basic-check
+
+To add instances in the target pool:
+gcloud compute target-pools add-instances www-pool --instances www1,www2,www3
+
+To create compute instance group from template:
+gcloud compute instance-groups managed create lb-backend-group --template=lb-backend-template --size=2 --zone=us-central1-a
+
 -------------------------------------------------------------------------
 VPC Network:
 
@@ -72,8 +81,23 @@ gcloud compute firewall-rules create privatenet-allow-icmp-ssh-rdp --direction=I
 To list all the firewall rules (sorted by VPC network):
 gcloud compute firewall-rules list --sort-by=NETWORK
 
-To create a static external IP address:
+To create a regional static external IP address:
 gcloud compute addresses create network-lb-ip-1 --region us-central1
+
+To create a global static external IP address:
+gcloud compute addresses create lb-ipv4-1 --ip-version=IPV4 --global
+
+To create firewall rule for health check rule for global http(s) load balancer. This is an ingress rule that allows traffic from the Google Cloud health checking systems (130.211.0.0/22 and 35.191.0.0/16).
+gcloud compute firewall-rules create fw-allow-health-check \
+    --network=default \
+    --action=allow \
+    --direction=ingress \
+    --source-ranges=130.211.0.0/22,35.191.0.0/16 \
+    --target-tags=allow-health-check \
+    --rules=tcp:80
+
+To create health check:
+gcloud compute health-checks create http http-basic-check --port 80
 
 -------------------------------------------------------------------------
 Google Cloud Storage:
