@@ -140,6 +140,9 @@ Understanding the difference between TCP and HTTP:
 
 https://stackoverflow.com/questions/23157817/http-vs-tcp-ip-send-data-to-a-web-server
 
+Understanding forwarding rule in GCP:
+https://cloud.google.com/load-balancing/docs/forwarding-rule-concepts
+
 -------------------------------------------------------------------
 Deployment Manager:
 
