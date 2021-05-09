@@ -290,3 +290,9 @@ gcloud compute addresses describe lb-ipv4-1 \
         --global \
         --target-http-proxy=http-lb-proxy \
         --ports=80
+
+-------------------------------------------------------------------------------------------
+Cloud SQL:
+
+To connect to a cloud sql instance:
+gcloud sql connect [INSTANCE_NAME]] --user=root
