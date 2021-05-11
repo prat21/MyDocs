@@ -120,3 +120,29 @@ https://www.youtube.com/watch?v=r7ce2yqdckk
 https://www.coursera.org/lecture/logging-monitoring-observability-google-cloud/exporting-and-analyzing-logs-peXBz
 
 https://cloud.google.com/kubernetes-engine/docs/concepts/cluster-autoscaler
+
+https://cloud.google.com/compute/docs/disks/snapshots
+
+https://cloud.google.com/compute/docs/regions-zones/global-regional-zonal-resources#globalresources
+
+https://cloud.google.com/compute/docs/instances/moving-instance-across-zones
+
+https://cloud.google.com/appengine/docs/admin-api/migrating-splitting-traffic
+
+https://cloud.google.com/kubernetes-engine/docs/concepts/service
+https://kubernetes.io/docs/concepts/services-networking/service/
+
+https://cloud.google.com/bigquery/docs/estimate-costs#bq
+
+IAM:
+https://cloud.google.com/iam/docs/creating-custom-roles
+https://cloud.google.com/sdk/gcloud/reference/iam
+https://cloud.google.com/iam/docs/granting-changing-revoking-access
+
+Google cloud storage:
+https://cloud.google.com/storage/docs/storage-classes#comparison_of_storage_classes
+https://cloud.google.com/storage/docs/access-control
+https://cloud.google.com/storage/docs/access-control/signing-urls-with-helpers
+
+Service Account:
+https://cloud.google.com/iam/docs/service-accounts

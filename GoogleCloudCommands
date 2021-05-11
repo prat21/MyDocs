@@ -188,6 +188,17 @@ Google Kubernetes Engine:
 To create a kubernetes cluster:
 gcloud container clusters create [CLUSTER-NAME]
 
+To create multi zonal cluster with autoscaling enabled:
+gcloud container clusters create [CLUSTER-NAME] \
+  --num-nodes 2 \
+  --zone us-central1-a \
+  --node-locations us-central1-a,us-central1-b,us-central1-f \
+  --enable-autoscaling --min-nodes 1 --max-nodes 4
+
+This will create six nodes across three zones initially, with a minimum of one node per zone and a maximum of four nodes per zone.
+In this example, the total size of the cluster can be between three and twelve nodes, spread across the three zones.
+If one of the zones fails, the total size of the cluster can be between two and eight nodes.
+
 To authenticate the cluster:
 gcloud container clusters get-credentials [CLUSTER-NAME]
 
