@@ -199,20 +199,73 @@ This will create six nodes across three zones initially, with a minimum of one n
 In this example, the total size of the cluster can be between three and twelve nodes, spread across the three zones.
 If one of the zones fails, the total size of the cluster can be between two and eight nodes.
 
+To enable autoscaling for an existing node pool, run the following command:
+gcloud container clusters update [cluster-name] --enable-autoscaling \
+    --min-nodes 1 --max-nodes 10 --region [compute-region] || --zone [compute-zone] --node-pool default-pool
+
+To disable autoscaling for a specific node pool, run the following command:
+gcloud container clusters update [cluster-name] --no-enable-autoscaling \
+    --node-pool pool-name [--zone compute-zone --project project-id]
+
 To authenticate the cluster:
 gcloud container clusters get-credentials [CLUSTER-NAME]
 
-To create a deployment (deploy a conatainerized application):
+To create a deployment (deploy a containerized application):
 kubectl create deployment hello-server --image=gcr.io/google-samples/hello-app:1.0
+
+To create a deployment using a deployment descriptor (Pod template):
+kubectl apply -f [DEPLOYMENT_DESCRIPTOR]
 
 To create a Kubernetes Service, which is a Kubernetes resource that lets you expose your application to external traffic:
 kubectl expose deployment hello-server --type=LoadBalancer --port 8080
 
+To get the list of pods (filtered by key-value pair):
+kubectl get pods -l [KEY=VALUE]
+
+To get information about a specific Pod:
+kubectl describe pod [POD_NAME]
+
+To view a Deployment's manifest, run the following command:
+kubectl get deployments [DEPLOYMENT_NAME] -o yaml
+
 To get the list of kubernetes services:
 kubectl get service
 
+To update a deployment, with new version of app:
+kubectl apply -f [DEPLOYMENT_FILE]
+or
+kubectl set image deployment nginx nginx=nginx:1.9.1
+See: https://cloud.google.com/kubernetes-engine/docs/how-to/stateless-apps#update
+
+To roll back an update:
+kubectl rollout undo deployment my-deployment
+or to rollback to specific version
+kubectl rollout undo deployment my-deployment --to-revision=3
+
+To scale a deployment (other than auto-scaling):
+kubectl scale deployment [DEPLOYMENT_NAME] --replicas [NUMBER_OF_REPLICAS]
+
+Tp apply autoscaling for a deployment:
+kubectl autoscale deployment my-app --max 6 --min 4 --cpu-percent 50
+
 To delete a cluster:
 gcloud container clusters delete [CLUSTER-NAME]
+
+To get details of deployment:
+kubectl describe deployments
+
+To disable cloud operations for GKE (cloud monitoring and logging),while creating a cluster:
+gcloud container clusters create [CLUSTER_NAME] \
+  --zone=[ZONE] \
+  --project=[PROJECT_ID] \
+  --cluster-version=[CLUSTER_VERSION] \
+  --no-enable-stackdriver-kubernetes
+Otherwise cloud Operations for GKE is enabled by default.
+
+To enable Cloud Operations for GKE, in an existing cluster:
+gcloud container clusters update [CLUSTER_NAME] \
+  --zone=[ZONE]  \
+  --enable-stackdriver-kubernetes
 
 --------------------------------------------------------------------
 How to create managed load-balanced instance group:

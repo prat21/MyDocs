@@ -41,8 +41,6 @@ https://cloud.google.com/compute/docs/images/image-management-best-practices
 
 https://cloud.google.com/migrate/compute-engine/docs/4.11/concepts/architecture/gcp-reference-architecture
 
-https://cloud.google.com/kubernetes-engine/docs
-
 https://cloud.google.com/anthos/docs/concepts/overview
 https://cloud.google.com/anthos/docs/tutorials/explore-anthos
 
@@ -114,24 +112,34 @@ https://cloud.google.com/network-connectivity/docs/interconnect/concepts/dedicat
 https://cloud.google.com/network-connectivity/docs/interconnect/concepts/partner-overview
 
 https://cloud.google.com/logging/docs/export/configure_export_v2
-https://cloud.google.com/stackdriver/docs/solutions/gke
+
 
 https://www.youtube.com/watch?v=r7ce2yqdckk
 https://www.coursera.org/lecture/logging-monitoring-observability-google-cloud/exporting-and-analyzing-logs-peXBz
 
-https://cloud.google.com/kubernetes-engine/docs/concepts/cluster-autoscaler
-
 https://cloud.google.com/compute/docs/disks/snapshots
-
 https://cloud.google.com/compute/docs/regions-zones/global-regional-zonal-resources#globalresources
 
 https://cloud.google.com/compute/docs/instances/moving-instance-across-zones
 
 https://cloud.google.com/appengine/docs/admin-api/migrating-splitting-traffic
 
+Kubernetes:
+https://cloud.google.com/kubernetes-engine/docs
+https://cloud.google.com/kubernetes-engine/docs/concepts/types-of-clusters
+https://cloud.google.com/kubernetes-engine/docs/concepts/cluster-architecture
+https://cloud.google.com/kubernetes-engine/docs/concepts/cluster-upgrades
+https://cloud.google.com/kubernetes-engine/docs/concepts/cluster-autoscaler
+https://cloud.google.com/kubernetes-engine/docs/concepts/deployment
+https://cloud.google.com/kubernetes-engine/docs/how-to/scaling-apps#autoscaling-deployments
 https://cloud.google.com/kubernetes-engine/docs/concepts/service
 https://kubernetes.io/docs/concepts/services-networking/service/
+https://cloud.google.com/sdk/gcloud/reference/container/clusters/get-credentials
+https://cloud.google.com/stackdriver/docs/solutions/gke
+https://cloud.google.com/stackdriver/docs/solutions/gke/managing-logs
+https://cloud.google.com/blog/products/management-tools/using-logging-your-apps-running-kubernetes-engine
 
+BigQuery:
 https://cloud.google.com/bigquery/docs/estimate-costs#bq
 
 IAM:
@@ -143,6 +151,8 @@ Google cloud storage:
 https://cloud.google.com/storage/docs/storage-classes#comparison_of_storage_classes
 https://cloud.google.com/storage/docs/access-control
 https://cloud.google.com/storage/docs/access-control/signing-urls-with-helpers
+https://cloud.google.com/storage/docs/gsutil/commands/signurl#usage
 
 Service Account:
 https://cloud.google.com/iam/docs/service-accounts
+https://www.preveil.com/blog/public-and-private-key/ (Explains the public and private key concept)
