@@ -173,3 +173,6 @@ https://cloud.google.com/bigtable/docs/quickstart-cbt
 https://cloud.google.com/bigtable/docs/creating-instance
 https://cloud.google.com/bigtable/docs/instances-clusters-nodes
 https://cloud.google.com/bigtable/docs/audit-logging
+
+Cloud Audit logs:
+https://cloud.google.com/logging/docs/audit
