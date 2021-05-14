@@ -89,10 +89,6 @@ https://cloud.google.com/docs/compare/aws
 
 https://cloud.google.com/storage/docs/storage-classes
 
-https://cloud.google.com/bigtable/docs/overview
-
-https://cloud.google.com/bigtable/docs/quickstart-cbt
-
 https://cloud.google.com/datastore/docs/firestore-or-datastore
 
 https://datastudio.google.com/navigation/reporting
@@ -123,6 +119,13 @@ https://cloud.google.com/compute/docs/regions-zones/global-regional-zonal-resour
 https://cloud.google.com/compute/docs/instances/moving-instance-across-zones
 
 https://cloud.google.com/appengine/docs/admin-api/migrating-splitting-traffic
+
+Compute Engine:
+https://cloud.google.com/compute/docs/autoscaler/
+https://cloud.google.com/compute/docs/autoscaler/multiple-signals
+https://cloud.google.com/compute/docs/startupscript
+https://cloud.google.com/compute/docs/disks/
+https://cloud.google.com/compute/docs/disks/add-persistent-disk#create_disk
 
 Kubernetes:
 https://cloud.google.com/kubernetes-engine/docs
@@ -156,3 +159,14 @@ https://cloud.google.com/storage/docs/gsutil/commands/signurl#usage
 Service Account:
 https://cloud.google.com/iam/docs/service-accounts
 https://www.preveil.com/blog/public-and-private-key/ (Explains the public and private key concept)
+
+VPC:
+https://cloud.google.com/vpc/docs/vpc
+https://cloud.google.com/network-connectivity/docs/router/concepts/overview
+https://cloud.google.com/network-connectivity/docs/vpn/concepts/classic-topologies
+https://cloud.google.com/network-connectivity/docs/vpn/concepts/overview
+
+BigTable:
+Bigtable uses apache Hbase. Bigtable is not a relational database. It does not support SQL queries, joins, or multi-row transactions.
+https://cloud.google.com/bigtable/docs/overview
+https://cloud.google.com/bigtable/docs/quickstart-cbt

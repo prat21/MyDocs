@@ -8,6 +8,10 @@ When using the interactive mode, press TAB to complete file path and resource ar
 When using the interactive mode, press TAB to complete file path and resource arguments. If a dropdown menu appears, press TAB to move through the list, and press the spacebar to select your choice.
 gcloud compute instances describe <your_vm>
 
+To install a component using gcloud. For example to install the cbt(bigtable) component:
+gcloud components update
+gcloud components install cbt
+
 ---------------------------------------
 Compute engine default config:
 
@@ -59,6 +63,15 @@ gcloud compute target-pools add-instances www-pool --instances www1,www2,www3
 
 To create compute instance group from template:
 gcloud compute instance-groups managed create lb-backend-group --template=lb-backend-template --size=2 --zone=us-central1-a
+
+To create a disk:
+gcloud compute disks create [DISK_NAME] \
+  --size [DISK_SIZE] \
+  --type [DISK_TYPE]
+
+To attach a disk to an instance:
+gcloud compute instances attach-disk [INSTANCE_NAME] \
+  --disk [DISK_NAME]
 
 -------------------------------------------------------------------------
 VPC Network:
@@ -360,3 +373,61 @@ Cloud SQL:
 
 To connect to a cloud sql instance:
 gcloud sql connect [INSTANCE_NAME]] --user=root
+
+-------------------------------------------------------------------------------------------
+IAM:
+
+To grant the Viewer role to the user my-user@example.com for the project my-project:
+gcloud projects add-iam-policy-binding my-project \
+    --member=user:my-user@example.com --role=roles/viewer
+
+To quickly revoke a role from a user:
+gcloud projects remove-iam-policy-binding my-project \
+    --member=user:my-user@example.com --role=roles/viewer
+
+To get the all iam policies of a project:
+gcloud projects get-iam-policy my-project --format json > ~/policy.json
+
+To set the iam policies of a project:
+gcloud projects set-iam-policy [project-id] [filepath]
+
+To list grantable roles for a resource identified via full resource name (for example a compute engine instance):
+gcloud iam list-grantable-roles  //compute.googleapis.com/projects/example-project/zones/us-central1-f/instances/example-instance
+
+-------------------------------------------------------------------------------------------
+BigTable:
+To create an bigtable instance:
+gcloud bigtable instances create INSTANCE_ID \
+    --display-name=DISPLAY_NAME \
+    [--cluster-config=id=CLUSTER_ID,zone=CLUSTER_ZONE,[nodes=CLUSTER_NUM_NODES,kms-key=KMS_KEY]] \
+    [--cluster-storage-type=CLUSTER_STORAGE_TYPE]
+
+To enable replication for a production instance, create another cluster:
+gcloud bigtable clusters create CLUSTER_ID \
+    --instance=INSTANCE_ID \
+    --zone=ZONE \
+    [--num-nodes=NUM_NODES] \
+    [--kms-key=KMS_KEY] \
+    [--project=PROJECT]
+See: https://cloud.google.com/bigtable/docs/creating-instance
+
+To create a table:
+cbt createtable my-table
+
+To list tables:
+cbt ls
+
+To create a column family named cf1:
+cbt createfamily my-table cf1
+
+To list column families:
+cbt ls my-table
+
+To put the value "test-value" in the row r1, using the column family cf1 and the column qualifier c1:
+cbt set my-table r1 cf1:c1=test-value
+
+To read the data in a table:
+cbt read my-table
+
+To delete the table:
+cbt deletetable my-table
