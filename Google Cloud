@@ -170,3 +170,6 @@ BigTable:
 Bigtable uses apache Hbase. Bigtable is not a relational database. It does not support SQL queries, joins, or multi-row transactions.
 https://cloud.google.com/bigtable/docs/overview
 https://cloud.google.com/bigtable/docs/quickstart-cbt
+https://cloud.google.com/bigtable/docs/creating-instance
+https://cloud.google.com/bigtable/docs/instances-clusters-nodes
+https://cloud.google.com/bigtable/docs/audit-logging
