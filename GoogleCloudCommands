@@ -117,6 +117,12 @@ Google Cloud Storage:
 
 To create a bucket:
 gsutil mb gs://BUCKET_NAME
+OR
+gsutil mb -p [PROJECT_ID] -c [STORAGE_CLASS] -l [BUCKET_LOCATION] -b on gs://BUCKET_NAME
+WHERE -p: Specify the project with which your bucket will be associated. For example, my-project.
+      -c: Specify the default storage class of your bucket. For example, NEARLINE.
+      -l: Specify the location of your bucket. For example, US-EAST1.
+      -b: Enable uniform bucket-level access for your bucket.
 
 To list items in a bucket:
 gsutil ls gs://[YOUR_BUCKET_NAME]
@@ -151,13 +157,43 @@ gsutil cp -v setup.html gs://$BUCKET_NAME_1
 To list all versions of the file:
 gsutil ls -a gs://$BUCKET_NAME_1/setup.html
 
-To download an original version of a file from bucket:
-gsutil cp $VERSION_NAME recovered.txt
+To download noncurrent version of an object:
+gsutil cp gs://[SOURCE_BUCKET_NAME]/[SOURCE_OBJECT_NAME#GENERATION_NUMBER] gs://[DESTINATION_BUCKET_NAME]/[DESTINATION_OBJECT_NAME]
+WHERE "GENERATION_NUMBER" is the generation number for the noncurrent version you want to copy. For example,1560468815691234.
+
+To delete noncurrent version of an object:
+gsutil rm gs://[BUCKET_NAME]/[OBJECT_NAME#GENERATION_NUMBER]
 
 To sync a local folder with cloud storage bucket:
 gsutil rsync -r ./firstlevel gs://$BUCKET_NAME_1/firstlevel
 (Where firstlevel is the local folder, whose contents will be copied into the bucket recursively)
 
+To change the storage class of object:
+gsutil rewrite -s STORAGE_CLASS gs://PATH_TO_OBJECT
+
+To change the default storage class of a bucket:
+gsutil defstorageclass set STORAGE_CLASS gs://BUCKET_NAME
+
+To enable uniform bucket level access(which disables object level ACLs):
+gsutil uniformbucketlevelaccess set on gs://BUCKET_NAME
+
+To get uniform bucket level access status:
+gsutil uniformbucketlevelaccess get gs://BUCKET_NAME
+
+To disable uniform bucket level access:
+gsutil uniformbucketlevelaccess set off gs://BUCKET_NAME
+
+To get the size of a bucket:
+gsutil du -s gs://BUCKET_NAME
+
+To get metadata of a bucket:
+gsutil ls -L -b gs://BUCKET_NAME
+
+To get metadata of an object:
+gsutil stat gs://BUCKET_NAME/OBJECT_NAME
+
+To delete a bucket:
+gsutil rm -r gs://BUCKET_NAME
 -------------------------------------------------------------------
 
 Hybrid Connectivity:
@@ -431,3 +467,26 @@ cbt read my-table
 
 To delete the table:
 cbt deletetable my-table
+-------------------------------------------------------------------------------
+LOGGING:
+
+To read your Google Cloud project-level audit log entries:
+gcloud logging read "logName : projects/PROJECT_ID/logs/cloudaudit.googleapis.com" --project=PROJECT_ID
+
+To read your folder-level audit log entries:
+gcloud logging read "logName : folders/FOLDER_ID/logs/cloudaudit.googleapis.com" --folder=FOLDER_ID
+
+To read your organization-level audit log entries:
+gcloud logging read "logName : organizations/ORGANIZATION_ID/logs/cloudaudit.googleapis.com" --organization=ORGANIZATION_ID
+
+To create an aggregated sink for a folder:
+gcloud logging sinks create SINK_NAME \
+storage.googleapis.com/BUCKET_NAME --include-children \
+--folder=FOLDER_ID --log-filter="logName:activity"
+To create a sink on the organization level, replace --folder=[FOLDER_ID] with --organization=[ORGANIZATION_ID].
+For a billing account, replace with --billing-account=[BILLING_ACCOUNT_ID].
+
+To create a log sink (not aggregated):
+To create a sink to a Cloud Logging log bucket
+gcloud logging sinks create my-sink logging.googleapis.com/projects/myproject123/locations/global/buckets/my-bucket \
+  --log-filter='logName="projects/myproject123/logs/matched"' --description="My first sink"

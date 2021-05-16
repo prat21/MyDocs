@@ -155,6 +155,17 @@ https://cloud.google.com/storage/docs/storage-classes#comparison_of_storage_clas
 https://cloud.google.com/storage/docs/access-control
 https://cloud.google.com/storage/docs/access-control/signing-urls-with-helpers
 https://cloud.google.com/storage/docs/gsutil/commands/signurl#usage
+https://cloud.google.com/storage/docs/changing-storage-classes#gsutil
+https://cloud.google.com/storage/docs/lifecycle
+For buckets in a region, the new storage class cannot be Multi-Regional Storage.
+For buckets in a multi-region or dual-region, the new storage class cannot be Regional Storage.
+https://cloud.google.com/storage/docs/managing-lifecycles#gsutil_1
+https://cloud.google.com/storage/docs/moving-buckets
+Changing the default storage class of a bucket does not affect any of the objects that already exist in the bucket.
+https://cloud.google.com/storage/docs/creating-buckets
+https://cloud.google.com/storage/docs/uniform-bucket-level-access
+https://cloud.google.com/storage/docs/object-versioning
+https://cloud.google.com/storage/docs/using-object-versioning
 
 Service Account:
 https://cloud.google.com/iam/docs/service-accounts
@@ -174,5 +185,15 @@ https://cloud.google.com/bigtable/docs/creating-instance
 https://cloud.google.com/bigtable/docs/instances-clusters-nodes
 https://cloud.google.com/bigtable/docs/audit-logging
 
+Cloud Logging:
+https://cloud.google.com/logging/docs/routing/overview
+https://cloud.google.com/logging/docs/export
+https://cloud.google.com/logging/docs/export/configure_export_v2
+https://cloud.google.com/logging/docs/export/aggregated_sinks (Aggregated sink)
+
+
 Cloud Audit logs:
 https://cloud.google.com/logging/docs/audit
+https://www.youtube.com/watch?v=iR8GjOwTOrQ
+Data Access audit logs—except for BigQuery—are disabled by default.
+https://cloud.google.com/logging/docs/audit/configure-data-access
