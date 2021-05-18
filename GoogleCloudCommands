@@ -57,6 +57,7 @@ gcloud compute instances move example-instance-1  --zone us-central1-b --destina
 
 To create target pools:
 gcloud compute target-pools create www-pool --region us-central1 --http-health-check basic-check
+Target pool-based load balancers can only use legacy HTTP health checks.
 
 To add instances in the target pool:
 gcloud compute target-pools add-instances www-pool --instances www1,www2,www3
@@ -138,6 +139,9 @@ gsutil acl set private gs://$BUCKET_NAME_1/setup.html
 
 To update the access list to make the file publicly readable:
 gsutil acl ch -u AllUsers:R gs://$BUCKET_NAME_1/setup.html
+
+To make all objects in a bucket readable to everyone on the public internet (For uniform bucket level access enabled bucket):
+gsutil iam ch allUsers:objectViewer gs://BUCKET_NAME
 
 To view the current lifecycle policy of a bucket:
 gsutil lifecycle get gs://$BUCKET_NAME_1

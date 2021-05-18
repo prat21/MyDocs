@@ -127,6 +127,24 @@ https://cloud.google.com/compute/docs/startupscript
 https://cloud.google.com/compute/docs/disks/
 https://cloud.google.com/compute/docs/disks/add-persistent-disk#create_disk
 
+Load Balancers:
+https://cloud.google.com/load-balancing/docs/choosing-load-balancer (Choosing a load balancer)
+https://cloud.google.com/load-balancing/docs/https (External HTTP(S) load balancing)
+https://cloud.google.com/load-balancing/docs/l7-internal (Internal HTTP(S) load balancing)
+https://cloud.google.com/load-balancing/docs/ssl (External SSl (TCP traffic with SSL offload) proxy load balancing)
+https://cloud.google.com/load-balancing/docs/tcp (External TCP proxy load balancing)
+https://cloud.google.com/load-balancing/docs/network/networklb-backend-service (External TCP/UDP network load balancers)
+With the Premium Tier, a load balancer can be configured as a global load balancing service.
+With Standard Tier, a load balancer handles load balancing regionally.
+
+Cloud Monitoring:
+https://cloud.google.com/monitoring/quickstart-lamp
+https://cloud.google.com/monitoring/settings/multiple-projects
+Using the Monitoring agent is optional but recommended.
+Monitoring can access some instance metrics without the Monitoring agent, including CPU utilization, some disk traffic metrics,
+network traffic, and uptime information
+https://cloud.google.com/monitoring/agent/monitoring
+
 Kubernetes:
 https://cloud.google.com/kubernetes-engine/docs
 https://cloud.google.com/kubernetes-engine/docs/concepts/types-of-clusters
@@ -150,6 +168,10 @@ https://cloud.google.com/iam/docs/creating-custom-roles
 https://cloud.google.com/sdk/gcloud/reference/iam
 https://cloud.google.com/iam/docs/granting-changing-revoking-access
 
+GCLOUD SDK AUTHORIZATION:
+https://cloud.google.com/sdk/docs/authorizing
+https://cloud.google.com/sdk/docs/initializing
+
 Google cloud storage:
 https://cloud.google.com/storage/docs/storage-classes#comparison_of_storage_classes
 https://cloud.google.com/storage/docs/access-control
@@ -166,6 +188,12 @@ https://cloud.google.com/storage/docs/creating-buckets
 https://cloud.google.com/storage/docs/uniform-bucket-level-access
 https://cloud.google.com/storage/docs/object-versioning
 https://cloud.google.com/storage/docs/using-object-versioning
+https://cloud.google.com/storage/docs/access-control/making-data-public
+
+Storage Transfer Service:
+https://cloud.google.com/storage-transfer/docs/overview
+https://cloud.google.com/storage-transfer/docs/create-manage-transfer-console#amazon-s3
+https://cloud.google.com/storage-transfer/docs/configure-access
 
 Service Account:
 https://cloud.google.com/iam/docs/service-accounts
@@ -176,6 +204,7 @@ https://cloud.google.com/vpc/docs/vpc
 https://cloud.google.com/network-connectivity/docs/router/concepts/overview
 https://cloud.google.com/network-connectivity/docs/vpn/concepts/classic-topologies
 https://cloud.google.com/network-connectivity/docs/vpn/concepts/overview
+https://cloud.google.com/vpc/docs/configure-private-google-access
 
 BigTable:
 Bigtable uses apache Hbase. Bigtable is not a relational database. It does not support SQL queries, joins, or multi-row transactions.
