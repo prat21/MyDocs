@@ -89,11 +89,30 @@ gcloud compute networks list
 To list the available VPC subnets (sorted by VPC network):
 gcloud compute networks subnets list --sort-by=NETWORK
 
+To enable vpc flow logs in a subnet:
+gcloud compute networks subnets create SUBNET_NAME \
+    --enable-flow-logs \
+    [other flags as needed]
+
+To enable vpc flow logs for existing subnets:
+gcloud compute networks subnets update SUBNET_NAME \
+    --enable-flow-logs \
+    [other flags as needed]
+
 To create a firewall rule:
 gcloud compute firewall-rules create privatenet-allow-icmp-ssh-rdp --direction=INGRESS --priority=1000 --network=privatenet --action=ALLOW --rules=icmp,tcp:22,tcp:3389 --source-ranges=0.0.0.0/0
 
 To list all the firewall rules (sorted by VPC network):
 gcloud compute firewall-rules list --sort-by=NETWORK
+
+To enable firewall logging:
+gcloud compute firewall-rules update NAME \
+    --enable-logging
+    --logging-metadata=LOGGING_METADATA
+
+To disable firewall logging:
+gcloud compute firewall-rules update NAME \
+    --no-enable-logging
 
 To create a regional static external IP address:
 gcloud compute addresses create network-lb-ip-1 --region us-central1
@@ -251,6 +270,16 @@ gcloud container clusters create [CLUSTER-NAME] \
 This will create six nodes across three zones initially, with a minimum of one node per zone and a maximum of four nodes per zone.
 In this example, the total size of the cluster can be between three and twelve nodes, spread across the three zones.
 If one of the zones fails, the total size of the cluster can be between two and eight nodes.
+
+To create a regional cluster:
+gcloud container clusters create CLUSTER_NAME \
+    --cluster-version VERSION
+    --region COMPUTE_REGION
+
+SEE: https://cloud.google.com/kubernetes-engine/docs/concepts/types-of-clusters
+     https://cloud.google.com/kubernetes-engine/docs/how-to/creating-a-regional-cluster
+A multi-zonal cluster has a single replica of the control plane running in a single zone, and has nodes running in multiple zones.
+A regional cluster has multiple replicas of the control plane, running in multiple zones within a given region.
 
 To enable autoscaling for an existing node pool, run the following command:
 gcloud container clusters update [cluster-name] --enable-autoscaling \

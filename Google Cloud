@@ -126,6 +126,9 @@ https://cloud.google.com/compute/docs/autoscaler/multiple-signals
 https://cloud.google.com/compute/docs/startupscript
 https://cloud.google.com/compute/docs/disks/
 https://cloud.google.com/compute/docs/disks/add-persistent-disk#create_disk
+https://cloud.google.com/compute/docs/disks/create-disk-from-source (create cloned disk)
+https://cloud.google.com/compute/docs/disks/create-snapshots#restore-snapshots
+
 
 Load Balancers:
 https://cloud.google.com/load-balancing/docs/choosing-load-balancer (Choosing a load balancer)
@@ -159,6 +162,8 @@ https://cloud.google.com/sdk/gcloud/reference/container/clusters/get-credentials
 https://cloud.google.com/stackdriver/docs/solutions/gke
 https://cloud.google.com/stackdriver/docs/solutions/gke/managing-logs
 https://cloud.google.com/blog/products/management-tools/using-logging-your-apps-running-kubernetes-engine
+https://cloud.google.com/kubernetes-engine/docs/concepts/node-pools
+https://cloud.google.com/kubernetes-engine/docs/how-to/node-pools
 
 BigQuery:
 https://cloud.google.com/bigquery/docs/estimate-costs#bq
@@ -205,6 +210,16 @@ https://cloud.google.com/network-connectivity/docs/router/concepts/overview
 https://cloud.google.com/network-connectivity/docs/vpn/concepts/classic-topologies
 https://cloud.google.com/network-connectivity/docs/vpn/concepts/overview
 https://cloud.google.com/vpc/docs/configure-private-google-access
+https://cloud.google.com/vpc/docs/using-flow-logs
+https://www.coursera.org/lecture/logging-monitoring-observability-google-cloud/vpc-flow-logs-XWUmD (Vpc flow logs)
+https://cloud.google.com/vpc/docs/using-firewall-rules-logging (Firewall logs)
+https://cloud.google.com/vpc/docs/audit-logging
+
+Firewall:
+https://cloud.google.com/vpc/docs/firewalls
+https://cloud.google.com/vpc/docs/vpc#app-engine-comm (Communications and access for App Engine)
+Since app Engine standard environment instances do not run inside VPC network, VPC firewall rules do not apply to them.
+https://cloud.google.com/vpc/docs/vpc#internet_access_reqs (Internet access requirements)
 
 BigTable:
 Bigtable uses apache Hbase. Bigtable is not a relational database. It does not support SQL queries, joins, or multi-row transactions.
