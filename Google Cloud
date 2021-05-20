@@ -128,6 +128,8 @@ https://cloud.google.com/compute/docs/disks/
 https://cloud.google.com/compute/docs/disks/add-persistent-disk#create_disk
 https://cloud.google.com/compute/docs/disks/create-disk-from-source (create cloned disk)
 https://cloud.google.com/compute/docs/disks/create-snapshots#restore-snapshots
+https://cloud.google.com/compute/docs/disks/scheduled-snapshots
+https://cloud.google.com/compute/docs/disks/regional-persistent-disk
 
 
 Load Balancers:

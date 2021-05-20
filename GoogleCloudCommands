@@ -70,9 +70,60 @@ gcloud compute disks create [DISK_NAME] \
   --size [DISK_SIZE] \
   --type [DISK_TYPE]
 
+To create a regional persistent disk:
+gcloud compute disks create DISK_NAME \
+    --size=DISK_SIZE \
+    --type=DISK_TYPE \
+    --region=REGION \
+    --replica-zones=ZONE1,ZONE2
+
+To attach the regional disk to a vm instance:
+gcloud compute instances attach-disk INSTANCE_NAME \
+    --disk=DISK_NAME \
+    --disk-scope=regional
+
 To attach a disk to an instance:
 gcloud compute instances attach-disk [INSTANCE_NAME] \
   --disk [DISK_NAME]
+
+To resize a disk:
+gcloud compute disks resize [DISK_NAME] --size [DISK_SIZE]
+
+To creating a snapshot of a zonal persistent disk:
+gcloud compute disks snapshot [DISK_NAME] --storage-location [STORAGE_LOCATION]
+
+To creating a snapshot of a regional persistent disk:
+gcloud compute disks snapshot [DISK_NAME] --region [REGION] --storage-location [STORAGE_LOCATION]
+
+To create a disk from a snapshot:
+gcloud compute disks create DISK_NAME \
+    --size=DISK_SIZE \
+    --source-snapshot=SNAPSHOT_NAME \
+    --type=DISK_TYPE
+
+To create a snapshot schedule:
+  gcloud compute resource-policies create snapshot-schedule [SCHEDULE_NAME] \
+      --description "[SCHEDULE_DESCRIPTION]" \
+      --max-retention-days [MAX_RETENTION_DAYS] \
+      --start-time [START_TIME] \
+      --hourly-schedule [SNAPSHOT_INTERVAL] \
+      --daily-schedule \
+      --weekly-schedule [SNAPSHOT_INTERVAL] \
+      --weekly-schedule-from-file [FILE_NAME] \
+      --on-source-disk-delete [DELETION_OPTION]
+
+To attach a snapshot schedule to a disk:
+gcloud compute disks add-resource-policies [DISK_NAME] \
+    --resource-policies [SCHEDULE_NAME] \
+    --zone [ZONE]
+
+To view snapshot schedules:
+gcloud compute resource-policies list
+
+To setting the auto-delete state of a zonal persistent disk:
+gcloud compute instances set-disk-auto-delete example-instance \
+  [--auto-delete|--no-auto-delete] \
+  --disk DISK_NAME
 
 -------------------------------------------------------------------------
 VPC Network:
