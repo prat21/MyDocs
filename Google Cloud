@@ -130,6 +130,13 @@ https://cloud.google.com/compute/docs/disks/create-disk-from-source (create clon
 https://cloud.google.com/compute/docs/disks/create-snapshots#restore-snapshots
 https://cloud.google.com/compute/docs/disks/scheduled-snapshots
 https://cloud.google.com/compute/docs/disks/regional-persistent-disk
+https://cloud.google.com/compute/docs/disks/regional-persistent-disk#use_multi_instances
+https://cloud.google.com/compute/docs/disks/regional-persistent-disk#migrate-repd
+probably, you can only create boot disk from an image and not a snapshot. please verify.
+Difference between image and snapshot:
+https://stackoverflow.com/a/29634892
+https://www.quora.com/What-is-the-difference-between-an-image-and-a-snapshot-on-Google-Cloud
+https://cloud.google.com/compute/docs/images/create-delete-deprecate-private-images
 
 
 Load Balancers:
@@ -216,6 +223,11 @@ https://cloud.google.com/vpc/docs/using-flow-logs
 https://www.coursera.org/lecture/logging-monitoring-observability-google-cloud/vpc-flow-logs-XWUmD (Vpc flow logs)
 https://cloud.google.com/vpc/docs/using-firewall-rules-logging (Firewall logs)
 https://cloud.google.com/vpc/docs/audit-logging
+https://cloud.google.com/vpc/docs/configure-serverless-vpc-access
+(Serverless VPC Access enables you to connect from a serverless environment on Google Cloud (Cloud Run (fully managed), Cloud Functions,
+or the App Engine standard environment) directly to your VPC network.
+This connection makes it possible for your serverless environment to access Compute Engine VM instances, Memorystore instances,
+and any other resources with an internal IP address.)
 
 Firewall:
 https://cloud.google.com/vpc/docs/firewalls
@@ -243,3 +255,42 @@ https://cloud.google.com/logging/docs/audit
 https://www.youtube.com/watch?v=iR8GjOwTOrQ
 Data Access audit logs—except for BigQuery—are disabled by default.
 https://cloud.google.com/logging/docs/audit/configure-data-access
+
+App Engine:
+https://cloud.google.com/appengine/docs/standard
+https://cloud.google.com/appengine/docs/flexible
+https://cloud.google.com/appengine/docs/the-appengine-environments
+https://cloud.google.com/appengine/docs/standard/java11/an-overview-of-app-engine
+https://cloud.google.com/appengine/docs/standard/java11/configuration-files
+You must deploy the initial version of your app to the default service before you can create and deploy additional services to your app.
+https://cloud.google.com/appengine/docs/standard/java11/building-app
+https://cloud.google.com/appengine/docs/standard/java11/config/appref
+https://cloud.google.com/appengine/docs/standard/java11/reference/dispatch-yaml
+An app engine app can have only one dispatch.yaml file.
+https://cloud.google.com/appengine/docs/standard/java11/labeling-resources
+https://cloud.google.com/appengine/docs/standard/java11/how-requests-are-routed
+https://cloud.google.com/appengine/docs/standard/java11/application-security#ingress_controls
+ If you use Cloud Load Balancing with your App Engine app, we recommend that you use ingress controls to ensure that your app receives only internal
+ and Cloud Load Balancing traffic.
+ Otherwise, users can use your app's appspot URL to bypass the load balancer.
+https://cloud.google.com/appengine/docs/standard/java11/access-control#auth-cloud-implicit-java
+By default, the app's environment contains credentials from the default App Engine service account.
+This service account is created by Google when you create an App Engine app and is given full permissions to manage and use all Cloud services in a GCP project.
+https://cloud.google.com/appengine/docs/standard/java11/service-account
+By default, the App Engine default service account has the Editor role in the project.
+https://cloud.google.com/appengine/docs/standard/java11/audit-logging#audit_log_format
+App Engine doesn't write Data Access audit logs or System Event audit logs.
+Admin Activity audit logs and System Event audit logs are free.
+Data Access audit logs and Policy Denied audit logs are chargeable.
+https://cloud.google.com/appengine/docs/standard/java11/testing-and-deploying-your-app#other_deployment_options
+https://cloud.google.com/appengine/docs/standard/java11/testing-and-deploying-your-app#testing-on-app-engine
+https://cloud.google.com/appengine/docs/standard/java11/writing-application-logs
+https://cloud.google.com/appengine/docs/standard/java11/storage-options
+https://cloud.google.com/appengine/docs/standard/java11/using-cloud-datastore
+Datastore mode automatically creates single-property indexes for use with simple types of queries.
+For complex queries that include multiple properties, you'll need to configure composite indexes in your app's index.yaml file.
+https://cloud.google.com/appengine/docs/standard/java11/migrating-traffic
+https://cloud.google.com/appengine/docs/standard/java11/splitting-traffic
+https://cloud.google.com/sdk/gcloud/reference/app/services/set-traffic
+https://cloud.google.com/appengine/docs/standard/java11/scheduling-jobs-with-cron-yaml
+https://cloud.google.com/appengine/docs/standard/java11/connecting-vpc

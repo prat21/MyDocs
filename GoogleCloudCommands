@@ -574,3 +574,52 @@ To create a log sink (not aggregated):
 To create a sink to a Cloud Logging log bucket
 gcloud logging sinks create my-sink logging.googleapis.com/projects/myproject123/locations/global/buckets/my-bucket \
   --log-filter='logName="projects/myproject123/logs/matched"' --description="My first sink"
+-------------------------------------------------------------------------------
+APP engine:
+
+To select a region and create an App Engine application:
+gcloud app create --project=[YOUR_PROJECT_ID]
+Each Cloud project can contain only a single App Engine application, and once created you cannot change the location of your App Engine application.
+
+To check if an App Engine application exists in your Cloud project:
+gcloud app describe
+
+To retrieve the IDs of your app's services and versions:
+gcloud app instances list
+
+To list all services and versions:
+gcloud app versions list
+
+To list all versions for a specific service:
+gcloud app versions list --service=service1
+
+To list only versions that are receiving traffic:
+gcloud app versions list --hide-no-traffic
+
+To display all data about an existing version:
+gcloud app versions describe [VERSION_ID] --service=default
+
+To deploy the dispatch configuration file without otherwise altering the currently serving version:
+gcloud app deploy dispatch.yaml
+SEE: https://cloud.google.com/appengine/docs/standard/java11/how-requests-are-routed
+
+To view the ingress setting for a service:
+gcloud app services describe [SERVICE]
+
+To update the ingress setting for a service:
+gcloud app services update [SERVICE] --ingress=[INGRESS]
+INGRESS: The ingress control you want to apply. One of all, internal-only, or internal-and-cloud-load-balancing.
+
+To migrate traffic immediately:
+gcloud app services set-traffic [MY_SERVICE] --splits [MY_VERSION]=1
+
+To migrate traffic gradually:
+gcloud app services set-traffic [MY_SERVICE] --splits [MY_VERSION]=1 --migrate
+
+To split traffic between versions of a service:
+gcloud app services set-traffic [MY_SERVICE] --splits [MY_VERSION1]=[VERSION1_WEIGHT],[MY_VERSION2]=[VERSION2_WEIGHT] --split-by [IP_OR_COOKIE]
+For example:
+To send all traffic to 'v2' of service 's1', run:
+gcloud app services set-traffic s1 --splits=v2=1
+To split traffic evenly between 'v1' and 'v2' of service 's1', run:
+gcloud app services set-traffic s1 --splits=v2=.5,v1=.5
