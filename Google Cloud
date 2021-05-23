@@ -294,3 +294,7 @@ https://cloud.google.com/appengine/docs/standard/java11/splitting-traffic
 https://cloud.google.com/sdk/gcloud/reference/app/services/set-traffic
 https://cloud.google.com/appengine/docs/standard/java11/scheduling-jobs-with-cron-yaml
 https://cloud.google.com/appengine/docs/standard/java11/connecting-vpc
+
+Cloud SQL:
+https://cloud.google.com/sql/docs/mysql/create-instance
+https://cloud.google.com/sql/docs/mysql/clone-instance

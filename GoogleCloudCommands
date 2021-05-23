@@ -491,8 +491,43 @@ gcloud compute addresses describe lb-ipv4-1 \
 -------------------------------------------------------------------------------------------
 Cloud SQL:
 
+TO create a mysql instance:
+gcloud sql instances create [INSTANCE_NAME] --cpu=[NUMBER_CPUS] --memory=[MEMORY_SIZE] --region=[REGION]
+OR
+gcloud sql instances create [INSTANCE_NAME] --tier=[API_TIER_STRING] --region=[REGION]
+For example, the following string creates an instance with two vCPUs and 7,680 MB of memory:
+gcloud sql instances create myinstance --database-version=MYSQL_8_0 --cpu=2 --memory=7680MB --region=us-central1
+
+To set the password for the "root@%" MySQL user:
+gcloud sql users set-password root --host=% --instance INSTANCE_NAME --password PASSWORD
+
 To connect to a cloud sql instance:
 gcloud sql connect [INSTANCE_NAME]] --user=root
+
+To view summary information about your Cloud SQL instances:
+gcloud sql instances describe [INSTANCE_NAME]
+
+To edit an instance:
+gcloud sql instances patch [INSTANCE_NAME] --backup-start-time 16:00
+
+To clone an instance:
+gcloud sql instances clone [SOURCE_INSTANCE_NAME] [TARGET_INSTANCE_NAME]
+
+To start a stopped instance:
+gcloud sql instances patch [INSTANCE_NAME] --activation-policy ALWAYS
+
+Activation policy options are:
+ALWAYS - The instance is always up and running.
+NEVER- The instance is not restarted.
+If you are using a MySQL instance, you generally set your activation policy to ALWAYS to accept connection requests.
+If you are not using your instance, you can set its activation policy to NEVER to avoid instance charges.
+
+To stop an instance:
+gcloud sql instances patch [INSTANCE_NAME] --activation-policy NEVER
+
+To restart an instance:
+gcloud sql instances restart [INSTANCE_NAME]
+
 
 -------------------------------------------------------------------------------------------
 IAM:
