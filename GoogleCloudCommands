@@ -587,11 +587,68 @@ To list the details of one backup, use the ID from the output of the backups lis
 gcloud sql backups describe [BACKUP_ID] --instance [INSTANCE_NAME]
 
 TO set the number of automated backups to retain:
-gcloud sql instances patch instance-name --retained-backups-count num-to-retain
+gcloud sql instances patch [instance-name] --retained-backups-count num-to-retain
 
 To disable automated backups:
 gcloud sql instances patch [INSTANCE_NAME] --no-backup
 
+To restore the same instance from a backup:
+gcloud sql backups restore [BACKUP_ID] --restore-instance=[INSTANCE_NAME]
+
+To enable point-in-time recovery:
+gcloud sql instances patch [INSTANCE_NAME] --enable-bin-log
+
+To disable point-in-time recovery:
+gcloud sql instances patch [INSTANCE_NAME] --no-enable-bin-log
+
+To create a read replica:
+gcloud sql instances create [REPLICA_NAME] --master-instance-name=PRIMARY_INSTANCE_NAME
+You can specify a different tier size using the --tier parameter, if needed.
+You can specify a different region using the --region parameter.
+If the primary instance has a private IP address only, add the --no-assign-ip parameter to the command.
+You must create the replica in the same VPC network as the primary instance.
+
+Note: A read replica can be in a different region whereas a failover instance should be in the same region as the primary instance,
+but maybe in a different zone.
+
+To promote a replica to a standalone instance:
+gcloud sql instances promote-replica [REPLICA_NAME]
+
+To import data from sql dump file (uploaded in cloud storage) into cloud sql:
+gcloud sql import sql [INSTANCE_NAME] gs://[BUCKET_NAME]/[IMPORT_FILE_NAME] --database=[DATABASE_NAME]
+
+To import data from csv file (uploaded in cloud storage) into cloud sql:
+gcloud sql import csv [INSTANCE_NAME] gs://[BUCKET_NAME]/[FILE_NAME] --database=[DATABASE_NAME] --table=[TABLE_NAME]
+
+To export data from cloud sql instance to a sqldump (stored in cloud storage):
+gcloud sql export sql [INSTANCE_NAME] gs://[BUCKET_NAME]/sqldumpfile.gz \
+                              --database=[DATABASE_NAME] --offload
+Note: Use the --offload flag if you want to use serverless export. Otherwise, remove it from the following command.
+
+To export data from cloud sql instance to a csv file (stored in cloud storage):
+gcloud sql export csv [INSTANCE_NAME] gs://[BUCKET_NAME]/[FILE_NAME] \
+                            --database=[DATABASE_NAME] \
+                            --offload \
+                            --query=[SELECT_QUERY]
+The query is used to select the data to be exported in csv file.
+
+To create a database in a cloud sql instance:
+gcloud sql databases create [DATABASE_NAME] --instance=[INSTANCE_NAME]
+[--charset=CHARSET] [--collation=COLLATION]
+
+To list databases:
+gcloud sql databases list --instance=[INSTANCE_NAME]
+
+To delete a database:
+gcloud sql databases delete [DATABASE_NAME] --instance=[INSTANCE_NAME]
+
+To create a user:
+gcloud sql users create [user_name] \
+   --host=[HOST] --instance=[INSTANCE_NAME] --password=[PASSWORD]
+
+To change a user password:
+gcloud sql users set-password [USER_NAME] \
+   --host=[HOST] --instance=[INSTANCE_NAME] --prompt-for-password
 -------------------------------------------------------------------------------------------
 IAM:
 
