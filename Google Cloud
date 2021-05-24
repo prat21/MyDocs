@@ -173,6 +173,7 @@ https://cloud.google.com/stackdriver/docs/solutions/gke/managing-logs
 https://cloud.google.com/blog/products/management-tools/using-logging-your-apps-running-kubernetes-engine
 https://cloud.google.com/kubernetes-engine/docs/concepts/node-pools
 https://cloud.google.com/kubernetes-engine/docs/how-to/node-pools
+##############SEE ingress rules on gke which is an HTTP(S) load balancer. "LoadBalancer" service is a TCP/UDP network load balancer#############
 
 BigQuery:
 https://cloud.google.com/bigquery/docs/estimate-costs#bq
@@ -298,3 +299,22 @@ https://cloud.google.com/appengine/docs/standard/java11/connecting-vpc
 Cloud SQL:
 https://cloud.google.com/sql/docs/mysql/create-instance
 https://cloud.google.com/sql/docs/mysql/clone-instance
+https://cloud.google.com/sql/docs/mysql/monitor-instance
+https://cloud.google.com/sql/docs/mysql/delete-instance
+You cannot delete an instance that has any replicas. You must delete all replicas first.
+https://cloud.google.com/sql/docs/mysql/connect-overview
+https://cloud.google.com/sql/docs/mysql/configure-ip
+https://cloud.google.com/sql/docs/mysql/configure-private-ip
+https://cloud.google.com/sql/docs/mysql/authorize-networks
+Even if your instance has only a public IP address, you can connect to it securely by using the Cloud SQL Auth proxy.
+All traffic between the Cloud SQL Auth proxy and your Cloud SQL instance is encrypted.
+If you don't use the proxy, and you are connecting your client from your own public IP address,
+you need to add your client's public address as an authorized network.
+Your client application's IP address or address range must be configured as authorized networks for the following conditions:
+1. Your client application is connecting directly to a Cloud SQL instance on its public IP address.
+2. Your client application is connecting directly to a Cloud SQL instance on its private IP address, and your client's IP address is a non-RFC 1918 address
+https://cloud.google.com/sql/docs/mysql/connect-admin-proxy
+https://cloud.google.com/sql/docs/mysql/connect-admin-ip
+https://cloud.google.com/sql/docs/mysql/connect-app-engine-standard
+https://cloud.google.com/sql/docs/mysql/connect-kubernetes-engine
+https://cloud.google.com/sql/docs/mysql/configure-ha

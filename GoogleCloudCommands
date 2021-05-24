@@ -528,6 +528,69 @@ gcloud sql instances patch [INSTANCE_NAME] --activation-policy NEVER
 To restart an instance:
 gcloud sql instances restart [INSTANCE_NAME]
 
+To delete an instance:
+gcloud sql instances delete [INSTANCE_NAME]
+
+To filter instance searches using labels:
+gcloud beta sql instances list --filter='labels.billing-code:34802'
+
+To add an IPv4 address (public ip) to the instance:
+gcloud sql instances patch [INSTANCE_NAME] --assign-ip
+
+TO show all existing authorized addresses by describing the instance:
+gcloud sql instances describe [INSTANCE_NAME]
+
+To update the authorized network list, including all addresses you want included:
+gcloud sql instances patch [INSTANCE_NAME] --authorized-networks=[IP_ADDR1],[IP_ADDR2]...
+
+To remove all authorized networks:
+gcloud sql instances patch [INSTANCE_NAME] --clear-authorized-networks
+
+To configure an instance to refuse all public IP connections, Clear the authorized address list:
+gcloud sql instances patch [INSTANCE_NAME] --clear-authorized-networks
+
+To disable public IP:
+gcloud sql instances patch [INSTANCE_NAME] --no-assign-ip
+
+To create sql instance with high availability:
+gcloud sql instances create [REGIONAL_INSTANCE_NAME] \
+                     --availability-type=REGIONAL \
+                     --database-version=[DATABASE_VERSION] \
+                     --tier=[MACHINE_TYPE] \
+                     --enable-bin-log
+You can specify both the primary and secondary zones, using the --zone and --secondary-zone parameters.
+The following restrictions apply when the secondary zone is used during instance creation or edit:
+1. The zones must be valid zones.
+2. If the secondary zone is specified, the primary must also be specified.
+3. If the primary and secondary zones are specified, they must be distinct zones.
+4. If the primary and secondary zones are specified, they must belong to the same region.
+
+To update an existing sql instance to be highly available:
+gcloud sql instances patch [INSTANCE_NAME] --availability-type REGIONAL --enable-bin-log --backup-start-time=[HH:MM]
+
+To initiate a failover:
+gcloud sql instances failover [PRIMARY_INSTANCE_NAME]
+
+To disable high availability:
+gcloud sql instances patch [INSTANCE_NAME] --availability-type ZONAL
+
+To create an on-demand backup:
+gcloud sql backups create --async --instance [INSTANCE_NAME]
+
+To schedule automated backups:
+gcloud sql instances patch [INSTANCE_NAME] --backup-start-time [HH:MM]
+
+To view backups of an instance:
+gcloud sql backups list --instance [INSTANCE_NAME]
+
+To list the details of one backup, use the ID from the output of the backups list command:
+gcloud sql backups describe [BACKUP_ID] --instance [INSTANCE_NAME]
+
+TO set the number of automated backups to retain:
+gcloud sql instances patch instance-name --retained-backups-count num-to-retain
+
+To disable automated backups:
+gcloud sql instances patch [INSTANCE_NAME] --no-backup
 
 -------------------------------------------------------------------------------------------
 IAM:
