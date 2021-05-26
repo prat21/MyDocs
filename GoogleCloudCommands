@@ -268,6 +268,14 @@ gsutil stat gs://BUCKET_NAME/OBJECT_NAME
 
 To delete a bucket:
 gsutil rm -r gs://BUCKET_NAME
+
+To apply notification configuration in your bucket:
+gsutil notification create -t TOPIC_NAME -f json gs://BUCKET_NAME
+If you use a TOPIC_NAME that doesn't exist in your project, gsutil creates one for you.
+
+To list notification configuration of a bucket:
+gsutil notification list gs://BUCKET_NAME
+
 -------------------------------------------------------------------
 
 Hybrid Connectivity:
@@ -671,11 +679,22 @@ gcloud iam list-grantable-roles  //compute.googleapis.com/projects/example-proje
 
 -------------------------------------------------------------------------------------------
 BigTable:
-To create an bigtable instance:
+To create a bigtable instance with a single cluster:
 gcloud bigtable instances create INSTANCE_ID \
     --display-name=DISPLAY_NAME \
     [--cluster-config=id=CLUSTER_ID,zone=CLUSTER_ZONE,[nodes=CLUSTER_NUM_NODES,kms-key=KMS_KEY]] \
     [--cluster-storage-type=CLUSTER_STORAGE_TYPE]
+INSTANCE_ID: The permanent identifier for the instance.
+DISPLAY_NAME: A human-readable name that identifies the instance in the Cloud Console.
+CLUSTER_ID: The permanent identifier for the cluster.
+CLUSTER_ZONE: The zone where the cluster runs.
+The command accepts the following optional flags:
+--cluster-config=nodes=CLUSTER_NUM_NODES: The number of nodes in the cluster.
+Each cluster in an instance must have 1 or more nodes. The default value is 1.
+If you aren't sure how many nodes you need, use the default. You can add more nodes later. Learn more.
+--cluster-config=kms-key=KMS_KEY: A CMEK key ID. Use this if you want the instance to be CMEK-protected. You cannot add this later. Learn more.
+--cluster-storage-type=CLUSTER_STORAGE_TYPE: The type of storage to use for the cluster.
+Each cluster in an instance must use the same storage type. Accepts the values SSD and HDD. The default value is SSD.
 
 To enable replication for a production instance, create another cluster:
 gcloud bigtable clusters create CLUSTER_ID \
@@ -685,6 +704,42 @@ gcloud bigtable clusters create CLUSTER_ID \
     [--kms-key=KMS_KEY] \
     [--project=PROJECT]
 See: https://cloud.google.com/bigtable/docs/creating-instance
+ZONE: The zone where the cluster runs.
+An instance's clusters must each be in unique zones.
+You can create an additional cluster in any zone where Bigtable is available.
+For example, if the first cluster is in us-east1-b, you can choose a different zone in the same region, such as us-east1-c,
+or a zone in a separate region, such as europe-west2-a.
+
+Common uses of labels:
+We do not recommend creating large numbers of unique labels, such as for timestamps or individual values for every API call.
+Here are some common use cases for labels:
+1. Team or cost center labels: Add labels based on team or cost center to distinguish instances owned by different teams (for example, team:research and team:analytics). You can use this type of label for cost accounting or budgeting.
+2. Component labels: For example, component:redis, component:frontend, component:ingest, and component:dashboard.
+3. Environment or stage labels: For example, environment:production and environment:test.
+4. State labels: For example, state:active, state:readytodelete, and state:archive.
+
+To list bigtable instances:
+gcloud bigtable instances list
+OR
+cbt listinstances
+
+To list the clusters in a particular instance:
+gcloud bigtable clusters list --instances=INSTANCE_ID
+OR
+cbt -instance=INSTANCE_ID listclusters
+
+To change the number of nodes:
+gcloud bigtable clusters update CLUSTER_ID --instance=INSTANCE_ID --num-nodes=NUM_NODES
+OR
+cbt -instance=INSTANCE_ID updatecluster CLUSTER_ID NUM_NODES
+
+To create a cluster using cbt command:
+cbt -instance=INSTANCE_ID createcluster CLUSTER_ID ZONE NUM_NODES STORAGE_TYPE
+
+To delete a cluster:
+gcloud bigtable clusters delete CLUSTER_ID --instance=INSTANCE_ID
+OR
+cbt -instance=INSTANCE_ID deletecluster CLUSTER_ID
 
 To create a table:
 cbt createtable my-table

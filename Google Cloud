@@ -204,6 +204,13 @@ https://cloud.google.com/storage/docs/uniform-bucket-level-access
 https://cloud.google.com/storage/docs/object-versioning
 https://cloud.google.com/storage/docs/using-object-versioning
 https://cloud.google.com/storage/docs/access-control/making-data-public
+https://cloud.google.com/storage/docs/pubsub-notifications
+https://cloud.google.com/storage/docs/pubsub-notifications#events
+https://cloud.google.com/storage/docs/reporting-changes
+https://cloud.google.com/storage/docs/audit-logging
+https://cloud.google.com/storage/docs/lifecycle#tracking
+Cloud Audit Logs does not log actions taken by the Object Lifecycle Management feature.
+Pub/Sub notifications for cloud storage tracks actions taken by Object Lifecycle Management.
 
 Storage Transfer Service:
 https://cloud.google.com/storage-transfer/docs/overview
@@ -241,8 +248,28 @@ Bigtable uses apache Hbase. Bigtable is not a relational database. It does not s
 https://cloud.google.com/bigtable/docs/overview
 https://cloud.google.com/bigtable/docs/quickstart-cbt
 https://cloud.google.com/bigtable/docs/creating-instance
+For a paticular bigtable instance, clusters can be in any region where Bigtable is available, as long as each cluster is in a different zone.
 https://cloud.google.com/bigtable/docs/instances-clusters-nodes
+A table belongs to an instance, not to a cluster or node.
+A cluster is located in a single zone.
+Behind the scenes, Bigtable splits all of the data in a table into separate tablets.
+Tablets are stored on disk, separate from the nodes but in the same zone as the nodes. A tablet is associated with a single node.
+https://cloud.google.com/bigtable/docs/access-control#overview
+In Bigtable, you cannot grant access to the following types of members:
+1. allAuthenticatedUsers
+2. allUsers
 https://cloud.google.com/bigtable/docs/audit-logging
+https://cloud.google.com/bigtable/docs/keyvis-overview
+The Key Visualizer tool for Bigtable provides scans that show the usage patterns for each table in a cluster.
+Key Visualizer helps you check whether your schema design and usage patterns are causing undesirable results, such as hotspots on specific rows.
+Each table has only one index, the row key. There are no secondary indices. Each row key must be unique.
+https://cloud.google.com/bigtable/docs/creating-managing-labels#common-uses
+https://cloud.google.com/bigtable/docs/modifying-instance
+In the Cloud Console, monitoring data is available in the following places:
+1. Bigtable monitoring
+2. Bigtable instance overview
+3. Google Cloud's operations suite Cloud Monitoring
+4. Key Visualizer
 
 Cloud Logging:
 https://cloud.google.com/logging/docs/routing/overview
