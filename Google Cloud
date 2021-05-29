@@ -177,6 +177,15 @@ https://cloud.google.com/kubernetes-engine/docs/how-to/node-pools
 
 BigQuery:
 https://cloud.google.com/bigquery/docs/estimate-costs#bq
+https://cloud.google.com/bigquery/docs/bq-command-line-tool#setting_default_values_for_command-line_flags
+You can set default values for command-line flags by including them in the bq command-line tool's configuration file, .bigqueryrc
+https://cloud.google.com/bigquery/docs/managing-jobs#bq
+https://cloud.google.com/bigquery/docs/datasets-intro#dataset_limitations
+https://cloud.google.com/bigquery/docs/locations#move-dataset
+The BigQuery Data Transfer Service transfers (copies) data from a source to a destination dataset in BigQuery.
+https://cloud.google.com/bigquery/docs/datasets#bq
+
+
 
 IAM:
 https://cloud.google.com/iam/docs/creating-custom-roles
@@ -186,6 +195,7 @@ https://cloud.google.com/iam/docs/granting-changing-revoking-access
 GCLOUD SDK AUTHORIZATION:
 https://cloud.google.com/sdk/docs/authorizing
 https://cloud.google.com/sdk/docs/initializing
+Jobs are actions that BigQuery runs on your behalf to load data, export data, query data, or copy data.
 
 Google cloud storage:
 https://cloud.google.com/storage/docs/storage-classes#comparison_of_storage_classes
@@ -270,6 +280,17 @@ In the Cloud Console, monitoring data is available in the following places:
 2. Bigtable instance overview
 3. Google Cloud's operations suite Cloud Monitoring
 4. Key Visualizer
+https://cloud.google.com/bigtable/docs/backups#storage
+A table backup is a cluster-level resource.
+Even if a table is in an instance with multiple clusters (meaning the cluster is using replication),
+a backup is created and stored on only one cluster in that instance.
+https://cloud.google.com/bigtable/docs/managing-backups
+https://cloud.google.com/bigtable/docs/import-export
+https://cloud.google.com/bigtable/docs/managing-tables
+https://cloud.google.com/bigtable/docs/managing-tables#multiple-versions
+https://cloud.google.com/bigtable/docs/failovers
+https://cloud.google.com/bigtable/docs/managing-failovers
+https://cloud.google.com/bigtable/docs/audit-logging
 
 Cloud Logging:
 https://cloud.google.com/logging/docs/routing/overview

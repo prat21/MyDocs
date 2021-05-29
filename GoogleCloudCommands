@@ -12,6 +12,20 @@ To install a component using gcloud. For example to install the cbt(bigtable) co
 gcloud components update
 gcloud components install cbt
 
+To authorize access and perform other common Cloud SDK setup steps:
+gcloud init
+
+To prevent the command from automatically opening a web browser:
+gcloud init --console-only
+
+To authorize access without performing other setup steps:
+gcloud auth login
+OR
+gcloud auth login --no-launch-browser
+
+To authorize gcloud to access Google Cloud Platform using an existing service account:
+gcloud auth activate-service-account test-service-account@google.com  --key-file=/path/key.json --project=testproject
+
 ---------------------------------------
 Compute engine default config:
 
@@ -728,6 +742,34 @@ gcloud bigtable clusters list --instances=INSTANCE_ID
 OR
 cbt -instance=INSTANCE_ID listclusters
 
+To list tables in an instance:
+gcloud bigtable instances tables list --instance=INSTANCE_ID
+
+To create backup from a table:
+gcloud bigtable backups create BACKUP_ID --instance=INSTANCE_ID --cluster=CLUSTER_ID --table=TABLE_ID \
+--async --expiration-date=EXPIRATION_DATE | --retention-period=RETENTION_PERIOD
+
+To view list of backups:
+gcloud bigtable backups list --instance=INSTANCE_ID --cluster=CLUSTER_ID
+
+To restore the backup to a new table:
+gcloud bigtable instances tables restore
+--source-instance=INSTANCE_ID_SOURCE --source-cluster=CLUSTER_ID
+--source=BACKUP_ID --destination-instance=INSTANCE_ID_DESTINATION
+--destination=NEW_TABLE_ID --async
+Note: You cannot restore from a backup to an existing table. The table has to be a new table.
+
+To update a backup:
+gcloud bigtable backups update BACKUP_ID --instance=INSTANCE_ID
+--cluster=CLUSTER_ID --expiration-date=EXPIRATION_DATE |
+--retention-period=RETENTION_PERIOD
+
+To get metadata about backup:
+gcloud bigtable backups describe BACKUP_ID --instance=INSTANCE_ID --cluster=CLUSTER_ID
+
+TO delete a backup:
+gcloud bigtable backups delete BACKUP_ID  --instance=INSTANCE_ID --cluster=CLUSTER_ID
+
 To change the number of nodes:
 gcloud bigtable clusters update CLUSTER_ID --instance=INSTANCE_ID --num-nodes=NUM_NODES
 OR
@@ -741,6 +783,15 @@ gcloud bigtable clusters delete CLUSTER_ID --instance=INSTANCE_ID
 OR
 cbt -instance=INSTANCE_ID deletecluster CLUSTER_ID
 
+To delete an instance:
+gcloud bigtable instances delete INSTANCE_ID
+OR
+cbt deleteinstance INSTANCE_ID
+
+To use the cbt tool, configure a .cbtrc file in your home directory with default project id and bigtable instance id:
+echo -e "project = [PROJECT_ID]\ninstance = [INSTANCE_ID]" > ~/.cbtrc
+https://cloud.google.com/bigtable/docs/managing-tables#configuring_the_cbt_tool
+
 To create a table:
 cbt createtable my-table
 
@@ -750,7 +801,7 @@ cbt ls
 To create a column family named cf1:
 cbt createfamily my-table cf1
 
-To list column families:
+To list information about a table:
 cbt ls my-table
 
 To put the value "test-value" in the row r1, using the column family cf1 and the column qualifier c1:
@@ -761,6 +812,13 @@ cbt read my-table
 
 To delete the table:
 cbt deletetable my-table
+
+To change garbage collection policy
+(Retaining multiple versions of each value):
+cbt setgcpolicy [TABLE_NAME] [FAMILY_NAME] maxversions=[VERSIONS]
+(Setting an expiration time for values):
+cbt setgcpolicy [TABLE_NAME] [FAMILY_NAME] maxage=[DAYS]d
+
 -------------------------------------------------------------------------------
 LOGGING:
 
@@ -833,3 +891,47 @@ To send all traffic to 'v2' of service 's1', run:
 gcloud app services set-traffic s1 --splits=v2=1
 To split traffic evenly between 'v1' and 'v2' of service 's1', run:
 gcloud app services set-traffic s1 --splits=v2=.5,v1=.5
+-------------------------------------------------------------------------------
+BigQuery:
+
+To view information of a particular job:
+bq --location=location show -j job_id
+1. location is optional. Location is the name of the location where the job runs.
+For example, if you are using BigQuery in the Tokyo region, set the flag's value to asia-northeast1.
+You can set a default value for the location using the .bigqueryrc file.
+2. job_id is the ID of the job.
+
+To list jobs in a project:
+bq ls -j -a \
+--min_creation_time integer1 \
+--max_creation_time integer2 \
+-n integer3 \
+project_id
+1) -j is used to identify jobs as the resource to list.
+2) --all or -a lists jobs from all users. To see full (unredacted) details for all jobs, you must have bigquery.jobs.listAll permissions.
+3) --min_creation_time is used to list jobs after a supplied timestamp value.
+4) --max_creation_time is used to list jobs before a supplied timestamp value.
+5) -n limits the results. By default, you are limited to 100,000 results.
+
+To cancel a PENDING or RUNNING job:
+bq --location=location cancel job_id
+OR
+bq --location=location --nosync cancel job_id (--nosync flag to return immediately)
+
+To create a dataset:
+bq --location=location mk \
+--dataset \
+--default_table_expiration [integer1] \
+--default_partition_expiration [integer2] \
+--description [description] \
+[project_id]:[dataset]
+
+For example, the following command creates a dataset named mydataset with data location set to US,
+a default table expiration of 3600 seconds (1 hour), and a description of This is my dataset.
+Instead of using the --dataset flag, the command uses the -d shortcut. If you omit -d and --dataset, the command defaults to creating a dataset.
+
+bq --location=US mk -d \
+--default_table_expiration 3600 \
+--description "This is my dataset." \
+mydataset
+
