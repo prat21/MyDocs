@@ -184,8 +184,19 @@ https://cloud.google.com/bigquery/docs/datasets-intro#dataset_limitations
 https://cloud.google.com/bigquery/docs/locations#move-dataset
 The BigQuery Data Transfer Service transfers (copies) data from a source to a destination dataset in BigQuery.
 https://cloud.google.com/bigquery/docs/datasets#bq
-
-
+https://cloud.google.com/bigquery/docs/copying-datasets
+Dataset copying uses features of the BigQuery Data Transfer Service.
+https://cloud.google.com/bigquery/docs/dataset-access-controls
+https://cloud.google.com/bigquery/docs/dataset-access-controls#granting_access_to_a_dataset
+https://cloud.google.com/bigquery/docs/listing-datasets
+https://cloud.google.com/bigquery/docs/dataset-metadata#information_schema
+https://cloud.google.com/bigquery/docs/updating-datasets
+https://cloud.google.com/bigquery/docs/updating-datasets#table-expiration
+https://cloud.google.com/bigquery/docs/managing-datasets
+https://cloud.google.com/bigquery/docs/tables
+https://cloud.google.com/bigquery/docs/tables#getting_table_information_using_information_schema_beta
+https://cloud.google.com/bigquery/docs/table-access-controls#bq
+https://cloud.google.com/bigquery/docs/managing-tables
 
 IAM:
 https://cloud.google.com/iam/docs/creating-custom-roles

@@ -294,15 +294,19 @@ gsutil notification list gs://BUCKET_NAME
 
 Hybrid Connectivity:
 
-Cloud VPN facilitates the connection of GCP resources present in a particular VPC network with other networks (either VPC network or external network), using a secured tunnel and internal IP addresses.
+Cloud VPN facilitates the connection of GCP resources present in a particular VPC network with other networks (either VPC network or external network),
+using a secured tunnel and internal IP addresses.
 
 Dedicated and Partner Interconnect also facilitates the connection of on-premise resource with GCP resources using internal IP addresses.
 
-Direct and Carrier peering facilitates the connection of on-premise resources with GCP resources using Google's edge point of presence (PoP) using public IP address.
+Direct and Carrier peering facilitates the connection of on-premise resources with GCP resources using Google's edge point of presence (PoP)
+using public IP address.
 
 See: https://callcenterstudio.com/google-cloud-connection-blogs/
 
-Shared VPC and VPC peering is a way to establish direct connection between resources residing on seperate VPC networks using internal IP address. Cloud VPN is another way to achieve the same, but Shared VPC/VPC peering is more suitable for this type of scenario and comes with low network latency and low cost.
+Shared VPC and VPC peering is a way to establish direct connection between resources residing on seperate VPC networks using internal IP address.
+Cloud VPN is another way to achieve the same,
+but Shared VPC/VPC peering is more suitable for this type of scenario and comes with low network latency and low cost.
 
 -------------------------------------------------------------------
 Understanding the difference between TCP and HTTP:
@@ -450,7 +454,8 @@ gcloud compute instance-templates create lb-backend-template \
 gcloud compute instance-groups managed create lb-backend-group \
    --template=lb-backend-template --size=2 --zone=us-central1-a
 
-3. Create the "fw-allow-health-check" firewall rule. This is an ingress rule that allows traffic from the Google Cloud health checking systems (130.211.0.0/22 and 35.191.0.0/16).
+3. Create the "fw-allow-health-check" firewall rule.
+This is an ingress rule that allows traffic from the Google Cloud health checking systems (130.211.0.0/22 and 35.191.0.0/16).
 This lab uses the target tag allow-health-check to identify the VMs.
 
 gcloud compute firewall-rules create fw-allow-health-check \
@@ -935,3 +940,132 @@ bq --location=US mk -d \
 --description "This is my dataset." \
 mydataset
 
+Dataset copying uses features of the BigQuery Data Transfer Service.
+To create a dataset copy:
+bq mk --transfer_config --project_id=PROJECT_ID --data_source=DATA_SOURCE --target_dataset=DATASET --display_name=NAME --params='PARAMETERS'
+
+Replace the following:
+1. PROJECT_ID: your Google Cloud project ID. If --project_id isn't specified, the default project is used.
+2. DATA_SOURCE: the data source: cross_region_copy.
+3. DATASET: the BigQuery target dataset for the transfer configuration.
+4. NAME: the display name for the copy job or transfer configuration.
+The transfer name can be any value that lets you easily identify the transfer if you need to modify it later.
+5. PARAMETERS: contains the parameters for the created transfer configuration in JSON format.
+For example: --params='{"param":"param_value"}'.
+For dataset copying, you must supply the source_dataset_id, the source_project_id, and optionally the overwrite_destination_table parameters.
+
+For example, the following command creates a dataset copy configuration named My Transfer with a target dataset named mydataset
+and a project with the ID of myproject.
+bq mk --transfer_config --project_id=myproject --data_source=cross_region_copy --target_dataset=mydataset --display_name='My Dataset Copy'
+--params='{"source_dataset_id":"123_demo_eu","source_project_id":"mysourceproject","overwrite_destination_table":"true"}'
+
+To get the existing dataset information (and output to a JSON file):
+bq show --format=prettyjson [project_id]:[dataset] > [path_to_file]
+Example:
+Enter the following command to write the access controls for mydataset to a JSON file. mydataset is in your default project.
+bq show --format=prettyjson mydataset > /tmp/mydataset.json
+Enter the following command to write the access controls for mydataset to a JSON file. mydataset is in myotherproject.
+bq show --format=prettyjson myotherproject:mydataset > /tmp/mydataset.json
+
+To update a dataset (suppose updating the access controls to the dataset):
+bq update --source [path_to_file] [project_id]:[dataset]
+Example:
+Enter the following command to update the access controls for mydataset. mydataset is in myotherproject.
+bq update --source /tmp/mydataset.json myotherproject:mydataset
+
+To list datasets in a project:
+bq ls --filter labels.key:value \
+--max_results integer \
+--format=prettyjson \
+--project_id project_id
+Examples:
+Enter the following command to list datasets in your default project.
+bq ls --format=pretty
+Enter the following command to list datasets in myotherproject.
+bq ls --format=prettyjson --project_id myotherproject
+Enter the following command to list all datasets including anonymous datasets in your default project.
+bq ls -a
+Enter the following command to list datasets in your default project with the label org:dev.
+bq ls --filter labels.org:dev
+
+The following example retrieves all columns from the INFORMATION_SCHEMA.SCHEMATA view except for schema_owner which is reserved for future use.
+The metadata returned is for all datasets in the default project — myproject.
+To run the query against a project other than your default project,
+add the project ID to the dataset in the following format: `project_id`.INFORMATION_SCHEMA.view for example, `myproject`.INFORMATION_SCHEMA.SCHEMATA.
+bq query --nouse_legacy_sql \
+'SELECT
+   * EXCEPT(schema_owner)
+ FROM
+   INFORMATION_SCHEMA.SCHEMATA'
+SEE: https://cloud.google.com/bigquery/docs/dataset-metadata#information_schema
+
+To update an existing dataset:
+bq update --description "string" [project_id]:[dataset] (to update description)
+OR
+bq update --default_table_expiration=[integer] [project_id]:[dataset] (to update default table expiration time)
+You can set a default table expiration time at the dataset level, or you can set a table's expiration time when the table is created.
+If you set the expiration when the table is created, the dataset's default table expiration is ignored.
+If you do not set a default table expiration at the dataset level, and you do not set a table expiration when the table is created,
+the table never expires and you must delete the table manually.
+OR
+bq update --default_partition_expiration [integer] [project_id]:[dataset] (to update default partition expiration time)
+OR
+bq update --source [path_to_file] [project_id]:[dataset] (to update the access controls as mentioned previously)
+
+To delete a dataset:
+bq rm -r -d project_id:dataset
+In addition, if the dataset contains tables, you must use the -r flag to remove all tables in the dataset.
+
+To create an empty table in an existing dataset with a schema definition:
+bq mk \
+--table \
+--expiration integer \
+--description description \
+--label key:value, key:value \
+project_id:dataset.table \
+[schema]
+Use the bq mk command with the --table or -t flag. You can supply table schema information inline or via a JSON schema file.
+
+To create a permanent table from a query result:
+bq --location=location query \
+--destination_table project_id:dataset.table \
+--use_legacy_sql=false 'query'
+
+To get information about table:
+bq show --format=prettyjson --schema [project_id]:[dataset].[table_id]
+Use the --schema flag to display only table schema information.
+
+To display all information of a table:
+bq show --format=prettyjson [project_id]:[dataset].[table_id]
+
+To create an access policy on a table using IAM:
+bq get-iam-policy \
+ project-id:dataset.table_or_view \
+ > policy.json
+
+To update a policy:
+bq set-iam-policy \
+ project-id:dataset.table_or_view \
+ policy.json
+
+To update a table:
+bq update --description=[description] [project_id]:[dataset].[table]
+OR
+bq update --expiration=[integer] [project_id]:[dataset].[table]
+
+To copy a single source table:
+bq --location=location cp \
+-a -f -n \
+project_id:dataset.source_table \
+project_id:dataset.destination_table
+1) -a or --append_table appends the data from the source table to an existing table in the destination dataset.
+2) -f or --force overwrites an existing table in the destination dataset and doesn't prompt you for confirmation.
+3) -n or --no_clobber returns the following error message if the table exists in the destination dataset: Table 'project_id:dataset.table' already exists, skipping.
+If -n is not specified, the default behavior is to prompt you to choose whether to replace the destination table.
+
+To copy multiple source tables:
+bq --location=location cp \
+-a -f -n \
+project_id:dataset.source_table,project_id:dataset.source_table \
+project_id:dataset.destination_table
+Note: All source tables must have identical schemas, and only one destination table is allowed.
