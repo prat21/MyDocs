@@ -1034,6 +1034,7 @@ bq --location=location query \
 To get information about table:
 bq show --format=prettyjson --schema [project_id]:[dataset].[table_id]
 Use the --schema flag to display only table schema information.
+When you query the INFORMATION_SCHEMA.TABLES view, the query results contain one row for each table or view in a dataset.
 
 To display all information of a table:
 bq show --format=prettyjson [project_id]:[dataset].[table_id]
@@ -1069,3 +1070,117 @@ bq --location=location cp \
 project_id:dataset.source_table,project_id:dataset.source_table \
 project_id:dataset.destination_table
 Note: All source tables must have identical schemas, and only one destination table is allowed.
+
+To delete a table:
+bq rm -t -f [project_id]:[dataset].[table]
+1) --table or -t should be specified to delete a table.
+2) --force or -f to skip confirmation.
+
+To export data from a BigQuery table:
+bq --location=location extract \
+--destination_format format \
+--compression compression_type \
+--field_delimiter delimiter \
+--print_header=boolean \
+project_id:dataset.table \
+gs://bucket/filename.ext
+
+To create an empty partitioned table:
+The steps to create a partitioned table in BigQuery are similar to creating a standard table, except that you specify the partitioning options,
+along with any other table options.
+bq mk --table \
+  --schema SCHEMA \
+  --time_partitioning_field COLUMN \
+  --time_partitioning_type UNIT_TIME \
+  --time_partitioning_expiration EXPIRATION_TIME \
+  --require_partition_filter=BOOLEAN
+  PROJECT_ID:DATASET.TABLE
+
+To load data in partitioned table is same as normal table:
+[USING QUERY]
+bq query \
+--use_legacy_sql=false \
+--replace \
+--destination_table 'mydataset.table1$20160301' \
+'SELECT
+  column1,
+  column2
+FROM
+  mydataset.mytable'
+SEE: https://cloud.google.com/bigquery/docs/managing-partitioned-table-data#append-overwrite
+
+To create a view:
+bq mk \
+--use_legacy_sql=false \
+--view_udf_resource=PATH_TO_FILE \
+--expiration INTEGER \
+--description "DESCRIPTION" \
+--label KEY:VALUE \
+--view 'QUERY' \
+--project_id PROJECT_ID \
+DATASET.VIEW
+
+To list views or tables in a dataset:
+bq ls --format=prettyjson [projectid]:[dataset]
+
+To get information about views:
+bq show --format=prettyjson [project_id]:[dataset].[view]
+When you query the INFORMATION_SCHEMA.VIEWS view, the query results contain one row for each view in a dataset.
+
+To update a view:
+bq update --expiration [integer] [project_id]:[dataset].[view] (to update expiration time)
+
+To delete a view:
+bq rm -t project_id:dataset.view
+
+To add label to an existing dataset:
+bq update --set_label [KEY]:[VALUE] [PROJECT_ID]:[DATASET]
+
+To add label to an existing table/view:
+bq update --set_label [KEY]:[VALUE] [PROJECT_ID]:[DATASET].[TABLE_OR_VIEW]
+
+To filter using labels:
+bq ls --filter "labels.department:shipping" (to list datasets in your default project that have a department:shipping label)
+
+To remove a label from a dataset:
+bq update --clear_label [key] [project_id]:[dataset]
+
+To remove a label from a table or view:
+bq update --clear_label [key] [project_id]:[dataset].[table_or_view]
+
+To load data from a local data source:
+bq --location=LOCATION load \
+--source_format=FORMAT \
+PROJECT_ID:DATASET.TABLE \
+PATH_TO_SOURCE \
+SCHEMA
+1) LOCATION: your location. The --location flag is optional.
+For example, if you are using BigQuery in the Tokyo region, set the flag's value to asia-northeast1.
+You can set a default value for the location by using the .bigqueryrc file.
+2) FORMAT: CSV, AVRO, PARQUET, ORC, or NEWLINE_DELIMITED_JSON.
+3) project_id: your project ID.
+4) dataset: an existing dataset.
+5) table: the name of the table into which you're loading data.
+6) path_to_source: the path to the local file.
+7) schema: a valid schema. The schema can be a local JSON file, or it can be typed inline as part of the command.
+You can also use the --autodetect flag instead of supplying a schema definition.
+
+To run batch query:
+bq --location=location query \
+--batch \
+--use_legacy_sql=false \
+'query'
+Specify the:
+1) --destination_table flag to create a permanent table based on the query results.
+2) --append_table flag to append the query results to a destination table.
+3) --use_legacy_sql=false flag to use standard SQL syntax. You can set a default syntax for the bq command-line tool using the .bigqueryrc file.
+4) --label flag to apply a label to the query job in the form key:value. Repeat this flag to specify multiple labels.
+5) --max_rows or -n flag to specify the number of rows to return in the query results.
+6) --maximum_bytes_billed flag to limit the bytes billed for the query.
+If the query goes beyond the limit, it fails (without incurring a charge). If not specified, the bytes billed is set to the project default.
+
+Note: --maximum_bytes_billed flag to limit the bytes billed for the query. If the query goes beyond the limit, it fails (without incurring a charge).
+If not specified, the bytes billed is set to the project default.
+
+To dry run a query:
+bq query --use_legacy_sql=false --dry_run [QUERY]

@@ -197,6 +197,41 @@ https://cloud.google.com/bigquery/docs/tables
 https://cloud.google.com/bigquery/docs/tables#getting_table_information_using_information_schema_beta
 https://cloud.google.com/bigquery/docs/table-access-controls#bq
 https://cloud.google.com/bigquery/docs/managing-tables
+https://cloud.google.com/bigquery/docs/exporting-data#bq
+You can undelete a table within seven days of deletion, including explicit deletions and implicit deletions due to table expiration.
+You cannot export table data to a local file, to Sheets, or to Drive. The only supported export location is Cloud Storage.
+You cannot change the location of a dataset after it is created, but you can make a copy of the dataset.
+https://cloud.google.com/bigquery/docs/partitioned-tables
+By dividing a large table into smaller partitions, you can improve query performance,
+and you can control costs by reducing the number of bytes read by a query.
+You can get information about partitioned tables using the INFORMATION_SCHEMA.PARTITIONS view.
+https://cloud.google.com/bigquery/docs/views
+https://cloud.google.com/bigquery/docs/view-metadata#views_view
+https://cloud.google.com/bigquery/docs/adding-labels
+https://cloud.google.com/bigquery/docs/loading-data#loading_data_from_other_google_services
+https://cloud.google.com/bigquery/docs/loading-data#alternatives_to_loading_data
+https://cloud.google.com/bigquery/docs/batch-loading-data#data-locations
+Exception: If your dataset is in the US multi-regional location, you can load data from a Cloud Storage bucket in any regional or multi-regional location.
+https://cloud.google.com/bigquery/docs/query-overview#types_of_queries
+After you load your data into BigQuery, you can query the data in your tables. BigQuery supports two types of queries:
+1) Interactive queries
+2) Batch queries
+By default, BigQuery runs interactive queries, which means that the query is executed as soon as possible.
+BigQuery also offers batch queries.
+BigQuery queues each batch query on your behalf and starts the query as soon as idle resources are available, usually within a few minutes.
+https://cloud.google.com/bigquery/docs/query-overview#query_jobs
+https://cloud.google.com/bigquery/docs/running-queries#batch
+https://cloud.google.com/bigquery/docs/dry-run-queries
+https://cloud.google.com/bigquery/docs/custom-quotas
+https://cloud.google.com/bigquery/docs/custom-quotas#example
+https://cloud.google.com/bigquery/docs/monitoring#information_schema_views
+https://cloud.google.com/bigquery/docs/best-practices-costs
+https://cloud.google.com/bigquery/docs/best-practices-costs#preview-data
+In the bq command-line tool, use the bq head command and specify the number of rows to preview.
+https://cloud.google.com/bigquery/docs/best-practices-costs#limit_query_costs_by_restricting_the_number_of_bytes_billed
+You can limit the number of bytes billed for a query using the maximum bytes billed setting.
+When you set maximum bytes billed, the number of bytes that the query will read is estimated before the query execution.
+If the number of estimated bytes is beyond the limit, then the query fails without incurring a charge.
 
 IAM:
 https://cloud.google.com/iam/docs/creating-custom-roles
