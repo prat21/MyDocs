@@ -121,6 +121,12 @@ https://cloud.google.com/compute/docs/instances/moving-instance-across-zones
 https://cloud.google.com/appengine/docs/admin-api/migrating-splitting-traffic
 
 Compute Engine:
+https://cloud.google.com/compute/docs/instances/create-start-instance
+https://cloud.google.com/compute/docs/instances/create-start-preemptible-instance#handle_preemption
+Do not use regional persistent disks for boot disks. In a failover situation, they do not force-attach to a VM.
+https://cloud.google.com/compute/docs/disks/detach-reattach-boot-disk
+https://cloud.google.com/compute/docs/instances/windows/creating-managing-windows-instances
+https://cloud.google.com/compute/docs/instances/windows/creating-passwords-for-windows-instances
 https://cloud.google.com/compute/docs/autoscaler/
 https://cloud.google.com/compute/docs/autoscaler/multiple-signals
 https://cloud.google.com/compute/docs/startupscript

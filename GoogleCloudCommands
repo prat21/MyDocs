@@ -55,7 +55,9 @@ gcloud -h OR gcloud --help
 Compute Engine VM instance:
 
 To create VM instance:
-gcloud compute instances create privatenet-us-vm --zone=us-central1-c --machine-type=f1-micro --subnet=privatesubnet-us --image-family=debian-10 --image-project=debian-cloud --boot-disk-size=10GB --boot-disk-type=pd-standard --boot-disk-device-name=privatenet-us-vm
+gcloud compute instances create privatenet-us-vm --zone=us-central1-c --machine-type=f1-micro \
+ --subnet=privatesubnet-us --image-family=debian-10 --image-project=debian-cloud \
+ --boot-disk-size=10GB --boot-disk-type=pd-standard --boot-disk-device-name=privatenet-us-vm
 
 To list all the VM instances (sorted by zone):
 gcloud compute instances list --sort-by=ZONE
@@ -68,6 +70,64 @@ gcloud compute ssh vm-internal --zone us-central1-c --tunnel-through-iap
 
 Move a VM instance from one zone to another:
 gcloud compute instances move example-instance-1  --zone us-central1-b --destination-zone us-central1-f
+
+To create a VM instance boot disk from a snapshot:
+gcloud compute instances create VM_NAME \
+    --source-snapshot=BOOT_SNAPSHOT_NAME \
+    --boot-disk-size=BOOT_DISK_SIZE \
+    --boot-disk-type=BOOT_DISK_TYPE \
+    --boot-disk-device-name=BOOT_DISK_NAME
+To quickly create more than one VM with the same boot disk, create a custom image and, then create VMs from that image rather than from the snapshot.
+SEE: https://cloud.google.com/compute/docs/instances/create-start-instance#createsnapshot
+
+To create a preemptible instance:
+gcloud compute instances create [INSTANCE_NAME] --preemptible
+
+To create a standalone boot persistent disk from an image:
+gcloud compute disks create example-disk --image example-image
+
+To create a boot persistent disk from a snapshot:
+gcloud compute disks create example-disk --source-snapshot example-snapshot
+It is only possible to apply data from a snapshot when you first create a persistent disk.
+You cannot apply a snapshot to an existing persistent disk, or apply a snapshot to persistent disks that belong to a different project than that snapshot.
+
+To detach a boot disk:
+gcloud compute instances detach-disk INSTANCE_NAME --disk=DISK_NAME
+You can attach or detach a boot disk only from a stopped VM instance.
+You can attach only one boot disk per VM instance.
+
+To reattach a boot disk:
+gcloud compute instances attach-disk INSTANCE_NAME \
+    --disk=DISK_NAME \
+    --boot
+Any disk can be reattached as a boot disk to an instance as long as the instance does not already have a boot disk attached
+and the boot disk is in the same zone as the VM instance.
+
+To update a boot disk for an instance:
+You can use only the Cloud Console to update the boot disk for a VM in one step. Specifically, you can detach an existing boot disk and attach a new boot disk as one action.
+SEE: https://cloud.google.com/compute/docs/disks/detach-reattach-boot-disk#update_a_boot_disk_for_an_instance
+
+To list all the windows server images:
+gcloud compute images list --project windows-cloud --no-standard-images
+
+To determine whether an image supports Shielded VM features, run the following command, and check for UEFI_COMPATIBLE in the output:
+gcloud compute images describe [IMAGE_NAME] --project windows-cloud
+
+If you chose an image that supports Shielded VM, you can optionally change the instance's Shielded VM settings using one of the following flags:
+--no-shielded-secure-boot: Disable Secure Boot. Secure Boot helps protect your VM instances against boot-level and kernel-level malware and rootkits.
+Example:
+gcloud compute instances create my-instance \
+--image-family windows-2012-r2 --image-project windows-cloud \
+--no-shielded-secure-boot
+
+To check if your windows server instance has successfully started and is ready to be used:
+gcloud compute instances get-serial-port-output [INSTANCE_NAME]
+
+To create a new account and password for windows server instance:
+gcloud compute reset-windows-password [INSTANCE_NAME]
+
+To create a vm instance from a custom machine type:
+gcloud compute instances create example-instance --custom-cpu=4 --custom-memory=5
 
 To create target pools:
 gcloud compute target-pools create www-pool --region us-central1 --http-health-check basic-check
