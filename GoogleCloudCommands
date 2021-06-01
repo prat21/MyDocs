@@ -64,6 +64,7 @@ gcloud compute instances list --sort-by=ZONE
 
 SSH to a VM instance:
 gcloud compute ssh vm-internal --zone us-central1-c
+When you connect to VMs using the gcloud tool, Compute Engine creates a persistent SSH key for you.
 
 SSH to a private VM instance using IAP tunnel:
 gcloud compute ssh vm-internal --zone us-central1-c --tunnel-through-iap
@@ -129,6 +130,32 @@ gcloud compute reset-windows-password [INSTANCE_NAME]
 To create a vm instance from a custom machine type:
 gcloud compute instances create example-instance --custom-cpu=4 --custom-memory=5
 
+To create a vm instance from an instance template:
+gcloud compute instances create [INSTANCE_NAME] --source-instance-template [INSTANCE_TEMPLATE_NAME]
+
+You can create an instance from an existing instance by going to the VM instance details page of the Google Cloud Console.
+When you create an instance by clicking Create similar,
+the Cloud Console creates an instance with the same configuration as the source instance but does not copy any data stored on the persistent disks or the existing instance.
+You can only use this feature in the Cloud Console; this feature is not supported in the gcloud tool or the API.
+SEE: https://cloud.google.com/compute/docs/instances/create-vm-from-similar-instance
+
+To create a VM with a custom hostname:
+gcloud compute instances create VM_NAME \
+       --hostname=HOST_NAME
+
+Sole-tenant nodes are physical servers that run VMs only from a single project.
+
+To add or remove project-wide public SSH keys:
+gcloud compute project-info add-metadata --metadata-from-file ssh-keys=[LIST_PATH]
+
+To add or remove instance-level public SSH keys:
+gcloud compute instances add-metadata [INSTANCE_NAME] --metadata-from-file ssh-keys=[LIST_PATH]
+
+To set the auto-delete state of a zonal persistent disk:
+gcloud compute instances set-disk-auto-delete example-instance \
+  [--auto-delete|--no-auto-delete] \
+  --disk DISK_NAME
+
 To create target pools:
 gcloud compute target-pools create www-pool --region us-central1 --http-health-check basic-check
 Target pool-based load balancers can only use legacy HTTP health checks.
@@ -139,7 +166,7 @@ gcloud compute target-pools add-instances www-pool --instances www1,www2,www3
 To create compute instance group from template:
 gcloud compute instance-groups managed create lb-backend-group --template=lb-backend-template --size=2 --zone=us-central1-a
 
-To create a disk:
+To create a non-boot disk (notice there is no image):
 gcloud compute disks create [DISK_NAME] \
   --size [DISK_SIZE] \
   --type [DISK_TYPE]
@@ -162,6 +189,12 @@ gcloud compute instances attach-disk [INSTANCE_NAME] \
 
 To resize a disk:
 gcloud compute disks resize [DISK_NAME] --size [DISK_SIZE]
+You can only resize a persistent disk to increase its size. You cannot reduce the size of a persistent disk.
+You can resize disks at any time, whether or not the disk is attached to a running VM.
+After resizing your disk, you might need to resize its file system and partitions.
+1) Boot disk: VMs using public images automatically resize the root partition and file system after you've resized the boot disk on the VM and restarted the VM.
+If you are using an image that does not support this functionality, you must manually resize the root partition and file system.
+2) Non-boot disk: After resizing the disk, you must extend the file system on the disk to use the added space.
 
 To creating a snapshot of a zonal persistent disk:
 gcloud compute disks snapshot [DISK_NAME] --storage-location [STORAGE_LOCATION]

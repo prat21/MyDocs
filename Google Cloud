@@ -127,6 +127,26 @@ Do not use regional persistent disks for boot disks. In a failover situation, th
 https://cloud.google.com/compute/docs/disks/detach-reattach-boot-disk
 https://cloud.google.com/compute/docs/instances/windows/creating-managing-windows-instances
 https://cloud.google.com/compute/docs/instances/windows/creating-passwords-for-windows-instances
+https://cloud.google.com/compute/docs/instances/create-vm-from-instance-template
+https://cloud.google.com/compute/docs/instances/create-vm-from-similar-instance
+https://cloud.google.com/compute/docs/instances/custom-hostname-vm
+https://cloud.google.com/compute/docs/instances/ssh#metadata-managed_ssh_connections
+https://cloud.google.com/compute/docs/instances/connecting-advanced#provide-key
+https://cloud.google.com/compute/docs/instances/adding-removing-ssh-keys#risks
+By creating and managing SSH keys, you can let users access a Linux instance through third-party tools.
+An SSH key consists of the following files:
+1) A public SSH key file that is applied to instance-level metadata or project-wide metadata.
+2) A private SSH key file that the user stores on their local devices.
+If a user presents their private SSH key, they can use a third-party tool to connect to any instance that is configured with the matching public SSH key file,
+even if they aren't a member of your Google Cloud project.
+Therefore, you can control which instances a user can access by changing the public SSH key metadata for one or more instances.
+https://cloud.google.com/compute/docs/instances/adding-removing-ssh-keys
+https://cloud.google.com/compute/docs/instances/adding-removing-ssh-keys#edit-ssh-metadata
+https://cloud.google.com/compute/docs/disks/add-persistent-disk
+https://cloud.google.com/compute/docs/disks/working-with-persistent-disks#disk_type
+You can change the type of your persistent disk using snapshots. For example, to change your standard persistent disk to an SSD persistent disk, use the following process:
+1) Create a snapshot of your standard persistent disk.
+2) Create a new persistent disk based on the snapshot. Include the --type flag and specify pd-ssd.
 https://cloud.google.com/compute/docs/autoscaler/
 https://cloud.google.com/compute/docs/autoscaler/multiple-signals
 https://cloud.google.com/compute/docs/startupscript
