@@ -116,8 +116,6 @@ https://www.coursera.org/lecture/logging-monitoring-observability-google-cloud/e
 https://cloud.google.com/compute/docs/disks/snapshots
 https://cloud.google.com/compute/docs/regions-zones/global-regional-zonal-resources#globalresources
 
-https://cloud.google.com/compute/docs/instances/moving-instance-across-zones
-
 https://cloud.google.com/appengine/docs/admin-api/migrating-splitting-traffic
 
 Compute Engine:
@@ -147,17 +145,76 @@ https://cloud.google.com/compute/docs/disks/working-with-persistent-disks#disk_t
 You can change the type of your persistent disk using snapshots. For example, to change your standard persistent disk to an SSD persistent disk, use the following process:
 1) Create a snapshot of your standard persistent disk.
 2) Create a new persistent disk based on the snapshot. Include the --type flag and specify pd-ssd.
+https://cloud.google.com/compute/docs/disks/regional-persistent-disk#restrictions
+Restrictions
+1) You cannot use regional persistent disks as boot disks.
+2) You can create a regional persistent disk from a snapshot but not an image.
+https://cloud.google.com/compute/docs/disks/regional-persistent-disk#use_multi_instances
+https://cloud.google.com/compute/docs/disks/regional-persistent-disk#migrate-repd
+https://cloud.google.com/compute/docs/disks/create-disk-from-source
+You can create persistent disks from the following data sources:
+1) Existing disks: Clone an existing persistent disk. Use this option if you need an instantly attachable copy of an existing non-boot persistent disk.
+2) Snapshots: Create a non-boot disk from a source snapshot. Use this option to restore data from a persistent disk that you've backed up using snapshots.
+3) Images: Create a boot disk from a source image. Use this option to create a boot disk for a new VM or to create a standalone boot persistent disk.
+https://cloud.google.com/compute/docs/disks/create-disk-from-source#clone
+Restrictions
+1) The zone, region, and disk type of the clone must be the same as that of the source disk.
+2) You cannot create a zonal disk clone from a regional disk. You cannot create a regional disk clone from a zonal disk.
+https://cloud.google.com/compute/docs/disks/create-snapshots
+You can create snapshots from disks even while they are attached to running instances.
+Snapshots are global resources, so you can use them to restore data to a new disk or instance within the same project.
+You can also share snapshots across projects.
+https://cloud.google.com/compute/docs/disks/create-snapshots#restore-snapshots
+Compute Engine uses incremental snapshots so that each snapshot contains only the data that has changed since the previous snapshot.
+https://cloud.google.com/compute/docs/disks/scheduled-snapshots
+Restrictions:
+1) A persistent disk can have only one snapshot schedule attached to it at a time.
+2) You cannot delete a snapshot schedule if it is attached to a disk. You must detach the schedule from all disks, then delete the schedule.
+https://cloud.google.com/compute/docs/disks/scheduled-snapshots#deletion_rule
+https://cloud.google.com/compute/docs/disks/scheduled-snapshots#change_snapshot_schedule
+https://cloud.google.com/compute/docs/images/create-delete-deprecate-private-images
+Create the image
+You can create disk images from the following sources:
+1) A persistent disk, even while that disk is attached to a VM
+2) A snapshot of a persistent disk
+3) Another image in your project
+https://cloud.google.com/compute/docs/instances/startup-scripts/linux
+https://cloud.google.com/compute/docs/shutdownscript
+Create and run shutdown scripts that execute commands right before a virtual machine (VM) instance is stopped or restarted.
+Shutdown scripts have a limited amount of time to finish running before the instance stops:
+1. On-demand instances: 90 seconds after you stop or delete an instance
+2. Preemptible instances: 30 seconds after instance preemption begins
+https://cloud.google.com/compute/docs/shutdownscript#shutdown_actions
+The shutdown script won't run if the instance is reset using instances().reset.
+https://cloud.google.com/compute/docs/instances/stop-start-instance
+You cannot stop and restart a VM with a local SSD attached.
+https://cloud.google.com/compute/docs/instances/deleting-instance
+https://cloud.google.com/compute/docs/instances/update-instance-properties
+https://cloud.google.com/compute/docs/instances/moving-instance-across-zones
+Move your instance manually using the following steps:
+1. Create snapshots of persistent disks attached to the original instance.
+2. Create copies of the persistent disks in the destination zone.
+3. For external and internal IP addresses:
+    a. If you are moving an instance across zones within the same region, and you want to preserve its ephemeral IP address,
+    temporarily promote the ephemeral IP address that is assigned to the instance to a static IP address
+    and then assign it to the new VM instance you create in the destination zone.
+    b. If you are moving an instance across regions, you must pick a different IP address for the VM instance.
+4. Create and boot up a new instance in the destination zone. If you are moving across regions, you must also pick a new subnetwork for the new instance.
+5. Attach the new persistent disks to your new instance.
+6. Assign an external IP address to the new instance. If necessary, demote the address back to an ephemeral external IP address.
+7. Delete the snapshots, original disks, and original instance.
+https://cloud.google.com/compute/docs/instances/moving-instance-across-zones#limitations
+https://cloud.google.com/compute/docs/instances/copy-vm-between-projects
+https://cloud.google.com/compute/docs/instances/changing-machine-type-of-stopped-instance
+https://cloud.google.com/compute/docs/access/create-enable-service-accounts-for-instances
+A virtual machine instance can only have one service account identity.
+https://cloud.google.com/compute/docs/instances/setting-instance-scheduling-options
+https://cloud.google.com/compute/docs/instances/setting-instance-scheduling-options#settingoptions
+https://cloud.google.com/compute/docs/instance-groups/creating-groups-of-managed-instances
+You can create regional MIGs or zonal MIGs.
 https://cloud.google.com/compute/docs/autoscaler/
 https://cloud.google.com/compute/docs/autoscaler/multiple-signals
 https://cloud.google.com/compute/docs/startupscript
-https://cloud.google.com/compute/docs/disks/
-https://cloud.google.com/compute/docs/disks/add-persistent-disk#create_disk
-https://cloud.google.com/compute/docs/disks/create-disk-from-source (create cloned disk)
-https://cloud.google.com/compute/docs/disks/create-snapshots#restore-snapshots
-https://cloud.google.com/compute/docs/disks/scheduled-snapshots
-https://cloud.google.com/compute/docs/disks/regional-persistent-disk
-https://cloud.google.com/compute/docs/disks/regional-persistent-disk#use_multi_instances
-https://cloud.google.com/compute/docs/disks/regional-persistent-disk#migrate-repd
 probably, you can only create boot disk from an image and not a snapshot. please verify.
 Difference between image and snapshot:
 https://stackoverflow.com/a/29634892
