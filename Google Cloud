@@ -212,8 +212,33 @@ https://cloud.google.com/compute/docs/instances/setting-instance-scheduling-opti
 https://cloud.google.com/compute/docs/instances/setting-instance-scheduling-options#settingoptions
 https://cloud.google.com/compute/docs/instance-groups/creating-groups-of-managed-instances
 You can create regional MIGs or zonal MIGs.
+You must select which zones are associated with a regional MIG when you create the regional MIG.
+After you choose specific zones during creation, you cannot change or update the zones later.
+1.  To select more than three zones within a region, you must explicitly specify the individual zones.
+    For example, to select all four zones within a region, you must provide all four zones explicitly in your request.
+    If you do not, Compute Engine selects three zones by default.
+2.  To select two or fewer zones in a region, you must explicitly specify the individual zones.
+    Even if the region only contains two zones, you must still explicitly specify the zones in your request.
+https://cloud.google.com/compute/docs/instance-groups/regional-migs#autoscaling_a_regional_mig
+An autoscaling policy is applied to the group as a whole.
+For example, if you enable autoscaler to target 66% CPU utilization,
+the autoscaler tracks all instances in the group to maintain an average 66% utilization across all instances in all zones.
+To add more instances to a MIG, you can:
+1. Manually set the size of the MIG.
+2. Use autoscaling for stateless applications.
+https://cloud.google.com/compute/docs/instance-groups/autohealing-instances-in-migs
+An autohealing policy relies on an application-based health check to verify that an application is responding as expected.
+Checking that an application responds is more precise than simply verifying that a VM is in a RUNNING state.
+If the autohealer determines that an application isn't responding, the MIG automatically recreates that VM.
+You can set a maximum of one autohealing policy per MIG.
+https://cloud.google.com/compute/docs/ip-addresses/reserve-static-external-ip-address
 https://cloud.google.com/compute/docs/autoscaler/
-https://cloud.google.com/compute/docs/autoscaler/multiple-signals
+Autoscaling only works with zonal and regional managed instance groups (MIGs). Unmanaged instance groups are not supported.
+You cannot use autoscaling if your MIG has stateful configuration.
+Autoscaling works independently from autohealing.
+https://cloud.google.com/compute/docs/autoscaler#autoscaling_policy
+https://cloud.google.com/compute/docs/autoscaler/multiple-signals#overview
+https://cloud.google.com/compute/docs/autoscaler/scaling-cpu
 https://cloud.google.com/compute/docs/startupscript
 probably, you can only create boot disk from an image and not a snapshot. please verify.
 Difference between image and snapshot:

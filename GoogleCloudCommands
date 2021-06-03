@@ -325,6 +325,34 @@ To update the maintenance policy of an existing VM:
 gcloud compute instances set-scheduling INSTANCE_NAME \
     --maintenance-policy MAINTENANCE_POLICY \
     [--no-restart-on-failure | --restart-on-failure]
+
+To list instances of managed instance group:
+gcloud compute instance-groups managed list-instances [INSTANCE_GROUP]
+
+To roll out updates in an MIG(via instance template):
+gcloud compute instance-groups managed rolling-action start-update INSTANCE_GROUP_NAME \
+    --version=template=INSTANCE_TEMPLATE \
+    --type=opportunistic|proactive \
+    [--zone=ZONE | --region=REGION]
+SEE: https://cloud.google.com/compute/docs/instance-groups/updating-migs#setting_up_an_opportunistic_or_proactive_update
+
+To promote an ephemeral external IP address to static external IP address:
+gcloud compute addresses create ADDRESS_NAME --addresses=IP_ADDRESS \
+  [--region=REGION | --global]
+IP_ADDRESS: the IP address you want to promote
+
+To enable autoscaling based on CPU utilization:
+gcloud compute instance-groups managed set-autoscaling example-managed-instance-group \
+  --max-num-replicas 20 \
+  --target-cpu-utilization 0.60 \
+  --cool-down-period 90
+
+To enable autoscaling based on load balancing serving capacity:
+gcloud compute instance-groups managed set-autoscaling example-managed-instance-group \
+    --max-num-replicas 20 \
+    --target-load-balancing-utilization 0.6 \
+    --cool-down-period 90
+
 -------------------------------------------------------------------------
 VPC Network:
 
@@ -639,6 +667,16 @@ gcloud compute instance-templates create lb-backend-template \
 
 gcloud compute instance-groups managed create lb-backend-group \
    --template=lb-backend-template --size=2 --zone=us-central1-a
+OR to create a regional MIG:
+gcloud compute instance-groups managed create example-rmig \
+    --template example-template  \
+    --size 30 \
+    --region us-east1
+OR to choose specific zones in a regional MIG:
+gcloud compute instance-groups managed create example-rmig \
+    --template example-template \
+    --size 30 \
+    --zones us-east1-b,us-east1-c
 
 3. Create the "fw-allow-health-check" firewall rule.
 This is an ingress rule that allows traffic from the Google Cloud health checking systems (130.211.0.0/22 and 35.191.0.0/16).
@@ -655,8 +693,12 @@ gcloud compute firewall-rules create fw-allow-health-check \
 4. Now that the instances are up and running, set up a global static external IP address that your customers use to reach your load balancer.
 
 gcloud compute addresses create lb-ipv4-1 \
-    --ip-version=IPV4 \
+    --ip-version=[IPV4 | IPV6] \
     --global
+(OR to create a regional external IP address:
+gcloud compute addresses create ADDRESS_NAME  \
+    --region=REGION
+All regional IP addresses are IPv4)
 
 5. Note the IPv4 address that was reserved:
 
@@ -669,18 +711,23 @@ gcloud compute addresses describe lb-ipv4-1 \
     gcloud compute health-checks create http http-basic-check \
         --port 80
 
-7. Create a backend service (Each backend service is associated with an instance group):
+7. Create a backend service:
 
     gcloud compute backend-services create web-backend-service \
         --protocol=HTTP \
         --port-name=http \
         --health-checks=http-basic-check \
         --global
+(OR a health-check can be associated with an instance group:
+gcloud compute instance-groups managed update my-mig \
+        --health-check example-check \
+        --initial-delay 300 \
+        --zone us-east1-b)
 8. Add your instance group as the backend to the backend service:
 
     gcloud compute backend-services add-backend web-backend-service \
         --instance-group=lb-backend-group \
-        --instance-group-zone=us-central1-a \
+        --instance-group-zone=us-central1-a [--instance-group-region=INSTANCE_GROUP_REGION]\  (for zonal or regional MIGs)
         --global
 
 9. Create a URL map to route the incoming requests to the default backend service:
