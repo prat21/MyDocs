@@ -461,6 +461,8 @@ Data Access audit logs—except for BigQuery—are disabled by default.
 https://cloud.google.com/logging/docs/audit/configure-data-access
 
 App Engine:
+APP ENGINE STANDARD DOES NOT USE VPC NETWORKS. SEE: https://www.youtube.com/watch?v=T0P6qsTuh1s
+APP ENGINE FLEXIBLE USES VPC.
 https://cloud.google.com/appengine/docs/standard
 https://cloud.google.com/appengine/docs/flexible
 https://cloud.google.com/appengine/docs/the-appengine-environments
