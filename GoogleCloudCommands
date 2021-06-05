@@ -580,8 +580,48 @@ To disable autoscaling for a specific node pool, run the following command:
 gcloud container clusters update [cluster-name] --no-enable-autoscaling \
     --node-pool pool-name [--zone compute-zone --project project-id]
 
-To authenticate the cluster:
+To authenticate the cluster (and create a kubeconfig entry):
 gcloud container clusters get-credentials [CLUSTER-NAME]
+
+To set a default cluster for gcloud commands:
+gcloud config set container/cluster [CLUSTER_NAME]
+
+To change zones for zonal clusters:
+gcloud container clusters update CLUSTER_NAME \
+  --zone COMPUTE_ZONE \
+  --node-locations COMPUTE_ZONE,COMPUTE_ZONE1
+OR for regional
+gcloud container clusters update CLUSTER_NAME \
+  --region COMPUTE_REGION \
+  --node-locations COMPUTE_ZONE,COMPUTE_ZONE1
+
+To resize a cluster:
+gcloud container clusters resize CLUSTER_NAME --node-pool POOL_NAME \
+    --num-nodes NUM_NODES
+NUM_NODES: the number of nodes in the pool in a zonal cluster.
+If you use multi-zonal or regional clusters, NUM_NODES is the number of nodes for each zone the node pools is in.
+If your cluster has only one node pool, omit the --node-pool flag.
+
+To manually upgrade the control plane:
+gcloud container clusters upgrade CLUSTER_NAME --master \
+    --cluster-version VERSION
+Replace VERSION with the version that you want to upgrade your cluster to.
+
+To manually upgrade a node pool:
+gcloud container clusters upgrade CLUSTER_NAME \
+  --node-pool=NODE_POOL_NAME \
+  --cluster-version VERSION
+Replace VERSION with the version that you want to upgrade your cluster to.
+
+To add a node pool in a cluster:
+gcloud container node-pools create [POOL_NAME] --cluster [CLUSTER_NAME]
+
+To view node pools in a cluster:
+gcloud container node-pools list --cluster [CLUSTER_NAME]
+
+To enable node auto-repair:
+gcloud container clusters create cluster-name --zone compute-zone \
+  --enable-autorepair
 
 To create a deployment (deploy a containerized application):
 kubectl create deployment hello-server --image=gcr.io/google-samples/hello-app:1.0

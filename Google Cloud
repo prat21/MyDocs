@@ -267,6 +267,33 @@ https://cloud.google.com/monitoring/agent/monitoring
 
 Kubernetes:
 https://cloud.google.com/kubernetes-engine/docs
+https://cloud.google.com/kubernetes-engine/docs/how-to/creating-a-zonal-cluster
+1.  A single-zone cluster has a single control plane running in one zone. This control plane manages workloads on nodes running in the same zone.
+2.  A multi-zonal cluster's nodes run in multiple zones, but it has only a single replica of the control plane.
+    If you need higher availability for the control plane, consider creating a regional cluster instead.
+    In a regional cluster, the control plane is replicated across multiple zones in a region.
+For private clusters:
+Internal IP addresses for nodes come from the primary IP address range of the subnet you choose for the cluster.
+Pod IP addresses and Service IP addresses come from two subnet secondary IP address ranges of that same subnet.
+https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-admin-overview#node_configuration
+You can create one or more node pools; node pools are groups of nodes within your cluster that share a common configuration.
+Your cluster must have at least one node pool, and a node pool called default is created when you create the cluster.
+https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-usage-metering
+GKE usage metering tracks information about the resource requests and actual resource usage of your cluster's workloads.
+Currently, GKE usage metering tracks information about CPU, GPU, TPU, memory, storage, and optionally network egress.
+You can differentiate resource usage using Kubernetes Namespaces, labels, or a combination of both.
+Data is stored in BigQuery, where you can query it directly or export it for analysis using external tools such as Google Data Studio.
+GKE usage metering is not enabled by default. You have to enable it on a particular cluster (existing or new).
+https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-access-for-kubectl
+If you run multiple clusters within your Google Cloud project, you need to choose which cluster kubectl talks to.
+You can set a default cluster for kubectl by setting the current context in Kubernetes' kubeconfig file.
+Additionally, you can run kubectl commands against a specific cluster using the --cluster flag.
+https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-access-for-kubectl#cluster_endpoint
+https://cloud.google.com/kubernetes-engine/docs/how-to/upgrading-a-cluster
+By default, automatic upgrades are enabled for Google Kubernetes Engine (GKE) clusters and node pools.
+Control planes are upgraded on a regular basis, and cannot be disabled.
+However, you can apply maintenance windows and exclusions to temporarily suspend upgrades for control planes and nodes.
+https://cloud.google.com/kubernetes-engine/docs/how-to/node-pools#deploy
 https://cloud.google.com/kubernetes-engine/docs/concepts/types-of-clusters
 https://cloud.google.com/kubernetes-engine/docs/concepts/cluster-architecture
 https://cloud.google.com/kubernetes-engine/docs/concepts/cluster-upgrades
