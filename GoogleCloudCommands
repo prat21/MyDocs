@@ -620,8 +620,17 @@ To view node pools in a cluster:
 gcloud container node-pools list --cluster [CLUSTER_NAME]
 
 To enable node auto-repair:
-gcloud container clusters create cluster-name --zone compute-zone \
+gcloud container clusters create [cluster-name] --zone compute-zone \
   --enable-autorepair
+
+To create a cluster with a maintenance window:
+gcloud container clusters create cluster-name \
+  --maintenance-window-start start-time \
+  --maintenance-window-end end-time \
+  --maintenance-window-recurrence rrule
+
+To remove a maintenance window:
+gcloud container clusters update cluster-name --clear-maintenance-window
 
 To create a deployment (deploy a containerized application):
 kubectl create deployment hello-server --image=gcr.io/google-samples/hello-app:1.0
@@ -630,13 +639,19 @@ To create a deployment using a deployment descriptor (Pod template):
 kubectl apply -f [DEPLOYMENT_DESCRIPTOR]
 
 To create a Kubernetes Service, which is a Kubernetes resource that lets you expose your application to external traffic:
-kubectl expose deployment hello-server --type=LoadBalancer --port 8080
+kubectl expose deployment hello-server --type=LoadBalancer --port 8080 (to create a loadbalacner service)
+kubectl expose deployment my-deployment --name my-cip-service --type ClusterIP --protocol TCP --port 80 --target-port 8080 (to create a clusterIP)
+kubectl expose deployment my-deployment-50000 --name my-np-service --type NodePort --protocol TCP --port 80 --target-port 50000 (to create NodePort)
+SEE: https://cloud.google.com/kubernetes-engine/docs/how-to/exposing-apps#using_kubectl_expose_to_create_a_service
 
 To get the list of pods (filtered by key-value pair):
 kubectl get pods -l [KEY=VALUE]
 
 To get information about a specific Pod:
 kubectl describe pod [POD_NAME]
+
+To get information of pods for a specific deployment:
+kubectl describe pods [DEPLOYMENT]
 
 To view a Deployment's manifest, run the following command:
 kubectl get deployments [DEPLOYMENT_NAME] -o yaml
@@ -658,7 +673,7 @@ kubectl rollout undo deployment my-deployment --to-revision=3
 To scale a deployment (other than auto-scaling):
 kubectl scale deployment [DEPLOYMENT_NAME] --replicas [NUMBER_OF_REPLICAS]
 
-Tp apply autoscaling for a deployment:
+Tp apply autoscaling for a deployment (creates a HorizontalPodAutoscaler or HPA):
 kubectl autoscale deployment my-app --max 6 --min 4 --cpu-percent 50
 
 To delete a cluster:

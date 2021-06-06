@@ -245,6 +245,10 @@ Difference between image and snapshot:
 https://stackoverflow.com/a/29634892
 https://www.quora.com/What-is-the-difference-between-an-image-and-a-snapshot-on-Google-Cloud
 https://cloud.google.com/compute/docs/images/create-delete-deprecate-private-images
+The VM images for Compute Engine and Amazon Elastic Compute Cloud (EC2) don't include the Logging agent,so you must complete these steps to install it on those instances.
+The agent runs under both Linux and Windows.
+If your VMs are running in Google Kubernetes Engine or App Engine, the agent is already included in the VM image.
+https://cloud.google.com/logging/docs/agent/logging/installation
 
 
 Load Balancers:
@@ -294,6 +298,41 @@ By default, automatic upgrades are enabled for Google Kubernetes Engine (GKE) cl
 Control planes are upgraded on a regular basis, and cannot be disabled.
 However, you can apply maintenance windows and exclusions to temporarily suspend upgrades for control planes and nodes.
 https://cloud.google.com/kubernetes-engine/docs/how-to/node-pools#deploy
+Kubernetes uses the Deployment controller to deploy stateless applications
+Kubernetes uses the StatefulSets to deploy stateful applications
+https://cloud.google.com/kubernetes-engine/docs/how-to/stateless-apps#update
+https://cloud.google.com/kubernetes-engine/docs/concepts/alias-ips#cluster_sizing
+Pod IP address ranges, and subnet secondary IP address ranges in general,
+are accessible from on-premises networks connected with Cloud VPN or Cloud Interconnect using Cloud Routers.
+When you create a VPC-native cluster, you specify a subnet in a VPC network. The cluster uses three unique subnet IP address ranges:
+1. It uses the subnet's primary IP address range for all node IP addresses.
+2. It uses one secondary IP address range for all Pod IP addresses.
+3. It uses another secondary IP address range for all Service (cluster IP) addresses.
+https://cloud.google.com/kubernetes-engine/docs/how-to/exposing-apps
+A service of type LoadBalancer is an external TCP/UDP network loadbalancer.
+A kubernetes ingress object creates an external HTTP(S) Load Balancer.
+https://cloud.google.com/kubernetes-engine/docs/how-to/load-balance-ingress
+Kubernetes RBAC(role-based access control) is a core component of Kubernetes and lets you create and grant roles (sets of permissions)
+for any object or type of object within the cluster.
+https://cloud.google.com/kubernetes-engine/docs/concepts/pod
+By default, Pods run on nodes in the default node pool for the cluster. You can configure the node pool a Pod selects explicitly or implicitly:
+1.  You can explicitly force a Pod to deploy to a specific node pool by setting a nodeSelector in the Pod manifest.
+    This forces a Pod to run only on Nodes in that node pool.
+2.  You can specify resource requests for the containers you run.
+    The Pod will only run on nodes that satisfy the resource requests.
+    For instance, if the Pod definition includes a container that requires four CPUs, the Service will not select Pods running on Nodes with two CPUs.
+https://cloud.google.com/kubernetes-engine/docs/concepts/daemonset
+DaemonSets attempt to adhere to a one-Pod-per-node model, either across the entire cluster or a subset of nodes.
+As you add nodes to a node pool, DaemonSets automatically add Pods to the new nodes as needed.
+Examples of such tasks include storage daemons like ceph, log collection daemons like fluent-bit, and node monitoring daemons like collectd.
+https://cloud.google.com/kubernetes-engine/docs/concepts/configmap
+ConfigMaps bind configuration files, command-line arguments, environment variables, port numbers, and other configuration artifacts to your Pods' containers
+and system components at runtime.
+ConfigMaps enable you to separate your configurations from your Pods and components, which helps keep your workloads portable.
+This makes their configurations easier to change and manage, and prevents hardcoding configuration data to Pod specifications.
+ConfigMaps are useful for storing and sharing non-sensitive, unencrypted configuration information.
+To use sensitive information in your clusters, you must use Secrets.
+https://cloud.google.com/kubernetes-engine/docs/concepts/volumes#types_of_volumes
 https://cloud.google.com/kubernetes-engine/docs/concepts/types-of-clusters
 https://cloud.google.com/kubernetes-engine/docs/concepts/cluster-architecture
 https://cloud.google.com/kubernetes-engine/docs/concepts/cluster-upgrades
@@ -307,8 +346,7 @@ https://cloud.google.com/stackdriver/docs/solutions/gke
 https://cloud.google.com/stackdriver/docs/solutions/gke/managing-logs
 https://cloud.google.com/blog/products/management-tools/using-logging-your-apps-running-kubernetes-engine
 https://cloud.google.com/kubernetes-engine/docs/concepts/node-pools
-https://cloud.google.com/kubernetes-engine/docs/how-to/node-pools
-##############SEE ingress rules on gke which is an HTTP(S) load balancer. "LoadBalancer" service is a TCP/UDP network load balancer#############
+
 
 BigQuery:
 https://cloud.google.com/bigquery/docs/estimate-costs#bq
