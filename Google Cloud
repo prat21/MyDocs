@@ -253,13 +253,27 @@ https://cloud.google.com/logging/docs/agent/logging/installation
 
 Load Balancers:
 https://cloud.google.com/load-balancing/docs/choosing-load-balancer (Choosing a load balancer)
+External TCP/UDP network load balancer & Internal TCP/UDP loadbalancer are passthrough.
+All others are proxy-based.
+Internal HTTP(S) and External TCP/UDP network load balancers are regional load balancers.
+All others are global.
 https://cloud.google.com/load-balancing/docs/https (External HTTP(S) load balancing)
 https://cloud.google.com/load-balancing/docs/l7-internal (Internal HTTP(S) load balancing)
+Only clients that are located in the same region as the load balancer can access this IP address. Internal client requests stay internal to your network and region.
 https://cloud.google.com/load-balancing/docs/ssl (External SSl (TCP traffic with SSL offload) proxy load balancing)
 https://cloud.google.com/load-balancing/docs/tcp (External TCP proxy load balancing)
 https://cloud.google.com/load-balancing/docs/network/networklb-backend-service (External TCP/UDP network load balancers)
 With the Premium Tier, a load balancer can be configured as a global load balancing service.
 With Standard Tier, a load balancer handles load balancing regionally.
+External IP addresses can be global or regional.
+You can also use HTTP(S) Load Balancing with Cloud Storage buckets.
+https://cloud.google.com/load-balancing/docs/https#load_balancing_using_multiple_backend_types
+External HTTP(S) Load Balancing supports the following backend types:
+1. Instance groups
+2. Zonal network endpoint groups (NEGs)
+3. Serverless NEGs: One or more App Engine, Cloud Run, or Cloud Functions services
+4. Internet NEGs, for endpoints that are outside of Google Cloud (also known as custom origins)
+5. Buckets in Cloud Storage
 
 Cloud Monitoring:
 https://cloud.google.com/monitoring/quickstart-lamp
