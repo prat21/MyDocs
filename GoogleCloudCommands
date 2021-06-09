@@ -105,7 +105,8 @@ Any disk can be reattached as a boot disk to an instance as long as the instance
 and the boot disk is in the same zone as the VM instance.
 
 To update a boot disk for an instance:
-You can use only the Cloud Console to update the boot disk for a VM in one step. Specifically, you can detach an existing boot disk and attach a new boot disk as one action.
+You can use only the Cloud Console to update the boot disk for a VM in one step.
+Specifically, you can detach an existing boot disk and attach a new boot disk as one action.
 SEE: https://cloud.google.com/compute/docs/disks/detach-reattach-boot-disk#update_a_boot_disk_for_an_instance
 
 To list all the windows server images:
@@ -135,7 +136,8 @@ gcloud compute instances create [INSTANCE_NAME] --source-instance-template [INST
 
 You can create an instance from an existing instance by going to the VM instance details page of the Google Cloud Console.
 When you create an instance by clicking Create similar,
-the Cloud Console creates an instance with the same configuration as the source instance but does not copy any data stored on the persistent disks or the existing instance.
+the Cloud Console creates an instance with the same configuration as the source instance but does not copy any data stored on the persistent disks
+or the existing instance.
 You can only use this feature in the Cloud Console; this feature is not supported in the gcloud tool or the API.
 SEE: https://cloud.google.com/compute/docs/instances/create-vm-from-similar-instance
 
@@ -335,12 +337,28 @@ gcloud compute instance-groups managed rolling-action start-update INSTANCE_GROU
     --type=opportunistic|proactive \
     [--zone=ZONE | --region=REGION]
 SEE: https://cloud.google.com/compute/docs/instance-groups/updating-migs#setting_up_an_opportunistic_or_proactive_update
+    https://cloud.google.com/compute/docs/instance-groups/rolling-out-updates-to-managed-instance-groups#starting_a_basic_rolling_update
+    https://cloud.google.com/compute/docs/instance-groups/rolling-out-updates-to-managed-instance-groups#max_surge
+    https://cloud.google.com/compute/docs/instance-groups/rolling-out-updates-to-managed-instance-groups#max_unavailable
+
+TO roll out canary update:
+gcloud compute instance-groups managed rolling-action start-update INSTANCE_GROUP_NAME \
+    --version=template=CURRENT_INSTANCE_TEMPLATE_NAME \
+    --canary-version=template=NEW_TEMPLATE,target-size=SIZE \
+    [--zone=ZONE | --region=REGION]
+SEE: https://cloud.google.com/compute/docs/instance-groups/rolling-out-updates-to-managed-instance-groups#canary_updates
+
+To perform rolling restart or replace:
+gcloud compute instance-groups managed rolling-action replace INSTANCE_GROUP_NAME
+gcloud compute instance-groups managed rolling-action restart INSTANCE_GROUP_NAME
+SEE: https://cloud.google.com/compute/docs/instance-groups/rolling-out-updates-to-managed-instance-groups#performing_a_rolling_replace_or_restart
 
 To promote an ephemeral external IP address to static external IP address:
 gcloud compute addresses create ADDRESS_NAME --addresses=IP_ADDRESS \
   [--region=REGION | --global]
 IP_ADDRESS: the IP address you want to promote
 
+Autoscaling is a feature of managed instance groups (MIGs).
 To enable autoscaling based on CPU utilization:
 gcloud compute instance-groups managed set-autoscaling example-managed-instance-group \
   --max-num-replicas 20 \

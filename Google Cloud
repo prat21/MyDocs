@@ -239,6 +239,16 @@ Autoscaling works independently from autohealing.
 https://cloud.google.com/compute/docs/autoscaler#autoscaling_policy
 https://cloud.google.com/compute/docs/autoscaler/multiple-signals#overview
 https://cloud.google.com/compute/docs/autoscaler/scaling-cpu
+https://cloud.google.com/compute/docs/instance-groups/rolling-out-updates-to-managed-instance-groups#starting_a_basic_rolling_update
+https://cloud.google.com/compute/docs/instance-groups/rolling-out-updates-to-managed-instance-groups#max_surge
+https://cloud.google.com/compute/docs/instance-groups/rolling-out-updates-to-managed-instance-groups#max_unavailable
+If you do not want any unavailable machines during an update, set the maxUnavailable value to 0 and the maxSurge value to greater than 0.
+With these settings, Compute Engine removes each old machine only after its replacement new machine is created and running.
+https://cloud.google.com/compute/docs/instance-groups/rolling-out-updates-to-managed-instance-groups#canary_updates
+https://cloud.google.com/compute/docs/instance-groups/rolling-out-updates-to-managed-instance-groups#rolling_back_an_update
+There is no explicit command for rolling back an update to a previous version, but if you decide to roll back an update
+(either a fully committed update or a canary update), you can do so by making a new update request and passing in the instance template that you want to roll back to.
+https://cloud.google.com/compute/docs/instance-groups/rolling-out-updates-to-managed-instance-groups#performing_a_rolling_replace_or_restart
 https://cloud.google.com/compute/docs/startupscript
 probably, you can only create boot disk from an image and not a snapshot. please verify.
 Difference between image and snapshot:
