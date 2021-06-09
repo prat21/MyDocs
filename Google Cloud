@@ -130,6 +130,8 @@ https://cloud.google.com/compute/docs/instances/create-vm-from-similar-instance
 https://cloud.google.com/compute/docs/instances/custom-hostname-vm
 https://cloud.google.com/compute/docs/instances/ssh#metadata-managed_ssh_connections
 https://cloud.google.com/compute/docs/instances/connecting-advanced#provide-key
+(Recommended) Enable OS Login.
+(Not recommended) Manually add and remove SSH keys by editing project or instance metadata.
 https://cloud.google.com/compute/docs/instances/adding-removing-ssh-keys#risks
 By creating and managing SSH keys, you can let users access a Linux instance through third-party tools.
 An SSH key consists of the following files:
@@ -138,11 +140,21 @@ An SSH key consists of the following files:
 If a user presents their private SSH key, they can use a third-party tool to connect to any instance that is configured with the matching public SSH key file,
 even if they aren't a member of your Google Cloud project.
 Therefore, you can control which instances a user can access by changing the public SSH key metadata for one or more instances.
+https://cloud.google.com/compute/docs/instances/adding-removing-ssh-keys#project-wide
+Use project-wide public SSH keys to give users general access to a Linux instance.
+Project-wide public SSH keys give users access to all of the Linux instances in a project that allow project-wide public SSH keys.
+If an instance blocks project-wide public SSH keys,
+a user can't use their project-wide public SSH key to connect to the instance unless the same public SSH key is also added to instance metadata.
+https://cloud.google.com/compute/docs/instances/managing-instance-access#connect
+Grant one of the following instance access roles.
+1. roles/compute.osLogin, which doesn't grant administrator permissions
+2. roles/compute.osAdminLogin, which grants administrator permissions
 https://cloud.google.com/compute/docs/instances/adding-removing-ssh-keys
 https://cloud.google.com/compute/docs/instances/adding-removing-ssh-keys#edit-ssh-metadata
 https://cloud.google.com/compute/docs/disks/add-persistent-disk
 https://cloud.google.com/compute/docs/disks/working-with-persistent-disks#disk_type
-You can change the type of your persistent disk using snapshots. For example, to change your standard persistent disk to an SSD persistent disk, use the following process:
+You can change the type of your persistent disk using snapshots.
+For example, to change your standard persistent disk to an SSD persistent disk, use the following process:
 1) Create a snapshot of your standard persistent disk.
 2) Create a new persistent disk based on the snapshot. Include the --type flag and specify pd-ssd.
 https://cloud.google.com/compute/docs/disks/regional-persistent-disk#restrictions
