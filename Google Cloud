@@ -447,6 +447,8 @@ IAM:
 https://cloud.google.com/iam/docs/creating-custom-roles
 https://cloud.google.com/sdk/gcloud/reference/iam
 https://cloud.google.com/iam/docs/granting-changing-revoking-access
+Cloud Storage IAM roles:
+https://cloud.google.com/storage/docs/access-control/iam-roles#standard-roles
 
 GCLOUD SDK AUTHORIZATION:
 https://cloud.google.com/sdk/docs/authorizing
@@ -461,6 +463,9 @@ Archive Storage also has higher costs for data access and operations.
 https://cloud.google.com/storage/docs/domain-name-verification
 https://cloud.google.com/storage/docs/key-terms#geo-redundant
 https://cloud.google.com/storage/docs/moving-buckets
+Moving data between locations incurs network usage costs.
+In addition, moving data between buckets may incur retrieval and early deletion fees,
+if the data being moved are Nearline Storage, Coldline Storage, or Archive Storage objects.
 https://cloud.google.com/storage/docs/access-control
 https://cloud.google.com/storage/docs/access-control/signing-urls-with-helpers
 https://cloud.google.com/storage/docs/gsutil/commands/signurl#usage

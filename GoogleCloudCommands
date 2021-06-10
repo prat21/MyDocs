@@ -444,11 +444,20 @@ If not otherwise specified in your request, buckets are created in the US multi-
 A bucket name can only be assigned during creation. You cannot change the name of an existing bucket.
 You can use a bucket name in a DNS record as part of a CNAME or A redirect.
 
+To add label to bucket:
+gsutil label ch -l KEY_1:VALUE_1 gs://BUCKET_NAME
+
+To remove a bucket label:
+gsutil label ch -d KEY_1 gs://BUCKET_NAME
+
 To list items in a bucket:
 gsutil ls gs://[YOUR_BUCKET_NAME]
 
 To upload a file in a bucket:
 gsutil cp setup.html gs://$BUCKET_NAME_1
+
+To recursively copy data:
+gsutil cp -r gs://SOURCE_BUCKET/* gs://DESTINATION_BUCKET
 
 To get the acl list for an object in a bucket:
 gsutil acl get gs://$BUCKET_NAME_1/setup.html  > acl.txt
@@ -515,7 +524,7 @@ gsutil ls -L -b gs://BUCKET_NAME
 To get metadata of an object:
 gsutil stat gs://BUCKET_NAME/OBJECT_NAME
 
-To delete a bucket:
+To delete a bucket (-r recursively deletes objects and buckets):
 gsutil rm -r gs://BUCKET_NAME
 
 To apply notification configuration in your bucket:
