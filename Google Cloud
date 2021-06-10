@@ -479,7 +479,6 @@ if the data was originally stored as Nearline Storage, Coldline Storage, or Arch
 https://cloud.google.com/storage/docs/lifecycle
 For buckets in a region, the new storage class cannot be Multi-Regional Storage.
 For buckets in a multi-region or dual-region, the new storage class cannot be Regional Storage.
-https://cloud.google.com/storage/docs/managing-lifecycles#gsutil_1
 https://cloud.google.com/storage/docs/uniform-bucket-level-access
 https://cloud.google.com/storage/docs/object-versioning
 Cloud Storage retains a noncurrent object version each time you replace or delete a live object version,
@@ -492,14 +491,45 @@ https://cloud.google.com/storage/docs/object-versioning#considerations
     If you enable versioning, consider using Object Lifecycle Management, which can remove the oldest versions of an object as newer versions become noncurrent.
 https://cloud.google.com/storage/docs/object-versioning#example
 https://cloud.google.com/storage/docs/using-object-versioning
+https://cloud.google.com/storage/docs/bucket-lock
+Retention policies and Object Versioning are mutually exclusive features in Cloud Storage: for a given bucket, only one of these can be enabled at a time.
 https://cloud.google.com/storage/docs/access-control/making-data-public
 https://cloud.google.com/storage/docs/pubsub-notifications
 https://cloud.google.com/storage/docs/pubsub-notifications#events
 https://cloud.google.com/storage/docs/reporting-changes
 https://cloud.google.com/storage/docs/audit-logging
+https://cloud.google.com/storage/docs/lifecycle
+If multiple rules have their conditions satisfied simultaneously for a single object,
+Cloud Storage performs the action associated with only one of the rules, based on the following considerations:
+1. The Delete action takes precedence over any SetStorageClass action.
+2. The SetStorageClass action that switches the object to the storage class with the lowest at-rest storage pricing takes precedence.
+For buckets in a region, the new storage class cannot be Multi-Regional Storage.
+For buckets in a multi-region or dual-region, the new storage class cannot be Regional Storage.
+https://cloud.google.com/storage/docs/lifecycle#islive
+The IsLive condition is typically only used in conjunction with Object Versioning.
+When set to false, this condition is satisfied for any noncurrent version of an object.
+When set to true, this condition is satisfied for the live version of an object.
+https://cloud.google.com/storage/docs/lifecycle#numberofnewerversions
+The NumberOfNewerVersions condition is typically only used in conjunction with Object Versioning.
+If the value of this condition is set to N, an object version satisfies the condition when there are at least N versions (including the live version) newer than it.
+For a live object version, the number of newer versions is considered to be 0.
+For the most recent noncurrent version, the number of newer versions is 1 (or 0 if there is no live object version), and so on.
+https://cloud.google.com/storage/docs/lifecycle#setstorageclass-cost
+Unlike changing an object's storage class manually(by using rewrite), using SetStorageClass does not rewrite an object.
+This gives Object Lifecycle Management certain pricing advantages:
+1. There are no retrieval fees or early deletion fees associated with the storage class change,
+    even when the object is originally set to Nearline Storage or Coldline Storage.
+https://cloud.google.com/storage/docs/lifecycle#tracking
+To track the lifecycle management actions that Cloud Storage takes, use one of the following options:
+1. Use Cloud Storage usage logs. This feature logs both the action and who performed the action.
+2. Enable Pub/Sub Notifications for Cloud Storage for your bucket. This feature sends notifications to a Pub/Sub topic of your choice when specified actions occur.
+    Note that this feature does not record who performed the actions.
 https://cloud.google.com/storage/docs/lifecycle#tracking
 Cloud Audit Logs does not log actions taken by the Object Lifecycle Management feature.
 Pub/Sub notifications for cloud storage tracks actions taken by Object Lifecycle Management.
+https://cloud.google.com/storage/docs/managing-lifecycles
+Lifecycle configurations are managed at the bucket level and apply to all current and future objects in the bucket.
+https://cloud.google.com/storage/docs/access-control/iam#project-level_roles_vs_bucket-level_roles
 
 Storage Transfer Service:
 https://cloud.google.com/storage-transfer/docs/overview
