@@ -483,15 +483,20 @@ gsutil versioning get gs://$BUCKET_NAME_1
 To enable versioning of a bucket:
 gsutil versioning set on gs://$BUCKET_NAME_1
 
+To check whether Object Versioning is enabled:
+gsutil versioning get gs://BUCKET_NAME
+
 To copy a file to the bucket with the versioning:
 gsutil cp -v setup.html gs://$BUCKET_NAME_1
 
-To list all versions of the file:
+To list all versions of the file (live and noncurrent):
 gsutil ls -a gs://$BUCKET_NAME_1/setup.html
 
 To download noncurrent version of an object:
 gsutil cp gs://[SOURCE_BUCKET_NAME]/[SOURCE_OBJECT_NAME#GENERATION_NUMBER] gs://[DESTINATION_BUCKET_NAME]/[DESTINATION_OBJECT_NAME]
 WHERE "GENERATION_NUMBER" is the generation number for the noncurrent version you want to copy. For example,1560468815691234.
+After restoring the object version, the original noncurrent version continues to exist in the bucket.
+If you no longer need the noncurrent version, you can subsequently delete it
 
 To delete noncurrent version of an object:
 gsutil rm gs://[BUCKET_NAME]/[OBJECT_NAME#GENERATION_NUMBER]
@@ -501,7 +506,7 @@ gsutil rsync -r ./firstlevel gs://$BUCKET_NAME_1/firstlevel
 (Where firstlevel is the local folder, whose contents will be copied into the bucket recursively)
 
 To change the storage class of object:
-gsutil rewrite -s STORAGE_CLASS gs://PATH_TO_OBJECT
+gsutil rewrite -s STORAGE_CLASS gs://BUCKET_NAME/OBJECT_NAME
 
 To change the default storage class of a bucket:
 gsutil defstorageclass set STORAGE_CLASS gs://BUCKET_NAME
@@ -523,6 +528,12 @@ gsutil ls -L -b gs://BUCKET_NAME
 
 To get metadata of an object:
 gsutil stat gs://BUCKET_NAME/OBJECT_NAME
+
+To set the metadata of an object:
+gsutil setmeta -h "METADATA_KEY:METADATA_VALUE" gs://BUCKET_NAME/OBJECT_NAME
+
+To delete an object:
+gsutil rm gs://BUCKET_NAME/OBJECT_NAME
 
 To delete a bucket (-r recursively deletes objects and buckets):
 gsutil rm -r gs://BUCKET_NAME

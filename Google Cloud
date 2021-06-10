@@ -456,6 +456,7 @@ https://cloud.google.com/sdk/docs/initializing
 https://cloud.google.com/sdk/docs/configurations
 
 Google cloud storage:
+https://cloud.google.com/storage/docs/creating-buckets
 https://cloud.google.com/storage/docs/storage-classes#comparison_of_storage_classes
 You can change the storage class of an existing object either by rewriting the object or by using Object Lifecycle Management.
 Changing the default storage class of a bucket does not affect any of the objects that already exist in the bucket.
@@ -466,19 +467,30 @@ https://cloud.google.com/storage/docs/moving-buckets
 Moving data between locations incurs network usage costs.
 In addition, moving data between buckets may incur retrieval and early deletion fees,
 if the data being moved are Nearline Storage, Coldline Storage, or Archive Storage objects.
+The gsutil command-line tool uses resumable uploads in the gsutil cp and gsutil rsync commands when uploading data to Cloud Storage.
+https://cloud.google.com/storage/docs/metadata#content-type
+If the Content-Type is not specified by the uploader and cannot be determined, it is set to application/octet-stream or application/x-www-form-urlencoded.
 https://cloud.google.com/storage/docs/access-control
 https://cloud.google.com/storage/docs/access-control/signing-urls-with-helpers
 https://cloud.google.com/storage/docs/gsutil/commands/signurl#usage
 https://cloud.google.com/storage/docs/changing-storage-classes#gsutil
+This guide involves rewriting data, which is a Class A operation and which may incur retrieval and early deletion charges
+if the data was originally stored as Nearline Storage, Coldline Storage, or Archive Storage.
 https://cloud.google.com/storage/docs/lifecycle
 For buckets in a region, the new storage class cannot be Multi-Regional Storage.
 For buckets in a multi-region or dual-region, the new storage class cannot be Regional Storage.
 https://cloud.google.com/storage/docs/managing-lifecycles#gsutil_1
-https://cloud.google.com/storage/docs/moving-buckets
-Changing the default storage class of a bucket does not affect any of the objects that already exist in the bucket.
-https://cloud.google.com/storage/docs/creating-buckets
 https://cloud.google.com/storage/docs/uniform-bucket-level-access
 https://cloud.google.com/storage/docs/object-versioning
+Cloud Storage retains a noncurrent object version each time you replace or delete a live object version,
+as long as you do not specify the generation number of the live version.
+Noncurrent versions retain the name of the object, but are uniquely identified by their generation number.
+https://cloud.google.com/storage/docs/object-versioning#considerations
+1. Object Versioning cannot be enabled on a bucket that currently has a retention policy.
+2. There is no default limit on the number of object versions you can have.
+    Each noncurrent version of an object is charged at the same rate as the live version of the object.
+    If you enable versioning, consider using Object Lifecycle Management, which can remove the oldest versions of an object as newer versions become noncurrent.
+https://cloud.google.com/storage/docs/object-versioning#example
 https://cloud.google.com/storage/docs/using-object-versioning
 https://cloud.google.com/storage/docs/access-control/making-data-public
 https://cloud.google.com/storage/docs/pubsub-notifications
