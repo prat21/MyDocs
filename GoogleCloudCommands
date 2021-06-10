@@ -440,6 +440,9 @@ WHERE -p: Specify the project with which your bucket will be associated. For exa
       -c: Specify the default storage class of your bucket. For example, NEARLINE.
       -l: Specify the location of your bucket. For example, US-EAST1.
       -b: Enable uniform bucket-level access for your bucket.
+If not otherwise specified in your request, buckets are created in the US multi-region and have a default storage class of Standard Storage.
+A bucket name can only be assigned during creation. You cannot change the name of an existing bucket.
+You can use a bucket name in a DNS record as part of a CNAME or A redirect.
 
 To list items in a bucket:
 gsutil ls gs://[YOUR_BUCKET_NAME]

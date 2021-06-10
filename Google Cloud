@@ -455,6 +455,12 @@ https://cloud.google.com/sdk/docs/configurations
 
 Google cloud storage:
 https://cloud.google.com/storage/docs/storage-classes#comparison_of_storage_classes
+You can change the storage class of an existing object either by rewriting the object or by using Object Lifecycle Management.
+Changing the default storage class of a bucket does not affect any of the objects that already exist in the bucket.
+Archive Storage also has higher costs for data access and operations.
+https://cloud.google.com/storage/docs/domain-name-verification
+https://cloud.google.com/storage/docs/key-terms#geo-redundant
+https://cloud.google.com/storage/docs/moving-buckets
 https://cloud.google.com/storage/docs/access-control
 https://cloud.google.com/storage/docs/access-control/signing-urls-with-helpers
 https://cloud.google.com/storage/docs/gsutil/commands/signurl#usage
