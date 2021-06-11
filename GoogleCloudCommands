@@ -560,6 +560,15 @@ If you use a TOPIC_NAME that doesn't exist in your project, gsutil creates one f
 To list notification configuration of a bucket:
 gsutil notification list gs://BUCKET_NAME
 
+To create a signed URL to download an object:
+gsutil signurl -d 10m Desktop/private-key.json gs://example-bucket/cat.jpeg
+The command generates a signed URL for users to view the object cat.jpeg for 10 minutes.
+
+To create a signed URL to upload an object:
+gsutil signurl -m PUT -d 1h -c CONTENT_TYPE -u gs://BUCKET_NAME/OBJECT_NAME
+Use the gsutil signurl command with the -u option to reference the service account credentials.
+SEE: https://cloud.google.com/storage/docs/access-control/signing-urls-with-helpers#upload-object
+
 -------------------------------------------------------------------
 
 Hybrid Connectivity:

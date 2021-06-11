@@ -493,8 +493,6 @@ https://cloud.google.com/storage/docs/using-object-versioning
 https://cloud.google.com/storage/docs/bucket-lock
 Retention policies and Object Versioning are mutually exclusive features in Cloud Storage: for a given bucket, only one of these can be enabled at a time.
 https://cloud.google.com/storage/docs/access-control/making-data-public
-https://cloud.google.com/storage/docs/pubsub-notifications
-https://cloud.google.com/storage/docs/pubsub-notifications#events
 https://cloud.google.com/storage/docs/reporting-changes
 https://cloud.google.com/storage/docs/audit-logging
 https://cloud.google.com/storage/docs/lifecycle
@@ -541,6 +539,15 @@ and only bucket-level Identity and Access Management (IAM) permissions grant acc
 To support the ability to disable uniform bucket-level access and revert to using ACLs, Cloud Storage saves existing ACLs for 90 days.
 If you disable uniform bucket-level access during this time:
 1. Objects regain their saved ACLs.
+https://cloud.google.com/storage/docs/encryption
+https://cloud.google.com/storage/docs/encryption/using-customer-managed-keys
+https://cloud.google.com/storage/docs/encryption/customer-supplied-keys#restrictions
+https://cloud.google.com/storage/docs/encryption/using-customer-supplied-keys#storage-generate-encryption-key-java
+https://cloud.google.com/storage/docs/pubsub-notifications
+https://cloud.google.com/storage/docs/pubsub-notifications#events
+https://cloud.google.com/storage/docs/access-control/signed-urls
+Signed URLs contain authentication information in their query string, allowing users without credentials to perform specific actions on a resource.
+When you generate a signed URL, you specify a user or service account which must have sufficient permission to make the request that the signed URL will make.
 
 Storage Transfer Service:
 https://cloud.google.com/storage-transfer/docs/overview
