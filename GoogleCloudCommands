@@ -468,6 +468,21 @@ gsutil acl set private gs://$BUCKET_NAME_1/setup.html
 To update the access list to make the file publicly readable:
 gsutil acl ch -u AllUsers:R gs://$BUCKET_NAME_1/setup.html
 
+To add member to bucket level policy using iam:
+gsutil iam ch MEMBER_TYPE:MEMBER_NAME:IAM_ROLE gs://BUCKET_NAME
+The gsutil iam ch command does not work with policies that contain conditions.
+To modify a policy that has conditions, use gsutil iam get to retrieve the policy for the relevant bucket, edit it locally,
+and then use gsutil iam set to re-apply it to the bucket.
+
+To remove a member from a bucket-level policy:
+gsutil iam ch -d MEMBER_TYPE:MEMBER_NAME gs://BUCKET_NAME
+
+To view the iam policy or iam condition on a bucket:
+gsutil iam get gs://BUCKET_NAME > /tmp/policy.json
+
+TO set the iam policy or iam condition on a bucket:
+gsutil iam set /tmp/policy.json gs://BUCKET_NAME
+
 To make all objects in a bucket readable to everyone on the public internet (For uniform bucket level access enabled bucket):
 gsutil iam ch allUsers:objectViewer gs://BUCKET_NAME
 

@@ -479,7 +479,6 @@ if the data was originally stored as Nearline Storage, Coldline Storage, or Arch
 https://cloud.google.com/storage/docs/lifecycle
 For buckets in a region, the new storage class cannot be Multi-Regional Storage.
 For buckets in a multi-region or dual-region, the new storage class cannot be Regional Storage.
-https://cloud.google.com/storage/docs/uniform-bucket-level-access
 https://cloud.google.com/storage/docs/object-versioning
 Cloud Storage retains a noncurrent object version each time you replace or delete a live object version,
 as long as you do not specify the generation number of the live version.
@@ -529,7 +528,19 @@ Cloud Audit Logs does not log actions taken by the Object Lifecycle Management f
 Pub/Sub notifications for cloud storage tracks actions taken by Object Lifecycle Management.
 https://cloud.google.com/storage/docs/managing-lifecycles
 Lifecycle configurations are managed at the bucket level and apply to all current and future objects in the bucket.
+https://cloud.google.com/storage/docs/access-control/iam
+An IAM policy applied to your project defines the actions that users can take on all objects or buckets within your project.
+An IAM policy applied to a single bucket defines the actions that users can take on that specific bucket and objects within it.
 https://cloud.google.com/storage/docs/access-control/iam#project-level_roles_vs_bucket-level_roles
+https://cloud.google.com/storage/docs/access-control/using-iam-permissions#gsutil_2
+https://cloud.google.com/storage/docs/access-control/using-iam-permissions#conditions-iam
+To set IAM Conditions on a bucket, you must first enable uniform bucket-level access on that bucket.
+https://cloud.google.com/storage/docs/uniform-bucket-level-access
+When you enable uniform bucket-level access on a bucket, Access Control Lists (ACLs) are disabled,
+and only bucket-level Identity and Access Management (IAM) permissions grant access to that bucket and the objects it contains.
+To support the ability to disable uniform bucket-level access and revert to using ACLs, Cloud Storage saves existing ACLs for 90 days.
+If you disable uniform bucket-level access during this time:
+1. Objects regain their saved ACLs.
 
 Storage Transfer Service:
 https://cloud.google.com/storage-transfer/docs/overview
