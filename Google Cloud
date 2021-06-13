@@ -548,6 +548,14 @@ Signed URLs contain authentication information in their query string, allowing u
 When you generate a signed URL, you specify a user or service account which must have sufficient permission to make the request that the signed URL will make.
 https://cloud.google.com/storage/docs/access-control/signing-urls-with-helpers
 https://cloud.google.com/storage/docs/gsutil/commands/signurl#usage
+https://cloud.google.com/storage/docs/caching
+To use Cloud CDN, you must use external HTTP(S) Load Balancing with your Cloud Storage buckets as a backend.
+Cloud CDN uses the Cache-Control metadata set on your objects to determine how they should be cached.
+https://cloud.google.com/storage/docs/hosting-static-website
+Note the IP address associated with the load balancer: for example, 30.90.80.100.
+To point your domain to your load balancer, create an "A" record using your domain registration service.
+https://cloud.google.com/storage/docs/hosting-static-website-http
+To connect your domain to Cloud Storage, create a CNAME record through your domain registration service.
 
 Storage Transfer Service:
 https://cloud.google.com/storage-transfer/docs/overview
