@@ -569,6 +569,10 @@ gsutil signurl -m PUT -d 1h -c CONTENT_TYPE -u gs://BUCKET_NAME/OBJECT_NAME
 Use the gsutil signurl command with the -u option to reference the service account credentials.
 SEE: https://cloud.google.com/storage/docs/access-control/signing-urls-with-helpers#upload-object
 
+Assigning specialty pages:
+gsutil web set -m index.html -e 404.html gs://www.example.com
+SEE: https://cloud.google.com/storage/docs/hosting-static-website-http#specialty-pages
+
 -------------------------------------------------------------------
 
 Hybrid Connectivity:
