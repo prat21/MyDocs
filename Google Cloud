@@ -635,6 +635,9 @@ https://cloud.google.com/logging/docs/export/aggregated_sinks (Aggregated sink)
 
 
 Cloud Audit logs:
+Google Cloud services write audit logs to help you answer the questions, "Who did what, where, and when?" 
+Your Cloud projects contain only the audit logs for resources that are directly within the project. 
+Other entities, such as folders, organizations, and Cloud Billing accounts, contain the audit logs for the entity itself.
 https://cloud.google.com/logging/docs/audit
 https://www.youtube.com/watch?v=iR8GjOwTOrQ
 Data Access audit logs—except for BigQuery—are disabled by default.
@@ -664,6 +667,8 @@ https://cloud.google.com/appengine/docs/standard/java11/application-security#ing
  If you use Cloud Load Balancing with your App Engine app, we recommend that you use ingress controls to ensure that your app receives only internal
  and Cloud Load Balancing traffic.
  Otherwise, users can use your app's appspot URL to bypass the load balancer.
+ https://cloud.google.com/appengine/docs/standard/java11/understanding-firewalls
+ For App Engine, the App Engine firewall only applies to incoming traffic routed to your app or service.
 https://cloud.google.com/appengine/docs/standard/java11/access-control#auth-cloud-implicit-java
 By default, the app's environment contains credentials from the default App Engine service account.
 This service account is created by Google when you create an App Engine app and is given full permissions to manage and use all Cloud services in a GCP project.
@@ -675,6 +680,8 @@ Admin Activity audit logs and System Event audit logs are free.
 Data Access audit logs and Policy Denied audit logs are chargeable.
 https://cloud.google.com/appengine/docs/standard/java11/testing-and-deploying-your-app#other_deployment_options
 https://cloud.google.com/appengine/docs/standard/java11/testing-and-deploying-your-app#testing-on-app-engine
+Deploy your new version, but prevent traffic from being automatically routed to the new version:
+mvn appengine:deploy -Dapp.deploy.projectId=PROJECT_ID -Dapp.deploy.promote=False
 https://cloud.google.com/appengine/docs/standard/java11/writing-application-logs
 https://cloud.google.com/appengine/docs/standard/java11/storage-options
 https://cloud.google.com/appengine/docs/standard/java11/using-cloud-datastore
