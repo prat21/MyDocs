@@ -650,6 +650,11 @@ https://cloud.google.com/appengine/docs/standard/java11/an-overview-of-app-engin
 https://cloud.google.com/appengine/docs/standard/java11/configuration-files
 You must deploy the initial version of your app to the default service before you can create and deploy additional services to your app.
 https://cloud.google.com/appengine/docs/standard/java11/building-app
+https://cloud.google.com/appengine/docs/standard/java11/building-app/deploying-web-service
+You can specify the name of your service in the app.yaml file. If the name is omitted, it is treated as default. 
+The first service you deploy must be the default service.
+You can update your service at any time by running the gcloud app deploy command again. 
+Each time you deploy, a new version is created and traffic is automatically routed to the latest version.
 https://cloud.google.com/appengine/docs/standard/java11/config/appref
 https://cloud.google.com/appengine/docs/standard/java11/reference/dispatch-yaml
 An app engine app can have only one dispatch.yaml file.
