@@ -701,6 +701,8 @@ It's easier to set up an IP address split, but a cookie split is more precise.
 https://cloud.google.com/sdk/gcloud/reference/app/services/set-traffic
 https://cloud.google.com/appengine/docs/standard/java11/scheduling-jobs-with-cron-yaml
 https://cloud.google.com/appengine/docs/standard/java11/connecting-vpc
+To use Serverless VPC Access, you must first create a Serverless VPC Access connector to handle communication to your VPC network.
+
 
 Cloud SQL:
 https://cloud.google.com/sql/docs/mysql/create-instance
