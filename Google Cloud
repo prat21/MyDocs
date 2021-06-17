@@ -687,8 +687,17 @@ https://cloud.google.com/appengine/docs/standard/java11/storage-options
 https://cloud.google.com/appengine/docs/standard/java11/using-cloud-datastore
 Datastore mode automatically creates single-property indexes for use with simple types of queries.
 For complex queries that include multiple properties, you'll need to configure composite indexes in your app's index.yaml file.
+https://cloud.google.com/appengine/docs/standard/java11/using-cloud-storage
+App Engine creates a default bucket when you create an app.
+This bucket provides the first 5GB of storage for free and includes a free quota for Cloud Storage I/O operations.
+https://cloud.google.com/appengine/docs/standard/java11/serving-static-files
+To serve static files for Java 11 in the standard environment, you define the handlers in your app.yaml file using either the static_dir or static_files elements.
+https://cloud.google.com/appengine/docs/standard/java11/how-instances-are-managed#loading_requests
+https://cloud.google.com/appengine/docs/standard/java11/how-instances-are-managed#warmup_requests
 https://cloud.google.com/appengine/docs/standard/java11/migrating-traffic
 https://cloud.google.com/appengine/docs/standard/java11/splitting-traffic
+When you have specified two or more versions for splitting, you must choose whether to split traffic by using either an IP address or HTTP cookie. 
+It's easier to set up an IP address split, but a cookie split is more precise.
 https://cloud.google.com/sdk/gcloud/reference/app/services/set-traffic
 https://cloud.google.com/appengine/docs/standard/java11/scheduling-jobs-with-cron-yaml
 https://cloud.google.com/appengine/docs/standard/java11/connecting-vpc
