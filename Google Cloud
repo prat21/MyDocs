@@ -568,6 +568,60 @@ https://www.preveil.com/blog/public-and-private-key/ (Explains the public and pr
 
 VPC:
 https://cloud.google.com/vpc/docs/vpc
+https://cloud.google.com/vpc/docs/vpc#specifications
+You can create more than one subnet per region.
+A network must have at least one subnet before you can use it.
+https://cloud.google.com/vpc/docs/vpc#subnet-ranges
+When an auto mode VPC network is created, one subnet from each region is automatically created within it. 
+These automatically created subnets use a set of predefined IP ranges that fit within the 10.128.0.0/9 CIDR block.
+You can switch a VPC network from auto mode to custom mode. This is a one-way conversion. 
+Custom mode VPC networks cannot be changed to auto mode VPC networks.
+https://cloud.google.com/vpc/docs/vpc#default-network
+You can disable the creation of default networks by creating an organization policy with the compute.skipDefaultNetworkCreation constraint.
+Because the subnets of every auto mode VPC network use the same predefined range of IP addresses, 
+you cannot connect auto mode VPC networks to one another.
+Google recommends that you use custom mode VPC networks in production.
+https://cloud.google.com/vpc/docs/vpc#firewall_rules
+Every VPC network has two implied firewall rules. One implied rule allows most egress traffic, and the other denies all ingress traffic.
+You cannot delete the implied rules, but you can override them with your own.
+To monitor which firewall rule allowed or denied a particular connection, see Firewall Rules Logging.
+https://cloud.google.com/vpc/docs/vpc#internet_access_reqs
+https://cloud.google.com/vpc/docs/vpc#app-engine-comm (App Engine does not reside in VPC)
+https://cloud.google.com/vpc/docs/shared-vpc
+Shared VPC allows an organization to connect resources from multiple projects to a common Virtual Private Cloud (VPC) network, 
+so that they can communicate with each other securely and efficiently using internal IPs from that network.
+Shared VPC connects projects within the same organization. Participating host and service projects cannot belong to different organizations.
+https://cloud.google.com/vpc/docs/vpc-peering
+Google Cloud VPC Network Peering allows internal IP address connectivity across two Virtual Private Cloud (VPC) networks 
+regardless of whether they belong to the same project or the same organization.
+Shared VPC and VPC peering is a way to establish direct connection 
+between resources residing on separate VPC networks using internal IP address.
+Cloud VPN is another way to achieve the same,
+but Shared VPC/VPC peering is more suitable for this type of scenario and comes with low network latency and low cost.
+Peering traffic (traffic flowing between peered networks) has the same latency, throughput, and availability 
+as private traffic in the same network.
+https://cloud.google.com/vpc/docs/alias-ip
+https://cloud.google.com/vpc/docs/firewall-rules-logging
+You enable Firewall Rules Logging individually for each firewall rule whose connections you need to log.
+Firewall Rules Logging only records TCP and UDP connections.
+Changes to firewall rules can be viewed in VPC audit logs.
+You cannot enable Firewall Rules Logging for the implied deny ingress and implied allow egress rules.
+https://cloud.google.com/vpc/docs/flow-logs
+VPC Flow Logs interacts with firewall rules in the following ways:
+1. Egress packets are sampled before egress firewall rules. 
+   Even if an egress firewall rule denies outbound packets, those packets can be sampled by VPC Flow Logs.
+2. Ingress packets are sampled after ingress firewall rules. 
+   If an ingress firewall rule denies inbound packets, those packets are not sampled by VPC Flow Logs.
+https://cloud.google.com/vpc/docs/serverless-vpc-access
+Serverless VPC Access enables you to connect from a serverless environment on Google Cloud directly to your VPC network.
+This connection makes it possible for your serverless environment to access resources in your VPC network via internal IP addresses.
+With Serverless VPC Access, you create a connector in your Google Cloud project and attach it to a VPC network.
+You then configure your serverless services (such as Cloud Run services, App Engine apps, or Cloud Functions) 
+to use the connector for internal network traffic.
+The following Google services support Serverless VPC Access connectors:
+1. Cloud Run
+2. App Engine standard environment (All runtimes except PHP 5)
+3. Cloud Functions
 https://cloud.google.com/network-connectivity/docs/router/concepts/overview
 https://cloud.google.com/network-connectivity/docs/vpn/concepts/classic-topologies
 https://cloud.google.com/network-connectivity/docs/vpn/concepts/overview
@@ -584,9 +638,37 @@ and any other resources with an internal IP address.)
 
 Firewall:
 https://cloud.google.com/vpc/docs/firewalls
+Firewall configuration is associated with a VPC network. 
+This means that you cannot share firewall rules among VPC networks, 
+including networks connected by VPC Network Peering or by using Cloud VPN tunnels.
+VPC firewall rules are stateful:
+When a connection is allowed through the firewall in either direction, return traffic matching this connection is also allowed.
+https://cloud.google.com/vpc/docs/firewalls#default_firewall_rules
+Internet access is allowed if no other firewall rules deny outbound traffic 
+and if the instance has an external IP address or uses a Cloud NAT instance.
+The implied rules cannot be removed.
+Deny rules take precedence over allow rules of the same priority.
+Implied firewall rules are present in all VPC networks, regardless of how the networks are created, 
+and whether they are auto mode or custom mode VPC networks.
+The default network has the same implied rules.
+https://cloud.google.com/vpc/docs/firewalls#more_rules_default_vpc
+The default network is pre-populated with firewall rules that allow incoming connections to instances. (Note present in other networks)
+default-allow-internal: Allows ingress connections for all protocols and ports among instances in the network.
+https://cloud.google.com/vpc/docs/firewalls#direction_of_the_rule
+Consider an example connection between two VMs in the same network. 
+Traffic from VM1 to VM2 can be controlled by using either of these firewall rules:
+1. An ingress rule with a target of VM2 and a source of VM1.
+2. An egress rule with a target of VM1 and a destination of VM2.
+https://cloud.google.com/vpc/docs/firewalls#priority_order_for_firewall_rules
+ If you do not specify a priority when creating a rule, it is assigned a priority of 1000.
+https://cloud.google.com/vpc/docs/firewalls#enforcement
+You can change whether a firewall rule is enforced by setting its state to enabled or disabled. 
+Disabling a rule is useful for troubleshooting or to grant temporary access to instances. 
+It's much easier to disable a rule, test, and then re-enable it, than it is to delete and re-create the rule.
 https://cloud.google.com/vpc/docs/vpc#app-engine-comm (Communications and access for App Engine)
 Since app Engine standard environment instances do not run inside VPC network, VPC firewall rules do not apply to them.
 https://cloud.google.com/vpc/docs/vpc#internet_access_reqs (Internet access requirements)
+https://cloud.google.com/vpc/docs/firewall-rules-logging
 
 BigTable:
 Bigtable uses apache Hbase. Bigtable is not a relational database. It does not support SQL queries, joins, or multi-row transactions.
@@ -702,6 +784,7 @@ https://cloud.google.com/sdk/gcloud/reference/app/services/set-traffic
 https://cloud.google.com/appengine/docs/standard/java11/scheduling-jobs-with-cron-yaml
 https://cloud.google.com/appengine/docs/standard/java11/connecting-vpc
 To use Serverless VPC Access, you must first create a Serverless VPC Access connector to handle communication to your VPC network.
+https://cloud.google.com/vpc/docs/vpc#app-engine-comm (App Engine does not reside in VPC)
 
 
 Cloud SQL:
