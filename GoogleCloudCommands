@@ -395,9 +395,16 @@ To enable vpc flow logs for existing subnets:
 gcloud compute networks subnets update SUBNET_NAME \
     --enable-flow-logs \
     [other flags as needed]
+    
+Expand the primary IP range of a subnet:
+gcloud compute networks subnets expand-ip-range SUBNET \
+  --region=REGION \
+  --prefix-length=PREFIX_LENGTH
+Note: Expanding the primary IP range of a subnet cannot be undone. You cannot shrink the primary IP range of a subnet.
 
 To create a firewall rule:
-gcloud compute firewall-rules create privatenet-allow-icmp-ssh-rdp --direction=INGRESS --priority=1000 --network=privatenet --action=ALLOW --rules=icmp,tcp:22,tcp:3389 --source-ranges=0.0.0.0/0
+gcloud compute firewall-rules create privatenet-allow-icmp-ssh-rdp --direction=INGRESS --priority=1000 --network=privatenet \
+--action=ALLOW --rules=icmp,tcp:22,tcp:3389 --source-ranges=0.0.0.0/0
 
 To list all the firewall rules (sorted by VPC network):
 gcloud compute firewall-rules list --sort-by=NETWORK
