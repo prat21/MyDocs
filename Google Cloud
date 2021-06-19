@@ -623,6 +623,18 @@ The following Google services support Serverless VPC Access connectors:
 2. App Engine standard environment (All runtimes except PHP 5)
 3. Cloud Functions
 https://cloud.google.com/network-connectivity/docs/router/concepts/overview
+Cloud Router isn't supported for Direct Peering or Carrier Peering connections.
+When you extend your on-premises network to Google Cloud, 
+use Cloud Router to dynamically exchange routes between your Google Cloud networks and your on-premises network. 
+Cloud Router peers with your on-premises VPN gateway or router.
+The routers exchange topology information through BGP.
+Without Cloud Router, you can use only static routes to configure your Cloud VPN tunnels.
+https://cloud.google.com/network-connectivity/docs/router/concepts/overview#regional-dyn-routing
+https://cloud.google.com/network-connectivity/docs/router/concepts/overview#global_dynamic_routing_example
+With global dynamic routing, Cloud Router has visibility to resources in all regions.
+For example, if you have VMs in one region, they can reach a Cloud VPN tunnel in another region automatically without maintaining static routes.
+Note: We recommend creating two Cloud Routers in each region for an Interconnect connection. 
+      Creating two Cloud Routers is required for 99.99% availability.
 https://cloud.google.com/network-connectivity/docs/vpn/concepts/classic-topologies
 https://cloud.google.com/network-connectivity/docs/vpn/concepts/overview
 https://cloud.google.com/vpc/docs/configure-private-google-access
@@ -669,6 +681,7 @@ https://cloud.google.com/vpc/docs/vpc#app-engine-comm (Communications and access
 Since app Engine standard environment instances do not run inside VPC network, VPC firewall rules do not apply to them.
 https://cloud.google.com/vpc/docs/vpc#internet_access_reqs (Internet access requirements)
 https://cloud.google.com/vpc/docs/firewall-rules-logging
+
 
 BigTable:
 Bigtable uses apache Hbase. Bigtable is not a relational database. It does not support SQL queries, joins, or multi-row transactions.

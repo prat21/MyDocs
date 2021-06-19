@@ -424,7 +424,14 @@ gcloud compute addresses create network-lb-ip-1 --region us-central1
 To create a global static external IP address:
 gcloud compute addresses create lb-ipv4-1 --ip-version=IPV4 --global
 
-To create firewall rule for health check rule for global http(s) load balancer. This is an ingress rule that allows traffic from the Google Cloud health checking systems (130.211.0.0/22 and 35.191.0.0/16).
+To create a static internal IP address:
+gcloud compute addresses create ADDRESS_NAME [ADDRESS_NAME..] \
+    --region REGION --subnet SUBNETWORK \
+    --addresses IP_ADDRESS
+Note: Using the --subnet option creates internal IP address.
+
+To create firewall rule for health check rule for global http(s) load balancer. 
+This is an ingress rule that allows traffic from the Google Cloud health checking systems (130.211.0.0/22 and 35.191.0.0/16).
 gcloud compute firewall-rules create fw-allow-health-check \
     --network=default \
     --action=allow \
