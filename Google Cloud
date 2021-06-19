@@ -637,6 +637,14 @@ Note: We recommend creating two Cloud Routers in each region for an Interconnect
       Creating two Cloud Routers is required for 99.99% availability.
 https://cloud.google.com/network-connectivity/docs/vpn/concepts/classic-topologies
 https://cloud.google.com/network-connectivity/docs/vpn/concepts/overview
+Traffic traveling between the two networks is encrypted by one VPN gateway and then decrypted by the other VPN gateway. 
+This action protects your data as it travels over the internet.
+https://cloud.google.com/network-connectivity/docs/vpn/concepts/overview#ha-vpn
+HA VPN is a high-availability (HA) Cloud VPN solution that lets you securely connect your on-premises network to your VPC network 
+through an IPsec VPN connection in a single region.
+To achieve high availability when both VPN gateways are located in VPC networks, 
+you must use two HA VPN gateways, and both of them must be located in the same region.
+https://cloud.google.com/network-connectivity/docs/vpn/concepts/overview#comparison_table
 https://cloud.google.com/vpc/docs/configure-private-google-access
 https://cloud.google.com/vpc/docs/using-flow-logs
 https://www.coursera.org/lecture/logging-monitoring-observability-google-cloud/vpc-flow-logs-XWUmD (Vpc flow logs)
