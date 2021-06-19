@@ -1202,7 +1202,14 @@ cbt setgcpolicy [TABLE_NAME] [FAMILY_NAME] maxage=[DAYS]d
 
 -------------------------------------------------------------------------------
 LOGGING:
+To create a log bucket:
+gcloud logging buckets create BUCKET_ID --location=LOCATION OPTIONAL_FLAGS
 
+TO create a log view:
+gcloud logging views create VIEW_ID \
+  --log-filter="resource.type=gce_instance" --bucket=BUCKET_NAME \
+  --location=LOCATION --description="Log view for the central log bucket for Compute Engine instance"
+  
 To read your Google Cloud project-level audit log entries:
 gcloud logging read "logName : projects/PROJECT_ID/logs/cloudaudit.googleapis.com" --project=PROJECT_ID
 
@@ -1216,6 +1223,7 @@ To create an aggregated sink for a folder:
 gcloud logging sinks create SINK_NAME \
 storage.googleapis.com/BUCKET_NAME --include-children \
 --folder=FOLDER_ID --log-filter="logName:activity"
+Use --include-children flag to create aggregated sink.
 To create a sink on the organization level, replace --folder=[FOLDER_ID] with --organization=[ORGANIZATION_ID].
 For a billing account, replace with --billing-account=[BILLING_ACCOUNT_ID].
 

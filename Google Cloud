@@ -731,10 +731,45 @@ https://cloud.google.com/bigtable/docs/managing-failovers
 https://cloud.google.com/bigtable/docs/audit-logging
 
 Cloud Logging:
+https://cloud.google.com/logging/docs/agent/logging/installation
+The VM images for Compute Engine and Amazon Elastic Compute Cloud (EC2) don't include the Logging agent, 
+so you must complete these steps to install it on those instances.
+If your VMs are running in Google Kubernetes Engine or App Engine, the agent is already included in the VM image.
 https://cloud.google.com/logging/docs/routing/overview
+Depending on the log sink's configuration, every log entry received by Cloud Logging falls into one or more of these categories:
+1. Stored in Cloud Logging and not routed elsewhere
+2. Stored in Cloud Logging and routed to a supported destination
+3. Not stored in Cloud Logging but routed to a supported destination
+4. Neither stored in Cloud Logging nor routed elsewhere. These logs are excluded entirely.
+You can create sinks at the Google Cloud project level. To set up sinks at the organization or folder levels, use aggregated sinks.
+https://cloud.google.com/logging/docs/routing/overview#buckets
+Cloud log buckets are different storage entities than the similarly named Cloud Storage buckets.
+Cloud Logging provides every Cloud project with the _Required and _Default log buckets.
+https://cloud.google.com/logging/docs/storage#required-bucket
+Cloud Logging automatically routes the following types of logs to the _Required bucket:
+1. Admin Activity audit logs
+2. System Event audit logs
+3. Access Transparency logs
+Cloud Logging retains the logs in this bucket for 400 days; you can't change this retention period.
+You can't modify or delete the _Required bucket. You can't disable the _Required sink, which routes logs to the _Required bucket.
+https://cloud.google.com/logging/docs/storage#default-bucket
+Any log entry that isn't ingested by the _Required bucket is routed by the _Default sink to the _Default bucket, 
+unless you disable or otherwise edit the _Default sink.
+Logs held in the _Default bucket are retained for 30 days, unless you configure custom retention for the bucket.
+https://cloud.google.com/logging/docs/logs-views
+Inclusion filter: Selects which log entries to route through this sink. For inclusion filter examples, see Sample queries.
+Exclusion filter: Selects which log entries to explicitly exclude from routing, even if the log entries match the sink's inclusion filter.
+				  Note that a sink can contain multiple exclusion filters. 
+				  If any log entry matches any of the filters, the log entry is excluded from routing.
 https://cloud.google.com/logging/docs/export
 https://cloud.google.com/logging/docs/export/configure_export_v2
+Log entries going to log buckets, BigQuery, or Pub/Sub are streamed immediately. 
+Log entries going to Cloud Storage are batched and sent out approximately every hour.
 https://cloud.google.com/logging/docs/export/aggregated_sinks (Aggregated sink)
+To use aggregated sinks, create a sink in a Google Cloud organization or folder and set the sink's includeChildren parameter to True. 
+That sink can then route log entries from the organization or folder, plus (recursively) from any contained folders, billing accounts, or projects.
+Note: Sinks for folders, billing accounts, and organizations can't be created from Google Cloud Console. 
+You can use Google Cloud Console to create project-level (non-aggregated) sinks only.
 
 
 Cloud Audit logs:
