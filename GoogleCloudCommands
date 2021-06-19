@@ -1072,6 +1072,16 @@ gcloud projects set-iam-policy [project-id] [filepath]
 To list grantable roles for a resource identified via full resource name (for example a compute engine instance):
 gcloud iam list-grantable-roles  //compute.googleapis.com/projects/example-project/zones/us-central1-f/instances/example-instance
 
+To create a service account key:
+gcloud iam service-accounts keys create key-file \
+    --iam-account=sa-name@project-id.iam.gserviceaccount.com
+key-file: The path to a new output file for the private key—for example, ~./sa-private-key.json.
+
+To upload the public key of a service account:
+gcloud iam service-accounts keys upload key-file \
+    --iam-account sa-name@project-id.iam.gserviceaccount.com
+key-file: The path to the file containing the key data to upload—for example, ./public_key.pem.
+
 -------------------------------------------------------------------------------------------
 BigTable:
 To create a bigtable instance with a single cluster:
