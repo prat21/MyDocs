@@ -351,6 +351,7 @@ A kubernetes ingress object creates an external HTTP(S) Load Balancer.
 https://cloud.google.com/kubernetes-engine/docs/how-to/load-balance-ingress
 Kubernetes RBAC(role-based access control) is a core component of Kubernetes and lets you create and grant roles (sets of permissions)
 for any object or type of object within the cluster.
+https://cloud.google.com/kubernetes-engine/docs/how-to/internal-load-balancing
 https://cloud.google.com/kubernetes-engine/docs/concepts/pod
 By default, Pods run on nodes in the default node pool for the cluster. You can configure the node pool a Pod selects explicitly or implicitly:
 1.  You can explicitly force a Pod to deploy to a specific node pool by setting a nodeSelector in the Pod manifest.
@@ -381,6 +382,7 @@ https://kubernetes.io/docs/concepts/services-networking/service/
 https://cloud.google.com/sdk/gcloud/reference/container/clusters/get-credentials
 https://cloud.google.com/stackdriver/docs/solutions/gke
 https://cloud.google.com/stackdriver/docs/solutions/gke/managing-logs
+Kubernetes containers collect logs for your workloads, written to STDOUT and STDERR.
 https://cloud.google.com/blog/products/management-tools/using-logging-your-apps-running-kubernetes-engine
 https://cloud.google.com/kubernetes-engine/docs/concepts/node-pools
 
@@ -567,6 +569,14 @@ https://cloud.google.com/storage-transfer/docs/configure-access
 Service Account:
 https://cloud.google.com/iam/docs/service-accounts
 https://www.preveil.com/blog/public-and-private-key/ (Explains the public and private key concept)
+https://cloud.google.com/docs/authentication/production#automatically
+If your application runs inside a Google Cloud environment, and you have attached a service account to that environment, 
+your application can retrieve credentials for the service account. 
+The application can then use the credentials to call Google Cloud APIs.
+You can attach service accounts to resources for many different Google Cloud services, including Compute Engine, 
+Google Kubernetes Engine, App Engine, Cloud Run, and Cloud Functions. 
+We recommend using this strategy because it is more convenient and secure than manually passing credentials.
+Google Cloud Client Libraries use a library called Application Default Credentials (ADC) to automatically find your service account credentials.
 
 VPC:
 https://cloud.google.com/vpc/docs/vpc

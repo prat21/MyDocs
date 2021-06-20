@@ -722,7 +722,7 @@ To create a deployment using a deployment descriptor (Pod template):
 kubectl apply -f [DEPLOYMENT_DESCRIPTOR]
 
 To create a Kubernetes Service, which is a Kubernetes resource that lets you expose your application to external traffic:
-kubectl expose deployment hello-server --type=LoadBalancer --port 8080 (to create a loadbalacner service)
+kubectl expose deployment hello-server --type=LoadBalancer --port 8080 (to create a loadbalancer service)
 kubectl expose deployment my-deployment --name my-cip-service --type ClusterIP --protocol TCP --port 80 --target-port 8080 (to create a clusterIP)
 kubectl expose deployment my-deployment-50000 --name my-np-service --type NodePort --protocol TCP --port 80 --target-port 50000 (to create NodePort)
 SEE: https://cloud.google.com/kubernetes-engine/docs/how-to/exposing-apps#using_kubectl_expose_to_create_a_service
@@ -1247,6 +1247,12 @@ APP engine:
 To select a region and create an App Engine application:
 gcloud app create --project=[YOUR_PROJECT_ID]
 Each Cloud project can contain only a single App Engine application, and once created you cannot change the location of your App Engine application.
+
+To deploy a new version of an app engine service:
+gcloud app deploy
+from the directory where the app.yaml file of your service is located:
+To specify a custom version ID, use the --version flag.
+To prevent traffic from being automatically routed to the new version, use the --no-promote flag.
 
 To check if an App Engine application exists in your Cloud project:
 gcloud app describe
