@@ -293,7 +293,7 @@ gcloud compute instances create VM_NAME \
   --image-family=debian-10 \
   --metadata-from-file=startup-script=FILE_PATH
 
-To pass startup script from clous storage:
+To pass startup script from cloud storage:
 gcloud compute instances create VM_NAME \
   --image-project=debian-cloud \
   --image-family=debian-10 \

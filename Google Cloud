@@ -124,6 +124,10 @@ https://cloud.google.com/compute/docs/instances/create-start-preemptible-instanc
 Do not use regional persistent disks for boot disks. In a failover situation, they do not force-attach to a VM.
 https://cloud.google.com/compute/docs/disks/detach-reattach-boot-disk
 https://cloud.google.com/compute/docs/instances/windows/creating-managing-windows-instances
+Windows instances experience a longer startup time because of the sysprep process. 
+The Cloud Console might show that the instance is running even if the sysprep process is not yet complete. 
+To check if your instance has successfully started and is ready to be used, check the serial port output with the following command:
+gcloud compute instances get-serial-port-output [INSTANCE_NAME]
 https://cloud.google.com/compute/docs/instances/windows/creating-passwords-for-windows-instances
 https://cloud.google.com/compute/docs/instances/create-vm-from-instance-template
 https://cloud.google.com/compute/docs/instances/create-vm-from-similar-instance
@@ -185,6 +189,8 @@ Restrictions:
 https://cloud.google.com/compute/docs/disks/scheduled-snapshots#deletion_rule
 https://cloud.google.com/compute/docs/disks/scheduled-snapshots#change_snapshot_schedule
 https://cloud.google.com/compute/docs/images/create-delete-deprecate-private-images
+Custom images are ideal for situations where you have created and modified a persistent boot disk 
+or specific image to a certain state and need to save that state for creating VMs.
 Create the image
 You can create disk images from the following sources:
 1) A persistent disk, even while that disk is attached to a VM
@@ -220,6 +226,15 @@ https://cloud.google.com/compute/docs/instances/copy-vm-between-projects
 https://cloud.google.com/compute/docs/instances/changing-machine-type-of-stopped-instance
 https://cloud.google.com/compute/docs/access/create-enable-service-accounts-for-instances
 A virtual machine instance can only have one service account identity.
+https://cloud.google.com/compute/docs/access/create-enable-service-accounts-for-instances#clientlib
+Client libraries can use Application Default Credentials to authenticate with Google APIs and send requests to those APIs.
+https://cloud.google.com/compute/docs/access/create-enable-service-accounts-for-instances#best_practices
+The default compute engine service accout is added as project editor IAM role.
+In general, Google recommends that each instance that needs to call a Google API should run as a service account with the minimum permissions necessary for that instance 
+to do its job. In practice, this means you should configure service accounts for your instances with the following process:
+1. Create a new service account rather than using the Compute Engine default service account.
+2. Grant IAM roles to that service account for only the resources that it needs.
+3. Configure the instance to run as that service account.
 https://cloud.google.com/compute/docs/instances/setting-instance-scheduling-options
 https://cloud.google.com/compute/docs/instances/setting-instance-scheduling-options#settingoptions
 https://cloud.google.com/compute/docs/instance-groups/creating-groups-of-managed-instances
@@ -297,6 +312,9 @@ External HTTP(S) Load Balancing supports the following backend types:
 3. Serverless NEGs: One or more App Engine, Cloud Run, or Cloud Functions services
 4. Internet NEGs, for endpoints that are outside of Google Cloud (also known as custom origins)
 5. Buckets in Cloud Storage
+https://cloud.google.com/load-balancing/docs/https/ext-load-balancer-backend-buckets
+Provide public access to a cloud storage bucket to use it as a backend for an external HTTP(S) load balancer.
+https://cloud.google.com/load-balancing/docs/negs/serverless-neg-concepts
 
 Cloud Monitoring:
 https://cloud.google.com/monitoring/quickstart-lamp
