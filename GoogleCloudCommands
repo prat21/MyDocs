@@ -23,6 +23,9 @@ gcloud auth login
 OR
 gcloud auth login --no-launch-browser
 
+To determine what your current Cloud SDK credentials are:
+gcloud auth list
+
 To authorize gcloud to access Google Cloud Platform using an existing service account:
 gcloud auth activate-service-account test-service-account@google.com  --key-file=/path/key.json --project=testproject
 
@@ -40,6 +43,13 @@ gcloud config list compute/zone
 
 To set your default compute zone to us-central1-a:
 gcloud config set compute/zone us-central1-a
+
+To unset any property:
+gcloud config unset [PROPERTY]
+
+To switch the active account:
+gcloud config set account [ACCOUNT]
+https://cloud.google.com/sdk/docs/authorizing
 
 To see what your default region and zone settings are:
 gcloud config get-value compute/zone
@@ -1008,6 +1018,15 @@ You must create the replica in the same VPC network as the primary instance.
 
 Note: A read replica can be in a different region whereas a failover instance should be in the same region as the primary instance,
 but maybe in a different zone.
+
+To disable replica/replication:
+gcloud sql instances patch [REPLICA_NAME] --no-enable-database-replication
+Disabling replication does not stop the replica instance; it becomes a read-only instance that is no longer replicating from its primary instance. 
+You continue to be charged for the instance. You can re-enable replication on the disabled replica, delete the replica, or promote the replica to a stand-alone instance. 
+You cannot stop the replica.
+
+To enable replica/replication:
+gcloud sql instances patch [REPLICA_NAME] --enable-database-replication
 
 To promote a replica to a standalone instance:
 gcloud sql instances promote-replica [REPLICA_NAME]

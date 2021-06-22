@@ -229,7 +229,7 @@ A virtual machine instance can only have one service account identity.
 https://cloud.google.com/compute/docs/access/create-enable-service-accounts-for-instances#clientlib
 Client libraries can use Application Default Credentials to authenticate with Google APIs and send requests to those APIs.
 https://cloud.google.com/compute/docs/access/create-enable-service-accounts-for-instances#best_practices
-The default compute engine service accout is added as project editor IAM role.
+The default compute engine service account is added as project editor IAM role.
 In general, Google recommends that each instance that needs to call a Google API should run as a service account with the minimum permissions necessary for that instance 
 to do its job. In practice, this means you should configure service accounts for your instances with the following process:
 1. Create a new service account rather than using the Compute Engine default service account.
@@ -476,6 +476,12 @@ GCLOUD SDK AUTHORIZATION:
 https://cloud.google.com/sdk/docs/authorizing
 https://cloud.google.com/sdk/docs/initializing
 https://cloud.google.com/sdk/docs/configurations
+https://cloud.google.com/sdk/docs/properties
+You can also set properties via environment variables. Each property has a corresponding environment variable that can be used to set it. 
+The name of the environment variable follows the CLOUDSDK_SECTION_NAME_PROPERTY_NAME pattern. 
+For example, you can set the core/project and compute/zone properties as follows:
+CLOUDSDK_CORE_PROJECT=[YOUR_PROJECT_NAME]
+CLOUDSDK_COMPUTE_ZONE=[YOUR_ZONE_NAME]
 
 Google cloud storage:
 https://cloud.google.com/storage/docs/creating-buckets
@@ -884,6 +890,13 @@ https://cloud.google.com/sql/docs/mysql/monitor-instance
 https://cloud.google.com/sql/docs/mysql/delete-instance
 You cannot delete an instance that has any replicas. You must delete all replicas first.
 https://cloud.google.com/sql/docs/mysql/connect-overview
+How to authorize - which connections are authorized and allowed to connect to your Cloud SQL instance:
+1. Cloud SQL Auth proxy and Cloud SQL language connectors - these provide access based on IAM.
+2. Self-managed SSL/TLS certificates - these only allow connections based on specific public keys.
+3. Authorized networks - a list of IP addresses allowed to connect.
+In order to help keep your instance secure, 
+any connections to a Cloud SQL instance using a public IP must be authorized using either the Cloud SQL Auth proxy or authorized networks.
+Unless using the Cloud SQL Auth proxy, connections to the public IP address of an instance are only allowed if the connection come from from an authorized network.
 https://cloud.google.com/sql/docs/mysql/configure-ip
 https://cloud.google.com/sql/docs/mysql/configure-private-ip
 https://cloud.google.com/sql/docs/mysql/authorize-networks
@@ -895,14 +908,34 @@ Your client application's IP address or address range must be configured as auth
 1. Your client application is connecting directly to a Cloud SQL instance on its public IP address.
 2. Your client application is connecting directly to a Cloud SQL instance on its private IP address, and your client's IP address is a non-RFC 1918 address
 https://cloud.google.com/sql/docs/mysql/connect-admin-proxy
+https://cloud.google.com/sql/docs/mysql/connect-admin-proxy#authentication-options
 https://cloud.google.com/sql/docs/mysql/connect-admin-ip
+The gcloud sql connect command does not support connecting to a Cloud SQL instance using private IP.
 https://cloud.google.com/sql/docs/mysql/connect-app-engine-standard
 https://cloud.google.com/sql/docs/mysql/connect-kubernetes-engine
+To access a Cloud SQL instance from an application running in Google Kubernetes Engine, you can use either the Cloud SQL Auth proxy (with public or private IP), 
+or connect directly using a private IP address.
+The Cloud SQL Auth proxy is the recommended way to connect to Cloud SQL, even when using private IP. 
+This is because the Cloud SQL Auth proxy provides strong encryption and authentication using IAM, which can help keep your database secure.
 https://cloud.google.com/sql/docs/mysql/configure-ha
 https://cloud.google.com/sql/docs/mysql/backup-recovery/backing-up
 https://cloud.google.com/sql/docs/mysql/backup-recovery/restoring
 https://cloud.google.com/sql/docs/mysql/backup-recovery/pitr
 https://cloud.google.com/sql/docs/mysql/replication/create-replica
+Before creating a read replica:
+1. Check the status of the primary instance
+   gcloud sql instances describe PRIMARY_INSTANCE_NAME
+   If the databaseReplicationEnabled property is true, the instance is a replica; you cannot create a replica of a replica.
+2. If the enabled property under backupConfiguration is false, enable backups for the primary instance now:
+   gcloud sql instances patch PRIMARY_INSTANCE_NAME --backup-start-time >HH:MM
+3. If the binaryLogEnabled property is false, enable binary logs on the primary instance:
+   	gcloud sql instances patch --enable-bin-log PRIMARY_INSTANCE_NAME
+4. Create the read replica:
+   gcloud sql instances create REPLICA_NAME --master-instance-name=PRIMARY_INSTANCE_NAME
+https://cloud.google.com/sql/docs/mysql/replication/manage-replicas#gcloud
+Disabling replication does not stop the replica instance; it becomes a read-only instance that is no longer replicating from its primary instance. 
+You continue to be charged for the instance. You can re-enable replication on the disabled replica, delete the replica, or promote the replica to a stand-alone instance. 
+You cannot stop the replica.
 https://cloud.google.com/sql/docs/mysql/replication/cross-region-replicas
 There are two common scenarios for promoting cross-region replicas:
 1. Regional migration: Perform a planned migration of a database to a different region.
@@ -915,4 +948,5 @@ https://cloud.google.com/sql/docs/mysql/import-export/exporting
 https://cloud.google.com/sql/docs/mysql/create-manage-databases
 https://cloud.google.com/sql/docs/mysql/create-manage-users
 Additional material: https://cloud.google.com/sql/docs/mysql/high-availability
+Cloud SQL high availability is backed up by Regional persistent disk.
 Additional material: https://cloud.google.com/sql/docs/mysql/replication
