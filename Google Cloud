@@ -466,6 +466,7 @@ If the number of estimated bytes is beyond the limit, then the query fails witho
 
 IAM:
 https://cloud.google.com/iam/docs/creating-custom-roles
+Custom roles can only be used at the project or organization levels. They can’t be used at the folder level.
 https://cloud.google.com/iam/docs/creating-managing-service-account-keys
 https://cloud.google.com/sdk/gcloud/reference/iam
 https://cloud.google.com/iam/docs/granting-changing-revoking-access
