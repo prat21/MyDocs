@@ -76,7 +76,8 @@ SSH to a VM instance:
 gcloud compute ssh vm-internal --zone us-central1-c
 When you connect to VMs using the gcloud tool, Compute Engine creates a persistent SSH key for you.
 
-SSH to a private VM instance using IAP tunnel:
+SSH to a private VM instance using IAP tunnel (For private VM instance, SSH access from any source IP is not recommended, otherwise it breaks the
+whole "private" concept. So, instead, IAP tunnel is used to enable only authorized users to access the VM via SSH):
 gcloud compute ssh vm-internal --zone us-central1-c --tunnel-through-iap
 
 Move a VM instance from one zone to another:

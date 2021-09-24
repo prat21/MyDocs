@@ -286,6 +286,11 @@ The VM images for Compute Engine and Amazon Elastic Compute Cloud (EC2) don't in
 The agent runs under both Linux and Windows.
 If your VMs are running in Google Kubernetes Engine or App Engine, the agent is already included in the VM image.
 https://cloud.google.com/logging/docs/agent/logging/installation
+Note: Compute engine instance does not know the external IP address, but only knows the internal IP address.
+External to internal IP address mapping is managed separately.
+Note: If an instance is stopped, any ephemeral external IP addresses assigned to the instance are released back into the general Compute Engine pool
+and become available for use by other projects.
+When a stopped instance is started again, a new ephemeral external IP address is assigned to the instance.
 
 
 Load Balancers:
@@ -604,6 +609,10 @@ We recommend using this strategy because it is more convenient and secure than m
 Google Cloud Client Libraries use a library called Application Default Credentials (ADC) to automatically find your service account credentials.
 
 VPC:
+Google Cloud Virtual Private Cloud (VPC) provides networking functionality to Compute Engine virtual machine (VM) instances,
+Kubernetes Engine containers, and the App Engine flexible environment.
+In other words, without a VPC network, you cannot create VM instances, containers, or App Engine applications.
+Therefore, each Google Cloud project has a default network to get you started.
 https://cloud.google.com/vpc/docs/vpc
 https://cloud.google.com/vpc/docs/vpc#specifications
 You can create more than one subnet per region.
@@ -689,6 +698,9 @@ https://cloud.google.com/vpc/docs/configure-serverless-vpc-access
 or the App Engine standard environment) directly to your VPC network.
 This connection makes it possible for your serverless environment to access Compute Engine VM instances, Memorystore instances,
 and any other resources with an internal IP address.)
+Note: If a VM, with only internal IP address (and no external IP address), wants to access google APIs and services (like google cloud storage),
+then "private google access" has to be enabled in the corresponding subnet for those VMs.
+This is not required for VMs with external IPs.
 
 Firewall:
 https://cloud.google.com/vpc/docs/firewalls
