@@ -205,7 +205,8 @@ Shutdown scripts have a limited amount of time to finish running before the inst
 https://cloud.google.com/compute/docs/shutdownscript#shutdown_actions
 The shutdown script won't run if the instance is reset using instances().reset.
 https://cloud.google.com/compute/docs/instances/stop-start-instance
-You cannot stop and restart a VM with a local SSD attached.
+You cannot stop and restart a VM with a local SSD attached. The data residing in local ssd, survives a VM reset but not VM stop or terminate.
+Snapshot is not available for local SSDs.
 https://cloud.google.com/compute/docs/instances/deleting-instance
 https://cloud.google.com/compute/docs/instances/update-instance-properties
 https://cloud.google.com/compute/docs/instances/moving-instance-across-zones
@@ -291,6 +292,7 @@ External to internal IP address mapping is managed separately.
 Note: If an instance is stopped, any ephemeral external IP addresses assigned to the instance are released back into the general Compute Engine pool
 and become available for use by other projects.
 When a stopped instance is started again, a new ephemeral external IP address is assigned to the instance.
+Note: When an instance is stopped, you are not charged for the CPU or memory, rather you are charged for any attached disks or IPs.
 
 
 Load Balancers:
