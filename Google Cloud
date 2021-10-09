@@ -689,6 +689,10 @@ HA VPN is a high-availability (HA) Cloud VPN solution that lets you securely con
 through an IPsec VPN connection in a single region.
 To achieve high availability when both VPN gateways are located in VPC networks, 
 you must use two HA VPN gateways, and both of them must be located in the same region.
+In order to establish VPN connection between two separate networks, two VPN gateways (one for each network), and two VPN tunnels need to be established.
+Iif both tunnels are not established, traffic might flow from one network to another but not vice-versa.
+The traffic reach the remote server, but the response can't be returned.
+Each vpn gateway needs an external IP.
 https://cloud.google.com/network-connectivity/docs/vpn/concepts/overview#comparison_table
 https://cloud.google.com/vpc/docs/configure-private-google-access
 https://cloud.google.com/vpc/docs/using-flow-logs
@@ -700,6 +704,7 @@ https://cloud.google.com/vpc/docs/configure-serverless-vpc-access
 or the App Engine standard environment) directly to your VPC network.
 This connection makes it possible for your serverless environment to access Compute Engine VM instances, Memorystore instances,
 and any other resources with an internal IP address.)
+https://cloud.google.com/vpc/docs/configure-private-services-access
 Note: If a VM, with only internal IP address (and no external IP address), wants to access google APIs and services (like google cloud storage),
 then "private google access" has to be enabled in the corresponding subnet for those VMs.
 This is not required for VMs with external IPs.
@@ -911,6 +916,8 @@ How to authorize - which connections are authorized and allowed to connect to yo
 In order to help keep your instance secure, 
 any connections to a Cloud SQL instance using a public IP must be authorized using either the Cloud SQL Auth proxy or authorized networks.
 Unless using the Cloud SQL Auth proxy, connections to the public IP address of an instance are only allowed if the connection come from from an authorized network.
+When your application does not reside in the same VPC connected network and region as your Cloud SQL instance,
+use a cloud sql proxy to secure its external connection.
 https://cloud.google.com/sql/docs/mysql/configure-ip
 https://cloud.google.com/sql/docs/mysql/configure-private-ip
 https://cloud.google.com/sql/docs/mysql/authorize-networks
