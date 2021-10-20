@@ -301,6 +301,8 @@ External TCP/UDP network load balancer & Internal TCP/UDP loadbalancer are passt
 All others are proxy-based.
 Internal HTTP(S) and External TCP/UDP network load balancers are regional load balancers.
 All others are global.
+Global HTTP(S), SSL proxy and TCP proxy load balancers can receive IPv4/IPv6 traffic.
+Whereas Network TCP/UDP and Internal load balancers can receive only IPv4 traffic.
 https://cloud.google.com/load-balancing/docs/https (External HTTP(S) load balancing)
 https://cloud.google.com/load-balancing/docs/l7-internal (Internal HTTP(S) load balancing)
 Only clients that are located in the same region as the load balancer can access this IP address. 
@@ -708,6 +710,17 @@ https://cloud.google.com/vpc/docs/configure-private-services-access
 Note: If a VM, with only internal IP address (and no external IP address), wants to access google APIs and services (like google cloud storage),
 then "private google access" has to be enabled in the corresponding subnet for those VMs.
 This is not required for VMs with external IPs.
+Note: Dedicated interconnect, partner interconnect and cloud vpn helps on-premise network to connect to the
+"private" IP addresses of the gcp resources in gcp network. Whereas direct and carrier peering connects on premise network with the "public" IP addresses
+of the gcp resources in gcp network by creating a direct connection with google PoP (Point of Presence).
+Interconnect(including cloud VPN) comes with SLA whereas peering doesn't have any SLA.
+Note: VPC peering can establish connection between two vpc networks regardless of whether those two networks reside
+in the same or different project or organization.
+Shared VPC cannot have a single vpc network that spans across multiple organizations.
+Shared VPC can only span projects in the same organization.
+Note(Cloud NAT): Cloud NAT lets your VM instances and container pods communicate with the internet using a shared, public IP address.
+A cloud NAT gateway is region and VPC network specific.
+If you have VM instances in multiple regions, you’ll need to create a NAT gateway for each region.
 
 Firewall:
 https://cloud.google.com/vpc/docs/firewalls
@@ -971,3 +984,10 @@ https://cloud.google.com/sql/docs/mysql/create-manage-users
 Additional material: https://cloud.google.com/sql/docs/mysql/high-availability
 Cloud SQL high availability is backed up by Regional persistent disk.
 Additional material: https://cloud.google.com/sql/docs/mysql/replication
+
+
+PCA case studies link:
+https://services.google.com/fh/files/blogs/master_case_study_ehr_healthcare.pdf
+https://services.google.com/fh/files/blogs/master_case_study_helicopter_racing_league.pdf
+https://services.google.com/fh/files/blogs/master_case_study_mountkirk_games.pdf
+https://services.google.com/fh/files/blogs/master_case_study_terramearth.pdf
