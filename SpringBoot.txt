@@ -516,8 +516,10 @@ https://microservices.io/patterns/server-side-discovery.html
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 
-
 How configurations are loaded in spring boot:
 
 https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/ (Externalized Configuration)
+
+----------------------------------------------------------------------------------------------------------------------------------------
+Important link regarding microservice fault-tolerant methods: https://googlecourses.qwiklabs.com/course_sessions/443099/video/101635
 
