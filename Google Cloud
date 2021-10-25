@@ -995,3 +995,6 @@ https://services.google.com/fh/files/blogs/master_case_study_terramearth.pdf
 Important link regarding GCP storage solutions scaling : https://googlecourses.qwiklabs.com/course_sessions/443099/video/101607
 Important link regarding microservice fault-tolerant methods: https://googlecourses.qwiklabs.com/course_sessions/443099/video/101635
 Important link regarding different type of deployments: https://googlecourses.qwiklabs.com/course_sessions/443099/video/101654
+Important qwiklabs course for GKE and containers: https://googlecourses.qwiklabs.com/course_templates/32
+Important link regarding containers concepts: https://googlecourses.qwiklabs.com/course_sessions/468188/video/101815
+                                              https://www.terriblecode.com/blog/how-docker-images-work-union-file-systems-for-dummies/
