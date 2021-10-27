@@ -334,6 +334,7 @@ network traffic, and uptime information
 https://cloud.google.com/monitoring/agent/monitoring
 
 Kubernetes:
+REVIEW THIS QWIKLABS COURSE FOR AN IN-DEPTH KNOWLEDGE ON KUBERNETES AND GKE: https://googlecourses.qwiklabs.com/course_templates/34
 https://cloud.google.com/kubernetes-engine/docs
 https://cloud.google.com/kubernetes-engine/docs/how-to/creating-a-zonal-cluster
 1.  A single-zone cluster has a single control plane running in one zone. This control plane manages workloads on nodes running in the same zone.
@@ -412,6 +413,7 @@ https://cloud.google.com/stackdriver/docs/solutions/gke/managing-logs
 Kubernetes containers collect logs for your workloads, written to STDOUT and STDERR.
 https://cloud.google.com/blog/products/management-tools/using-logging-your-apps-running-kubernetes-engine
 https://cloud.google.com/kubernetes-engine/docs/concepts/node-pools
+Note: ClusterIP service creates a static common IP for the backend pods and clusterIP can only be accessed within the cluster and not outside.
 
 
 BigQuery:
