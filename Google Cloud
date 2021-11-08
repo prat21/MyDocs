@@ -413,7 +413,7 @@ https://cloud.google.com/stackdriver/docs/solutions/gke/managing-logs
 Kubernetes containers collect logs for your workloads, written to STDOUT and STDERR.
 https://cloud.google.com/blog/products/management-tools/using-logging-your-apps-running-kubernetes-engine
 https://cloud.google.com/kubernetes-engine/docs/concepts/node-pools
-Note: ClusterIP service creates a static common IP for the backend pods and clusterIP can only be accessed within the cluster and not outside.
+Note: ClusterIP service creates a static common IP for the backend pods and clusterIP can only be accessed within the cluster and not externally.
 
 
 BigQuery:
@@ -1002,3 +1002,6 @@ Important link regarding containers concepts: https://googlecourses.qwiklabs.com
                                               https://www.terriblecode.com/blog/how-docker-images-work-union-file-systems-for-dummies/
 Important link kubernetes(GKE) blue/green deployment: https://googlecourses.qwiklabs.com/course_sessions/471006/video/101871
 Important qwiklabs course for GKE and kubernetes: https://googlecourses.qwiklabs.com/course_templates/34
+                                                https://googlecourses.qwiklabs.com/course_templates/33
+Important link about kubernetes resource and limits:
+https://cloud.google.com/blog/products/containers-kubernetes/kubernetes-best-practices-resource-requests-and-limits
