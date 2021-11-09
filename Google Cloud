@@ -993,6 +993,7 @@ https://services.google.com/fh/files/blogs/master_case_study_ehr_healthcare.pdf
 https://services.google.com/fh/files/blogs/master_case_study_helicopter_racing_league.pdf
 https://services.google.com/fh/files/blogs/master_case_study_mountkirk_games.pdf
 https://services.google.com/fh/files/blogs/master_case_study_terramearth.pdf
+See google cloud best practices.
 
 Important link regarding GCP storage solutions scaling : https://googlecourses.qwiklabs.com/course_sessions/443099/video/101607
 Important link regarding microservice fault-tolerant methods: https://googlecourses.qwiklabs.com/course_sessions/443099/video/101635

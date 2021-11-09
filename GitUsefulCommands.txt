@@ -17,7 +17,7 @@ To push the branch to remote repository
 git push origin <branch-name>
 
 7. Add and commit using a single command:
-git commit -am <commit-message> (not aplicable for new and untracked files)
+git commit -am <commit-message> (not applicable for new and untracked files)
 
 8. Resolve Conflicts:
 https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging
