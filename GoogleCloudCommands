@@ -80,6 +80,11 @@ SSH to a private VM instance using IAP tunnel (For private VM instance, SSH acce
 whole "private" concept. So, instead, IAP tunnel is used to enable only authorized users to access the VM via SSH):
 gcloud compute ssh vm-internal --zone us-central1-c --tunnel-through-iap
 
+To connect to a VM instance without an external IP address, from a VPN:
+gcloud compute ssh INTERNAL_INSTANCE_NAME \
+    --zone=ZONE \
+    --internal-ip
+
 Move a VM instance from one zone to another:
 gcloud compute instances move example-instance-1  --zone us-central1-b --destination-zone us-central1-f
 
@@ -94,6 +99,10 @@ SEE: https://cloud.google.com/compute/docs/instances/create-start-instance#creat
 
 To create a preemptible instance:
 gcloud compute instances create [INSTANCE_NAME] --preemptible
+
+To create a VM instance from a container image:
+gcloud compute instances create-with-container VM_NAME \
+    --container-image=CONTAINER_IMAGE
 
 To create a standalone boot persistent disk from an image:
 gcloud compute disks create example-disk --image example-image
@@ -114,6 +123,11 @@ gcloud compute instances attach-disk INSTANCE_NAME \
     --boot
 Any disk can be reattached as a boot disk to an instance as long as the instance does not already have a boot disk attached
 and the boot disk is in the same zone as the VM instance.
+
+To failover your regional persistent disk:
+gcloud compute instances attach-disk INSTANCE_NAME  \
+    --disk DISK_NAME --disk-scope regional \
+    --force-attach
 
 To update a boot disk for an instance:
 You can use only the Cloud Console to update the boot disk for a VM in one step.
@@ -190,6 +204,15 @@ gcloud compute disks create DISK_NAME \
     --type=DISK_TYPE \
     --region=REGION \
     --replica-zones=ZONE1,ZONE2
+
+To create a regional persistent disk from zonal disk:
+gcloud compute disks create TARGET_DISK_NAME \
+  --description="zonal to regional cloned disk" \
+  --region=REGION_1 \
+  --source-disk=SOURCE_DISK_NAME \
+  --source-disk-zone=REGION_1_ZONE_1 \
+  --replica-zones=REGION_1_ZONE_1,REGION_1_ZONE_2 \
+  --project=PROJECT_ID
 
 To attach the regional disk to a vm instance:
 gcloud compute instances attach-disk INSTANCE_NAME \

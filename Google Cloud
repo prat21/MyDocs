@@ -155,7 +155,12 @@ Grant one of the following instance access roles.
 2. roles/compute.osAdminLogin, which grants administrator permissions
 https://cloud.google.com/compute/docs/instances/adding-removing-ssh-keys
 https://cloud.google.com/compute/docs/instances/adding-removing-ssh-keys#edit-ssh-metadata
+https://cloud.google.com/compute/docs/instances/connecting-advanced#sshbetweeninstances
 https://cloud.google.com/compute/docs/disks/add-persistent-disk
+https://cloud.google.com/compute/docs/disks/repd-failover
+https://cloud.google.com/compute/docs/disks/working-with-persistent-disks#resize_partitions
+1)Boot disk: VMs using public images automatically resize the root partition and file system after you've resized the boot disk on the VM and restarted the VM.
+2)Non-boot disk: After resizing the disk, you must extend the file system on the disk to use the added space.
 https://cloud.google.com/compute/docs/disks/working-with-persistent-disks#disk_type
 You can change the type of your persistent disk using snapshots.
 For example, to change your standard persistent disk to an SSD persistent disk, use the following process:
@@ -165,6 +170,9 @@ https://cloud.google.com/compute/docs/disks/regional-persistent-disk#restriction
 Restrictions
 1) You cannot use regional persistent disks as boot disks.
 2) You can create a regional persistent disk from a snapshot but not an image.
+https://cloud.google.com/compute/docs/disks/regional-persistent-disk#resize_repd
+You can resize disks at any time, regardless of whether the disk is attached to a running VM.
+You can attach a non-boot persistent disk to more than one VM in read-only mode, which lets you share static data between multiple VMs.
 https://cloud.google.com/compute/docs/disks/regional-persistent-disk#use_multi_instances
 https://cloud.google.com/compute/docs/disks/regional-persistent-disk#migrate-repd
 https://cloud.google.com/compute/docs/disks/create-disk-from-source
@@ -175,7 +183,7 @@ You can create persistent disks from the following data sources:
 https://cloud.google.com/compute/docs/disks/create-disk-from-source#clone
 Restrictions
 1) The zone, region, and disk type of the clone must be the same as that of the source disk.
-2) You cannot create a zonal disk clone from a regional disk. You cannot create a regional disk clone from a zonal disk.
+2) You cannot create a zonal disk clone from a regional disk.
 https://cloud.google.com/compute/docs/disks/create-snapshots
 You can create snapshots from disks even while they are attached to running instances.
 Snapshots are global resources, so you can use them to restore data to a new disk or instance within the same project.
@@ -197,6 +205,8 @@ You can create disk images from the following sources:
 2) A snapshot of a persistent disk
 3) Another image in your project
 https://cloud.google.com/compute/docs/instances/startup-scripts/linux
+Startup scripts can apply to all VMs in a project or to a single VM.
+Startup scripts specified by VM-level metadata override startup scripts specified by project-level metadata.
 https://cloud.google.com/compute/docs/shutdownscript
 Create and run shutdown scripts that execute commands right before a virtual machine (VM) instance is stopped or restarted.
 Shutdown scripts have a limited amount of time to finish running before the instance stops:
