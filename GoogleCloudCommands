@@ -405,6 +405,17 @@ gcloud compute instance-groups managed set-autoscaling example-managed-instance-
     --target-load-balancing-utilization 0.6 \
     --cool-down-period 90
 
+To temporarily turn off autoscaling:
+gcloud compute instance-groups managed update-autoscaling INSTANCE_GROUP_NAME \
+        --mode MODE
+MODE:
+off -> to disable the autoscaler but maintain its configuration
+only-scale-out -> to restrict the autoscaler to adding VM instances only
+on -> to re-enable all autoscaler activities according to its policy
+
+To delete an autoscaler:
+gcloud compute instance-groups managed stop-autoscaling INSTANCE_GROUP_NAME
+
 -------------------------------------------------------------------------
 VPC Network:
 

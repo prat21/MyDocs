@@ -215,11 +215,17 @@ Shutdown scripts have a limited amount of time to finish running before the inst
 https://cloud.google.com/compute/docs/shutdownscript#shutdown_actions
 The shutdown script won't run if the instance is reset using instances().reset.
 https://cloud.google.com/compute/docs/instances/stop-start-instance
+A stopped VM retains its persistent disks, its internal IPs, and its MAC addresses. However, the VM shuts down the guest OS and loses its application state.
+If you need to retain the guest OS and application state, suspend the VM instead.
 You cannot stop and restart a VM with a local SSD attached. The data residing in local ssd, survives a VM reset but not VM stop or terminate.
+Performing a reset on your VM is similar to doing a hard reset on your computer, where you might press a reset button or press and hold the power button.
+Resetting a VM forcibly wipes the memory contents of the machine and resets the VM to its initial state.
+The VM does not perform a clean shutdown of the guest OS.
 Snapshot is not available for local SSDs.
 https://cloud.google.com/compute/docs/instances/deleting-instance
 https://cloud.google.com/compute/docs/instances/update-instance-properties
 https://cloud.google.com/compute/docs/instances/moving-instance-across-zones
+External IP addresses are regional resources.
 Move your instance manually using the following steps:
 1. Create snapshots of persistent disks attached to the original instance.
 2. Create copies of the persistent disks in the destination zone.
@@ -235,6 +241,7 @@ Move your instance manually using the following steps:
 https://cloud.google.com/compute/docs/instances/moving-instance-across-zones#limitations
 https://cloud.google.com/compute/docs/instances/copy-vm-between-projects
 https://cloud.google.com/compute/docs/instances/changing-machine-type-of-stopped-instance
+If your VM does not have a local SSD and is not part of a managed instance group (MIG), you can change the machine type of your VM after stopping it.
 https://cloud.google.com/compute/docs/access/create-enable-service-accounts-for-instances
 A virtual machine instance can only have one service account identity.
 https://cloud.google.com/compute/docs/access/create-enable-service-accounts-for-instances#clientlib
@@ -246,7 +253,17 @@ to do its job. In practice, this means you should configure service accounts for
 1. Create a new service account rather than using the Compute Engine default service account.
 2. Grant IAM roles to that service account for only the resources that it needs.
 3. Configure the instance to run as that service account.
+https://cloud.google.com/docs/authentication/production#automatically
+Google Cloud Client Libraries use a library called Application Default Credentials (ADC) to automatically find your service account credentials.
+ADC looks for service account credentials in the following order:
+1)If the environment variable GOOGLE_APPLICATION_CREDENTIALS is set, ADC uses the service account key or configuration file that the variable points to.
+2)If the environment variable GOOGLE_APPLICATION_CREDENTIALS isn't set, ADC uses the service account that is attached to the resource that is running your code.
+This service account might be a default service account provided by Compute Engine, Google Kubernetes Engine, App Engine, Cloud Run, or Cloud Functions.
+It might also be a user-managed service account that you created.
+3)If ADC can't use any of the above credentials, an error occurs.
 https://cloud.google.com/compute/docs/instances/setting-instance-scheduling-options
+You can't change the availability policies for a preemptible VM.
+When there is a maintenance event, the preemptible VM stops and it does not migrate. You must manually restart the preempted VM.
 https://cloud.google.com/compute/docs/instances/setting-instance-scheduling-options#settingoptions
 https://cloud.google.com/compute/docs/instance-groups/creating-groups-of-managed-instances
 You can create regional MIGs or zonal MIGs.
@@ -264,6 +281,10 @@ the autoscaler tracks all instances in the group to maintain an average 66% util
 To add more instances to a MIG, you can:
 1. Manually set the size of the MIG.
 2. Use autoscaling for stateless applications.
+The autoscaler only adds instances to a zone up to 1/n of the specified maximum for the group, where n is the number of provisioned zones.
+For example, if you are using the default of 3 zones, and if 15 is the maxNumReplicas configured for autoscaling,
+the autoscaler can only add up to 1/3 * 15 = 5 instances per zone for the group.
+If one zone fails, the autoscaler only scales out to 2/3 of the maxNumReplicas in the remaining two zones combined.
 https://cloud.google.com/compute/docs/instance-groups/autohealing-instances-in-migs
 An autohealing policy relies on an application-based health check to verify that an application is responding as expected.
 Checking that an application responds is more precise than simply verifying that a VM is in a RUNNING state.
@@ -303,13 +324,15 @@ Note: If an instance is stopped, any ephemeral external IP addresses assigned to
 and become available for use by other projects.
 When a stopped instance is started again, a new ephemeral external IP address is assigned to the instance.
 Note: When an instance is stopped, you are not charged for the CPU or memory, rather you are charged for any attached disks or IPs.
+Note: Static regional external IP addresses are regional resources that are used by instances that are in the same region as the address.
+Although the regional external IP address is accessed by clients anywhere in the globe.
 
 
 Load Balancers:
 https://cloud.google.com/load-balancing/docs/choosing-load-balancer (Choosing a load balancer)
 External TCP/UDP network load balancer & Internal TCP/UDP loadbalancer are passthrough.
 All others are proxy-based.
-Internal HTTP(S) and External TCP/UDP network load balancers are regional load balancers.
+Internal HTTP(S), Internal TCP/UDP and External TCP/UDP network load balancers are regional load balancers.
 All others are global.
 Global HTTP(S), SSL proxy and TCP proxy load balancers can receive IPv4/IPv6 traffic.
 Whereas Network TCP/UDP and Internal load balancers can receive only IPv4 traffic.
