@@ -337,9 +337,16 @@ All others are global.
 Global HTTP(S), SSL proxy and TCP proxy load balancers can receive IPv4/IPv6 traffic.
 Whereas Network TCP/UDP and Internal load balancers can receive only IPv4 traffic.
 https://cloud.google.com/load-balancing/docs/https (External HTTP(S) load balancing)
+https://cloud.google.com/load-balancing/docs/https#component
+https://cloud.google.com/load-balancing/docs/https#source_ip_addresses_for_client_packets
+https://cloud.google.com/load-balancing/docs/https/ext-https-lb-simple#update_dns
 https://cloud.google.com/load-balancing/docs/l7-internal (Internal HTTP(S) load balancing)
 Only clients that are located in the same region as the load balancer can access this IP address. 
 Internal client requests stay internal to your network and region.
+https://cloud.google.com/kubernetes-engine/docs/how-to/internal-load-balance-ingress
+An Ingress for Internal HTTP(S) Load Balancing requires the following annotation:
+annotations:
+    kubernetes.io/ingress.class: "gce-internal"
 https://cloud.google.com/load-balancing/docs/ssl (External SSl (TCP traffic with SSL offload) proxy load balancing)
 https://cloud.google.com/load-balancing/docs/tcp (External TCP proxy load balancing)
 https://cloud.google.com/load-balancing/docs/network/networklb-backend-service (External TCP/UDP network load balancers)
@@ -356,7 +363,12 @@ External HTTP(S) Load Balancing supports the following backend types:
 5. Buckets in Cloud Storage
 https://cloud.google.com/load-balancing/docs/https/ext-load-balancer-backend-buckets
 Provide public access to a cloud storage bucket to use it as a backend for an external HTTP(S) load balancer.
+Backend buckets are only supported with global external HTTP(S) load balancers and global external HTTP(S) load balancer (classic).
+They aren't supported by regional external HTTP(S) load balancer or any other load balancer type.
 https://cloud.google.com/load-balancing/docs/negs/serverless-neg-concepts
+
+CLOUD CDN:
+https://cloud.google.com/cdn/docs/overview
 
 Cloud Monitoring:
 https://cloud.google.com/monitoring/quickstart-lamp
@@ -410,6 +422,10 @@ https://cloud.google.com/kubernetes-engine/docs/how-to/exposing-apps
 A service of type LoadBalancer is an external TCP/UDP network loadbalancer.
 A kubernetes ingress object creates an external HTTP(S) Load Balancer.
 https://cloud.google.com/kubernetes-engine/docs/how-to/load-balance-ingress
+An Ingress for Internal HTTP(S) Load Balancing requires the following annotation:
+annotations:
+    kubernetes.io/ingress.class: "gce-internal"
+https://cloud.google.com/kubernetes-engine/docs/how-to/internal-load-balance-ingress
 Kubernetes RBAC(role-based access control) is a core component of Kubernetes and lets you create and grant roles (sets of permissions)
 for any object or type of object within the cluster.
 https://cloud.google.com/kubernetes-engine/docs/how-to/internal-load-balancing
@@ -544,12 +560,19 @@ The gsutil command-line tool uses resumable uploads in the gsutil cp and gsutil 
 https://cloud.google.com/storage/docs/metadata#content-type
 If the Content-Type is not specified by the uploader and cannot be determined, it is set to application/octet-stream or application/x-www-form-urlencoded.
 https://cloud.google.com/storage/docs/access-control
+If you use IAM and ACLs on the same resource, Cloud Storage grants the broader permission set on the resource.
+For example, if your IAM permissions only allow a few users to access my-object, but your ACLs make my-object public,
+then my-object is exposed to the public.
+In general, IAM cannot detect permissions granted by ACLs, and ACLs cannot detect permissions granted by IAM.
 https://cloud.google.com/storage/docs/changing-storage-classes#gsutil
 This guide involves rewriting data, which is a Class A operation and which may incur retrieval and early deletion charges
 if the data was originally stored as Nearline Storage, Coldline Storage, or Archive Storage.
 https://cloud.google.com/storage/docs/lifecycle
 For buckets in a region, the new storage class cannot be Multi-Regional Storage.
 For buckets in a multi-region or dual-region, the new storage class cannot be Regional Storage.
+https://cloud.google.com/storage/docs/lifecycle#setstorageclass-cost
+For object lifecycle management, there are no retrieval fees or early deletion fees associated with the storage class change,
+even when the object is originally set to Nearline Storage or Coldline Storage.
 https://cloud.google.com/storage/docs/object-versioning
 Cloud Storage retains a noncurrent object version each time you replace or delete a live object version,
 as long as you do not specify the generation number of the live version.
@@ -561,9 +584,14 @@ https://cloud.google.com/storage/docs/object-versioning#considerations
     If you enable versioning, consider using Object Lifecycle Management, which can remove the oldest versions of an object as newer versions become noncurrent.
 https://cloud.google.com/storage/docs/object-versioning#example
 https://cloud.google.com/storage/docs/using-object-versioning
+https://cloud.google.com/storage/docs/using-versioned-objects
 https://cloud.google.com/storage/docs/bucket-lock
 Retention policies and Object Versioning are mutually exclusive features in Cloud Storage: for a given bucket, only one of these can be enabled at a time.
 https://cloud.google.com/storage/docs/access-control/making-data-public
+To make individual objects readable to everyone on the public internet:
+gsutil acl ch -u AllUsers:R gs://BUCKET_NAME/OBJECT_NAME
+To make all objects in a bucket readable to everyone on the public internet:
+gsutil iam ch allUsers:objectViewer gs://BUCKET_NAME
 https://cloud.google.com/storage/docs/reporting-changes
 https://cloud.google.com/storage/docs/audit-logging
 https://cloud.google.com/storage/docs/lifecycle
