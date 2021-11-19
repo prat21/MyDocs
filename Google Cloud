@@ -568,6 +568,10 @@ https://cloud.google.com/storage/docs/changing-storage-classes#gsutil
 This guide involves rewriting data, which is a Class A operation and which may incur retrieval and early deletion charges
 if the data was originally stored as Nearline Storage, Coldline Storage, or Archive Storage.
 https://cloud.google.com/storage/docs/lifecycle
+If multiple rules have their conditions satisfied simultaneously for a single object,
+Cloud Storage performs the action associated with only one of the rules, based on the following considerations:
+1. The Delete action takes precedence over any SetStorageClass action.
+2. The SetStorageClass action that switches the object to the storage class with the lowest at-rest storage pricing takes precedence.
 For buckets in a region, the new storage class cannot be Multi-Regional Storage.
 For buckets in a multi-region or dual-region, the new storage class cannot be Regional Storage.
 https://cloud.google.com/storage/docs/lifecycle#setstorageclass-cost
@@ -594,13 +598,11 @@ To make all objects in a bucket readable to everyone on the public internet:
 gsutil iam ch allUsers:objectViewer gs://BUCKET_NAME
 https://cloud.google.com/storage/docs/reporting-changes
 https://cloud.google.com/storage/docs/audit-logging
-https://cloud.google.com/storage/docs/lifecycle
-If multiple rules have their conditions satisfied simultaneously for a single object,
-Cloud Storage performs the action associated with only one of the rules, based on the following considerations:
-1. The Delete action takes precedence over any SetStorageClass action.
-2. The SetStorageClass action that switches the object to the storage class with the lowest at-rest storage pricing takes precedence.
-For buckets in a region, the new storage class cannot be Multi-Regional Storage.
-For buckets in a multi-region or dual-region, the new storage class cannot be Regional Storage.
+Cloud Audit Logs does not track access to public objects.
+Cloud Audit Logs does not log actions taken by the Object Lifecycle Management feature.
+To track the lifecycle management actions that Cloud Storage takes, use one of the following options:
+1. Use Cloud Storage usage logs.
+2. Enable Pub/Sub Notifications for Cloud Storage for your bucket.
 https://cloud.google.com/storage/docs/lifecycle#islive
 The IsLive condition is typically only used in conjunction with Object Versioning.
 When set to false, this condition is satisfied for any noncurrent version of an object.
@@ -660,6 +662,7 @@ To connect your domain to Cloud Storage, create a CNAME record through your doma
 
 Storage Transfer Service:
 https://cloud.google.com/storage-transfer/docs/overview
+https://cloud.google.com/storage-transfer/docs/overview#gsutil
 https://cloud.google.com/storage-transfer/docs/create-manage-transfer-console#amazon-s3
 https://cloud.google.com/storage-transfer/docs/configure-access
 
@@ -963,6 +966,7 @@ App Engine creates a default bucket when you create an app.
 This bucket provides the first 5GB of storage for free and includes a free quota for Cloud Storage I/O operations.
 https://cloud.google.com/appengine/docs/standard/java11/serving-static-files
 To serve static files for Java 11 in the standard environment, you define the handlers in your app.yaml file using either the static_dir or static_files elements.
+https://cloud.google.com/appengine/docs/standard/java11/how-instances-are-managed#scaling_types
 https://cloud.google.com/appengine/docs/standard/java11/how-instances-are-managed#loading_requests
 https://cloud.google.com/appengine/docs/standard/java11/how-instances-are-managed#warmup_requests
 https://cloud.google.com/appengine/docs/standard/java11/migrating-traffic
