@@ -697,11 +697,22 @@ You can disable the creation of default networks by creating an organization pol
 Because the subnets of every auto mode VPC network use the same predefined range of IP addresses, 
 you cannot connect auto mode VPC networks to one another.
 Google recommends that you use custom mode VPC networks in production.
+https://cloud.google.com/vpc/docs/vpc#system-generated-routes
+If your VPC network is connected to an on-premises network by using Cloud VPN or Cloud Interconnect,
+check that subnet ranges do not conflict with on-premises IP addresses.
 https://cloud.google.com/vpc/docs/vpc#firewall_rules
 Every VPC network has two implied firewall rules. One implied rule allows most egress traffic, and the other denies all ingress traffic.
 You cannot delete the implied rules, but you can override them with your own.
 To monitor which firewall rule allowed or denied a particular connection, see Firewall Rules Logging.
+https://cloud.google.com/vpc/docs/vpc#intra_vpc_reqs
+Except for the default network, you must explicitly create higher priority ingress firewall rules to allow instances to communicate with one another.
+The default network includes several firewall rules in addition to the implied ones, including the default-allow-internal rule,
+which permits instance-to-instance communication within the network.
+The default network also comes with ingress rules allowing protocols such as RDP and SSH.
 https://cloud.google.com/vpc/docs/vpc#internet_access_reqs
+One of the following must be true:
+1)The instance must have an external IP address. An external IP address can be assigned to an instance when it is created or after it has been created.
+2)The instance must be able to use Cloud NAT or an instance-based proxy that is the target for a static 0.0.0.0/0 route.
 https://cloud.google.com/vpc/docs/vpc#app-engine-comm (App Engine does not reside in VPC)
 https://cloud.google.com/vpc/docs/shared-vpc
 Shared VPC allows an organization to connect resources from multiple projects to a common Virtual Private Cloud (VPC) network, 
@@ -710,16 +721,25 @@ Shared VPC connects projects within the same organization. Participating host an
 https://cloud.google.com/vpc/docs/vpc-peering
 Google Cloud VPC Network Peering allows internal IP address connectivity across two Virtual Private Cloud (VPC) networks 
 regardless of whether they belong to the same project or the same organization.
+A given VPC network can peer with multiple VPC networks.
+A subnet CIDR range in one peered VPC network cannot overlap with a static route in another peered network.
+At the time of peering, Google Cloud checks to see if there are any subnet IP ranges that overlap subnet IP ranges in the other network.
+If there is any overlap, peering is not established.
 Shared VPC and VPC peering is a way to establish direct connection between resources residing on separate VPC networks using internal IP address.
 Cloud VPN is another way to achieve the same, but Shared VPC/VPC peering is more suitable for this type of scenario and comes with low network latency and low cost.
 Peering traffic (traffic flowing between peered networks) has the same latency, throughput, and availability as private traffic in the same network.
 https://cloud.google.com/vpc/docs/alias-ip
+If you have only one service running on a VM, you can reference it using the interface's primary IP address.
+If you have multiple services running on a VM, you may want to assign each one a different internal IP address.
+You can do this with Alias IP ranges.
 https://cloud.google.com/vpc/docs/firewall-rules-logging
 You enable Firewall Rules Logging individually for each firewall rule whose connections you need to log.
 Firewall Rules Logging only records TCP and UDP connections.
 Changes to firewall rules can be viewed in VPC audit logs.
 You cannot enable Firewall Rules Logging for the implied deny ingress and implied allow egress rules.
+If the incoming request is allowed by an ingress rule, established responses cannot be blocked by any kind of egress rule.
 https://cloud.google.com/vpc/docs/flow-logs
+You enable or disable VPC Flow Logs per subnet.
 VPC Flow Logs interacts with firewall rules in the following ways:
 1. Egress packets are sampled before egress firewall rules. 
    Even if an egress firewall rule denies outbound packets, those packets can be sampled by VPC Flow Logs.
@@ -755,14 +775,19 @@ This action protects your data as it travels over the internet.
 https://cloud.google.com/network-connectivity/docs/vpn/concepts/overview#ha-vpn
 HA VPN is a high-availability (HA) Cloud VPN solution that lets you securely connect your on-premises network to your VPC network 
 through an IPsec VPN connection in a single region.
+When you create an HA VPN gateway, Google Cloud automatically chooses two external IP addresses, one for each of its fixed number of two interfaces.
 To achieve high availability when both VPN gateways are located in VPC networks, 
 you must use two HA VPN gateways, and both of them must be located in the same region.
 In order to establish VPN connection between two separate networks, two VPN gateways (one for each network), and two VPN tunnels need to be established.
-Iif both tunnels are not established, traffic might flow from one network to another but not vice-versa.
+If both tunnels are not established, traffic might flow from one network to another but not vice-versa.
 The traffic reach the remote server, but the response can't be returned.
 Each vpn gateway needs an external IP.
 https://cloud.google.com/network-connectivity/docs/vpn/concepts/overview#comparison_table
 https://cloud.google.com/vpc/docs/configure-private-google-access
+Private google access can be enabled on a per subnet basis.
+A VM with an external IP address assigned to its network interface doesn't need Private Google Access to connect to Google APIs and services.
+The firewall configuration of your VPC network must allow access from VMs to the IP addresses used by Google APIs and services.
+The implied allow egress rule satisfies this requirement.
 https://cloud.google.com/vpc/docs/using-flow-logs
 https://www.coursera.org/lecture/logging-monitoring-observability-google-cloud/vpc-flow-logs-XWUmD (Vpc flow logs)
 https://cloud.google.com/vpc/docs/using-firewall-rules-logging (Firewall logs)
@@ -793,34 +818,53 @@ https://cloud.google.com/vpc/docs/firewalls
 Firewall configuration is associated with a VPC network. 
 This means that you cannot share firewall rules among VPC networks, 
 including networks connected by VPC Network Peering or by using Cloud VPN tunnels.
+Every network has two implied firewall rules (whether they are auto mode or custom mode VPC networks) that permit outgoing connections and block incoming connections.
+These rules are not shown in the Cloud Console.
+Firewall rules that you create can override these implied rules.
 VPC firewall rules are stateful:
 When a connection is allowed through the firewall in either direction, return traffic matching this connection is also allowed.
 https://cloud.google.com/vpc/docs/firewalls#default_firewall_rules
-Internet access is allowed if no other firewall rules deny outbound traffic 
-and if the instance has an external IP address or uses a Cloud NAT instance.
+Internet access is allowed if no other firewall rules deny outbound traffic and if the instance has an external IP address or uses a Cloud NAT instance.
 The implied rules cannot be removed.
 Deny rules take precedence over allow rules of the same priority.
 Implied firewall rules are present in all VPC networks, regardless of how the networks are created, 
 and whether they are auto mode or custom mode VPC networks.
 The default network has the same implied rules.
 https://cloud.google.com/vpc/docs/firewalls#more_rules_default_vpc
-The default network is pre-populated with firewall rules that allow incoming connections to instances. (Note present in other networks)
+The default network is pre-populated with firewall rules that allow incoming connections to instances. (Not present in other networks)
 default-allow-internal: Allows ingress connections for all protocols and ports among instances in the network.
+default-allow-ssh: Allows ingress connections on TCP destination port 22 from any source to any instance in the network.
+default-allow-rdp: Allows ingress connections on TCP destination port 3389 from any source to any instance in the network.
+            This rule has a priority of 65534, and it enables connections to instances running the Microsoft Remote Desktop Protocol (RDP).
+default-allow-icmp: Allows ingress ICMP traffic from any source to any instance in the network.
+            This rule has a priority of 65534, and it enables tools such as ping.
+https://cloud.google.com/vpc/docs/firewalls#alwaysallowed
+Google Cloud runs a local metadata server alongside each instance at 169.254.169.254.
+This server is essential to the operation of the instance, so the instance can access it regardless of any firewall rules that you configure.
 https://cloud.google.com/vpc/docs/firewalls#direction_of_the_rule
+The direction of a firewall rule can be either ingress or egress.
+The direction is always defined from the perspective of the VM that the firewall rule applies to (the target).
 Consider an example connection between two VMs in the same network. 
 Traffic from VM1 to VM2 can be controlled by using either of these firewall rules:
 1. An ingress rule with a target of VM2 and a source of VM1.
 2. An egress rule with a target of VM1 and a destination of VM2.
 https://cloud.google.com/vpc/docs/firewalls#priority_order_for_firewall_rules
- If you do not specify a priority when creating a rule, it is assigned a priority of 1000.
+Lower integers indicate higher priorities. If you do not specify a priority when creating a rule, it is assigned a priority of 1000.
 https://cloud.google.com/vpc/docs/firewalls#enforcement
 You can change whether a firewall rule is enforced by setting its state to enabled or disabled. 
 Disabling a rule is useful for troubleshooting or to grant temporary access to instances. 
 It's much easier to disable a rule, test, and then re-enable it, than it is to delete and re-create the rule.
+https://cloud.google.com/vpc/docs/firewalls#ingress_cases
+https://cloud.google.com/vpc/docs/firewalls#egress_cases
 https://cloud.google.com/vpc/docs/vpc#app-engine-comm (Communications and access for App Engine)
 Since app Engine standard environment instances do not run inside VPC network, VPC firewall rules do not apply to them.
 https://cloud.google.com/vpc/docs/vpc#internet_access_reqs (Internet access requirements)
 https://cloud.google.com/vpc/docs/firewall-rules-logging
+You enable Firewall Rules Logging individually for each firewall rule whose connections you need to log.
+Firewall Rules Logging only records TCP and UDP connections.
+Changes to firewall rules can be viewed in VPC audit logs.
+You cannot enable Firewall Rules Logging for the implied deny ingress and implied allow egress rules.
+If the incoming request is allowed by an ingress rule, established responses cannot be blocked by any kind of egress rule.
 
 
 BigTable:
@@ -913,12 +957,17 @@ Data Access audit logs-- except for BigQuery Data Access audit logs-- are disabl
 System Event audit logs are always written; you can't configure or disable them and there is no charge.
 Policy Denied audit logs are generated by default and your Cloud project is charged for the logs storage.
 https://cloud.google.com/logging/docs/audit
+Cloud Logging _Required buckets ingest and store Admin Activity audit logs and System Event audit logs.
+You can't configure _Required buckets or any logs data in it.
+The _Default buckets, by default, ingest and store any enabled Data Access audit logs as well as Policy Denied audit logs.
+To prevent Data Access audit logs from being stored in the _Default buckets, you can disable them.
+To prevent any Policy Denied audit logs from being stored in the _Default buckets, you can exclude them by modifying their sinks' filters.
 https://www.youtube.com/watch?v=iR8GjOwTOrQ
 Data Access audit logs—except for BigQuery—are disabled by default.
 https://cloud.google.com/logging/docs/audit/configure-data-access
 
 App Engine:
-APP ENGINE STANDARD DOES NOT USE VPC NETWORKS. SEE: https://www.youtube.com/watch?v=T0P6qsTuh1s
+APP ENGINE STANDARD DOES NOT USE VPC NETWORKS.
 APP ENGINE FLEXIBLE USES VPC and run in VM instances.
 https://cloud.google.com/appengine/docs/standard
 https://cloud.google.com/appengine/docs/flexible
@@ -941,7 +990,7 @@ https://cloud.google.com/appengine/docs/standard/java11/application-security#ing
  If you use Cloud Load Balancing with your App Engine app, we recommend that you use ingress controls to ensure that your app receives only internal
  and Cloud Load Balancing traffic.
  Otherwise, users can use your app's appspot URL to bypass the load balancer.
- https://cloud.google.com/appengine/docs/standard/java11/understanding-firewalls
+https://cloud.google.com/appengine/docs/standard/java11/understanding-firewalls
  For App Engine, the App Engine firewall only applies to incoming traffic routed to your app or service.
 https://cloud.google.com/appengine/docs/standard/java11/access-control#auth-cloud-implicit-java
 By default, the app's environment contains credentials from the default App Engine service account.
@@ -970,6 +1019,16 @@ https://cloud.google.com/appengine/docs/standard/java11/how-instances-are-manage
 https://cloud.google.com/appengine/docs/standard/java11/how-instances-are-managed#loading_requests
 https://cloud.google.com/appengine/docs/standard/java11/how-instances-are-managed#warmup_requests
 https://cloud.google.com/appengine/docs/standard/java11/migrating-traffic
+By default, warmup requests are enabled and all traffic is gradually migrated to a version.
+You can also choose to disable warmup requests if you want the traffic immediately migrated to a version.
+Deploying a new version with the same name as an existing version causes an immediate traffic migration.
+Gradual traffic migration traffic between versions running in the flexible environment is not supported.
+You must migrate traffic immediately to versions that are running in the flexible environment.
+When warmup requests are enabled, traffic is migrated gradually by first sending a warmup request to new instances before those instances receive any user requests.
+1)To migrate traffic immediately:
+gcloud app services set-traffic [MY_SERVICE] --splits [MY_VERSION]=1
+2)To gradually migrate traffic, you include the optional --migrate flag:
+gcloud app services set-traffic [MY_SERVICE] --splits [MY_VERSION]=1 --migrate
 https://cloud.google.com/appengine/docs/standard/java11/splitting-traffic
 When you have specified two or more versions for splitting, you must choose whether to split traffic by using either an IP address or HTTP cookie. 
 It's easier to set up an IP address split, but a cookie split is more precise.
@@ -977,6 +1036,7 @@ https://cloud.google.com/sdk/gcloud/reference/app/services/set-traffic
 https://cloud.google.com/appengine/docs/standard/java11/scheduling-jobs-with-cron-yaml
 https://cloud.google.com/appengine/docs/standard/java11/connecting-vpc
 To use Serverless VPC Access, you must first create a Serverless VPC Access connector to handle communication to your VPC network.
+To send requests to your VPC network and receive the corresponding responses "without using the public internet", you must use a Serverless VPC Access connector.
 https://cloud.google.com/vpc/docs/vpc#app-engine-comm (App Engine does not reside in VPC)
 
 Cloud IOT:
