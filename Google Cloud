@@ -870,12 +870,19 @@ If the incoming request is allowed by an ingress rule, established responses can
 BigTable:
 Bigtable uses apache Hbase. Bigtable is not a relational database. It does not support SQL queries, joins, or multi-row transactions.
 https://cloud.google.com/bigtable/docs/overview
+You can manage security at the project, instance, and table levels. Bigtable does not support row-level, column-level, or cell-level security restrictions.
 https://cloud.google.com/bigtable/docs/quickstart-cbt
+https://cloud.google.com/bigtable/docs/replication-overview
 https://cloud.google.com/bigtable/docs/creating-instance
-For a paticular bigtable instance, clusters can be in any region where Bigtable is available, as long as each cluster is in a different zone.
+For a particular bigtable instance, clusters can be in any region where Bigtable is available, as long as each cluster is in a different zone.
+An instance's clusters must each be in unique zones. You can create an additional cluster in any zone where Bigtable is available.
+For example, if the first cluster is in us-east1-b, you can choose a different zone in the same region, such as us-east1-c,
+or a zone in a separate region, such as europe-west2-a.
 https://cloud.google.com/bigtable/docs/instances-clusters-nodes
 A table belongs to an instance, not to a cluster or node.
-A cluster is located in a single zone.
+If you have an instance with more than one cluster, you are using replication. This means you can't assign a table to an individual cluster.
+You also can't make each cluster store a different set of data in the same table.
+A cluster is located in a single zone. An instance's clusters must each be in unique zones.
 Behind the scenes, Bigtable splits all of the data in a table into separate tablets.
 Tablets are stored on disk, separate from the nodes but in the same zone as the nodes. A tablet is associated with a single node.
 https://cloud.google.com/bigtable/docs/access-control#overview
@@ -889,6 +896,7 @@ Key Visualizer helps you check whether your schema design and usage patterns are
 Each table has only one index, the row key. There are no secondary indices. Each row key must be unique.
 https://cloud.google.com/bigtable/docs/creating-managing-labels#common-uses
 https://cloud.google.com/bigtable/docs/modifying-instance
+An instance can have up to 4 clusters.
 In the Cloud Console, monitoring data is available in the following places:
 1. Bigtable monitoring
 2. Bigtable instance overview
@@ -901,10 +909,18 @@ a backup is created and stored on only one cluster in that instance.
 https://cloud.google.com/bigtable/docs/managing-backups
 https://cloud.google.com/bigtable/docs/import-export
 https://cloud.google.com/bigtable/docs/managing-tables
+A .cbtrc file is a configuration file for google cloud bigtable which contains values like project id, bigtable instance name etc.
 https://cloud.google.com/bigtable/docs/managing-tables#multiple-versions
 https://cloud.google.com/bigtable/docs/failovers
 https://cloud.google.com/bigtable/docs/managing-failovers
-https://cloud.google.com/bigtable/docs/audit-logging
+If an app profile routes all requests to a single cluster, you can perform a manual failover.
+If an app profile uses multi-cluster routing, failovers are automatic and you do not need to take any action.
+https://cloud.google.com/bigtable/docs/managing-failovers#automatic
+With Bigtable, automatic failovers truly are automatic.
+If an app profile uses multi-cluster routing, and the nearest cluster to the application server becomes unhealthy, you don't need to take any action.
+Bigtable automatically fails over, even if the cluster is only briefly unhealthy,
+and uses the nearest healthy cluster to handle requests until the unhealthy cluster has recovered.
+
 
 Cloud Logging:
 https://cloud.google.com/logging/docs/agent/logging/installation
