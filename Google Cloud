@@ -1044,22 +1044,40 @@ https://cloud.google.com/iot-core (SEE this for IOT flow in GCP)
 
 Cloud SQL:
 https://cloud.google.com/sql/docs/mysql/create-instance
+If the primary and secondary zones are specified (for high availability), they must belong to the same region.
 https://cloud.google.com/sql/docs/mysql/clone-instance
 https://cloud.google.com/sql/docs/mysql/monitor-instance
 https://cloud.google.com/sql/docs/mysql/delete-instance
 You cannot delete an instance that has any replicas. You must delete all replicas first.
 https://cloud.google.com/sql/docs/mysql/connect-overview
+https://cloud.google.com/sql/docs/mysql/connect-overview#private_ip
+You can use this address to connect from other resources with access to the VPC.
+"Optionally", you can require that all connections use either the Cloud SQL proxy or self-managed SSL certificates.
+https://cloud.google.com/sql/docs/mysql/connect-overview#public_ip
 How to authorize - which connections are authorized and allowed to connect to your Cloud SQL instance:
 1. Cloud SQL Auth proxy and Cloud SQL language connectors - these provide access based on IAM.
 2. Self-managed SSL/TLS certificates - these only allow connections based on specific public keys.
 3. Authorized networks - a list of IP addresses allowed to connect.
 In order to help keep your instance secure, 
-any connections to a Cloud SQL instance using a public IP must be authorized using either the Cloud SQL Auth proxy or authorized networks.
+any connections to a Cloud SQL instance using a public IP "must be" authorized using either the Cloud SQL Auth proxy "or" authorized networks.
 Unless using the Cloud SQL Auth proxy, connections to the public IP address of an instance are only allowed if the connection come from from an authorized network.
 When your application does not reside in the same VPC connected network and region as your Cloud SQL instance,
 use a cloud sql proxy to secure its external connection.
+https://cloud.google.com/sql/docs/mysql/connect-overview#cloud_sql_proxy
+The Cloud SQL Auth proxy lets you authorize and secure your connections by using Identity and Access Management (IAM) permissions.
+The Cloud SQL Auth proxy validates connections using credentials for a user or service account
+and wrapping the connection in a SSL/TLS layer that's authorized for a Cloud SQL instance
+https://cloud.google.com/sql/docs/mysql/connect-overview#cloud_sql_connector_libraries_for_java_and_python
+Cloud SQL offers client libraries that provide encryption and IAM-based authorization when connecting to a Cloud SQL instance by using Java and Python connectors.
+They provide the same authentication as the Cloud SQL Auth proxy without requiring an external process.
+https://cloud.google.com/sql/docs/mysql/connect-overview#ssl_tls
+It's strongly recommended to use self-managed SSL/TLS certificates to provide encryption when not using the Cloud SQL Auth proxy.
+Failing to do so means your data is being transmitted insecurely and might be intercepted or inspected by a third party.
+https://cloud.google.com/sql/docs/mysql/connect-overview#authorized_networks
+Unless using the Cloud SQL Auth proxy, connections to the public IP address of an instance are allowed only if the connection come from an authorized network.
 https://cloud.google.com/sql/docs/mysql/configure-ip
 https://cloud.google.com/sql/docs/mysql/configure-private-ip
+Note: private services access and private google access, both are different.
 https://cloud.google.com/sql/docs/mysql/authorize-networks
 Even if your instance has only a public IP address, you can connect to it securely by using the Cloud SQL Auth proxy.
 All traffic between the Cloud SQL Auth proxy and your Cloud SQL instance is encrypted.
@@ -1069,7 +1087,21 @@ Your client application's IP address or address range must be configured as auth
 1. Your client application is connecting directly to a Cloud SQL instance on its public IP address.
 2. Your client application is connecting directly to a Cloud SQL instance on its private IP address, and your client's IP address is a non-RFC 1918 address
 https://cloud.google.com/sql/docs/mysql/connect-admin-proxy
+Using the Cloud SQL Auth proxy is the recommended method for connecting to a Cloud SQL instance. The Cloud SQL Auth proxy:
+1)Works with both public and private IP endpoints
+2)Validates connections using credentials for a user or service account
+3)Wraps the connection in a SSL/TLS layer that's authorized for a Cloud SQL instance
 https://cloud.google.com/sql/docs/mysql/connect-admin-proxy#authentication-options
+If you are connecting to Cloud SQL from a Compute Engine instance, the Cloud SQL Auth proxy can use the service account associated with the Compute Engine instance.
+If the service account has the required permissions for the Cloud SQL instance, the Cloud SQL Auth proxy authenticates successfully.
+https://cloud.google.com/sql/docs/mysql/connect-admin-proxy#private-ip
+The Cloud SQL Auth proxy uses IP to establish a connection with your Cloud SQL instance.
+By default, the Cloud SQL Auth proxy attempts to connect using a public IPv4 address.
+If your Cloud SQL instance has only private IP, the Cloud SQL Auth proxy uses the private IP address to connect.
+Note: If a cloud sql instance has a private IP, then any resource can connect directly to the sql instance if it is residing in the same vpc network
+as the sql instance or is connected to the vpc network of the sql instance. For example, an app engine standard application can connect directly to
+the private IP of a sql instance, if the app engine is connected to the vpc network of the sql instance using serverless vpc access connector.
+Although cloud sql auth proxy is not mandatory for connection through private IP, but it is recommended.
 https://cloud.google.com/sql/docs/mysql/connect-admin-ip
 The gcloud sql connect command does not support connecting to a Cloud SQL instance using private IP.
 https://cloud.google.com/sql/docs/mysql/connect-app-engine-standard
@@ -1078,10 +1110,13 @@ To access a Cloud SQL instance from an application running in Google Kubernetes 
 or connect directly using a private IP address.
 The Cloud SQL Auth proxy is the recommended way to connect to Cloud SQL, even when using private IP. 
 This is because the Cloud SQL Auth proxy provides strong encryption and authentication using IAM, which can help keep your database secure.
+When you connect using the Cloud SQL Auth proxy, the Cloud SQL Auth proxy is added to your pod using the sidecar container pattern.
 https://cloud.google.com/sql/docs/mysql/configure-ha
 https://cloud.google.com/sql/docs/mysql/backup-recovery/backing-up
 https://cloud.google.com/sql/docs/mysql/backup-recovery/restoring
 https://cloud.google.com/sql/docs/mysql/backup-recovery/pitr
+You must have binary logging and backups enabled for the instance,
+with continuous binary logs since the last backup before the event you want to recover from.
 https://cloud.google.com/sql/docs/mysql/replication/create-replica
 Before creating a read replica:
 1. Check the status of the primary instance
@@ -1104,13 +1139,22 @@ There are two common scenarios for promoting cross-region replicas:
 Note: Promoting a replica is done manually and intentionally.
 It is not the same as high availability,
 where a standby instance (which is not a replica) automatically becomes the primary in case of a failure or zonal outage.
+Note: A highly available failover replica must belong to the same region as the primary instance.
+Whereas a read replica can belong to the same or different region. So in case of a regional outage, read replica (if configured as cross-regional) is
+the only option to failover to.
+https://cloud.google.com/sql/docs/mysql/replication/cross-region-replicas#recreating_additional_replicas
+When you promote a read replica to a standalone sql instance, you can delete the former primary instance(and any other replicas) and recreate the
+read replicas from the newly promoted standalone sql instance.
 https://cloud.google.com/sql/docs/mysql/import-export/importing
 https://cloud.google.com/sql/docs/mysql/import-export/exporting
 https://cloud.google.com/sql/docs/mysql/create-manage-databases
 https://cloud.google.com/sql/docs/mysql/create-manage-users
 Additional material: https://cloud.google.com/sql/docs/mysql/high-availability
 Cloud SQL high availability is backed up by Regional persistent disk.
+Through synchronous replication to each zone's persistent disk, all writes made to the primary instance are replicated to disks in both zones before a transaction is reported as committed.
+In the event of an instance or zone failure, the persistent disk is attached to the standby instance, and it becomes the new primary instance.
 Additional material: https://cloud.google.com/sql/docs/mysql/replication
+You connect to a read replica directly using its connection name and IP address.
 
 
 PCA (professional cloud architect) case studies link:
