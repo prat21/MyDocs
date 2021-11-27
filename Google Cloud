@@ -469,23 +469,38 @@ BigQuery:
 https://cloud.google.com/bigquery/docs/estimate-costs#bq
 https://cloud.google.com/bigquery/docs/bq-command-line-tool#setting_default_values_for_command-line_flags
 You can set default values for command-line flags by including them in the bq command-line tool's configuration file, .bigqueryrc
+https://cloud.google.com/bigquery/docs/jobs-overview
 https://cloud.google.com/bigquery/docs/managing-jobs#bq
 Jobs are actions that BigQuery runs on your behalf to load data, export data, query data, or copy data.
 https://cloud.google.com/bigquery/docs/datasets-intro#dataset_limitations
 https://cloud.google.com/bigquery/docs/locations#move-dataset
+You specify a location for storing your BigQuery data when you create a dataset. After you create the dataset, the location cannot be changed.
+BigQuery processes queries in the same location as the dataset that contains the tables you're querying.
 The BigQuery Data Transfer Service transfers (copies) data from a source to a destination dataset in BigQuery.
+https://cloud.google.com/bigquery-transfer/docs/locations
+Transfers from Cloud Storage to BigQuery require that the Cloud Storage bucket be colocated with the BigQuery destination dataset.
 https://cloud.google.com/bigquery/docs/datasets#bq
 https://cloud.google.com/bigquery/docs/copying-datasets
 Dataset copying uses features of the BigQuery Data Transfer Service.
+Datasets can be copied from region to region, single region to multi-region, multi-region to single region, or multi-region to multi-region.
 https://cloud.google.com/bigquery/docs/dataset-access-controls
 https://cloud.google.com/bigquery/docs/dataset-access-controls#granting_access_to_a_dataset
 https://cloud.google.com/bigquery/docs/listing-datasets
 https://cloud.google.com/bigquery/docs/dataset-metadata#information_schema
+INFORMATION_SCHEMA is a series of views that provide access to metadata about datasets, routines, tables, views, jobs, reservations, and streaming data.
 https://cloud.google.com/bigquery/docs/updating-datasets
+If you do not set a default table expiration at the dataset level, and you do not set a table expiration when the table is created,
+the table never expires and you must delete the table manually.
+If both options are set, the default partition expiration overrides the default table expiration.
 https://cloud.google.com/bigquery/docs/updating-datasets#table-expiration
 https://cloud.google.com/bigquery/docs/managing-datasets
 https://cloud.google.com/bigquery/docs/tables
+When you load data into BigQuery, you can load data into a new table or partition, you can append data to an existing table or partition, or you can overwrite a table or partition.
+You do not need to create an empty table before loading data into it. You can create the new table and load your data at the same time.
+https://cloud.google.com/bigquery/docs/tables#table-acl
+You can control access to bigquery in column and row level.
 https://cloud.google.com/bigquery/docs/tables#getting_table_information_using_information_schema_beta
+You can query the INFORMATION_SCHEMA.TABLES and INFORMATION_SCHEMA.TABLE_OPTIONS views to retrieve metadata about tables and views in a project.
 https://cloud.google.com/bigquery/docs/table-access-controls#bq
 https://cloud.google.com/bigquery/docs/managing-tables
 https://cloud.google.com/bigquery/docs/exporting-data#bq
@@ -501,6 +516,7 @@ https://cloud.google.com/bigquery/docs/view-metadata#views_view
 https://cloud.google.com/bigquery/docs/adding-labels
 https://cloud.google.com/bigquery/docs/loading-data#loading_data_from_other_google_services
 https://cloud.google.com/bigquery/docs/loading-data#alternatives_to_loading_data
+https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json
 https://cloud.google.com/bigquery/docs/batch-loading-data#data-locations
 Exception: If your dataset is in the US multi-regional location, you can load data from a Cloud Storage bucket in any regional or multi-regional location.
 https://cloud.google.com/bigquery/docs/query-overview#types_of_queries
@@ -510,6 +526,7 @@ After you load your data into BigQuery, you can query the data in your tables. B
 By default, BigQuery runs interactive queries, which means that the query is executed as soon as possible.
 BigQuery also offers batch queries.
 BigQuery queues each batch query on your behalf and starts the query as soon as idle resources are available, usually within a few minutes.
+In BigQuery, compute is decoupled from storage, and they are designed to work together to organize the data to make queries efficient over huge datasets.
 https://cloud.google.com/bigquery/docs/query-overview#query_jobs
 https://cloud.google.com/bigquery/docs/running-queries#batch
 https://cloud.google.com/bigquery/docs/dry-run-queries
@@ -517,6 +534,13 @@ https://cloud.google.com/bigquery/docs/custom-quotas
 https://cloud.google.com/bigquery/docs/custom-quotas#example
 https://cloud.google.com/bigquery/docs/monitoring#information_schema_views
 https://cloud.google.com/bigquery/docs/best-practices-costs
+Don't run queries to explore or preview table data.
+If you are experimenting with or exploring your data, you can use table preview options to view data for free and without affecting quotas.
+Use clustering and partitioning to reduce the amount of data scanned.
+For non-clustered tables, not use a LIMIT clause as a method of cost control.
+For non-clustered tables, applying a LIMIT clause to a query does not affect the amount of data that is read.
+You are billed for reading all bytes in the entire table as indicated by the query, even though the query returns only a subset.
+With a clustered table, a LIMIT clause can reduce the number of bytes scanned.
 https://cloud.google.com/bigquery/docs/best-practices-costs#preview-data
 In the bq command-line tool, use the bq head command and specify the number of rows to preview.
 https://cloud.google.com/bigquery/docs/best-practices-costs#limit_query_costs_by_restricting_the_number_of_bytes_billed
@@ -528,7 +552,6 @@ IAM:
 https://cloud.google.com/iam/docs/creating-custom-roles
 Custom roles can only be used at the project or organization levels. They can’t be used at the folder level.
 https://cloud.google.com/iam/docs/creating-managing-service-account-keys
-https://cloud.google.com/sdk/gcloud/reference/iam
 https://cloud.google.com/iam/docs/granting-changing-revoking-access
 Cloud Storage IAM roles:
 https://cloud.google.com/storage/docs/access-control/iam-roles#standard-roles
@@ -927,6 +950,7 @@ https://cloud.google.com/logging/docs/agent/logging/installation
 The VM images for Compute Engine and Amazon Elastic Compute Cloud (EC2) don't include the Logging agent, 
 so you must complete these steps to install it on those instances.
 If your VMs are running in Google Kubernetes Engine or App Engine, the agent is already included in the VM image.
+The Ops Agent collects both metrics and logs by default.
 https://cloud.google.com/logging/docs/routing/overview
 Depending on the log sink's configuration, every log entry received by Cloud Logging falls into one or more of these categories:
 1. Stored in Cloud Logging and not routed elsewhere
@@ -934,9 +958,17 @@ Depending on the log sink's configuration, every log entry received by Cloud Log
 3. Not stored in Cloud Logging but routed to a supported destination
 4. Neither stored in Cloud Logging nor routed elsewhere. These logs are excluded entirely.
 You can create sinks at the Google Cloud project level. To set up sinks at the organization or folder levels, use aggregated sinks.
+Inclusion filter: Selects which log entries to route through this sink. For inclusion filter examples, see Sample queries.
+Exclusion filter: Selects which log entries to explicitly exclude from routing, even if the log entries match the sink's inclusion filter.
+				  Note that a sink can contain multiple exclusion filters.
+				  If any log entry matches any of the filters, the log entry is excluded from routing.
+The sink's exclusion filters override any of its defined inclusion filters.
+If a log matches any exclusion filter in the sink, then it doesn't match the sink regardless of any inclusion filters defined.
+The log entry isn't routed to that sink's destination.
 https://cloud.google.com/logging/docs/routing/overview#buckets
 Cloud log buckets are different storage entities than the similarly named Cloud Storage buckets.
 Cloud Logging provides every Cloud project with the _Required and _Default log buckets.
+You can disable the logs that are routed to the _Default log bucket. You can't change routing rules for the _Required bucket.
 https://cloud.google.com/logging/docs/storage#required-bucket
 Cloud Logging automatically routes the following types of logs to the _Required bucket:
 1. Admin Activity audit logs
@@ -948,11 +980,15 @@ https://cloud.google.com/logging/docs/storage#default-bucket
 Any log entry that isn't ingested by the _Required bucket is routed by the _Default sink to the _Default bucket, 
 unless you disable or otherwise edit the _Default sink.
 Logs held in the _Default bucket are retained for 30 days, unless you configure custom retention for the bucket.
+https://cloud.google.com/logging/docs/routing/overview#user-buckets
+By applying sinks to your user-defined log buckets, you can route any subset of your logs to any log bucket,
+letting you choose which Cloud project your logs are stored in and which other logs are stored with them.
+For any log generated in Project-A, you can configure a sink to route that log to user-defined buckets in Project-A or Project-B.
+You can configure custom retention for the bucket.
 https://cloud.google.com/logging/docs/logs-views
-Inclusion filter: Selects which log entries to route through this sink. For inclusion filter examples, see Sample queries.
-Exclusion filter: Selects which log entries to explicitly exclude from routing, even if the log entries match the sink's inclusion filter.
-				  Note that a sink can contain multiple exclusion filters. 
-				  If any log entry matches any of the filters, the log entry is excluded from routing.
+Consider a scenario in which you store all of your organization's logs in a central project.
+Because log buckets can contain logs from multiple projects, you might want to control which projects different users can view logs from.
+Using custom log views, you can give one user access to logs only from a single project, while you give another user access to logs from all the projects.
 https://cloud.google.com/logging/docs/export
 https://cloud.google.com/logging/docs/export/configure_export_v2
 Log entries going to log buckets, BigQuery, or Pub/Sub are streamed immediately. 
