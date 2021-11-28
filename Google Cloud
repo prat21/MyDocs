@@ -755,6 +755,7 @@ https://cloud.google.com/vpc/docs/alias-ip
 If you have only one service running on a VM, you can reference it using the interface's primary IP address.
 If you have multiple services running on a VM, you may want to assign each one a different internal IP address.
 You can do this with Alias IP ranges.
+Subnet overlap checks across peered networks ensure that primary and secondary ranges do not overlap with any peered ranges.
 https://cloud.google.com/vpc/docs/firewall-rules-logging
 You enable Firewall Rules Logging individually for each firewall rule whose connections you need to log.
 Firewall Rules Logging only records TCP and UDP connections.
@@ -991,11 +992,17 @@ Because log buckets can contain logs from multiple projects, you might want to c
 Using custom log views, you can give one user access to logs only from a single project, while you give another user access to logs from all the projects.
 https://cloud.google.com/logging/docs/export
 https://cloud.google.com/logging/docs/export/configure_export_v2
+You can't disable the _Required sink; neither ingestion pricing nor storage pricing applies to the logs data stored in the _Required log bucket.
+You can disable the _Default sink to stop logs from being ingested into the _Default bucket. You can also disable any user-defined sinks.
+When you create a sink, Logging creates a new service account for the sink, called a unique writer identity.
+Your sink destination must permit this service account to write log entries.
 Log entries going to log buckets, BigQuery, or Pub/Sub are streamed immediately. 
 Log entries going to Cloud Storage are batched and sent out approximately every hour.
 https://cloud.google.com/logging/docs/export/aggregated_sinks (Aggregated sink)
 To use aggregated sinks, create a sink in a Google Cloud organization or folder and set the sink's includeChildren parameter to True. 
 That sink can then route log entries from the organization or folder, plus (recursively) from any contained folders, billing accounts, or projects.
+Note: You can create aggregated sinks for Google Cloud folders and organizations.
+Because neither Cloud projects nor billing accounts contain child resources, you can't create aggregated sinks for those.
 Note: Sinks for folders, billing accounts, and organizations can't be created from Google Cloud Console. 
 You can use Google Cloud Console to create project-level (non-aggregated) sinks only.
 
