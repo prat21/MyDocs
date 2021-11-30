@@ -124,7 +124,7 @@ gcloud compute instances attach-disk INSTANCE_NAME \
 Any disk can be reattached as a boot disk to an instance as long as the instance does not already have a boot disk attached
 and the boot disk is in the same zone as the VM instance.
 
-To failover your regional persistent disk:
+To failover to your regional persistent disk:
 gcloud compute instances attach-disk INSTANCE_NAME  \
     --disk DISK_NAME --disk-scope regional \
     --force-attach
@@ -240,10 +240,10 @@ gcloud compute snapshots list
 To get details of a snapshot:
 gcloud compute snapshots describe [SNAPSHOT_NAME]
 
-To creating a snapshot of a zonal persistent disk:
+To create a snapshot of a zonal persistent disk:
 gcloud compute disks snapshot [DISK_NAME] --storage-location [STORAGE_LOCATION]
 
-To creating a snapshot of a regional persistent disk:
+To create a snapshot of a regional persistent disk:
 gcloud compute disks snapshot [DISK_NAME] --region [REGION] --storage-location [STORAGE_LOCATION]
 
 To create a disk from a snapshot:
