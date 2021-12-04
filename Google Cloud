@@ -170,6 +170,8 @@ https://cloud.google.com/compute/docs/disks/regional-persistent-disk#restriction
 Restrictions
 1) You cannot use regional persistent disks as boot disks.
 2) You can create a regional persistent disk from a snapshot but not an image.
+Regional persistent disk is a storage option that provides synchronous replication of data between two zones in "a region".
+It does not provide replication across regions.
 https://cloud.google.com/compute/docs/disks/regional-persistent-disk#resize_repd
 You can resize disks at any time, regardless of whether the disk is attached to a running VM.
 You can attach a non-boot persistent disk to more than one VM in read-only mode, which lets you share static data between multiple VMs.
@@ -326,6 +328,7 @@ When a stopped instance is started again, a new ephemeral external IP address is
 Note: When an instance is stopped, you are not charged for the CPU or memory, rather you are charged for any attached disks or IPs.
 Note: Static regional external IP addresses are regional resources that are used by instances that are in the same region as the address.
 Although the regional external IP address is accessed by clients anywhere in the globe.
+Bastion host: https://cloud.google.com/solutions/connecting-securely
 
 
 Load Balancers:
@@ -1215,6 +1218,9 @@ In the event of an instance or zone failure, the persistent disk is attached to 
 Additional material: https://cloud.google.com/sql/docs/mysql/replication
 You connect to a read replica directly using its connection name and IP address.
 
+Important link explaining Google Cloud Directory Sync and SAML SSO:
+https://cloud.google.com/blog/products/identity-security/using-your-existing-identity-management-system-with-google-cloud-platform
+
 
 PCA (professional cloud architect) case studies link:
 https://services.google.com/fh/files/blogs/master_case_study_ehr_healthcare.pdf
@@ -1234,3 +1240,5 @@ Important qwiklabs course for GKE and kubernetes: https://googlecourses.qwiklabs
                                                 https://googlecourses.qwiklabs.com/course_templates/33
 Important link about kubernetes resource and limits:
 https://cloud.google.com/blog/products/containers-kubernetes/kubernetes-best-practices-resource-requests-and-limits
+Youtube link regarding video transcoding in GCP: https://www.youtube.com/watch?v=tG8uPjF9hoE
+                                                https://www.youtube.com/watch?v=z_EgU_IpNkE
