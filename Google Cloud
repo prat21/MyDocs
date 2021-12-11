@@ -550,6 +550,10 @@ https://cloud.google.com/bigquery/docs/best-practices-costs#limit_query_costs_by
 You can limit the number of bytes billed for a query using the maximum bytes billed setting.
 When you set maximum bytes billed, the number of bytes that the query will read is estimated before the query execution.
 If the number of estimated bytes is beyond the limit, then the query fails without incurring a charge.
+https://cloud.google.com/architecture/bigquery-data-warehouse#costs
+There are three primary cost dimensions for BigQuery: loading, storage, and query costs.
+The project that owns the BigQuery dataset is billed standard monthly storage rates.
+The project that initiates the query or the load is billed for the compute cost.
 
 IAM:
 https://cloud.google.com/iam/docs/creating-custom-roles
