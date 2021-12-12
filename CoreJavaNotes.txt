@@ -57,7 +57,7 @@ The principle of red-black trees is beyond the scope of this article, however, t
 
 First of all, a red-black tree is a data structure that consists of nodes; picture an inverted mango tree with its root in the sky and the branches growing downward. The root will contain the first element added to the tree.
 
-The rule is that starting from the root, any element in the left branch of any node is always less than the element in the node itself. Those on the right are always greater. What defines greater or less than is determined by the natural ordering of the elements or the defined comparator at construction as we saw earlier.
+The rule is that starting from the root, any element in the left branch of any node is always less than the element in the node itself. Those on the right are always greater (Properties of a binary search tree). What defines greater or less than is determined by the natural ordering of the elements or the defined comparator at construction as we saw earlier.
 
 This rule guarantees that the entries of a treemap will always be in sorted and predictable order.
 
@@ -189,6 +189,7 @@ ConcurrentHashMap:
 
 https://www.geeksforgeeks.org/concurrenthashmap-in-java/
 https://www.geeksforgeeks.org/difference-hashmap-concurrenthashmap/
+In Hashmap null values are allowed for keys and values, but in concurrenthashmap null value is not allowed for key or value.
 http://www.java67.com/2012/08/difference-between-hashmap-and-concurrentHashMap-java-collection.html
 https://stackoverflow.com/questions/12646404/concurrenthashmap-and-hashtable-in-java
 https://www.geeksforgeeks.org/differences-between-hashmap-and-hashtable-in-java/
