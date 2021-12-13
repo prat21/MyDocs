@@ -213,9 +213,19 @@ https://www.baeldung.com/java-copy-on-write-arraylist
 Difference between iterator and enumeration:
 
 https://javaconceptoftheday.com/differences-between-enumeration-vs-iterator-in-java/
+
+All Collection types maintain an internal array of objects ( Object[] ) to store the elements.
+Fail-Fast iterators directly fetch the elements from this array.
+They always consider that this internal array is not modified while iterating over its elements.
+To know whether the collection is modified or not, they use an internal flag called modCount which is updated each time a collection is modified.
+Every time when an Iterator calls the next() method, it checks the modCount.
+If it finds the modCount has been updated after this Iterator has been created, it throws ConcurrentModificationException.
+
 https://javaconceptoftheday.com/fail-fast-and-fail-safe-iterators-in-java-with-examples/
 https://www.baeldung.com/java-fail-safe-vs-fail-fast-iterator
+https://javaconceptoftheday.com/difference-between-iterator-and-listiterator-in-java/
 
+Iterators on Collections from java.util.concurrent package such as ConcurrentHashMap, CopyOnWriteArrayList, etc. are Fail-Safe in nature.
 The default iterator for the ConcurrentHashMap is weakly consistent. This means that this Iterator can tolerate concurrent modification, traverses elements as they existed when Iterator was constructed and may (but isn't guaranteed to) reflect modifications to the Collection after the construction of the Iterator.
 
 -----------------------------------------------------------------------------------------------------------------
@@ -229,6 +239,10 @@ Multiple resources can be used inside a try-with-resources block and have them a
 When we open any such AutoCloseable resource in special try-with-resource block, immediately after finishing the try block, JVM calls this.close() method on all resources initialized in try block.
 
 https://www.geeksforgeeks.org/automatic-resource-management-java/
+https://www.baeldung.com/java-suppressed-exceptions
+
+When using try-catch-finally block, the exception thrown from the try gets suppressed by the exception thrown from finally.
+When using AutoCloseable, it's the exception thrown in the try-with-resources block that's suppressed.
 
 -----------------------------------------------------------------------------------------------------------------
 Difference between iterator and listiterator:
@@ -1086,7 +1100,7 @@ It can occur whenever a wrapper class object is expected, and primitive data typ
 https://docs.oracle.com/javase/tutorial/java/data/autoboxing.html
 ------------------------------------------------------------------------------------------------
 
-
+Important practice link: https://javaconceptoftheday.com/java-inheritance-practice-coding-questions/
 
 
 
