@@ -238,6 +238,8 @@ Multiple resources can be used inside a try-with-resources block and have them a
 
 When we open any such AutoCloseable resource in special try-with-resource block, immediately after finishing the try block, JVM calls this.close() method on all resources initialized in try block.
 
+Note: A try-with-resources statement can have catch and finally blocks just like an ordinary try statement. In a try-with-resources statement, any catch or finally block is run after the resources declared have been closed.
+
 https://www.geeksforgeeks.org/automatic-resource-management-java/
 https://www.baeldung.com/java-suppressed-exceptions
 
@@ -264,6 +266,9 @@ Classloader:
 http://www.baeldung.com/java-classloaders
 
 https://www.journaldev.com/349/java-classloader
+-----------------------------------------------------------------------------------------------------------------
+Ways to create objects in java:
+https://www.geeksforgeeks.org/different-ways-create-objects-java/
 
 -----------------------------------------------------------------------------------------------------------------
  
@@ -275,7 +280,7 @@ https://www.journaldev.com/349/java-classloader
  
 A BlockingQueue may be capacity bounded. At any given time it may have a remainingCapacity beyond which no additional elements can be put without blocking. A BlockingQueue without any intrinsic capacity constraints always reports a remaining capacity of Integer.MAX_VALUE.
  
- -----------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------
  
  Difference between Abstract Class and Interface in Java
  
@@ -415,7 +420,7 @@ Once you've created a Statement object, you can then use it to execute an SQL st
 
 3. ResultSet executeQuery (String SQL): Returns a ResultSet object. Use this method when you expect to get a result set, as you would with a SELECT statement.
 
-
+Call an execute statement: executeQuery if the query returns only one ResultSet (such as a SELECT SQL statement), executeUpdate if the query does not return a ResultSet (such as an UPDATE SQL statement), or execute if the query might return more than one ResultSet object.
 
 Advantages of a PreparedStatement:
 
@@ -423,10 +428,13 @@ Precompilation and DB-side caching of the SQL statement leads to overall faster 
 
 Automatic prevention of SQL injection attacks by builtin escaping of quotes and other special characters. Note that this requires that you use any of the PreparedStatement setXxx() methods to set the values
 
+The main feature of a PreparedStatement object is that, unlike a Statement object, it is given a SQL statement when it is created.
+The advantage to this is that in most cases, this SQL statement is sent to the DBMS right away, where it is compiled.
+As a result, the PreparedStatement object contains not just a SQL statement, but a SQL statement that has been precompiled.
+This means that when the PreparedStatement is executed, the DBMS can just run the PreparedStatement SQL statement without having to compile it first.
+
 https://docs.oracle.com/javase/tutorial/jdbc/basics/prepared.html
 https://stackoverflow.com/questions/3271249/difference-between-statement-and-preparedstatement
-
-
 
 
 -----------------------------------------------------------------------------------------------------------------
@@ -446,6 +454,7 @@ https://dzone.com/articles/composition-vs-inheritance
 Reflection:
 https://www.geeksforgeeks.org/reflection-in-java/
 https://www.oracle.com/technical-resources/articles/java/javareflection.html
+Note: Protecting a constructor prevents the users from creating the instance of the class, outside the package.
 https://docs.oracle.com/javase/tutorial/reflect/index.html
 
 https://stackoverflow.com/questions/37628/what-is-reflection-and-why-is-it-useful
@@ -566,6 +575,8 @@ Can we override static menthod in java?
 
 https://www.javatpoint.com/can-we-override-static-method-in-java#:~:text=Can%20we%20override%20a%20static,we%20cannot%20override%20static%20methods.
 https://docs.oracle.com/javase/tutorial/java/IandI/override.html - important
+The access specifier for an overriding method can allow more, but not less, access than the overridden method.
+For example, a protected instance method in the superclass can be made public, but not private, in the subclass.
 https://docs.oracle.com/javase/tutorial/java/IandI/super.html
 https://docs.oracle.com/javase/tutorial/java/IandI/nogrow.html
 
