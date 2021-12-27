@@ -969,6 +969,7 @@ Inner classes:
 
 https://docs.oracle.com/javase/tutorial/java/javaOO/nested.html
 
+Non-static nested classes (inner classes) have access to other members of the enclosing class, even if they are declared private.
 Inner classes cannot declare any static variables or methods, but can access the static method of the outer class, using syntax like "OuterClass.statMeth()", whereas accessing normal instance methods of the outer class from inner class requires syntax like "OuterClass.this.statMeth()".
 
 ------------------------------------------------------------------------------------------------
@@ -1056,7 +1057,10 @@ Local Inner class:
 
 https://www.javatpoint.com/local-inner-class
 https://docs.oracle.com/javase/tutorial/java/javaOO/localclasses.html
-
+Local inner class cannot be invoked from outside the method.
+A local class has access to the members of its enclosing class.
+Starting in Java SE 8, a local class can access local variables and parameters of the enclosing block that are final or effectively final.
+Starting in Java SE 8, if you declare the local class in a method, it can access the method's parameters.
 ------------------------------------------------------------------------------------------------
 
 Anonymous Inner classes:
@@ -1068,7 +1072,8 @@ https://docs.oracle.com/javase/tutorial/java/javaOO/anonymousclasses.html
 
 Static Inner Class:
 
-A static class i.e. created inside a class is called static nested class in java. It cannot access non-static data members and methods. It can be accessed by outer class name.
+A static class i.e. created inside a class is called static nested class in java. It cannot access non-static data members and methods directly. It can use them only through object reference.
+Static Inner class can be accessed by outer class name.
 
 It can access static data members of outer class including private.
 Static nested class cannot access non-static (instance) data member or method.
