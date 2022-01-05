@@ -1076,9 +1076,62 @@ A static class i.e. created inside a class is called static nested class in java
 Static Inner class can be accessed by outer class name.
 
 It can access static data members of outer class including private.
-Static nested class cannot access non-static (instance) data member or method.
 
 ------------------------------------------------------------------------------------------------
+
+Static Inner Class example:
+
+public class test {
+    public static void main(String[] args) {
+        OuterClass out=new OuterClass("Pratik",26);
+        OuterClass.InnerClass inn = new OuterClass.InnerClass(); //The way to instantiate a static inner class
+        inn.display();
+        OuterClass.InnerClass.display2(); //The way to call a static method inside a static inner class
+    }
+}
+
+class OuterClass{
+    private String st;
+    private int i;
+    private static String stat1="static var";
+
+    OuterClass(String st, int i){
+        this.st=st;
+        this.i=i;
+    }
+
+    private void display(){
+        System.out.println("st: "+this.st+", i: "+this.i);
+    }
+
+    // Calling inner class is possible by creating the instance of the Inner only.
+    public void callInner(){
+        InnerClass inn2 = new InnerClass();
+        inn2.display();
+    }
+
+    public static void statTest(){
+        System.out.println("Inside outer static method");
+    }
+
+    static class InnerClass{
+        public String st="InnerPrat";
+
+        void display(){
+            System.out.println("Inside inner display");
+            System.out.println(OuterClass.stat1); // Can access static field of outer class
+            OuterClass.statTest();  //Can access static methods of outer class
+            // Compile time error, as "this" cannot be accessed from a static context
+            // System.out.println(OuterClass.this.display());
+        }
+
+        static void display2(){
+            System.out.println("Inside static method");
+        }
+    }
+}
+------------------------------------------------------------------------------------------------
+
 Nested interface:
 
 https://www.javatpoint.com/nested-interface
@@ -1099,6 +1152,7 @@ Serialization:
 https://www.javatpoint.com/serialization-in-java
 https://www.baeldung.com/java-serialization
 
+Static fields are not serializable.
 See NotSerializableException and InvalidClassException and SerialVersionUID.
 https://www.baeldung.com/java-serial-version-uid
 
@@ -1122,6 +1176,10 @@ It can occur whenever a wrapper class object is expected, and primitive data typ
 4. When a primitive type is assigned to an object type.
 
 https://docs.oracle.com/javase/tutorial/java/data/autoboxing.html
+------------------------------------------------------------------------------------------------
+
+Anonymous block:
+https://www.codesarray.com/view/Anonymous-and-Static-blocks-in-java/
 ------------------------------------------------------------------------------------------------
 
 Important practice link: https://javaconceptoftheday.com/java-inheritance-practice-coding-questions/
