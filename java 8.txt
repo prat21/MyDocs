@@ -29,11 +29,13 @@ https://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html
 https://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html
 https://docs.oracle.com/javase/tutorial/collections/streams/reduction.html
 https://www.baeldung.com/java-8-streams
-https://docs.oracle.com/javase/8/docs/api/java/util/stream/Collectors.html#groupingBy-java.util.function.Function-
 https://www.baeldung.com/java-groupingby-collector
 
 An attempt to reuse a stream after calling the terminal operation will trigger the IllegalStateException.
+Streams are lazy; computation on the source data is only performed when the terminal operation is initiated, and source elements are consumed only as needed.
 
+https://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html
+The combiner is necessary in parallel reductions. We only call combiner in a parallel mode to reduce the results of accumulators from different threads.
 ---------------------------------------------------------------------------------------------
 OPTIONAL:
 
