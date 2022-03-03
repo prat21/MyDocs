@@ -1,0 +1,9 @@
+https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.core-concepts
+https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.query-methods
+https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.definition-tuning
+The intermediate repository interface is annotated with @NoRepositoryBean.
+Make sure you add that annotation to all repository interfaces for which Spring Data should not create instances at runtime.
+https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.query-methods.query-creation
+https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.limit-query-result
+https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.java-config
+

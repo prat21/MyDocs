@@ -433,6 +433,11 @@ List<String> users = (List<String>)query.list();
 
 27. @NamedQuery and @NamedNativeQuery: SEE: Hibernate Tutorial 28 - Named Queries
 
+------------------------------------------------------------------------------------------------------------------------------
+
+28. Hibernate with spring. SEE: Spring Tutorial 45 - Using Hibernate with Spring
+https://www.baeldung.com/hibernate-5-spring
+
 
 
 
