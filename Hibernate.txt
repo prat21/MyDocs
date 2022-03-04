@@ -435,8 +435,27 @@ List<String> users = (List<String>)query.list();
 
 ------------------------------------------------------------------------------------------------------------------------------
 
-28. Hibernate with spring. SEE: Spring Tutorial 45 - Using Hibernate with Spring
+SEE: Hibernate with Spring (spring tutorial 45) and spring java configuration (including propertyplaceholderconfigurer and all annotations)
+
 https://www.baeldung.com/hibernate-5-spring
+https://www.baeldung.com/the-persistence-layer-with-spring-and-jpa
+
+Advantage of using spring data jpa(alongwith hibernate as a jpa provider) over spring+hibernate:
+https://stackoverflow.com/questions/23862994/what-is-the-difference-between-hibernate-and-spring-data-jpa
+https://dzone.com/articles/what-is-the-difference-between-hibernate-and-sprin-1
+Let's say you are using spring + hibernate for your application. Now you need to have dao interface and implementation where you will be writing crud operation using SessionFactory of hibernate. Let say you are writing dao class for Employee class, tomorrow in your application you might need to write similiar crud operation for any other entity. So there is lot of boilerplate code we can see here.
+Now Spring data jpa allow us to define dao interfaces by extending its repositories(crudrepository, jparepository) so it provide you dao implementation at runtime. You don't need to write dao implementation anymore.Thats how spring data jpa makes your life easy.
+So, basically spring jpa is another layer of abstraction on top of hibernate to avoid boilerplate code.
+
+Difference between sessionFactory and entityManagerFactory:
+https://stackoverflow.com/questions/5640778/hibernate-sessionfactory-vs-jpa-entitymanagerfactory
+Prefer EntityManagerFactory and EntityManager. They are defined by the JPA standard.
+SessionFactory and Session are hibernate-specific. The EntityManager invokes the hibernate session under the hood.
+
+EntityScan vs LocalContainerEntityManagerFactoryBean#setPackagesToScan:
+Configures the LocalContainerEntityManagerFactoryBean to to scan for entity classes in the classpath.
+This annotation provides an alternative to manually setting LocalContainerEntityManagerFactoryBean#setPackagesToScan(String...) and is particularly useful if you want to configure entity scanning in a type-safe way, or if your LocalContainerEntityManagerFactoryBean is auto-configured.
+Furthermore, any existing packagesToScan setting will be replaced.
 
 
 

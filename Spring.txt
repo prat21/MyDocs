@@ -1478,6 +1478,8 @@ So, basically spring jpa is another layer of abstraction on top of hibernate to 
 
 Difference between sessionFactory and entityManagerFactory:
 https://stackoverflow.com/questions/5640778/hibernate-sessionfactory-vs-jpa-entitymanagerfactory
+Prefer EntityManagerFactory and EntityManager. They are defined by the JPA standard.
+SessionFactory and Session are hibernate-specific. The EntityManager invokes the hibernate session under the hood.
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 Transaction management in spring:

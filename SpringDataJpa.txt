@@ -1,3 +1,8 @@
+Advantage of using spring data jpa(alongwith hibernate as a jpa provider) over spring+hibernate:
+Let's say you are using spring + hibernate for your application. Now you need to have dao interface and implementation where you will be writing crud operation using SessionFactory of hibernate. Let say you are writing dao class for Employee class, tomorrow in your application you might need to write similiar crud operation for any other entity. So there is lot of boilerplate code we can see here.
+Now Spring data jpa allow us to define dao interfaces by extending its repositories(crudrepository, jparepository) so it provide you dao implementation at runtime. You don't need to write dao implementation anymore.Thats how spring data jpa makes your life easy.
+So, basically spring jpa is another layer of abstraction on top of hibernate to avoid boilerplate code.
+
 https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.core-concepts
 https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.query-methods
 https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.definition-tuning
@@ -6,4 +11,6 @@ Make sure you add that annotation to all repository interfaces for which Spring 
 https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.query-methods.query-creation
 https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.limit-query-result
 https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.java-config
-
+https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.entity-persistence
+https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods.query-creation
+https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods.named-queries
