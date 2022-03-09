@@ -1,0 +1,11 @@
+https://www.youtube.com/watch?v=SUQxXg229Xg
+https://www.youtube.com/watch?v=95kxPSbHzVg
+https://www.baeldung.com/transaction-configuration-with-jpa-and-spring
+
+At a high level, Spring creates proxies for all the classes annotated with @Transactional, either on the class or on any of the methods.
+The proxy allows the framework to inject transactional logic before and after the running method, mainly for starting and committing the transaction.
+What's important to keep in mind is that, if the transactional bean is implementing an interface, by default the proxy will be a Java Dynamic Proxy.
+This means that only external method calls that come in through the proxy will be intercepted.
+Any self-invocation calls will not start any transaction, even if the method has the @Transactional annotation.
+Another caveat of using proxies is that only public methods should be annotated with @Transactional.
+Methods of any other visibilities will simply ignore the annotation silently as these are not proxied.

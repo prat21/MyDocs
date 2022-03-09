@@ -1462,6 +1462,9 @@ Spring java configuration:
 
 https://docs.spring.io/spring/docs/3.0.0.M4/reference/html/ch03s11.html
 https://springframework.guru/spring-framework-annotations/
+By default, Spring creates all singleton beans eagerly at the startup/bootstrapping of the application context.
+The reason behind this is simple: to avoid and detect all possible errors immediately rather than at runtime.
+https://www.baeldung.com/spring-lazy-annotation
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 
 SEE: Hibernate with Spring (spring tutorial 45) and spring java configuration (including propertyplaceholderconfigurer and all annotations)
