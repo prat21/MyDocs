@@ -529,8 +529,10 @@ In order to create a custom exception, we need to extend either Exception or Run
 -----------------------------------------------------------------------------------------------------------------
 
 Autoboxing/Unboxing:
-
 https://docs.oracle.com/javase/tutorial/java/data/autoboxing.html
+
+Difference between "new Integer()" and "Integer.valueOf()":
+https://stackoverflow.com/questions/9030817/differences-between-new-integer123-integer-valueof123-and-just-123#:~:text=new%20Integer(123)%20will%20create,call%20it%20more%20than%20once.
 
 -----------------------------------------------------------------------------------------------------------------
 
@@ -835,6 +837,11 @@ Cloning:
 https://www.javatpoint.com/object-cloning
 https://howtodoinjava.com/java/cloning/a-guide-to-object-cloning-in-java/#cloning_using_serialization
 No constructor is called on the object being cloned.
+"Object.clone() is protected, so we have to provide our own clone() and indirectly call Object.clone() from it."
+The question may come into mind that if all classes in java extends Object class and since Object class has the actual implementation of the clone()
+method, then why not call the inherited clone() method of the child class(while making a clone), rather than overriding the clone method just to call the Object.clone?
+The answer is, since Object.clone is protected, hence it cannot be called from outside generally, hence the clone method is overridden in the child class,
+the access scope is changed to public(in child class) and Object.clone is called from there.
 ------------------------------------------------------------------------------------------------
 Covariant Return Type:
 

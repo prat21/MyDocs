@@ -1,0 +1,28 @@
+1. https://cloud.spring.io/spring-cloud-netflix/reference/html/
+2. https://cloud.spring.io/spring-cloud-netflix/multi/multi_spring-cloud-eureka-server.html
+3. https://cloud.spring.io/spring-cloud-netflix/multi/multi__service_discovery_eureka_clients.html
+4. https://www.youtube.com/watch?v=jhvJg4tDrpw&list=PLqq-6Pq4lTTZSKAFG6aCDVDP86Qx4lNas&index=20 (Follow JavaBrains tutorial)
+5. https://stackoverflow.com/questions/33921557/understanding-spring-cloud-eureka-server-self-preservation-and-renew-threshold/41775757
+6. https://stackoverflow.com/questions/32616329/eureka-never-unregisters-a-service
+------------------------------------------------------------------
+Spring cloud eureka server peer awareness:
+
+https://medium.com/swlh/spring-cloud-high-availability-for-eureka-b5b7abcefb32
+
+------------------------------------------------------------------
+
+Eureka’s Peer Awareness: Concepts:
+
+We need to take into account some very important concepts about how the Eureka Replica mode works:
+
+1. The Replica mode will NOT work if you use the same hostname in both instances. That means that you need to give your host two different aliases if you want to test this within the same host.
+2. The Replica mode will NOT work if you use different application names in both instances. It makes sense since the application itself is the same, it's just that we're replicating it.
+3. The magic behind the Replica mode is as simple as configuring each instance to register in another one. You can extend this to as many instances as you like, as long as you keep connecting all the edges (A registers in B, B registers in C, C registers in A). In our case, it's just crossing both of them.
+
+
+https://thepracticaldeveloper.com/spring-boot-service-discovery-eureka/
+------------------------------------------------------------------
+
+Eureka Self Preservation:
+
+https://www.baeldung.com/eureka-self-preservation-renewal#:~:text=lease%2Drenewal%2Dinterval%2Din%2Dseconds%20indicates%20the%20interval,one%20heartbeat%20every%2030%20seconds.

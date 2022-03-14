@@ -15,7 +15,9 @@ LAMDA EXPRESSION:
 https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html
 
 "There are no runtime benefits of using lambda expressions, so I will use it cautiously because I don’t mind writing few extra lines of code." 
-SEE: https://www.journaldev.com/2389/java-8-features-with-examples#java8-collection
+SEE:
+https://www.journaldev.com/2389/java-8-features-with-examples#java8-collection
+A default interface method cannot override a method from java.lang.Object
 https://www.tutorialspoint.com/java8/java8_lambda_expressions.htm
 https://www.baeldung.com/java-8-new-features
 
@@ -36,6 +38,9 @@ Streams are lazy; computation on the source data is only performed when the term
 
 https://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html
 The combiner is necessary in parallel reductions. We only call combiner in a parallel mode to reduce the results of accumulators from different threads.
+
+Difference between Stream.of and Arrays.stream:
+https://www.techiedelight.com/difference-stream-of-arrays-stream-java/
 ---------------------------------------------------------------------------------------------
 OPTIONAL:
 

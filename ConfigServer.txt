@@ -1,0 +1,129 @@
+1. Spring cloud config server:
+
+https://cloud.spring.io/spring-cloud-static/spring-cloud-config/2.2.0.M1/#_quick_start
+https://www.baeldung.com/spring-cloud-configuration
+https://howtodoinjava.com/spring-cloud/spring-cloud-config-server-git/
+https://www.baeldung.com/spring-cloud-bootstrapping
+
+2. Difference between bootstrap.properties and application.properties:
+
+https://cloud.spring.io/spring-cloud-commons/multi/multi__spring_cloud_context_application_context_services.html
+https://stackoverflow.com/questions/32997352/what-is-the-difference-between-putting-a-property-on-application-yml-or-bootstra
+
+
+3. Getting the /env endpoint work in spring-boot-actuator 2.x:
+
+https://www.baeldung.com/spring-boot-actuators#boot-2x-actuator
+
+4. Spring and Spring boot externalized configuration:
+
+https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-external-config.html
+
+---------------------------------------------------------------------------------------------------------------
+
+The spring cloud config server has resources in the following form:
+
+/{application}/{profile}[/{label}]
+/{application}-{profile}.yml
+/{label}/{application}-{profile}.yml
+/{application}-{profile}.properties
+/{label}/{application}-{profile}.properties
+
+where application is injected as the spring.config.name in the SpringApplication (what is normally application in a regular Spring Boot app), profile is an active profile (or comma-separated list of properties), and label is an optional git label (defaults to master.)
+
+---------------------------------------------------------------------------------------------------------------
+
+If the repository is file-based, the server creates an Environment from application.yml (shared between all clients) and foo.yml (with foo.yml taking precedence, where spring.application.name=foo). If the YAML files have documents inside them that point to Spring profiles, those are applied with higher precedence (in order of the profiles listed). If there are profile-specific YAML (or properties) files, these are also applied with higher precedence than the defaults. Higher precedence translates to a PropertySource listed earlier in the Environment. (These same rules apply in a standalone Spring Boot application.)
+
+You can set spring.cloud.config.server.accept-empty to false so that Server would return a HTTP 404 status, if the application is not found.By default, this flag is set to true.
+-----------------------------------------------------------------------------------------------------
+
+Every repository can also optionally store config files in sub-directories, and patterns to search for those directories can be specified as searchPaths. The following example shows a config file at the top level:
+
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/spring-cloud-samples/config-repo
+          searchPaths: foo,bar*
+
+In the preceding example, the server searches for config files in the top level and in the foo/ sub-directory and also any sub-directory whose name begins with bar.
+
+-----------------------------------------------------------------------------------------------------
+By default, the server clones remote repositories when configuration is first requested. The server can be configured to clone the repositories at startup, as shown in the following top-level example:
+
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://git/common/config-repo.git
+          repos:
+            team-a:
+                pattern: team-a-*
+                cloneOnStart: true
+                uri: https://git/team-a/config-repo.git
+            team-b:
+                pattern: team-b-*
+                cloneOnStart: false
+                uri: https://git/team-b/config-repo.git
+            team-c:
+                pattern: team-c-*
+                uri: https://git/team-a/config-repo.git
+
+In the preceding example, the server clones team-a’s config-repo on startup, before it accepts any requests. All other repositories are not cloned until configuration from the repository is requested.
+
+Setting a repository to be cloned when the Config Server starts up can help to identify a misconfigured configuration source (such as an invalid repository URI) quickly, while the Config Server is starting up. With cloneOnStart not enabled for a configuration source, the Config Server may start successfully with a misconfigured or invalid configuration source and not detect an error until an application requests configuration from that configuration source.
+
+-----------------------------------------------------------------------------------------------------
+Spring Cloud Config Server also supports a search path with placeholders for the {application} and {profile} (and {label} if you need it), as shown in the following example:
+
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/spring-cloud-samples/config-repo
+          searchPaths: '{application}'
+
+The preceding listing causes a search of the repository for files in the same name as the directory (as well as the top level). Wildcards are also valid in a search path with placeholders (any matching directory is included in the search).
+-----------------------------------------------------------------------------------------------------
+
+You can control how often the config server will fetch updated configuration data from your Git backend by using spring.cloud.config.server.git.refreshRate. The value of this property is specified in seconds. By default the value is 0, meaning the config server will fetch updated configuration from the Git repo every time it is requested.
+
+-----------------------------------------------------------------------------------------------------
+
+With VCS-based backends (git, svn), files are checked out or cloned to the local filesystem. By default, they are put in the system temporary directory with a prefix of config-repo-. On linux, for example, it could be /tmp/config-repo-<randomid>. Some operating systems routinely clean out temporary directories. This can lead to unexpected behavior, such as missing properties. To avoid this problem, change the directory that Config Server uses by setting spring.cloud.config.server.git.basedir or spring.cloud.config.server.svn.basedir to a directory that does not reside in the system temp structure.
+
+-----------------------------------------------------------------------------------------------------
+
+With file-based (git, svn, and native) repositories, resources with file names in application* (application.properties, application.yml, application-*.properties, and so on) are shared between all client applications. You can use resources with these file names to configure global defaults and have them be overridden by application-specific files as necessary.
+
+The property overrides feature can also be used for setting global defaults, with placeholders applications allowed to override them locally.
+
+-----------------------------------------------------------------------------------------------------
+
+In some scenarios, you may wish to pull configuration data from multiple environment repositories. To do so, you can enable the composite profile in your configuration server’s application properties or YAML file. If, for example, you want to pull configuration data from a Subversion repository as well as two Git repositories, you can set the following properties for your configuration server:
+
+spring:
+  profiles:
+    active: composite
+  cloud:
+    config:
+      server:
+        composite:
+        -
+          type: svn
+          uri: file:///path/to/svn/repo
+        -
+          type: git
+          uri: file:///path/to/rex/git/repo
+        -
+          type: git
+          uri: file:///path/to/walter/git/repo
+
+Using this configuration, precedence is determined by the order in which repositories are listed under the composite key. In the above example, the Subversion repository is listed first, so a value found in the Subversion repository will override values found for the same property in one of the Git repositories. A value found in the rex Git repository will be used before a value found for the same property in the walter Git repository.
+
+-----------------------------------------------------------------------------------------------------
+
