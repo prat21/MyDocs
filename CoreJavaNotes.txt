@@ -835,7 +835,7 @@ No, because this() and super() must be the first statement in the class construc
 Cloning:
 
 https://www.javatpoint.com/object-cloning
-https://howtodoinjava.com/java/cloning/a-guide-to-object-cloning-in-java/#cloning_using_serialization
+https://howtodoinjava.com/java/cloning/a-guide-to-object-cloning-in-java/
 No constructor is called on the object being cloned.
 "Object.clone() is protected, so we have to provide our own clone() and indirectly call Object.clone() from it."
 The question may come into mind that if all classes in java extends Object class and since Object class has the actual implementation of the clone()
@@ -1190,7 +1190,45 @@ https://www.codesarray.com/view/Anonymous-and-Static-blocks-in-java/
 ------------------------------------------------------------------------------------------------
 
 Important practice link: https://javaconceptoftheday.com/java-inheritance-practice-coding-questions/
+------------------------------------------------------------------------------------------------
+Java design patterns:
+https://www.journaldev.com/1827/java-design-patterns-example-tutorial
 
+1) CREATIONAL DESIGN PATTERNS:
+Factory design pattern:
+https://www.journaldev.com/1392/factory-design-pattern-in-java
+Example: valueOf() method in wrapper classes like Boolean, Integer etc.
 
+Singleton design pattern:
+https://www.journaldev.com/1377/java-singleton-design-pattern-best-practices-examples
 
+Builder design pattern:
+https://www.journaldev.com/1425/builder-design-pattern-in-java
+Example: java.lang.StringBuilder#append()
 
+2) STRUCTURAL DESIGN PATTERNS:
+Adapter design pattern:
+https://www.geeksforgeeks.org/adapter-pattern/
+Example: java.util.Arrays#asList()
+
+Composite design pattern:
+https://www.geeksforgeeks.org/composite-design-pattern/
+https://www.journaldev.com/1535/composite-design-pattern-in-java
+
+Flyweight design pattern:
+Flyweight pattern is one of the structural design patterns as this pattern provides ways to decrease object count thus improving application required objects structure.
+https://www.geeksforgeeks.org/flyweight-design-pattern/
+https://www.journaldev.com/1562/flyweight-design-pattern-java
+Example: String pool, valueOf() of wrapper classes in java
+
+Decorator design pattern:
+https://www.journaldev.com/1540/decorator-design-pattern-in-java-example
+
+------------------------------------------------------------------------------------------------
+J2EE design patterns:
+https://stackabuse.com/java-j2ee-design-patterns/#dataaccessobjectpattern
+
+MVC pattern
+DAO pattern
+Front Controller pattern (Dispatcherservlet in spring mvc)
+Intercepting filter pattern
