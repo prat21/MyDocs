@@ -1,3 +1,5 @@
+See JAVA Brains also.
+
 1. Spring cloud config server:
 
 https://cloud.spring.io/spring-cloud-static/spring-cloud-config/2.2.0.M1/#_quick_start
@@ -128,3 +130,12 @@ Using this configuration, precedence is determined by the order in which reposit
 -----------------------------------------------------------------------------------------------------
 Config client dynamic loading of changes in git repo(RefreshScope):
 https://spring.io/guides/gs/centralized-configuration/
+
+Spring Cloud Bus (for dynamic config refresh):
+https://www.baeldung.com/spring-cloud-bus
+
+Java Brains:
+https://www.youtube.com/watch?v=yNnLICy2zk4&list=PLqq-6Pq4lTTaoaVoQVfRJPqvNTCjcTvJB&index=13
+-----------------------------------------------------------------------------------------------------
+Override with local property:
+https://stackoverflow.com/questions/43800256/how-spring-cloud-config-use-local-property-override-remote-property
