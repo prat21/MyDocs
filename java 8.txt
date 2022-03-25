@@ -32,6 +32,7 @@ https://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html
 https://docs.oracle.com/javase/tutorial/collections/streams/reduction.html
 https://www.baeldung.com/java-8-streams
 https://www.baeldung.com/java-groupingby-collector
+https://www.geeksforgeeks.org/stream-sorted-in-java/
 
 An attempt to reuse a stream after calling the terminal operation will trigger the IllegalStateException.
 Streams are lazy; computation on the source data is only performed when the terminal operation is initiated, and source elements are consumed only as needed.

@@ -126,5 +126,5 @@ spring:
 Using this configuration, precedence is determined by the order in which repositories are listed under the composite key. In the above example, the Subversion repository is listed first, so a value found in the Subversion repository will override values found for the same property in one of the Git repositories. A value found in the rex Git repository will be used before a value found for the same property in the walter Git repository.
 
 -----------------------------------------------------------------------------------------------------
-Config client dynamic loading of changes in git repo:
+Config client dynamic loading of changes in git repo(RefreshScope):
 https://spring.io/guides/gs/centralized-configuration/

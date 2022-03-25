@@ -1,8 +1,11 @@
 Reference:
 https://docs.oracle.com/javase/tutorial/essential/concurrency/threads.html
 
---------------------------------------------------------------------------------
+Important: https://docs.oracle.com/javase/tutorial/essential/concurrency/locksync.html
+See Synchronized statements and Reentrant Synchronization and their advantages.
 
+
+--------------------------------------------------------------------------------
 Volatile:
 https://www.geeksforgeeks.org/volatile-keyword-in-java/
 -------------------------------------------------------------------------------------
@@ -132,6 +135,18 @@ Java Callable tasks return java.util.concurrent.Future objects. Java Future prov
 Difference between wait, sleep and yield:
 
 https://infinitescript.com/2014/09/difference-between-wait-and-sleep-yield-in-java/
+--------------------------------------------------------------------------------------------------------------------------------------------------
+Multithreading in single vs multi processor:
+https://docs.oracle.com/cd/E19253-01/816-5137/mtintro-25092/index.html#:~:text=In%20a%20multithreaded%20process%20on,are%20not%20actually%20running%20simultaneously.
 
+In a multithreaded process on a single processor, the processor can switch execution resources between threads, resulting in concurrent execution.
+Concurrency indicates that more than one thread is making progress, but the threads are not actually running simultaneously.
+The switching between threads happens quickly enough that the threads might appear to run simultaneously.
 
+In the same multithreaded process in a shared-memory multiprocessor environment, each thread in the process can run concurrently on a separate processor, resulting in parallel execution, which is true simultaneous execution.
+When the number of threads in a process is less than or equal to the number of processors available, the operating system's thread support system ensures that each thread runs on a different processor.
+For example, in a matrix multiplication that is programmed with four threads, and runs on a system that has two dual-core processors, each software thread can run simultaneously on the four processor cores to compute a row of the result at the same time.
+--------------------------------------------------------------------------------------------------------------------------------------------------
+Atomic variables:
+https://www.baeldung.com/java-atomic-variables
 

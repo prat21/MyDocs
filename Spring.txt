@@ -1488,7 +1488,10 @@ SessionFactory and Session are hibernate-specific. The EntityManager invokes the
 Transaction management in spring:
 
 https://www.baeldung.com/transaction-configuration-with-jpa-and-spring
-
+------------------------------------------------------------------------------------------------------------------------------------------------------
+Spring Boot with multiple datasources:
+https://www.baeldung.com/spring-data-jpa-multiple-databases
+https://stackoverflow.com/questions/30337582/spring-boot-configure-and-use-two-datasources
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 
 SEE: https://www.baeldung.com/spring-interview-questions

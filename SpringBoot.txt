@@ -523,3 +523,9 @@ https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/ (Externali
 ----------------------------------------------------------------------------------------------------------------------------------------
 Important link regarding microservice fault-tolerant methods: https://googlecourses.qwiklabs.com/course_sessions/443099/video/101635
 
+----------------------------------------------------------------------------------------------------------------------------------------
+Saga microservice architecture pattern:
+https://microservices.io/patterns/data/saga.html
+https://chrisrichardson.net/post/sagas/2019/08/15/developing-sagas-part-3.html
+
+
