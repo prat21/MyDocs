@@ -8,6 +8,8 @@ See Synchronized statements and Reentrant Synchronization and their advantages.
 --------------------------------------------------------------------------------
 Volatile:
 https://www.geeksforgeeks.org/volatile-keyword-in-java/
+Synchronized keyword provides both atomicity and memory consistency.
+Volatile keyword provides only memory consistency.
 -------------------------------------------------------------------------------------
 
 Difference between reentrantlock and synchronized:
@@ -149,4 +151,11 @@ For example, in a matrix multiplication that is programmed with four threads, an
 --------------------------------------------------------------------------------------------------------------------------------------------------
 Atomic variables:
 https://www.baeldung.com/java-atomic-variables
+When multiple threads attempt to update the same value through CAS, one of them wins and updates the value.
+However, unlike in the case of locks, no other thread gets suspended; instead, they're simply informed that they did not manage to update the value.
+The threads can then proceed to do further work and context switches are completely avoided.
+https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/atomic/package-summary.html
+--------------------------------------------------------------------------------------------------------------------------------------------------
+Race Condition:
+http://tutorials.jenkov.com/java-concurrency/race-conditions-and-critical-sections.html
 

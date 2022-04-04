@@ -527,5 +527,8 @@ Important link regarding microservice fault-tolerant methods: https://googlecour
 Saga microservice architecture pattern:
 https://microservices.io/patterns/data/saga.html
 https://chrisrichardson.net/post/sagas/2019/08/15/developing-sagas-part-3.html
+----------------------------------------------------------------------------------------------------------------------------------------
+Create your own auto-configuration:
+https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#features.developing-auto-configuration
 
 

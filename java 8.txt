@@ -55,4 +55,6 @@ https://docs.oracle.com/javase/tutorial/java/IandI/defaultmethods.html
 https://docs.oracle.com/javase/tutorial/java/IandI/override.html
 
 Note: Static methods in interfaces are never inherited.
-
+---------------------------------------------------------------------------------------------
+Permgen vs Metaspace:
+https://www.baeldung.com/java-permgen-metaspace
