@@ -1,0 +1,40 @@
+1. Google Cloud Platform Fundamentals - Core Infrastructure
+
+Introducing Google Cloud Platform:
+https://youtu.be/5zwQoc1ggM0
+https://youtu.be/EHpaHQaUZgE
+https://youtu.be/TpW2zkqQt0A
+https://youtu.be/Ntxkz-ltIqo
+https://youtu.be/LOTX6MRzuQU
+https://youtu.be/SJRLrX4AM7A
+https://youtu.be/56uudRNwnlw
+https://youtu.be/jJ-OxyocAr4
+https://youtu.be/ZF3Mirqwwt8
+https://youtu.be/GLxTaDThPCA
+https://youtu.be/0Gpbyqj2ptM
+https://youtu.be/sglui70elWk
+https://youtu.be/YYxJrbtJY4A
+https://youtu.be/kekfOK8tc_U
+
+Getting Started with google cloud platform:
+https://youtu.be/xFxLCwFL004
+https://youtu.be/gg75Wma4brk
+https://youtu.be/hKtEd5efLk8
+https://youtu.be/jBYJzZH_ZE0
+https://youtu.be/ECP8MpbuDTI
+https://youtu.be/qoekFgfkVa4
+https://youtu.be/hK1hEZrTsAo
+
+Virtual Machines in the cloud:
+https://youtu.be/yaVyS7x-wl0
+https://youtu.be/m30ZlSpy5tc
+https://youtu.be/88UGz9C_xlg
+https://youtu.be/2bwYPN8uXms
+https://youtu.be/sUuboimzalA
+
+Storage in the cloud:
+https://youtu.be/H7wByyWFJRA
+https://youtu.be/njNZomdQ8U4
+https://youtu.be/IFEOg6WgJnk
+https://youtu.be/st5w9awpXfk
+https://youtu.be/Fzb9t9tn35M
