@@ -90,7 +90,7 @@ Q. How to prevent deadlock?
 
 A. The problem discussed before can be avoided by applying a suitable deadlock prevention technique. Following are some techniques available that help mitigate the deadlock problem:
 
-Non Overlapping Locks
+Avoid Nested Locks (avoid locking another resource if you already hold one)
 Lock Ordering
 Lock Timeout
 Single Thread

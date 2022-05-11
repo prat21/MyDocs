@@ -18,7 +18,6 @@ https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html
 SEE:
 https://www.journaldev.com/2389/java-8-features-with-examples#java8-collection
 A default interface method cannot override a method from java.lang.Object
-https://www.tutorialspoint.com/java8/java8_lambda_expressions.htm
 https://www.baeldung.com/java-8-new-features
 
 --------------------------------------------------------------------------------------------
@@ -30,6 +29,7 @@ STREAM:
 https://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html
 https://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html
 https://docs.oracle.com/javase/tutorial/collections/streams/reduction.html
+https://docs.oracle.com/javase/8/docs/api/java/util/stream/Collectors.html
 https://www.baeldung.com/java-8-streams
 https://www.baeldung.com/java-groupingby-collector
 https://www.geeksforgeeks.org/stream-sorted-in-java/
@@ -42,6 +42,9 @@ The combiner is necessary in parallel reductions. We only call combiner in a par
 
 Difference between Stream.of and Arrays.stream:
 https://www.techiedelight.com/difference-stream-of-arrays-stream-java/
+
+Practice link:
+https://blog.devgenius.io/15-practical-exercises-help-you-master-java-stream-api-3f9c86b1cf82
 ---------------------------------------------------------------------------------------------
 OPTIONAL:
 
