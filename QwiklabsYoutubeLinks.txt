@@ -1,4 +1,5 @@
 1. Google Cloud Platform Fundamentals - Core Infrastructure
+https://partner.cloudskillsboost.google/course_templates/60
 
 Introducing Google Cloud Platform:
 https://youtu.be/5zwQoc1ggM0
@@ -57,4 +58,20 @@ https://youtu.be/_r6AwzyzgEw
 https://youtu.be/snL4rzIf_Ok
 
 Developing, deploying and monitoring in the cloud:
+https://youtu.be/m5NncUabwMM
+https://youtu.be/JDewwB_xJ-A
+https://youtu.be/VLxbGAys5MU
+https://youtu.be/6B2Ms0w6J-k
 
+Big Data and Machine learning in the cloud:
+https://youtu.be/Qd4su19ooNE
+https://youtu.be/1K-aKHcx4Ms
+https://youtu.be/NGnL1rTlCPI
+https://youtu.be/Yc2aTPqvzVY
+https://youtu.be/4xdp0_V6u44
+https://youtu.be/imTG3p2H2VU
+https://youtu.be/D27TVDfjEN8
+https://youtu.be/zVZRdFuwmNo
+
+Summary Review:
+https://youtu.be/MnM8br9WBGM
