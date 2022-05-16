@@ -75,3 +75,39 @@ https://youtu.be/zVZRdFuwmNo
 
 Summary Review:
 https://youtu.be/MnM8br9WBGM
+
+-------------------------------------------------------------------------
+2. Architecting with Google Kubernetes Engine: Foundations
+https://partner.cloudskillsboost.google/course_templates/32
+
+Course Introduction:
+https://youtu.be/La_5XWhQ-yY
+
+Introduction to Google Cloud:
+https://youtu.be/K8F_7QBAj5A
+https://youtu.be/Xm4OQJ6vXOE
+https://youtu.be/puGMO6XszPM
+https://youtu.be/ybUQ9o6Nji4
+https://youtu.be/UN8cRJwGrTI
+https://youtu.be/roKWfdZO35o
+https://youtu.be/nmQ271lGpMk
+https://youtu.be/xhtQkA2B0lk
+
+Introduction to Containers and kubernetes:
+https://youtu.be/gC-iDw_h4h4
+https://youtu.be/-nsqdFpk0oI
+https://youtu.be/mJNbM2EzRnY
+https://youtu.be/mAxq9jhbby0
+https://youtu.be/FYFrffeygBc
+https://youtu.be/BAkE9-h-DEw
+https://youtu.be/80jCygkcwNM
+https://youtu.be/gDsi1XlIeik
+https://youtu.be/aXlHbVBAz6s
+
+Kubernetes Architecture:
+https://youtu.be/mcTxg_PplUs
+https://youtu.be/E80GnxIH0yY
+https://youtu.be/JxNaMYY0j-I
+https://youtu.be/Mik3YVo6CCU
+https://youtu.be/zS4qqLSGgrU
+
