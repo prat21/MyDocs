@@ -1235,3 +1235,8 @@ MVC pattern
 DAO pattern
 Front Controller pattern (Dispatcherservlet in spring mvc)
 Intercepting filter pattern
+------------------------------------------------------------------------------------------------
+
+Difference between put, post and patch:
+https://www.baeldung.com/cs/http-put-vs-patch
+https://www.quora.com/What-is-the-difference-between-PUT-POST-and-PATCH-for-RESTful-APIs

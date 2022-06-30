@@ -75,9 +75,279 @@ https://youtu.be/zVZRdFuwmNo
 
 Summary Review:
 https://youtu.be/MnM8br9WBGM
-
 -------------------------------------------------------------------------
-2. Architecting with Google Kubernetes Engine: Foundations
+2. Essential Cloud Infrastructure: Foundation
+https://partner.cloudskillsboost.google/course_templates/50
+
+Introduction:
+https://youtu.be/_gAdwSx9amQ
+
+Introduction to GCP:
+https://youtu.be/-bdg4PbxhPQ
+https://youtu.be/b1s2SSLPzSA
+https://youtu.be/gjCNIKycG_k
+https://youtu.be/ZzDJpgzWHzc
+https://youtu.be/nJ3FtjT4M1A
+https://youtu.be/w8HTFRZueYM
+https://youtu.be/fbEZUlQFcxw
+https://youtu.be/EXfLs-foDYs
+
+Virtual Networks:
+https://youtu.be/PTIEt1nP38U
+https://youtu.be/8Wl5b4TnX5c
+https://youtu.be/4kqkQKdr5uA
+https://youtu.be/dF2-2HCMo8A
+https://youtu.be/ZNq89Wiaz68
+https://youtu.be/eNoDlp17tzI
+https://youtu.be/cFwBDXvGrng
+https://youtu.be/nP4uW-ra-lI
+https://youtu.be/NnAxoi5qeYY
+https://youtu.be/jUYCOw0CSPA
+https://youtu.be/TWMFXtmfsP4
+https://youtu.be/ki-aja4kLjA
+https://youtu.be/OmBowUbChYk
+https://youtu.be/D1GqH0NS3eI
+https://youtu.be/u2uYkuQxeEc
+
+Virtual Machines:
+https://youtu.be/TNR26tJFK_s
+https://youtu.be/lEf-uAAGEwA
+https://youtu.be/MiPwff6f0m8
+https://youtu.be/S15E7hKuF_8
+https://youtu.be/nRaSqRdUDpY
+https://youtu.be/oejie2un92o
+https://youtu.be/occEIE_udvw
+https://youtu.be/3ecfD-9u4s4
+https://youtu.be/1YZZqRsjzGk
+https://youtu.be/JA_JAqF3ir0
+https://youtu.be/NuzbXy1Iu9I
+https://youtu.be/aM8HrHdP04g
+https://youtu.be/BqVKZsDI9ec
+https://youtu.be/nqi873jQwlg
+https://youtu.be/gbwWjBbCJ4s
+https://youtu.be/34DFMkp7940
+-------------------------------------------------------------------------
+3. Essential Google Cloud Infrastructure: Core Services
+https://partner.cloudskillsboost.google/course_templates/49
+
+Introduction:
+https://youtu.be/_gAdwSx9amQ
+
+Cloud IAM:
+https://youtu.be/criFLxog34I
+https://youtu.be/ic6UvcDVeV4
+https://youtu.be/ux3A8xdGjGY
+https://youtu.be/CFv1kR6RLdU
+https://youtu.be/l8uC1S0VvVs
+https://youtu.be/CK0ZGSh2Lh8
+https://youtu.be/hFgNCbE6Q6o
+https://youtu.be/lBO9jpQGqyU
+https://youtu.be/oyOYMtjTMvM
+https://youtu.be/QT5DJFWtqxc
+https://youtu.be/mjgYY47tTQU
+
+Storage and Database Services:
+https://youtu.be/vealg9QDM-c
+https://youtu.be/YHNERJDd15w
+https://youtu.be/x4wGOJ-Y000
+https://youtu.be/ouyixgv2zpo
+https://youtu.be/K2IhdgCsSDg
+https://youtu.be/bPRbyO4KPxM
+https://youtu.be/-AoSp76-ljs
+https://youtu.be/YFFvGpigLrY
+https://youtu.be/BtGuqCSoLu0
+https://youtu.be/IFvKUIr2qUA
+https://youtu.be/RhksHRCafhA
+https://youtu.be/GLVLITTVtN8
+https://youtu.be/IyjOM6neuew
+https://youtu.be/MZAhWOv0IjU
+
+Resource Management:
+https://youtu.be/_P2VzpOgr5M
+https://youtu.be/xOghgrtBTu0
+https://youtu.be/FoC7iI5-TNI
+https://youtu.be/AW4nY0cwB1o
+https://youtu.be/ZvNGy5x6TGc
+https://youtu.be/3hzTJhjw52U
+https://youtu.be/fL2oy-65F5w
+https://youtu.be/Byl96F1TZQM
+https://youtu.be/jjtbA60eZSY
+
+Resource Monitoring:
+https://youtu.be/xhokzQrt1ug
+https://youtu.be/I2KrYLZOJ7Y
+https://youtu.be/IEL6Xw3kriY
+https://youtu.be/aR8OgglL17s
+https://youtu.be/XUjnml8VKm8
+https://youtu.be/I-RAnaQ4XpE
+https://youtu.be/ChW6MBFCCNI
+https://youtu.be/zW9B3rxasY8
+https://youtu.be/wI0lNltVUxE
+https://youtu.be/KRqHm8xMIyQ
+https://youtu.be/jr2Z8dvbxb4
+https://youtu.be/g0FviD3sZ4E
+https://youtu.be/ICRCDmgqzZo
+-------------------------------------------------------------------------
+4. Elastic Cloud Infrastructure: Scaling and Automation
+https://partner.cloudskillsboost.google/course_templates/51
+
+Introduction:
+https://youtu.be/Je3ddocrsl0
+
+Interconnecting Networks:
+https://youtu.be/xw2pGBoyr0o
+https://youtu.be/FPepBnPWGOU
+https://youtu.be/ZID0CfB5z3A
+https://youtu.be/LZzBlgdpiRk
+https://youtu.be/Jmp4Oy6JJ3w
+https://youtu.be/nqtpDYmGUX0
+https://youtu.be/p2f4HAPoV4M
+https://youtu.be/_rKuQmHZztM
+https://youtu.be/Ouc_tfJy7Us
+https://youtu.be/lYpBzHBwuv8
+
+Load Balancing and Autoscaling:
+https://youtu.be/DDYLhO9vu2s
+https://youtu.be/kGIXHRVVXXs
+https://youtu.be/YTUrAAfhJlc
+https://youtu.be/jZQf97np114
+https://youtu.be/U9Afm57R5qE
+https://youtu.be/iY7OKKL3qv0
+https://youtu.be/Przb5qqp6ZA
+https://youtu.be/xwZfUooZmto
+https://youtu.be/brj2q72bt0I
+https://youtu.be/LQZVfhYaCWg
+https://youtu.be/OmHcZpIlDmY
+https://youtu.be/OYT06Ls5jpE
+https://youtu.be/lrTclz90lII
+https://youtu.be/GpdsSXn7ODA
+https://youtu.be/HaNQ08ho8Sw
+https://youtu.be/HDuSd-wkJMs
+
+Infrastructure Automation:
+https://youtu.be/CKuhqsd9jmU
+https://youtu.be/RCqu1K6LnqA
+https://youtu.be/kI4gXSHxLq8
+https://youtu.be/l2ZwQvYj0HI
+https://youtu.be/gomLRPe4p0w
+https://youtu.be/55P7H_CQ7so
+https://youtu.be/RVzipbPmyk8
+https://youtu.be/1zYcbhokL3A
+
+Managed Services:
+https://youtu.be/ETjSW29RN7Y
+https://youtu.be/gZMphjmBQDs
+https://youtu.be/oPhqoO3q9Fs
+https://youtu.be/SrW_FH-KCV0
+https://youtu.be/M1IknxtVUTI
+https://youtu.be/evxDviDrOSg
+https://youtu.be/YasY0AD5-4c
+https://youtu.be/ZT7dJcXzE1c
+-------------------------------------------------------------------------
+5. Reliable Google Cloud Infrastructure: Design and Process
+https://partner.cloudskillsboost.google/course_templates/41
+
+Introduction:
+https://youtu.be/mbitCKoxrnE
+https://youtu.be/ECrXpwd9A78
+https://youtu.be/xGjcy0UPtzo
+
+Defining Services:
+https://youtu.be/2KbfAioXkro
+https://youtu.be/Z5bk6O0qSGc
+https://youtu.be/tPoirArLKNY
+https://youtu.be/TxgqQiqAOsQ
+https://youtu.be/jz5ubYtyVjs
+https://youtu.be/rz8ij6DlTy0
+https://youtu.be/UhloMDKbYeI
+https://youtu.be/m3TbjR0Fc_U
+https://youtu.be/EitsWrp5gJk
+
+Microservice Design and Architecture:
+https://youtu.be/UrHdfZcPlyA
+https://youtu.be/5ZMu9ejLOSY
+https://youtu.be/8P3l6LjrWLg
+https://youtu.be/_ueHpx3n8yM
+https://youtu.be/Ikbj46EtWAQ
+https://youtu.be/lbD7KMg4upA
+https://youtu.be/9CuoC_XXKV0
+https://youtu.be/8uzBNHDvm6k
+https://youtu.be/0RnQnHEKN8k
+https://youtu.be/XISsSnGlERE
+https://youtu.be/aTsVd-qbYqQ
+
+DevOps Automation:
+https://youtu.be/o8Ffs0pLNqk
+https://youtu.be/H3Sx1ULJuGo
+https://youtu.be/OHBWs2D8xD8
+https://youtu.be/d02p6ufh81w
+https://youtu.be/hYV7Dlh30ys
+https://youtu.be/VBbcxpopLqI
+
+Choosing Storage Solutions:
+https://youtu.be/-rx4WZGu1no
+https://youtu.be/Nmuz6nr9T6Q
+https://youtu.be/7MYh3uloFA0
+https://youtu.be/Dpt-cf6OQow
+https://youtu.be/RPj4Og7l-Ns
+https://youtu.be/Ng91m--jM2o
+https://youtu.be/Q07TUS6Gmvg
+https://youtu.be/q6sO5HZMNTQ
+
+Google Cloud and Hybrid Network Architecture:
+https://youtu.be/0pPb9K9tbwI
+https://youtu.be/2VyY90QkOCM
+https://youtu.be/c0NuyDkFWeQ
+https://youtu.be/tP0_iEFmaJw
+https://youtu.be/0tj9xDHjxSg
+https://youtu.be/P1P0w3SDWCU
+https://youtu.be/cfjrK3imfCs
+https://youtu.be/sWPyrsj_7no
+https://youtu.be/SO7u87X7Cc4
+
+Deploying Applications to Google Cloud:
+https://youtu.be/6t9U63T90fg
+https://youtu.be/xpK003zs6L8
+https://youtu.be/bf5ntVF7_y0
+https://youtu.be/CZKjT_3fjb0
+https://youtu.be/rwPNf_pz7c8
+https://youtu.be/mVFoDEbxosA
+
+Designing Reliable Systems:
+https://youtu.be/cfXMEl0_b2c
+https://youtu.be/lEaOe0KO9cc
+https://youtu.be/HgvG14Y0N1s
+https://youtu.be/8T5wqMZF8zU
+https://youtu.be/AYQTPQ3E0dU
+https://youtu.be/n-bnABrJ_rw
+https://youtu.be/UFHnu8BWFq0
+https://youtu.be/kFSAZn4MdME
+https://youtu.be/cl-iRrpzPQE
+
+Security:
+https://youtu.be/vAdytJHdhBM
+https://youtu.be/X-ZzZHQVd-g
+https://youtu.be/3qqzhINqiPM
+https://youtu.be/9NVjQ8eg7RM
+https://youtu.be/o4XvGc_KucA
+https://youtu.be/NUZUwuF0qac
+https://youtu.be/cgZ6KcR5Y98
+https://youtu.be/w15XOqvuL_c
+https://youtu.be/uoeaGbb6i4Q
+
+Maintenance and Monitoring:
+https://youtu.be/jiqtpqZ89MM
+https://youtu.be/gs8hc9ZrUbM
+https://youtu.be/PNTKX1CDDiA
+https://youtu.be/I39ouDIWm6w
+https://youtu.be/qjJtm9WvgWA
+https://youtu.be/OQpILOFuHYs
+https://youtu.be/yk5wp22twsI
+https://youtu.be/y-so5lPBVnU
+https://youtu.be/32HJPEzRi14
+https://youtu.be/TZFUAPiHHp8
+-------------------------------------------------------------------------
+6. Architecting with Google Kubernetes Engine: Foundations
 https://partner.cloudskillsboost.google/course_templates/32
 
 Course Introduction:
@@ -110,4 +380,137 @@ https://youtu.be/E80GnxIH0yY
 https://youtu.be/JxNaMYY0j-I
 https://youtu.be/Mik3YVo6CCU
 https://youtu.be/zS4qqLSGgrU
+https://youtu.be/blhOwEOHSys
+https://youtu.be/J2P6Kfbz2mc
+https://youtu.be/AdqMzZ647jA
+https://youtu.be/RA25_qPuhsg
+https://youtu.be/orMIPjWjPdA
+https://youtu.be/Rx3c2ZLG0a8
+https://youtu.be/mH-iopFcBUQ
 
+-------------------------------------------------------------------------
+7. Architecting with Google Kubernetes Engine: Workloads
+https://googlecourses.qwiklabs.com/course_templates/34
+
+Course Introduction:
+https://youtu.be/9J1Ztelhv1g
+
+Kubernetes Operations:
+https://youtu.be/rVwNnRPvyAE
+https://youtu.be/KdxL__859xE
+https://youtu.be/msJPkmRywis
+https://youtu.be/x-VPPld67tE
+https://youtu.be/PS54TUnSxu8
+https://youtu.be/rxzWh_8cXTg
+
+Deployments, Jobs and Scaling:
+https://youtu.be/aD0ei3EqD0k
+https://youtu.be/5PPbecuAn_M
+https://youtu.be/2XjV7loT5-M
+https://youtu.be/zZNehag2Kus
+https://youtu.be/pv2A2LkDeAk
+https://youtu.be/5KUL_Kz_phM
+https://youtu.be/Ty613qs0qng
+https://youtu.be/eg4hesZiNI4
+https://youtu.be/IJtMaveGbMI
+https://youtu.be/uLpGybzzW-8
+https://youtu.be/u4pvDGLIXfY
+https://youtu.be/6pLexU4jIy8
+https://youtu.be/tG7B9ZSXAAQ
+https://youtu.be/fCWpm-ZUrjw
+https://youtu.be/xP-FlNhHDdw
+https://youtu.be/vCZs_n3CbEE
+https://youtu.be/c3M3AGfg8qk
+https://youtu.be/CKqdvmBnnHE
+https://youtu.be/-7luRbfuldg
+https://youtu.be/rbsUG3tB_98
+https://youtu.be/attvTKSuJ5A
+https://youtu.be/vXBlRyKbIxg
+https://youtu.be/ENfoLgI6tqo
+https://youtu.be/ptvugOXiDK4
+
+Google Kubernetes Engine Networking:
+https://youtu.be/Lg-C531Sz1I
+https://youtu.be/JAqEql0qSPc
+https://youtu.be/e85L-8TP5Gs
+https://youtu.be/Z8UQWD55Gmc
+https://youtu.be/ltYWL8mlqqk
+https://youtu.be/ehgEgUQoa0w
+https://youtu.be/qLZsalivNlo
+https://youtu.be/8EY6f5pot4I
+https://youtu.be/QI6L08SBbAQ
+https://youtu.be/I3ynlP6nNI4
+https://youtu.be/hPzc4lvldK0
+https://youtu.be/SR1dzj2MFY0
+
+Persistent Data and Storage:
+https://youtu.be/Q5GJ1OWywJ0
+https://youtu.be/1i9OtQwiwYU
+https://youtu.be/J5M1CqhU1S4
+https://youtu.be/oJAMMyedXBI
+https://youtu.be/HzB5mE2mYNI
+https://youtu.be/Py7Hk3fK6jI
+https://youtu.be/ds3BjmCUyDE
+https://youtu.be/Uo1WYaLzejE
+https://youtu.be/R_I1inrVSck
+https://youtu.be/VlkQMfc7Szg
+https://youtu.be/lXgTk63pxlI
+https://youtu.be/IzsjocmMSfM
+-------------------------------------------------------------------------
+8. Architecting with Google Kubernetes Engine: Production
+https://googlecourses.qwiklabs.com/course_templates/33
+
+Course Introduction:
+https://youtu.be/vU6m7Gj53Gk
+
+Access Control and Security in Kubernetes and GKE:
+https://youtu.be/10n8QbfgQI0
+https://youtu.be/ZMwrbzQYOAw
+https://youtu.be/WdHa6XBEe5s
+https://youtu.be/3MATlT7B9_8
+https://youtu.be/YEsMGfOV7i4
+https://youtu.be/b2YflpBzE_c
+https://youtu.be/rQcCMWzzhQU
+https://youtu.be/IMpnYtZAXmE
+https://youtu.be/HK8M5Pp3h6s
+https://youtu.be/Q_OyYd_3umE
+https://youtu.be/UbVwTAwYOfM
+https://youtu.be/zv2VX5te_XU
+
+GKE Logging and Monitoring:
+https://youtu.be/sItodfp6uCI
+https://youtu.be/Y3R5BbMUUko
+https://youtu.be/Y27LLrYmuBs
+https://youtu.be/6-SziyaABss
+https://youtu.be/uhz2f01_6-w
+https://youtu.be/1DQXls4v6Qk
+https://youtu.be/AJfarXbmtsk
+https://youtu.be/r9hOMLzlu6E
+https://youtu.be/BZrMKFlCyhg
+
+Using Google Cloud Managed Storage Services with GKE:
+https://youtu.be/SvEAEYoLgss
+https://youtu.be/IHUFPJskJO4
+https://youtu.be/2PXnNjZl5kM
+https://youtu.be/hJNCyYTCgTI
+https://youtu.be/GHIn_tpBcdU
+https://youtu.be/FfBiLsz6wrQ
+https://youtu.be/x5xvSk8ycug
+https://youtu.be/Yz8Z-GyPdyQ
+https://youtu.be/VoCYmtJ1AWQ
+https://youtu.be/2oZrUWg1gL4
+https://youtu.be/QWyR9tfDNrg
+https://youtu.be/FYthDUS_Sx8
+https://youtu.be/-R4PKnwf2ZI
+
+Using CI/CD with GKE:
+https://youtu.be/rC_FLnxYVD4
+https://youtu.be/D7pla80X6rs
+https://youtu.be/xHk6uUDkazQ
+https://youtu.be/ogwU-nAq_y4
+https://youtu.be/-smplWfyuB8
+https://youtu.be/lGmYPkgtHWY
+https://youtu.be/i0EceSGxUkE
+https://youtu.be/MRAX2qHmBq4
+https://youtu.be/0CJIkooVkqM
+-------------------------------------------------------------------------
