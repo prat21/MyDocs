@@ -287,6 +287,11 @@ A BlockingQueue may be capacity bounded. At any given time it may have a remaini
  https://www.geeksforgeeks.org/difference-between-abstract-class-and-interface-in-java/
  https://stackoverflow.com/questions/1913098/what-is-the-difference-between-an-interface-and-abstract-class?page=1&tab=votes#tab-top
  
+ 
+ Difference between Abstract class and Interface after Java 8.
+ 
+ https://javaconceptoftheday.com/interface-vs-abstract-class-after-java-8/
+ 
 -----------------------------------------------------------------------------------------------------------------
 Types of memory space allocated in java:
 https://www.baeldung.com/java-stack-heap
