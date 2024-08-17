@@ -28,7 +28,7 @@ A hashset is internally backed up by a hashmap. If we are to add an object K to 
 
 2. How HashMap works?
 
-https://javarevisited.blogspot.com/2011/02/how-hashmap-works-in-java.htm
+https://javarevisited.blogspot.com/2011/02/how-hashmap-works-in-java.html
 
 Hashmap maintains an array of linked list to store its elements. While inserting a key value pair K,V; it calculates the hash of the key K (If K is an object then it computes the hashcode() method of that object) and according to that hashcode generates an index and puts the pair in that bucket (or array position). Since the size of the array is limited, it may so happen that two different hashcodes map to the same index, ie hash collision. In that case, the new pair will inserted as a new node in the linked list of that index of the array (Internally, the node present in the ith index of the array stores the reference of the new node, thus maintaining a link to the new node). While placing the new node, the hashmap checks whether the key already exists or not in that linked list by using the equals() method of the object K (Since Keys are unique in hashmap).
 
