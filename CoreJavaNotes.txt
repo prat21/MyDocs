@@ -47,7 +47,7 @@ As a general rule, the default load factor (.75) offers a good tradeoff between 
 
 Unlike LinkedHashMap and HashMap, TreeMap does not use hashing for storing keys. It uses a data structure called Red-Black tree.
 
-http://www.thejavageek.com/2016/06/07/working-of-treemap/
+https://www.baeldung.com/java-treemap
 
 By default, TreeMap sorts all its entries according to their natural ordering. For an integer, this would mean ascending order and for strings, alphabetical order. TreeMap, unlike a hash map and linked hash map, does not employ the hashing principle anywhere since it does not use an array to store its entries.
 
@@ -245,6 +245,7 @@ https://www.baeldung.com/java-suppressed-exceptions
 
 When using try-catch-finally block, the exception thrown from the try gets suppressed by the exception thrown from finally.
 When using AutoCloseable, it's the exception thrown in the try-with-resources block that's suppressed.
+A resource that we use in try-with-resource must be subtypes of AutoCloseable to avoid a compile-time error.
 
 -----------------------------------------------------------------------------------------------------------------
 Difference between iterator and listiterator:
@@ -270,6 +271,8 @@ https://www.journaldev.com/349/java-classloader
 Ways to create objects in java:
 https://www.geeksforgeeks.org/different-ways-create-objects-java/
 
+For cloning and deserialization, JVM does not use constructor.
+
 -----------------------------------------------------------------------------------------------------------------
  
  BlockingQueue:
@@ -286,6 +289,9 @@ A BlockingQueue may be capacity bounded. At any given time it may have a remaini
  
  https://www.geeksforgeeks.org/difference-between-abstract-class-and-interface-in-java/
  https://stackoverflow.com/questions/1913098/what-is-the-difference-between-an-interface-and-abstract-class?page=1&tab=votes#tab-top
+
+From Java 8, interfaces can have default and static methods with concrete implementations.From Java 9, interfaces can also have private methods.
+Variables declared in an interface are by default public, static, and final (constants).
  
 -----------------------------------------------------------------------------------------------------------------
 Types of memory space allocated in java:
@@ -309,6 +315,7 @@ https://www.oracle.com/webfolder/technetwork/tutorials/obe/java/gc01/index.html 
 https://www.baeldung.com/java-string-pool (It has good explanation of String pool and garbage collection)
 https://www.baeldung.com/java-string-immutable
 https://www.baeldung.com/java-string-interview-questions
+https://www.baeldung.com/java-9-compact-string
 
 Before Java 7, the JVM placed the Java String Pool in the PermGen space, which has a fixed size — it can’t be expanded at runtime and is not eligible for garbage collection.
 
