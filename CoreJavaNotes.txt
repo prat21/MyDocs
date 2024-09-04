@@ -451,13 +451,12 @@ https://stackoverflow.com/questions/3271249/difference-between-statement-and-pre
 
 See difference between association, composition and aggregation in java
 https://javarevisited.blogspot.com/2014/02/ifference-between-association-vs-composition-vs-aggregation.html
-https://www.baeldung.com/java-composition-aggregation-association
+https://www.baeldung.com/java-composition-aggregation-association (Note how to model composition(using non-static inner class) and aggregation(separate class) in java)
 https://www.baeldung.com/java-inheritance-composition
 
 See - Composition is also very much preferred in object-oriented design over inheritance
 
 https://javarevisited.blogspot.com/2013/06/why-favor-composition-over-inheritance-java-oops-design.html
-https://dzone.com/articles/composition-vs-inheritance
 
 -----------------------------------------------------------------------------------------------------------------
 
@@ -587,6 +586,7 @@ Can we override static method in java?
 
 https://www.javatpoint.com/can-we-override-static-method-in-java#:~:text=Can%20we%20override%20a%20static,we%20cannot%20override%20static%20methods.
 https://docs.oracle.com/javase/tutorial/java/IandI/override.html - important
+Static methods in interfaces are never inherited.
 The access specifier for an overriding method can allow more, but not less, access than the overridden method.
 For example, a protected instance method in the superclass can be made public, but not private, in the subclass.
 In a subclass, you can overload the methods inherited from the superclass.
