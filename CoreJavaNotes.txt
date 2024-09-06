@@ -620,7 +620,7 @@ https://www.geeksforgeeks.org/differences-jdk-jre-jvm/
 Difference between compiler and interpreter
 https://www.programiz.com/article/difference-compiler-interpreter
 https://www.guru99.com/difference-compiler-vs-interpreter.html
-https://www.interviewbit.com/blog/difference-between-compiler-and-interpreter/
+https://www.interviewbit.com/blog/difference-between-compiler-and-interpreter/ (Has good comparison of interpreter and compilers)
 https://www.javatpoint.com/is-java-interpreted-or-compiled
 1. Write Java code and save the file with .java
 2. Now, this file will be compiled using the Java compiler, which is javac.
@@ -948,6 +948,8 @@ A class that is declared as abstract is known as an abstract class. It needs to 
 Methods in an interface, that are not declared as default or static are implicitly abstract, so the abstract modifier is not used with interface methods. (It can be used, but it is unnecessary.)
 
 An example of an abstract class in the JDK is AbstractMap, which is part of the Collections Framework. Its subclasses (which include HashMap, TreeMap, and ConcurrentHashMap) share many methods (including get, put, isEmpty, containsKey, and containsValue) that AbstractMap defines.
+
+Note: Check the section "Abstract Classes Compared to Interfaces" in the above link. It has good comparison.
 ------------------------------------------------------------------------------------------------
 Difference between abstraction and encapulation:
 
@@ -956,9 +958,14 @@ https://javarevisited.blogspot.com/2017/04/difference-between-abstraction-and-en
 ------------------------------------------------------------------------------------------------
 SOLID prinicple:
 https://www.baeldung.com/solid-principles
+https://stackify.com/solid-design-liskov-substitution-principle/#:~:text=The%20Liskov%20Substitution%20Principle%20in,the%20objects%20of%20your%20superclass. (Liskov substitution)
 
 ------------------------------------------------------------------------------------------------
 Since java 9, interface can have private methods.
+https://www.javatpoint.com/java-9-features
+https://www.javatpoint.com/java-9-try-with-resources
+https://www.javatpoint.com/java-9-anonymous-classes
+https://www.javatpoint.com/java-9-factory-methods
 ------------------------------------------------------------------------------------------------
 Marker Interface:
 
@@ -1152,6 +1159,7 @@ class OuterClass{
 Nested interface:
 
 https://www.javatpoint.com/nested-interface
+In the collection framework, the sun microsystem has provided a nested interface Entry. Entry is the subinterface of Map, i.e., accessed by Map.Entry.
 
 ------------------------------------------------------------------------------------------------
 188) How will you invoke any external process in Java?
@@ -1207,7 +1215,11 @@ https://www.journaldev.com/1827/java-design-patterns-example-tutorial
 1) CREATIONAL DESIGN PATTERNS:
 Factory design pattern:
 https://www.journaldev.com/1392/factory-design-pattern-in-java
+https://www.geeksforgeeks.org/factory-method-for-designing-pattern/
 Example: valueOf() method in wrapper classes like Boolean, Integer etc.
+
+Abstract factory design pattern:
+https://www.digitalocean.com/community/tutorials/abstract-factory-design-pattern-in-java
 
 Singleton design pattern:
 https://www.journaldev.com/1377/java-singleton-design-pattern-best-practices-examples
