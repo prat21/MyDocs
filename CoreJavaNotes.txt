@@ -1223,6 +1223,7 @@ https://www.digitalocean.com/community/tutorials/abstract-factory-design-pattern
 
 Singleton design pattern:
 https://www.journaldev.com/1377/java-singleton-design-pattern-best-practices-examples
+Example: java.lang.RunTime.getRuntime
 
 Builder design pattern:
 https://www.journaldev.com/1425/builder-design-pattern-in-java
@@ -1239,12 +1240,15 @@ https://www.journaldev.com/1535/composite-design-pattern-in-java
 
 Flyweight design pattern:
 Flyweight pattern is one of the structural design patterns as this pattern provides ways to decrease object count thus improving application required objects structure.
+The flyweight pattern is best suited for immutable objects.
+Note: Set of Intrinsic properties determine the unique category of objects we need to store in the cache map.
 https://www.geeksforgeeks.org/flyweight-design-pattern/
 https://www.journaldev.com/1562/flyweight-design-pattern-java
 Example: String pool, valueOf() of wrapper classes in java
 
 Decorator design pattern:
 https://www.journaldev.com/1540/decorator-design-pattern-in-java-example
+Decorator pattern is used a lot in Java IO classes, such as FileReader, BufferedReader etc.
 
 ------------------------------------------------------------------------------------------------
 J2EE design patterns:
