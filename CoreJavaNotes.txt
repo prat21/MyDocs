@@ -1271,3 +1271,15 @@ Intercepting filter pattern
 Difference between put, post and patch:
 https://www.baeldung.com/cs/http-put-vs-patch
 https://www.quora.com/What-is-the-difference-between-PUT-POST-and-PATCH-for-RESTful-APIs
+------------------------------------------------------------------------------------------------
+Java memory leak:
+https://www.baeldung.com/java-memory-leaks
+
+PermGen vs MetaSpace:
+https://www.baeldung.com/java-permgen-metaspace
+Starting with Java 8, the Metaspace replaces the PermGen bringing some substantial changes.
+
+Java memory management:
+https://www.linkedin.com/learning/java-memory-management-values-and-references/make-beautiful-stack-overflow-errors?dApp=53239054&leis=LAA&resume=false&u=2113185
+https://www.baeldung.com/java-memory-management-interview-questions
+
