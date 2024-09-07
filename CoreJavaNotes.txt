@@ -969,6 +969,12 @@ https://www.javatpoint.com/java-9-try-with-resources
 https://www.javatpoint.com/java-9-anonymous-classes
 https://www.javatpoint.com/java-9-factory-methods
 ------------------------------------------------------------------------------------------------
+Java 11 new features:
+A major change in this version is that we don’t need to compile the Java source files with javac explicitly anymore. Instead, we can directly run the file using the java command.
+Local-Variable Syntax for Lambda Parameters.
+https://howtodoinjava.com/java11/features-enhancements/#4-collection-toarrayintfunction
+https://www.baeldung.com/java-11-new-features
+------------------------------------------------------------------------------------------------
 Marker Interface:
 
 A marker interface is an interface that has no methods or constants inside it. It provides run-time type information about objects, so the compiler and JVM have additional information about the object.
