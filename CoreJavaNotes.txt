@@ -962,6 +962,8 @@ https://stackify.com/solid-design-liskov-substitution-principle/#:~:text=The%20L
 
 ------------------------------------------------------------------------------------------------
 Since java 9, interface can have private methods.
+Java 9 introduced modular system.
+https://www.baeldung.com/java-classloaders
 https://www.javatpoint.com/java-9-features
 https://www.javatpoint.com/java-9-try-with-resources
 https://www.javatpoint.com/java-9-anonymous-classes
