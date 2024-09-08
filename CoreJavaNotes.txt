@@ -1289,4 +1289,6 @@ Starting with Java 8, the Metaspace replaces the PermGen bringing some substanti
 Java memory management:
 https://www.linkedin.com/learning/java-memory-management-values-and-references/make-beautiful-stack-overflow-errors?dApp=53239054&leis=LAA&resume=false&u=2113185
 https://www.baeldung.com/java-memory-management-interview-questions
-
+------------------------------------------------------------------------------------------------
+Custom Exception:
+https://www.baeldung.com/java-new-custom-exception
