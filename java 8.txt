@@ -45,6 +45,9 @@ https://www.techiedelight.com/difference-stream-of-arrays-stream-java/
 
 Practice link:
 https://blog.devgenius.io/15-practical-exercises-help-you-master-java-stream-api-3f9c86b1cf82
+
+Disadvantage of manual iteration vs stream:
+https://www.linkedin.com/learning/advanced-java-programming-2/understanding-streams-in-java?autoSkip=true&dApp=53239054&leis=LAA&resume=false&u=2113185
 ---------------------------------------------------------------------------------------------
 OPTIONAL:
 
