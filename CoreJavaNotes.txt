@@ -244,7 +244,7 @@ https://www.geeksforgeeks.org/automatic-resource-management-java/
 https://www.baeldung.com/java-suppressed-exceptions
 
 When using try-catch-finally block, the exception thrown from the try gets suppressed by the exception thrown from finally.
-When using AutoCloseable, it's the exception thrown in the try-with-resources block that's suppressed.
+When using AutoCloseable, it's the exception thrown in the close method of try-with-resource that's suppressed.
 A resource that we use in try-with-resource must be subtypes of AutoCloseable to avoid a compile-time error.
 
 -----------------------------------------------------------------------------------------------------------------
