@@ -969,6 +969,13 @@ https://www.javatpoint.com/java-9-try-with-resources
 https://www.javatpoint.com/java-9-anonymous-classes
 https://www.javatpoint.com/java-9-factory-methods
 ------------------------------------------------------------------------------------------------
+Java 10 new features:
+https://www.baeldung.com/java-10-overview
+https://www.baeldung.com/java-10-local-variable-type-inference
+This feature is available only for local variables with the initializer.
+There is no runtime overhead in using var nor does it make Java a dynamically typed language. The type of the variable is still inferred at compile time and cannot be changed later.
+https://www.baeldung.com/java-10-overview#time-based-release-versioning
+------------------------------------------------------------------------------------------------
 Java 11 new features:
 A major change in this version is that we don’t need to compile the Java source files with javac explicitly anymore. Instead, we can directly run the file using the java command.
 Local-Variable Syntax for Lambda Parameters.
