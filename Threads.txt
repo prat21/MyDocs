@@ -115,7 +115,7 @@ ExecutorService:
 
 https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/ExecutorService.html
 http://www.baeldung.com/java-executor-service-tutorial
-
+https://medium.com/codex/executorservice-internal-working-in-java-7b286882f54e
 --------------------------------------------------------------------------------------------------------------------------------------------------
 
 Callable: Main difference between Runnable and Callable is that Runnable cannot return any value back to caller but Callable can return value. Another difference is that call() method from Callable can also throw checked exception which was not possible by run() method of Runnable interface. 
