@@ -48,6 +48,9 @@ https://blog.devgenius.io/15-practical-exercises-help-you-master-java-stream-api
 
 Disadvantage of manual iteration vs stream:
 https://www.linkedin.com/learning/advanced-java-programming-2/understanding-streams-in-java?autoSkip=true&dApp=53239054&leis=LAA&resume=false&u=2113185
+
+When to use parallelStream:
+https://www.linkedin.com/learning/advanced-java-programming-2/implementing-parallel-streams?autoSkip=true&dApp=53239054&leis=LAA&resume=false&u=2113185
 ---------------------------------------------------------------------------------------------
 OPTIONAL:
 
