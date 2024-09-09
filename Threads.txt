@@ -115,13 +115,17 @@ ExecutorService:
 
 https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/ExecutorService.html
 http://www.baeldung.com/java-executor-service-tutorial
-https://medium.com/codex/executorservice-internal-working-in-java-7b286882f54e
+https://medium.com/codex/executorservice-internal-working-in-java-7b286882f54e (Has internal working logic of thread pool)
 
 a. If fewer than CorePoolSize threads are running, the Executor always prefers creating a new thread rather than queuing.
 
 b. If CorePoolSize or more threads are running, the Executor always prefers queuing a request rather than creating a new thread.
 
 c. If a request cannot be queued, a new thread is created unless this would exceed maximumPoolSize, in which case, the task will be rejected.
+
+https://howtodoinjava.com/java/multi-threading/how-to-use-blockingqueue-and-threadpoolexecutor-in-java/
+
+Note: ExecutorService abstracts away the thread management and lifecycle overheads. We just create a thread pool with desried pool size and submit the tasks that we want to execute. ExecutorService takes care of the rest.
 --------------------------------------------------------------------------------------------------------------------------------------------------
 
 Callable: Main difference between Runnable and Callable is that Runnable cannot return any value back to caller but Callable can return value. Another difference is that call() method from Callable can also throw checked exception which was not possible by run() method of Runnable interface. 
