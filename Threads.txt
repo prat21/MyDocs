@@ -168,4 +168,16 @@ https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/atomic/package-su
 --------------------------------------------------------------------------------------------------------------------------------------------------
 Race Condition:
 http://tutorials.jenkov.com/java-concurrency/race-conditions-and-critical-sections.html
+--------------------------------------------------------------------------------------------------------------------------------------------------
+CompletableFuture:
+https://forums.oracle.com/ords/apexds/post/completablefuture-for-asynchronous-programming-in-java-8-8539
+https://www.baeldung.com/java-completablefuture-threadpool
+https://medium.com/javarevisited/completablefuture-usage-and-best-practises-4285c4ceaad4
+Why completableFuture was introduced even though Future interface was there:
+1. There was no way to make get() call non-blocking in Future.
+2. No support for exception handling.
+3. Chaining of callbacks was not supported.
+4. There was no way to explicitly complete the task.
+https://www.callicoder.com/java-8-completablefuture-tutorial/
+The join() method is similar to get(). The only difference is that it throws an unchecked exception if the underlying CompletableFuture completes exceptionally.
 
