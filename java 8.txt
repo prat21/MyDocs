@@ -31,6 +31,9 @@ https://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html
 https://docs.oracle.com/javase/tutorial/collections/streams/reduction.html
 https://docs.oracle.com/javase/8/docs/api/java/util/stream/Collectors.html
 https://www.baeldung.com/java-8-streams
+ParallelStream: When the source of a stream is a Collection or an array, it can be achieved with the help of the parallelStream() method. If the source of a stream is something other than a Collection or an array, the parallel() method should be used.
+IntStream intStreamParallel = IntStream.range(1, 150).parallel();
+
 https://www.baeldung.com/java-groupingby-collector
 https://www.geeksforgeeks.org/stream-sorted-in-java/
 
