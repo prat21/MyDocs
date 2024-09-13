@@ -966,9 +966,13 @@ Consequently, the BankingAppWithdrawalService is open for the extension with new
 For the Open/Closed Principle to work well, all subtypes must be substitutable for their supertype without ever having to modify the client code. Adhering to the Liskov Substitution Principle ensures this substitutability.
 Basically Liskov substitution helps in achieving open-closed prinicipal.
 If the client code needs to use instanceof or downcasting, then the chances are that both the Open/Closed Principle and the Liskov Substitution Principle have been violated.
+
 https://www.baeldung.com/java-interface-segregation
 One way to refactor a code which does not comply with open-closed principal is by segregating the interfaces into more fine grained interface (Interface segregation).
 We can leverage the concept of interface segregation to design our interfaces in such a way that the implementing subtypes can adhere to Liskov's substitution easily. And thus as a whole open-closed principal is achieved.
+
+https://www.baeldung.com/java-dependency-inversion-principle
+
 https://stackify.com/solid-design-liskov-substitution-principle/#:~:text=The%20Liskov%20Substitution%20Principle%20in,the%20objects%20of%20your%20superclass. (Liskov substitution)
 
 ------------------------------------------------------------------------------------------------
