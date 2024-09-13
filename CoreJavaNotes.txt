@@ -960,7 +960,7 @@ SOLID prinicple:
 https://www.baeldung.com/solid-principles
 https://www.baeldung.com/java-single-responsibility-principle
 https://www.baeldung.com/java-open-closed-principle
-https://www.baeldung.com/java-liskov-substitution-principle (Has good example of both SRP and OCP prinicipal. Use this as example.)
+https://www.baeldung.com/java-liskov-substitution-principle (Has good example of both OCP and Liskov prinicipal. Use this as example.)
 https://stackify.com/solid-design-liskov-substitution-principle/#:~:text=The%20Liskov%20Substitution%20Principle%20in,the%20objects%20of%20your%20superclass. (Liskov substitution)
 
 ------------------------------------------------------------------------------------------------
