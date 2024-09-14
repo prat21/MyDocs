@@ -73,6 +73,18 @@ https://docs.spring.io/spring-framework/reference/core/beans/factory-scopes.html
 Spring does not manage the complete lifecycle of a prototype bean. The container instantiates, configures, and otherwise assembles a prototype object and hands it to the client, with no further record of that prototype instance. Thus, although initialization lifecycle callback methods are called on all objects regardless of scope, in the case of prototypes, configured destruction lifecycle callbacks are not called. The client code must clean up prototype-scoped objects and release expensive resources that the prototype beans hold.
 https://docs.spring.io/spring-framework/reference/core/beans/factory-scopes.html#beans-factory-scopes-sing-prot-interaction
 ---------------------------------------------------------------------------------------------
+https://docs.spring.io/spring-framework/reference/core/beans/factory-nature.html
+When an ApplicationContext creates an object instance that implements the org.springframework.context.ApplicationContextAware interface, the instance is provided with a reference to that ApplicationContext.
+Autowiring is another alternative to obtain a reference to the ApplicationContext.
+---------------------------------------------------------------------------------------------
+https://docs.spring.io/spring-framework/reference/core/beans/factory-extension.html
+for each bean instance that is created by the container, the post-processor gets a callback from the container both before container initialization methods (such as InitializingBean.afterPropertiesSet() or any declared init method) are called, and after any bean initialization callbacks.
+An ApplicationContext automatically detects any beans that are defined in the configuration metadata that implement the BeanPostProcessor interface. The ApplicationContext registers these beans as post-processors so that they can be called later, upon bean creation.
+
+BeanFactoryPostProcessor operates on the bean configuration metadata. That is, the Spring IoC container lets a BeanFactoryPostProcessor read the configuration metadata and potentially change it before the container instantiates any beans
+Spring includes a number of predefined bean factory post-processors, such as PropertyOverrideConfigurer and PropertySourcesPlaceholderConfigurer.
+You can use the PropertySourcesPlaceholderConfigurer to externalize property values from a bean definition in a separate file by using the standard Java Properties format. Doing so enables the person deploying an application to customize environment-specific properties, such as database URLs and passwords.
+---------------------------------------------------------------------------------------------
 In order for spring to inject a property into an object, one of the following has to satisfy:
 1. the property has a setter method, regardless of whether it is private or public.
 2. the property is a constructor argument of the object so that it can be injected as a constructor-arg, regardless of whether it is private or public.
