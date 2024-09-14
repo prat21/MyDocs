@@ -54,6 +54,8 @@ https://www.linkedin.com/learning/advanced-java-programming-2/understanding-stre
 
 When to use parallelStream:
 https://www.linkedin.com/learning/advanced-java-programming-2/implementing-parallel-streams?autoSkip=true&dApp=53239054&leis=LAA&resume=false&u=2113185
+
+https://www.baeldung.com/java-8-comparator-comparing
 ---------------------------------------------------------------------------------------------
 OPTIONAL:
 
