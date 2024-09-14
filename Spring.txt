@@ -85,6 +85,34 @@ BeanFactoryPostProcessor operates on the bean configuration metadata. That is, t
 Spring includes a number of predefined bean factory post-processors, such as PropertyOverrideConfigurer and PropertySourcesPlaceholderConfigurer.
 You can use the PropertySourcesPlaceholderConfigurer to externalize property values from a bean definition in a separate file by using the standard Java Properties format. Doing so enables the person deploying an application to customize environment-specific properties, such as database URLs and passwords.
 ---------------------------------------------------------------------------------------------
+https://docs.spring.io/spring-framework/reference/core/beans/annotation-config.html
+Spring uses BeanPostProcessors(AutowiredAnnotationBeanPostProcessor) in conjunction with annotations to make the core IOC container aware of specific annotations.
+The <context:annotation-config/> element implicitly registers this post-processor.
+---------------------------------------------------------------------------------------------
+https://docs.spring.io/spring-framework/reference/core/beans/annotation-config/autowired.html
+As of Spring Framework 4.3, an @Autowired annotation on such a constructor is no longer necessary if the target bean defines only one constructor to begin with. However, if several constructors are available and there is no primary/default constructor, at least one of the constructors must be annotated with @Autowired in order to instruct the container which one to use.
+
+You can also instruct Spring to provide all beans of a particular type from the ApplicationContext by adding the @Autowired annotation to a field or method that expects an array of that type, as the following example shows:
+public class MovieRecommender {
+	@Autowired
+	private MovieCatalog[] movieCatalogs;
+}
+
+Even typed Map instances can be autowired as long as the expected key type is String. The map values contain all beans of the expected type, and the keys contain the corresponding bean names, as the following example shows:
+public class MovieRecommender {
+
+	private Map<String, MovieCatalog> movieCatalogs;
+
+	@Autowired
+	public void setMovieCatalogs(Map<String, MovieCatalog> movieCatalogs) {
+		this.movieCatalogs = movieCatalogs;
+	}
+}
+
+A non-required method will not be called at all if its dependency (or one of its dependencies, in case of multiple arguments) is not available. A non-required field will not get populated at all in such cases, leaving its default value in place.
+
+
+---------------------------------------------------------------------------------------------
 In order for spring to inject a property into an object, one of the following has to satisfy:
 1. the property has a setter method, regardless of whether it is private or public.
 2. the property is a constructor argument of the object so that it can be injected as a constructor-arg, regardless of whether it is private or public.
