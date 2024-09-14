@@ -58,10 +58,21 @@ Using annotations like @Autowired, the container is asked to inject a dependency
 
 SEE: https://dzone.com/articles/ioc-vs-di for Dependency Injection and IOC (it is good)
 
-
-
+--------------------------------------------------------------------------------------------
+Since you can mix constructor-based and setter-based DI, it is a good rule of thumb to use constructors for mandatory dependencies and setter methods or configuration methods for optional dependencies.
+Setter injection overrides the constructor injection. If we use both constructor and setter injection, IOC container will use the setter injection.
+Setter Injection: IoC Container first creates the dependent object then the Target Class Object
+Constructor Injection: IoC Container first create the target class object then the dependent object
+Constructor based injection helps to implement immutable objects.
+https://community.sap.com/t5/application-development-blog-posts/why-not-to-use-field-injection-in-spring-boot/ba-p/13578220#:~:text=Field%20injection%20makes%20your%20beans,constructed%2C%20its%20dependencies%20remain%20unchanged.&text=Here%2C%20the%20userRepository%20reference%20can,created%2C%20breaking%20the%20immutability%20principle.
+Field injection makes your beans mutable post-construction. With constructor injection, once an object is constructed, its dependencies remain unchanged.
 ---------------------------------------------------------------------------------------------
-
+https://docs.spring.io/spring-framework/reference/core/beans/dependencies/factory-method-injection.html
+---------------------------------------------------------------------------------------------
+https://docs.spring.io/spring-framework/reference/core/beans/factory-scopes.html
+Spring does not manage the complete lifecycle of a prototype bean. The container instantiates, configures, and otherwise assembles a prototype object and hands it to the client, with no further record of that prototype instance. Thus, although initialization lifecycle callback methods are called on all objects regardless of scope, in the case of prototypes, configured destruction lifecycle callbacks are not called. The client code must clean up prototype-scoped objects and release expensive resources that the prototype beans hold.
+https://docs.spring.io/spring-framework/reference/core/beans/factory-scopes.html#beans-factory-scopes-sing-prot-interaction
+---------------------------------------------------------------------------------------------
 In order for spring to inject a property into an object, one of the following has to satisfy:
 1. the property has a setter method, regardless of whether it is private or public.
 2. the property is a constructor argument of the object so that it can be injected as a constructor-arg, regardless of whether it is private or public.
