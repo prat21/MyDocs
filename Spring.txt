@@ -111,7 +111,32 @@ public class MovieRecommender {
 
 A non-required method will not be called at all if its dependency (or one of its dependencies, in case of multiple arguments) is not available. A non-required field will not get populated at all in such cases, leaving its default value in place.
 
+---------------------------------------------------------------------------------------------
+https://docs.spring.io/spring-framework/reference/core/beans/annotation-config/autowired-primary.html
+@Primary indicates that a particular bean should be given preference when multiple beans are candidates to be autowired to a single-valued dependency.
+---------------------------------------------------------------------------------------------
+https://docs.spring.io/spring-framework/reference/core/beans/annotation-config/autowired-qualifiers.html
+Qualifiers do not have to be unique. For example, you can define multiple MovieCatalog beans with the same qualifier value “action”, all of which are injected into a Set<MovieCatalog> annotated with @Qualifier("action").
+JSR-250 @Resource annotation which is semantically defined to identify a specific target component by its unique name, with the declared type being irrelevant for the matching process.
+@Autowired applies to fields, constructors, and multi-argument methods, allowing for narrowing through qualifier annotations at the parameter level. In contrast, @Resource is supported only for fields and bean property setter methods with a single argument.
+---------------------------------------------------------------------------------------------
+https://docs.spring.io/spring-framework/reference/core/beans/annotation-config/resource.html
 
+@Resource takes a name attribute. By default, Spring interprets that value as the bean name to be injected. In other words, it follows by-name semantics.
+If no name is explicitly specified, the default name is derived from the field name or setter method.
+
+In the following example, the customerPreferenceDao field first looks for a bean named "customerPreferenceDao" and then falls back to a primary type match for the type CustomerPreferenceDao:
+public class MovieRecommender {
+
+	@Resource
+	private CustomerPreferenceDao customerPreferenceDao;
+
+	@Resource
+	private ApplicationContext context;
+
+	public MovieRecommender() {
+	}
+}
 ---------------------------------------------------------------------------------------------
 In order for spring to inject a property into an object, one of the following has to satisfy:
 1. the property has a setter method, regardless of whether it is private or public.
