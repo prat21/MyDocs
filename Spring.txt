@@ -171,8 +171,107 @@ The example autowires the String method parameter country to the value of the ag
 You may declare @Bean methods as static, allowing for them to be called without creating their containing configuration class as an instance. This makes particular sense when defining post-processor beans (for example, of type BeanFactoryPostProcessor or BeanPostProcessor), since such beans get initialized early in the container lifecycle and should avoid triggering other parts of the configuration at that point.
 
 For Spring stereotype annotations, if you supply a name via the annotation’s value attribute that name will be used as the name in the corresponding bean definition. This convention also applies when the following JSR-250 and JSR-330 annotations are used instead of Spring stereotype annotations: @jakarta.annotation.ManagedBean, @javax.annotation.ManagedBean, @jakarta.inject.Named, and @javax.inject.Named.
-However, sometimes you need a different scope that can be specified by the @Scope annotation.
 
+A different scope can be specified by the @Scope annotation.
+---------------------------------------------------------------------------------------------
+https://docs.spring.io/spring-framework/reference/core/beans/standard-annotations.html
+
+As with @Autowired, you can use @Inject at the field level, method level and constructor-argument level.
+If you would like to use a qualified name for the dependency that should be injected, you should use the @Named annotation.
+As with @Autowired, @Inject can also be used with java.util.Optional or @Nullable. This is even more applicable here, since @Inject does not have a required attribute.
+Instead of @Component, you can use @jakarta.inject.Named or jakarta.annotation.ManagedBean.
+---------------------------------------------------------------------------------------------
+https://docs.spring.io/spring-framework/reference/core/beans/java/basic-concepts.html
+
+@Configuration classes let inter-bean dependencies be defined by calling other @Bean methods in the same class(Same class because this is achieved by proxy).
+
+When @Bean methods are declared within classes that are not annotated with @Configuration, they are referred to as being processed in a "lite" mode. In such scenarios, @Bean methods are effectively a general-purpose factory method mechanism without special runtime processing (that is, without generating a CGLIB subclass for it). A custom Java call to such a method will not get intercepted by the container and therefore behaves just like a regular method call, creating a new instance every time rather than reusing an existing singleton (or scoped) instance for the given bean.
+---------------------------------------------------------------------------------------------
+https://docs.spring.io/spring-framework/reference/core/beans/java/instantiating-container.html
+
+In much the same way that Spring XML files are used as input when instantiating a ClassPathXmlApplicationContext, you can use @Configuration classes as input when instantiating an AnnotationConfigApplicationContext. This allows for completely XML-free usage of the Spring container.
+
+public static void main(String[] args) {
+	ApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
+	MyService myService = ctx.getBean(MyService.class);
+	myService.doStuff();
+}
+
+To enable component scanning, you can annotate your @Configuration class as follows:
+@Configuration
+@ComponentScan(basePackages = "com.acme")
+public class AppConfig  {
+	// ...
+}
+
+AnnotationConfigApplicationContext exposes the scan(String...) method to allow for the same component-scanning functionality, as the following example shows:
+
+public static void main(String[] args) {
+	AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
+	ctx.scan("com.acme");
+	ctx.refresh();
+	MyService myService = ctx.getBean(MyService.class);
+}
+Remember that @Configuration classes are meta-annotated with @Component, so they are candidates for component-scanning. In the preceding example, assuming that AppConfig is declared within the com.acme package (or any package underneath), it is picked up during the call to scan(). Upon refresh(), all its @Bean methods are processed and registered as bean definitions within the container.
+---------------------------------------------------------------------------------------------
+https://docs.spring.io/spring-framework/reference/core/beans/java/bean-annotation.html
+
+We can also use default methods to define beans. This allows composition of bean configurations by implementing interfaces with bean definitions on default methods.
+public interface BaseConfig {
+
+	@Bean
+	default TransferServiceImpl transferService() {
+		return new TransferServiceImpl();
+	}
+}
+
+@Configuration
+public class AppConfig implements BaseConfig {
+}
+
+You can also declare your @Bean method with an interface (or base class) return type, as the following example shows:
+@Configuration
+public class AppConfig {
+
+	@Bean
+	public TransferService transferService() {      //Return type is an interface.
+		return new TransferServiceImpl();
+	}
+}
+
+By default, configuration classes use a @Bean method’s name as the name of the resulting bean. This functionality can be overridden, however, with the name attribute.
+@Configuration
+public class AppConfig {
+
+	@Bean("myThing")
+	public Thing thing() {
+		return new Thing();
+	}
+}
+
+It is sometimes desirable to give a single bean multiple names, otherwise known as bean aliasing. The name attribute of the @Bean annotation accepts a String array for this purpose.
+---------------------------------------------------------------------------------------------
+https://docs.spring.io/spring-framework/reference/core/beans/java/configuration-annotation.html
+
+When beans have dependencies on one another, expressing that dependency is as simple as having one bean method call another.
+@Configuration
+public class AppConfig {
+
+	@Bean
+	public BeanOne beanOne() {
+		return new BeanOne(beanTwo());
+	}
+
+	@Bean
+	public BeanTwo beanTwo() {
+		return new BeanTwo();
+	}
+}
+
+This method of declaring inter-bean dependencies works only when the @Bean method is declared within a @Configuration class. You cannot declare inter-bean dependencies by using plain @Component classes.
+
+There are a few restrictions due to the fact that CGLIB dynamically adds features at startup-time. In particular, configuration classes must not be final.
+All @Configuration classes are subclassed at startup-time with CGLIB. In the subclass, the child method checks the container first for any cached (scoped) beans before it calls the parent method and creates a new instance.
 ---------------------------------------------------------------------------------------------
 In order for spring to inject a property into an object, one of the following has to satisfy:
 1. the property has a setter method, regardless of whether it is private or public.
