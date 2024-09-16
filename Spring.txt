@@ -138,6 +138,42 @@ public class MovieRecommender {
 	}
 }
 ---------------------------------------------------------------------------------------------
+https://docs.spring.io/spring-framework/reference/core/beans/annotation-config/value-annotations.html
+
+When configuring a PropertySourcesPlaceholderConfigurer using JavaConfig, the @Bean method must be static. Note: Maybe because the PropertySourcesPlaceholderConfigurer is a BeanFactoryPostProcessor which gets invoked before bean creation.
+
+Note: Like @Resource, the @PostConstruct and @PreDestroy annotation types were a part of the standard Java libraries from JDK 6 to 8. However, the entire javax.annotation package got separated from the core Java modules in JDK 9 and eventually removed in JDK 11. As of Jakarta EE 9, the package lives in jakarta.annotation now. If needed, the jakarta.annotation-api artifact needs to be obtained via Maven Central now, simply to be added to the application’s classpath like any other library.
+---------------------------------------------------------------------------------------------
+https://docs.spring.io/spring-framework/reference/core/beans/classpath-scanning.html
+
+You can annotate your component classes with @Component, but, by annotating them with @Repository, @Service, or @Controller instead, your classes are more properly suited for processing by tools or associating with aspects.
+@Repository is already supported as a marker for automatic exception translation in your persistence layer.
+The @RestController annotation from Spring MVC is composed of @Controller and @ResponseBody.
+To autodetect these classes and register the corresponding beans, you need to add @ComponentScan to your @Configuration class, with the basePackages attribute.
+By default, classes annotated with @Component, @Repository, @Service, @Controller, @Configuration, or a custom annotation that itself is annotated with @Component are the only detected candidate components. However, you can modify and extend this behavior by applying custom filters. Add them as includeFilters or excludeFilters attributes of the @ComponentScan annotation.
+Spring components can also contribute bean definition metadata to the container. You can do this with the same @Bean annotation used to define bean metadata within @Configuration annotated classes.
+Autowired fields and methods are supported, as previously discussed, with additional support for autowiring of @Bean methods.
+    @Bean
+	protected TestBean protectedInstance(
+			@Qualifier("public") TestBean spouse,
+			@Value("#{privateInstance.age}") String country) {
+		TestBean tb = new TestBean("protectedInstance", 1);
+		tb.setSpouse(spouse);
+		tb.setCountry(country);
+		return tb;
+	}
+	@Bean
+    private TestBean privateInstance() {
+    	return new TestBean("privateInstance", i++);
+    }
+The example autowires the String method parameter country to the value of the age property on another bean named privateInstance.
+
+You may declare @Bean methods as static, allowing for them to be called without creating their containing configuration class as an instance. This makes particular sense when defining post-processor beans (for example, of type BeanFactoryPostProcessor or BeanPostProcessor), since such beans get initialized early in the container lifecycle and should avoid triggering other parts of the configuration at that point.
+
+For Spring stereotype annotations, if you supply a name via the annotation’s value attribute that name will be used as the name in the corresponding bean definition. This convention also applies when the following JSR-250 and JSR-330 annotations are used instead of Spring stereotype annotations: @jakarta.annotation.ManagedBean, @javax.annotation.ManagedBean, @jakarta.inject.Named, and @javax.inject.Named.
+However, sometimes you need a different scope that can be specified by the @Scope annotation.
+
+---------------------------------------------------------------------------------------------
 In order for spring to inject a property into an object, one of the following has to satisfy:
 1. the property has a setter method, regardless of whether it is private or public.
 2. the property is a constructor argument of the object so that it can be injected as a constructor-arg, regardless of whether it is private or public.
@@ -1571,6 +1607,9 @@ https://stackoverflow.com/questions/30337582/spring-boot-configure-and-use-two-d
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 
 SEE: https://www.baeldung.com/spring-interview-questions
+------------------------------------------------------------------------------------------------------------------------------------------------------
+Just an optional read of how j2ee became jakarta ee.
+https://blogs.oracle.com/javamagazine/post/transition-from-java-ee-to-jakarta-ee
 
 
 
