@@ -273,6 +273,39 @@ This method of declaring inter-bean dependencies works only when the @Bean metho
 There are a few restrictions due to the fact that CGLIB dynamically adds features at startup-time. In particular, configuration classes must not be final.
 All @Configuration classes are subclassed at startup-time with CGLIB. In the subclass, the child method checks the container first for any cached (scoped) beans before it calls the parent method and creates a new instance.
 ---------------------------------------------------------------------------------------------
+https://docs.spring.io/spring-framework/reference/core/beans/java/composing-configuration-classes.html
+
+The @Import annotation allows for loading @Bean definitions from another configuration class.
+---------------------------------------------------------------------------------------------
+https://docs.spring.io/spring-framework/reference/core/beans/environment.html
+
+The @Profile annotation lets you indicate that a component is eligible for registration when one or more specified profiles are active.
+@Profile can also be declared at the method level.
+You can activate multiple profiles at once.
+-Dspring.profiles.active="profile1,profile2"
+The default profile represents the profile that is enabled if no profile is active.
+
+Spring’s Environment abstraction provides search operations over a configurable hierarchy of property sources.
+The @PropertySource annotation provides a convenient and declarative mechanism for adding a PropertySource to Spring’s Environment.
+
+@Configuration
+@PropertySource("classpath:/com/myco/app.properties")
+public class AppConfig {
+
+ @Autowired
+ Environment env;
+
+ @Bean
+ public TestBean testBean() {
+  TestBean testBean = new TestBean();
+  testBean.setName(env.getProperty("testbean.name"));
+  return testBean;
+ }
+}
+
+Any ${...} placeholders present in a @PropertySource resource location are resolved against the set of property sources already registered against the environment(for example, system properties or environment variables).
+
+---------------------------------------------------------------------------------------------
 In order for spring to inject a property into an object, one of the following has to satisfy:
 1. the property has a setter method, regardless of whether it is private or public.
 2. the property is a constructor argument of the object so that it can be injected as a constructor-arg, regardless of whether it is private or public.
