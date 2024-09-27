@@ -306,6 +306,39 @@ public class AppConfig {
 Any ${...} placeholders present in a @PropertySource resource location are resolved against the set of property sources already registered against the environment(for example, system properties or environment variables).
 
 ---------------------------------------------------------------------------------------------
+https://docs.spring.io/spring-framework/reference/core/beans/context-introduction.html
+
+ContextRefreshedEvent: Published when the ApplicationContext is initialized or refreshed (for example, by using the refresh() method on the ConfigurableApplicationContext interface). Here, “initialized” means that all beans are loaded, post-processor beans are detected and activated, singletons are pre-instantiated, and the ApplicationContext object is ready for use. As long as the context has not been closed, a refresh can be triggered multiple times, provided that the chosen ApplicationContext actually supports such “hot” refreshes. For example, XmlWebApplicationContext supports hot refreshes, but GenericApplicationContext does not.
+
+You can register an event listener on any method of a managed bean by using the @EventListener annotation.
+public class BlockedListNotifier {
+
+	private String notificationAddress;
+
+	public void setNotificationAddress(String notificationAddress) {
+		this.notificationAddress = notificationAddress;
+	}
+
+	@EventListener
+	public void processBlockedListEvent(BlockedListEvent event) {
+		// notify appropriate parties via notificationAddress...
+	}
+}
+The method signature once again declares the event type to which it listens, but, this time, with a flexible name and without implementing a specific listener interface.
+If your method should listen to several events or if you want to define it with no parameter at all, the event types can also be specified on the annotation itself.
+
+@EventListener({ContextStartedEvent.class, ContextRefreshedEvent.class})
+public void handleContextStart() {
+	// ...
+}
+
+The following example shows how our notifier can be rewritten to be invoked only if the content attribute of the event is equal to my-event:
+
+@EventListener(condition = "#blEvent.content == 'my-event'")
+public void processBlockedListEvent(BlockedListEvent blEvent) {
+	// notify appropriate parties via notificationAddress...
+}
+---------------------------------------------------------------------------------------------
 In order for spring to inject a property into an object, one of the following has to satisfy:
 1. the property has a setter method, regardless of whether it is private or public.
 2. the property is a constructor argument of the object so that it can be injected as a constructor-arg, regardless of whether it is private or public.
