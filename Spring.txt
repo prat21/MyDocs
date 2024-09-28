@@ -66,6 +66,7 @@ Constructor Injection: IoC Container first create the target class object then t
 Constructor based injection helps to implement immutable objects.
 https://community.sap.com/t5/application-development-blog-posts/why-not-to-use-field-injection-in-spring-boot/ba-p/13578220#:~:text=Field%20injection%20makes%20your%20beans,constructed%2C%20its%20dependencies%20remain%20unchanged.&text=Here%2C%20the%20userRepository%20reference%20can,created%2C%20breaking%20the%20immutability%20principle.
 Field injection makes your beans mutable post-construction. With constructor injection, once an object is constructed, its dependencies remain unchanged.
+An @Autowired annotated constructor, setter or field does not have to be public.
 ---------------------------------------------------------------------------------------------
 https://docs.spring.io/spring-framework/reference/core/beans/dependencies/factory-method-injection.html
 ---------------------------------------------------------------------------------------------
@@ -173,6 +174,8 @@ You may declare @Bean methods as static, allowing for them to be called without 
 For Spring stereotype annotations, if you supply a name via the annotation’s value attribute that name will be used as the name in the corresponding bean definition. This convention also applies when the following JSR-250 and JSR-330 annotations are used instead of Spring stereotype annotations: @jakarta.annotation.ManagedBean, @javax.annotation.ManagedBean, @jakarta.inject.Named, and @javax.inject.Named.
 
 A different scope can be specified by the @Scope annotation.
+
+The AutowiredAnnotationBeanPostProcessor and CommonAnnotationBeanPostProcessor are both implicitly included when you use the component-scan element.
 ---------------------------------------------------------------------------------------------
 https://docs.spring.io/spring-framework/reference/core/beans/standard-annotations.html
 
