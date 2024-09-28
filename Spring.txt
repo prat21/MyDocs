@@ -288,6 +288,13 @@ You can activate multiple profiles at once.
 -Dspring.profiles.active="profile1,profile2"
 The default profile represents the profile that is enabled if no profile is active.
 
+For a common StandardServletEnvironment, the full hierarchy is as follows, with the highest-precedence entries at the top:
+1. ServletConfig parameters (if applicable - for example, in case of a DispatcherServlet context)
+2. ServletContext parameters (web.xml context-param entries)
+3. JNDI environment variables (java:comp/env/ entries)
+4. JVM system properties (-D command-line arguments)
+5. JVM system environment (operating system environment variables)
+
 Spring’s Environment abstraction provides search operations over a configurable hierarchy of property sources.
 The @PropertySource annotation provides a convenient and declarative mechanism for adding a PropertySource to Spring’s Environment.
 
