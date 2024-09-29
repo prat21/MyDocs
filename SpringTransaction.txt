@@ -7,5 +7,4 @@ The proxy allows the framework to inject transactional logic before and after th
 What's important to keep in mind is that, if the transactional bean is implementing an interface, by default the proxy will be a Java Dynamic Proxy.
 This means that only external method calls that come in through the proxy will be intercepted.
 Any self-invocation calls will not start any transaction, even if the method has the @Transactional annotation.
-Another caveat of using proxies is that only public methods should be annotated with @Transactional.
-Methods of any other visibilities will simply ignore the annotation silently as these are not proxied.
+The @Transactional annotation is typically used on methods with public visibility. As of 6.0, protected or package-visible methods can also be made transactional for class-based proxies by default. Note that transactional methods in interface-based proxies must always be public and defined in the proxied interface. For both kinds of proxies, only external method calls coming in through the proxy are intercepted.
