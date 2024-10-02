@@ -254,12 +254,18 @@ https://www.baeldung.com/spring-httpmessageconverter-rest
 
 Also see: http://www.jcombat.com/spring/understanding-http-message-converters-in-spring-framework
 ------------------------------------------------------------------------------------------------------------
+Async Spring MVC:
+
 Async Servlet Processing:
 https://docs.oracle.com/javaee/7/tutorial/servlets012.htm
 DeferredResult:
 https://www.baeldung.com/spring-deferred-result
 Asynchronous Requests:
 https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-ann-async.html
+Non-blocking IO:
+https://stackoverflow.com/questions/25099640/non-blocking-io-vs-async-io-and-implementation-in-java
+https://anmolsehgal.medium.com/non-blocking-io-java-nio-b18e53a92bad (Optional Read. Has explanation of how a traditional server handles requests)
+https://docs.oracle.com/javaee/7/tutorial/servlets013.htm (Optional Read)
 
 
 
