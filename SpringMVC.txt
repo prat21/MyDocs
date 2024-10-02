@@ -253,6 +253,13 @@ It will then search for a HttpMessageConverter that can convert the body sent by
 https://www.baeldung.com/spring-httpmessageconverter-rest
 
 Also see: http://www.jcombat.com/spring/understanding-http-message-converters-in-spring-framework
+------------------------------------------------------------------------------------------------------------
+Async Servlet Processing:
+https://docs.oracle.com/javaee/7/tutorial/servlets012.htm
+DeferredResult:
+https://www.baeldung.com/spring-deferred-result
+Asynchronous Requests:
+https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-ann-async.html
 
 
 
