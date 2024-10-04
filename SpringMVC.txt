@@ -267,6 +267,7 @@ DeferredResult:
 https://www.baeldung.com/spring-deferred-result
 Asynchronous Requests:
 https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-ann-async.html
+https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-ann-async.html#mvc-ann-async-vs-webflux
 Non-blocking IO:
 https://stackoverflow.com/questions/25099640/non-blocking-io-vs-async-io-and-implementation-in-java
 https://anmolsehgal.medium.com/non-blocking-io-java-nio-b18e53a92bad (Optional Read. Has explanation of how a traditional server handles requests)
