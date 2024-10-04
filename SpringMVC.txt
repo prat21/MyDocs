@@ -271,6 +271,19 @@ Non-blocking IO:
 https://stackoverflow.com/questions/25099640/non-blocking-io-vs-async-io-and-implementation-in-java
 https://anmolsehgal.medium.com/non-blocking-io-java-nio-b18e53a92bad (Optional Read. Has explanation of how a traditional server handles requests)
 https://docs.oracle.com/javaee/7/tutorial/servlets013.htm (Optional Read)
+-------------------------------------------------------------------------------------------------------------
+RestClient and RestTemplate:
+
+https://docs.spring.io/spring-framework/reference/integration/rest-clients.html
+If no request factory is specified when the RestClient was built, it will use the Apache or Jetty HttpClient if they are available on the classpath.
+RestTemplate uses the same HTTP library abstraction as RestClient. By default, it uses the SimpleClientHttpRequestFactory, but this can be changed via the constructor.
+RestTemplate: https://baeldung.com/rest-template
+RestClient: https://www.baeldung.com/spring-boot-restclient
+RestTemplate, as the name suggests, is built on a template design pattern. It’s a behavioral design pattern that defines the skeleton of an algorithm in a method, allowing subclasses to provide specific implementations for certain steps. While it’s a powerful pattern, it creates a need for overloading, which can be inconvenient.
+To improve on this, RestClient features a fluent API. A fluent API is a design pattern that allows method chaining in a way that makes the code more readable and expressive by sequentially calling methods on an object, often without the need for intermediate variables.
+
+How to configure restclient: https://docs.spring.io/spring-framework/reference/integration/rest-clients.html#_creating_a_restclient
+
 
 
 
