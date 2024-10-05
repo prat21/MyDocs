@@ -1,0 +1,2 @@
+Check "Reactive programming with java" - java brains tutorial (Project Reactor) first to get the idea of what reactive programming paradigm is.
+Check Tutorial#22.
