@@ -1,0 +1,6 @@
+https://docs.spring.io/spring-framework/reference/integration/scheduling.html
+
+To enable support for @Scheduled and @Async annotations, you can add @EnableScheduling and @EnableAsync to one of your @Configuration classes.
+
+@Scheduled can be used as a repeatable annotation. If several scheduled declarations are found on the same method, each of them will be processed independently, with a separate trigger firing for each of them. As a consequence, such co-located schedules may overlap and execute multiple times in parallel or in immediate succession. Please make sure that your specified cron expressions etc do not accidentally overlap.
+
