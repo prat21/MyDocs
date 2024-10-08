@@ -6,3 +6,8 @@ A JMS client can consume messages either synchronously or asynchronously.
 
 1. Synchronous: In this mode, a client receives a message by invoking the receive() method of the MessageConsumer object. The application thread blocks until the method returns, and this has the consequence that if a message is not available, it blocks until a message becomes available or the receive() method times out. Also, note that in this model the client can consume one message at a time.
 2. Asynchronous: In this mode, the client registers a MessageListener object with a message consumer. This is like a call-back where the client consumes a message when the session invokes the onMessage() method. In other words, the application's thread doesn't block.
+
+-----------------------------------------------------------------------------------------------
+The MessagePostProcessor interface gives you access to the message after it has been converted but before it is sent
+-----------------------------------------------------------------------------------------------
+https://docs.spring.io/spring-framework/reference/integration/jms/annotated.html#jms-annotated-response
