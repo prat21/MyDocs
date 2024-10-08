@@ -14,9 +14,9 @@ Auto-configuration is designed to work well with “Starter POMs”, but the two
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 
-@SpringBootApplication is a convenience annotation that adds all of the following:
+@SpringBootApplication is a convenience annotation that adds all the following:
 
-1. @Configuration tags the class as a source of bean definitions for the application context.
+1. @SpringBootConfiguration enable registration of extra beans in the context or the import of additional configuration classes. An alternative to Spring’s standard @Configuration that aids configuration detection in your integration tests.
 
 2. @EnableAutoConfiguration tells Spring Boot to start adding beans based on classpath settings, other beans, and various property settings.
 
@@ -74,7 +74,7 @@ SEE: Spring Boot Quick Start 10 - Spring Boot startup steps (Java Brains)
 ----------------------------------------------------------------------------------------------------------------------------------------
 From: https://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/#getting-started-first-application
 
-10.3.3 The â€œmainâ€� method
+10.3.3 The main method
 
 The final part of our application is the main method. This is just a standard method that follows the Java convention for an application entry point. Our main method delegates to Spring Bootâ€™s SpringApplication class by calling run. SpringApplication will bootstrap our application, starting Spring which will in turn start the auto-configured Tomcat web server. We need to pass Example.class as an argument to the run method to tell SpringApplication which is the primary Spring component. The args array is also passed through to expose any command-line arguments.
 
@@ -234,20 +234,40 @@ spring-boot-starter-data-jpa : Support for the â€œJava Persistence APIâ€�
 SEE: https://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/#getting-started-first-application
 
 14.1 Importing additional configuration classes
-You donâ€™t need to put all your @Configuration into a single class. The @Import annotation can be used to import additional configuration classes. Alternatively, you can use @ComponentScan to automatically pickup all Spring components, including @Configuration classes.
+You don't need to put all your @Configuration into a single class. The @Import annotation can be used to import additional configuration classes. Alternatively, you can use @ComponentScan to automatically pickup all Spring components, including @Configuration classes.
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 SEE: https://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/#getting-started-first-application
 15.1 Gradually replacing auto-configuration
 Auto-configuration is noninvasive, at any point you can start to define your own configuration to replace specific parts of the auto-configuration. For example, if you add your own DataSource bean, the default embedded database support will back away.
+----------------------------------------------------------------------------------------------------------------------------------------
+https://docs.spring.io/spring-boot/reference/using/devtools.html
+Applications that use spring-boot-devtools automatically restart whenever files on the classpath change. This can be a useful feature when working in an IDE, as it gives a very fast feedback loop for code changes.
+If you do not want to use the restart feature, you can disable it by using the spring.devtools.restart.enabled property.
+----------------------------------------------------------------------------------------------------------------------------------------
+https://docs.spring.io/spring-boot/reference/features/spring-application.html
+SpringApplication allows an application to be initialized lazily. When lazy initialization is enabled, beans are created as they are needed rather than during application startup.
+A downside of lazy initialization is that it can delay the discovery of a problem with the application.
+It can be enabled using the spring.main.lazy-initialization property as shown in the following example:
+spring.main.lazy-initialization=true
+If you want to disable lazy initialization for certain beans while using lazy initialization for the rest of the application, you can explicitly set their lazy attribute to false using the @Lazy(false) annotation.
+----------------------------------------------------------------------------------------------------------------------------------------
+https://docs.spring.io/spring-boot/reference/features/external-config.html
 
+It is recommended to stick with one format for your entire application. If you have configuration files with both .properties and YAML format in the same location, .properties takes precedence.
+
+if no profiles are explicitly activated, then properties from application-default are considered.
+
+https://docs.spring.io/spring-boot/reference/features/external-config.html#features.external-config.typesafe-configuration-properties.enabling-annotated-types
+
+Spring Boot attempts to validate @ConfigurationProperties classes whenever they are annotated with Spring’s @Validated annotation.
+To ensure that validation is always triggered for nested properties, the associated field must be annotated with @Valid.
 ----------------------------------------------------------------------------------------------------------------------------------------
 SEE: https://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/#getting-started-first-application-properties
-If you donâ€™t like application.properties as the configuration file name you can switch to another by specifying a spring.config.name environment property. You can also refer to an explicit location using the spring.config.location environment property (comma-separated list of directory locations, or file paths).
+If you don't like application.properties as the configuration file name you can switch to another by specifying a spring.config.name environment property. You can also refer to an explicit location using the spring.config.location environment property (comma-separated list of directory locations, or file paths).
 
 $ java -jar myproject.jar --spring.config.name=myproject
 or
-
 $ java -jar myproject.jar --spring.config.location=classpath:/default.properties,classpath:/override.properties
 
 ----------------------------------------------------------------------------------------------------------------------------------------
