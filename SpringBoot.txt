@@ -277,7 +277,19 @@ logging.level.org.springframework.web=debug
 logging.level.org.hibernate=error
 
 You can force Spring Boot to use a particular logging system by using the org.springframework.boot.logging.LoggingSystem system property.
+----------------------------------------------------------------------------------------------------------------------------------------
+https://docs.spring.io/spring-boot/reference/features/task-execution-and-scheduling.html
+In the absence of an Executor bean in the context, Spring Boot auto-configures an AsyncTaskExecutor. When virtual threads are enabled (using Java 21+ and spring.threads.virtual.enabled set to true) this will be a SimpleAsyncTaskExecutor that uses virtual threads. Otherwise, it will be a ThreadPoolTaskExecutor with sensible defaults. In either case, the auto-configured executor will be automatically used for:
+1. asynchronous task execution (@EnableAsync)
+2. Spring for GraphQL’s asynchronous handling of Callable return values from controller methods
+3. Spring MVC’s asynchronous request processing
+4. Spring WebFlux’s blocking execution support
+Note: Both SimpleAsyncTaskExecutor and ThreadPoolTaskExecutor are AsyncTaskExecutor.
 
+When a ThreadPoolTaskExecutor is auto-configured, the thread pool uses 8 core threads that can grow and shrink according to the load. Those default settings can be fine-tuned using the spring.task.execution namespace, as shown in the following example:
+spring.task.execution.pool.max-size=16
+spring.task.execution.pool.queue-capacity=100
+spring.task.execution.pool.keep-alive=10s
 ----------------------------------------------------------------------------------------------------------------------------------------
 SEE: https://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/#getting-started-first-application-properties
 If you don't like application.properties as the configuration file name you can switch to another by specifying a spring.config.name environment property. You can also refer to an explicit location using the spring.config.location environment property (comma-separated list of directory locations, or file paths).
