@@ -290,6 +290,21 @@ When a ThreadPoolTaskExecutor is auto-configured, the thread pool uses 8 core th
 spring.task.execution.pool.max-size=16
 spring.task.execution.pool.queue-capacity=100
 spring.task.execution.pool.keep-alive=10s
+---------------------------------------------------------------------------------------------------------------------------------------
+https://docs.spring.io/spring-boot/reference/features/developing-auto-configuration.html#features.developing-auto-configuration.locating-auto-configuration-candidates
+https://www.baeldung.com/spring-boot-custom-auto-configuration
+
+Classes that implement auto-configuration are annotated with @AutoConfiguration. This annotation itself is meta-annotated with @Configuration, making auto-configurations standard @Configuration classes.
+
+Spring Boot checks for the presence of a META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports file within your published jar. The file should list your configuration classes.
+
+We could add the @EnableAutoConfiguration annotation with exclude or excludeName attribute to a configuration class to disable a particular autoconfiguration.
+@Configuration
+@EnableAutoConfiguration(
+  exclude={MySQLAutoconfiguration.class})
+public class AutoconfigurationApplication {
+    //...
+}
 ----------------------------------------------------------------------------------------------------------------------------------------
 SEE: https://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/#getting-started-first-application-properties
 If you don't like application.properties as the configuration file name you can switch to another by specifying a spring.config.name environment property. You can also refer to an explicit location using the spring.config.location environment property (comma-separated list of directory locations, or file paths).
