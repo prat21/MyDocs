@@ -41,6 +41,20 @@ public interface UserRepository extends JpaRepository<User, Long> {
                                  @Param("firstname") String firstname);
 }
 
+https://docs.spring.io/spring-data/jpa/reference/jpa/query-methods.html#jpa.query-methods.query-creation
+Note: Check the different naming conventions of repository methods.
+
+https://docs.spring.io/spring-data/jpa/reference/repositories/projections.html
+A projection interface to retrieve a subset of attributes:
+interface NamesOnly {
+  String getFirstname();
+  String getLastname();
+}
+A repository using an interface based projection with a query method:
+interface PersonRepository extends Repository<Person, UUID> {
+  Collection<NamesOnly> findByLastname(String lastname);
+}
+
 https://www.baeldung.com/spring-data-jpa-query
 
 How to use multiple datasource/entitymanagerfactory in spring boot:
