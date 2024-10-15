@@ -306,6 +306,10 @@ public class AutoconfigurationApplication {
     //...
 }
 ----------------------------------------------------------------------------------------------------------------------------------------
+https://docs.spring.io/spring-boot/reference/web/servlet.html
+
+Spring Boot provides auto-configuration for Spring MVC that works well with most applications. It replaces the need for @EnableWebMvc and the two(ie @SpringBootApplication and @EnableWebMvc) cannot be used together.
+----------------------------------------------------------------------------------------------------------------------------------------
 SEE: https://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/#getting-started-first-application-properties
 If you don't like application.properties as the configuration file name you can switch to another by specifying a spring.config.name environment property. You can also refer to an explicit location using the spring.config.location environment property (comma-separated list of directory locations, or file paths).
 
