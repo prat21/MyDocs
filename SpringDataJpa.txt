@@ -63,3 +63,5 @@ https://stackoverflow.com/questions/30337582/spring-boot-configure-and-use-two-d
 
 Pagination and Sorting:
 https://www.baeldung.com/spring-data-jpa-pagination-sorting
+By having it extend PagingAndSortingRepository, we get findAll(Pageable pageable) and findAll(Sort sort) methods for paging and sorting.
+Conversely, we could have chosen to extend JpaRepository instead, as it extends PagingAndSortingRepository too.
