@@ -1,0 +1,34 @@
+https://docs.spring.io/spring-boot/reference/actuator/endpoints.html
+
+An endpoint is considered to be available when it is both "enabled" and "exposed".
+
+By default, all endpoints except for shutdown are "enabled".
+
+If you prefer endpoint enablement to be opt-in rather than opt-out, set the management.endpoints.enabled-by-default property to false and use individual endpoint enabled properties to opt back in.
+management.endpoints.enabled-by-default=false
+management.endpoint.info.enabled=true
+
+By default, only the health endpoint is "exposed" over HTTP and JMX.
+To change which endpoints are exposed, use the following technology-specific include and exclude properties:
+management.endpoints.jmx.exposure.exclude
+management.endpoints.jmx.exposure.include: health
+management.endpoints.web.exposure.exclude
+management.endpoints.web.exposure.include: health
+
+The include property lists the IDs of the endpoints that are exposed. The exclude property lists the IDs of the endpoints that should not be exposed. The exclude property takes precedence over the include property. You can configure both the include and the exclude properties with a list of endpoint IDs.
+
+For example, to only expose the health and info endpoints over JMX, use the following property:
+management.endpoints.jmx.exposure.include=health,info
+
+https://www.baeldung.com/spring-boot-actuators#custom-endpoint (For custom endpoints)
+https://docs.spring.io/spring-boot/reference/actuator/endpoints.html#actuator.endpoints.health.writing-custom-health-indicators (custom health indicator)
+To provide custom health information, you can register Spring beans that implement the HealthIndicator interface.
+
+https://docs.spring.io/spring-boot/reference/actuator/endpoints.html#actuator.endpoints.info
+Whether an individual contributor is enabled is controlled by its management.info.<id>.enabled property.
+With no prerequisites to indicate that they should be enabled, the env, java, os, and process contributors are disabled by default. Each can be enabled by setting its management.info.<id>.enabled property to true.
+The build and git info contributors are enabled by default.
+
+https://www.baeldung.com/spring-boot-actuators#info-endpoint
+https://stackoverflow.com/questions/59556405/provide-spring-boot-git-and-build-information-via-actuator-info-endpoint-when-u
+Note: after adding the git info plugin, you have to do a maven build in order to generate the git.properties file in "/target/classes/git.properties" path and then have to restart the application for/info endpoint to pickup the git info.
