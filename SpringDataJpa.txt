@@ -1,19 +1,46 @@
+https://docs.spring.io/spring-data/jpa/reference/jpa.html
+
 Advantage of using spring data jpa(alongwith hibernate as a jpa provider) over spring+hibernate:
 Let's say you are using spring + hibernate for your application. Now you need to have dao interface and implementation where you will be writing crud operation using SessionFactory of hibernate. Let say you are writing dao class for Employee class, tomorrow in your application you might need to write similar crud operation for any other entity. So there is lot of boilerplate code we can see here.
 Now Spring data jpa allow us to define dao interfaces by extending its repositories(crudrepository, jparepository) so it provide you dao implementation at runtime. You don't need to write dao implementation anymore.Thats how spring data jpa makes your life easy.
 So, basically spring jpa is another layer of abstraction on top of hibernate to avoid boilerplate code.
 
-https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.core-concepts
-https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.query-methods
-https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.definition-tuning
-The intermediate repository interface is annotated with @NoRepositoryBean.
-Make sure you add that annotation to all repository interfaces for which Spring Data should not create instances at runtime.
-https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.query-methods.query-creation
-https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.limit-query-result
-https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.java-config
-https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.entity-persistence
-https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods.query-creation
-https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods.named-queries
+If you do not want to extend Spring Data interfaces, you can also annotate your repository interface with @RepositoryDefinition.
+
+If many repositories in your application should have the same set of methods you can define your own base interface to inherit from. Such an interface must be annotated with @NoRepositoryBean. This prevents Spring Data to try to create an instance of it directly and failing because it can’t determine the entity for that repository, since it still contains a generic type variable.
+
+https://docs.spring.io/spring-data/jpa/reference/jpa/entity-persistence.html#jpa.entity-persistence.saving-entities
+Saving an entity can be performed with the CrudRepository.save(…) method. It persists or merges the given entity by using the underlying JPA EntityManager. If the entity has not yet been persisted, Spring Data JPA saves the entity with a call to the entityManager.persist(…) method. Otherwise, it calls the entityManager.merge(…) method.
+
+https://docs.spring.io/spring-data/jpa/reference/repositories/query-methods-details.html#repositories.collections-and-iterables.streamable
+You can use Streamable as alternative to Iterable or any collection type. It provides convenience methods to access a non-parallel Stream (missing from Iterable) and the ability to directly ….filter(…) and ….map(…) over the elements and concatenate the Streamable to others.
+
+https://docs.spring.io/spring-data/jpa/reference/repositories/query-methods-details.html#repositories.query-streaming
+You can process the results of query methods incrementally by using a Java 8 Stream<T> as the return type.
+@Query("select u from User u")
+Stream<User> findAllByCustomQueryAndStream();
+
+https://docs.spring.io/spring-data/jpa/reference/repositories/query-methods-details.html#repositories.query-async
+You can run repository queries asynchronously by using Spring’s asynchronous method running capability. This means the method returns immediately upon invocation while the actual query occurs in a task that has been submitted to a Spring TaskExecutor. Asynchronous queries differ from reactive queries and should not be mixed.
+@Async
+CompletableFuture<User> findOneByFirstname(String firstname);
+
+https://docs.spring.io/spring-data/jpa/reference/repositories/query-methods-details.html#repositories.special-parameters
+A Page knows about the total number of elements and pages available. It does so by the infrastructure triggering a count query to calculate the overall number. As this might be expensive (depending on the store used), you can instead return a Slice. A Slice knows only about whether a next Slice is available, which might be sufficient when walking through a larger result set.
+
+https://docs.spring.io/spring-data/jpa/reference/jpa/query-methods.html#jpa.query-methods.at-query
+Using named queries to declare queries for entities is a valid approach and works fine for a small number of queries. As the queries themselves are tied to the Java method that runs them, you can actually bind them directly by using the Spring Data JPA @Query annotation rather than annotating them to the domain class.
+Queries annotated to the query method take precedence over queries defined using @NamedQuery.
+
+https://docs.spring.io/spring-data/jpa/reference/jpa/query-methods.html#jpa.named-parameters
+You can use @Param annotation to give a method parameter a concrete name and bind the name in the query, as shown in the following example:
+public interface UserRepository extends JpaRepository<User, Long> {
+
+  @Query("select u from User u where u.firstname = :firstname or u.lastname = :lastname")
+  User findByLastnameOrFirstname(@Param("lastname") String lastname,
+                                 @Param("firstname") String firstname);
+}
+
 https://www.baeldung.com/spring-data-jpa-query
 
 How to use multiple datasource/entitymanagerfactory in spring boot:
