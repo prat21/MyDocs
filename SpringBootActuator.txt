@@ -31,4 +31,4 @@ The build and git info contributors are enabled by default.
 
 https://www.baeldung.com/spring-boot-actuators#info-endpoint
 https://stackoverflow.com/questions/59556405/provide-spring-boot-git-and-build-information-via-actuator-info-endpoint-when-u
-Note: after adding the git info plugin, you have to do a maven build in order to generate the git.properties file in "/target/classes/git.properties" path and then have to restart the application for/info endpoint to pickup the git info.
+Note: after adding the git info plugin, you have to do a maven build in order to generate the git.properties file in "/target/classes/git.properties" path and then have to restart the application for/info endpoint to pickup the git info. Sample implementation is in "mySpringBoot" project.
