@@ -1,0 +1,17 @@
+https://resilience4j.readme.io/docs/getting-started
+Note: Check the left hand side menu and go through the topics.
+
+https://resilience4j.readme.io/docs/getting-started-3
+It's important to remember that a fallback method should be placed in the same class and must have the same method signature with just ONE extra target exception parameter.
+The Resilience4j Aspects order is the following:
+Retry ( CircuitBreaker ( RateLimiter ( TimeLimiter ( Bulkhead ( Function ) ) ) ) )
+so Retry is applied at the end (if needed).
+
+https://resilience4j.readme.io/docs/getting-started-3#health-endpoint (Check this)
+
+https://www.baeldung.com/spring-boot-resilience4j
+We’ll need the "resilience4j-spring-boot2" and "spring-boot-starter-aop" and "spring-boot-started-actuator" dependencies in order to use the features from the Resilience-4j library using annotations in Spring Boot application.
+
+Helpful youtube tutorials:
+https://www.youtube.com/watch?v=Z_viIJSGXJw&list=PLq3uEqRnr_2GlhVSqltfLtpO8GF4VIICY&index=1
+https://www.youtube.com/watch?v=LefFKbIFyjQ&list=PL4TnYdea-xTLGklgQfWW8ZgpQXm8-FOHt&index=1
