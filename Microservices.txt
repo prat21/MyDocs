@@ -1,0 +1,16 @@
+Difference between SOA and microservice:
+https://www.youtube.com/watch?v=kq_0goMjKOs&list=PLqq-6Pq4lTTZSKAFG6aCDVDP86Qx4lNas&index=4
+
+https://www.crowdstrike.com/en-us/cybersecurity-101/cloud-security/soa-vs-microservices/#:~:text=The%20main%20difference%20between%20SOA,individual%20services%20that%20function%20independently.
+1. The main difference between SOA and microservices has to do with the architecture scope. In an SOA model, services or modules are shared and reused enterprise-wide, whereas a microservice architecture is built on individual services that function independently. In other words, SOA has an enterprise scope, while microservices has an application scope.
+2. In an SOA, services are organized and coordinated through a common communication channel called an enterprise service bus (ESB). Since all communication is centralized within the ESB, this introduces the risk of a "single point of failure" for all services. To avoid this issue and maintain independent operation, microservices communicate via API.
+Note: An ESB is single point of communication like JMS or AMQP so if the JMS server fails then the entire communication fails(https://www.mulesoft.com/resources/esb/what-esb)(https://aws.amazon.com/what-is/enterprise-service-bus/).
+
+https://aws.amazon.com/compare/the-difference-between-soa-microservices/
+1. While each SOA service is a full business capability, each microservice is a much smaller software component that specializes in a single task only.
+------------------------------------------------------------------------------------------------------------------
+What is an ESB:
+https://www.ibm.com/topics/esb
+1. It is possible to implement a SOA without an ESB architecture, but this would be equivalent to just having a bunch of services. Each application owner would need to directly connect to any service it needs and perform the necessary data transformations to meet each of the service interfaces. This is a lot of work.
+2. A centralized ESB offers the potential to standardize—and dramatically simplify—communication, messaging, and integration between services across the enterprise. Hardware and software costs can be shared, provisioning the servers as needed for the combined usage, providing a scalable centralized solution.
+Software applications simply connect (‘talk’) to the ESB and leave it to the ESB to transform the protocols, route the messages, and transform into the data formats as required providing the interoperability to get the transactions executed.
