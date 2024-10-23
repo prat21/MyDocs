@@ -767,7 +767,7 @@ class OverloadingCalculation1{
   
   public static void main(String args[]){  
   OverloadingCalculation1 obj=new OverloadingCalculation1();  
-  obj.sum(20,20);//now second int literal will be promoted to long, no complie time error
+  obj.sum(20,20);//now second int literal will be promoted to long, no compile time error
   obj.sum(20,20,20);  
   
   }  
