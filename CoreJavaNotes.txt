@@ -619,8 +619,8 @@ https://www.geeksforgeeks.org/differences-jdk-jre-jvm/
 
 ------------------------------------------------------------------------------------------------
 Difference between compiler and interpreter
-https://www.programiz.com/article/difference-compiler-interpreter
 https://www.guru99.com/difference-compiler-vs-interpreter.html
+Compiled code run faster. Interpreted code run slower.
 https://www.interviewbit.com/blog/difference-between-compiler-and-interpreter/ (Has good comparison of interpreter and compilers)
 https://www.javatpoint.com/is-java-interpreted-or-compiled
 1. Write Java code and save the file with .java
@@ -634,7 +634,14 @@ It is the JVM that is built and customized for each platform that supports Java,
 ------------------------------------------------------------------------------------------------
 JIT Compiler
 https://stackoverflow.com/questions/95635/what-does-a-just-in-time-jit-compiler-do
+289
 
+In the beginning, a compiler was responsible for turning a high-level language (defined as higher level than assembler) into object code (machine instructions), which would then be linked (by a linker) into an executable.
+
+At one point in the evolution of languages, compilers would compile a high-level language into pseudo-code, which would then be interpreted (by an interpreter) to run your program. This eliminated the object code and executables, and allowed these languages to be portable to multiple operating systems and hardware platforms. Pascal (which compiled to P-Code) was one of the first; Java and C# are more recent examples. Eventually the term P-Code was replaced with bytecode, since most of the pseudo-operations are a byte long.
+Note: Basically bytecode is nothing but pseudocode which is interpreted by platform dependent JVM.
+
+A Just-In-Time (JIT) compiler is a feature of the run-time interpreter, that instead of interpreting bytecode every time a method is invoked, will compile the bytecode into the machine code instructions of the running machine, and then invoke this object code instead. Ideally the efficiency of running object code will overcome the inefficiency of recompiling the program every time it runs.
 ------------------------------------------------------------------------------------------------
 Can a constructor be made final?
 
