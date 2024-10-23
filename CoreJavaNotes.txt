@@ -592,6 +592,7 @@ For example, a protected instance method in the superclass can be made public, b
 In a subclass, you can overload the methods inherited from the superclass.
 Such overloaded methods neither hide nor override the superclass instance methods—they are new methods, unique to the subclass.
 https://docs.oracle.com/javase/tutorial/java/IandI/super.html
+Note: If a constructor does not explicitly invoke a superclass constructor, the Java compiler automatically inserts a call to the no-argument constructor of the superclass. If the super class does not have a no-argument constructor, you will get a compile-time error.
 https://docs.oracle.com/javase/tutorial/java/IandI/nogrow.html
 
 ------------------------------------------------------------------------------------------------
