@@ -968,7 +968,7 @@ SOLID prinicple:
 https://www.baeldung.com/solid-principles
 https://www.baeldung.com/java-single-responsibility-principle
 https://www.baeldung.com/java-open-closed-principle
-https://www.baeldung.com/java-liskov-substitution-principle (Has good example of both OCP and Liskov prinicipal. Use this as example.)
+https://www.baeldung.com/java-liskov-substitution-principle (Has good example of both OCP and Liskov principal. Use this as example.)
 The BankingAppWithdrawalService no longer depends on concrete account classes. Because it now depends only on the abstract class, it need not be changed when a new account type is introduced.
 Consequently, the BankingAppWithdrawalService is open for the extension with new account types, but closed for modification, in that the new types don’t require it to change in order to integrate.
 For the Open/Closed Principle to work well, all subtypes must be substitutable for their supertype without ever having to modify the client code. Adhering to the Liskov Substitution Principle ensures this substitutability.
@@ -988,7 +988,8 @@ https://stackify.com/solid-design-liskov-substitution-principle/#:~:text=The%20L
 ------------------------------------------------------------------------------------------------
 Since java 9, interface can have private methods.
 Java 9 introduced modular system.
-https://www.linkedin.com/learning/advanced-java-programming-2/understanding-modules-in-java?dApp=53239054&leis=LAA&resume=false&u=2113185
+https://www.youtube.com/watch?v=5xDoo-PcZ7g&list=PLsyeobzWxl7qjvpYOxlLYYQF4QbQRTwTF (Telusko)
+https://www.youtube.com/watch?v=UqnwQp1uHuY (See up until "New Abstraction" segment in the seek bar)
 https://www.javatpoint.com/java-9-features
 https://www.javatpoint.com/java-9-try-with-resources
 https://www.javatpoint.com/java-9-anonymous-classes
