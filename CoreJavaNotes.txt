@@ -987,24 +987,38 @@ https://stackify.com/solid-design-liskov-substitution-principle/#:~:text=The%20L
 
 ------------------------------------------------------------------------------------------------
 Since java 9, interface can have private methods.
+Java 9 introduced java shell REPL tool (jshell).
 Java 9 introduced modular system.
 https://www.youtube.com/watch?v=5xDoo-PcZ7g&list=PLsyeobzWxl7qjvpYOxlLYYQF4QbQRTwTF (Telusko)
 https://www.youtube.com/watch?v=UqnwQp1uHuY (See up until "New Abstraction" segment in the seek bar)
+https://www.oracle.com/in/corporate/features/understanding-java-9-modules.html (See "What Is a Module?" and "Goals")
+https://www.baeldung.com/java-modularity (Optional read)
 https://www.javatpoint.com/java-9-features
 https://www.javatpoint.com/java-9-try-with-resources
 https://www.javatpoint.com/java-9-anonymous-classes
 https://www.javatpoint.com/java-9-factory-methods
+Difference between Arrays.asList() and List.of():
+The method asList() returns a fixed-size list. Therefore, adding and removing new elements throws an UnsupportedOperationException, although the list returned by Arrays.asList() is mutable. That is, we can change the individual elements of the list. Also, We should note that the list doesn’t create a copy of the input array. Instead, it wraps the original array with the List interface. Therefore, changes to the array reflect on the list too.
+In contrast to Arrays.asList(), Java 9 introduced a more convenient method, List.of(). This creates instances of unmodifiable List objects. The main difference from Arrays.asList() is that List.of() returns an immutable list that is a copy of the provided input array. For this reason, changes to the original array aren’t reflected on the returned list.
 ------------------------------------------------------------------------------------------------
 Java 10 new features:
 https://www.baeldung.com/java-10-overview
+1. List, Map, Set now has copyOf() method which returns unmodifiable copy.
+2. java.util.stream.Collectors get additional methods to collect a Stream into unmodifiable List, Map or Set. Example: collect(Collectors.unmodifiableList()).
+
 https://www.baeldung.com/java-10-local-variable-type-inference
 This feature is available only for local variables with the initializer.
 There is no runtime overhead in using var nor does it make Java a dynamically typed language. The type of the variable is still inferred at compile time and cannot be changed later.
 https://www.baeldung.com/java-10-overview#time-based-release-versioning
 ------------------------------------------------------------------------------------------------
 Java 11 new features:
-A major change in this version is that we don’t need to compile the Java source files with javac explicitly anymore. Instead, we can directly run the file using the java command.
-Local-Variable Syntax for Lambda Parameters.
+1. A major change in this version is that we don’t need to compile the Java source files with javac explicitly anymore. Instead, we can directly run the file using the java command.
+2. Local-Variable Syntax for Lambda Parameters.
+3. Not Predicate
+4. Collection toArray() method.
+5. Http client.
+"The new HTTP client from the java.net.http package was introduced in Java 9. It has now become a standard feature in Java 11."
+
 https://howtodoinjava.com/java11/features-enhancements/#4-collection-toarrayintfunction
 https://www.baeldung.com/java-11-new-features
 ------------------------------------------------------------------------------------------------
