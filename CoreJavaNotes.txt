@@ -1274,16 +1274,24 @@ public class Runtime1{
 ------------------------------------------------------------------------------------------------
 Serialization:
 
-https://www.javatpoint.com/serialization-in-java
 https://www.baeldung.com/java-serialization
+https://www.oracle.com/technical-resources/articles/java/serializationapi.html
+The class file must be accessible from the system in which the restoration occurs(ie java class file should be present). In other words, the object's class file and methods are not saved; only the object's state is saved.
+Serialization does not care about access modifiers such as private -- all nontransient fields are considered part of an object's persistent state and are eligible for persistence.
+See: "Customize the Default Protocol" section
+Use of custom serialization: Encryption could be added to the output and decryption to the input. They could be used to add extra data to the stream, perhaps a company versioning code. They can be used to stop the serialization of child class whose parent class implements serialization, by throwing the NotSerializableException from overridden writeObject() and readObject() methods.
+See: "Caching Objects in the Stream" section
 
 Static fields are not serializable.
 See NotSerializableException and InvalidClassException and SerialVersionUID.
 https://www.baeldung.com/java-serial-version-uid
 
+
 ------------------------------------------------------------------------------------------------
 Externalizable in java
-The Externalizable interface provides the facility of writing the state of an object into a byte stream in compress format. It is not a marker interface.
+https://www.oracle.com/technical-resources/articles/java/serializationapi.html
+See: "Create Your Own Protocol: the Externalizable Interface" section
+It is not a marker interface.
 
 The Externalizable interface provides two methods:
 
