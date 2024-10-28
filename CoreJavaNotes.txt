@@ -1147,6 +1147,51 @@ Anonymous Inner classes:
 https://www.geeksforgeeks.org/anonymous-inner-class-java/
 https://docs.oracle.com/javase/tutorial/java/javaOO/anonymousclasses.html
 
+
+public class AnonymousClassTest {
+    public static void main(String[] args) {
+        OuterClass3 outer = new OuterClass3();
+        outer.test();
+    }
+}
+
+interface AnonymousInter{
+    void print();
+}
+
+class OuterClass3 {
+    String outerString = "Outer String";
+
+    private String test2(){
+        return "Instance method";
+    }
+
+    public void test(){
+        String innerString = "Inner String";
+        String shadowTest = "Shadow test";
+        // Uncomment this line to see the error.
+        // Local variable has to be final or effective final to be accessed from anonymous inner class.
+        //innerString = "";
+        AnonymousInter ai = new AnonymousInter() {
+            String shadowTest = "Inner shadow test";
+
+            @Override
+            public void print() {
+                // Accessing local(method) and instance variable
+                System.out.printf("Inside anonymous implementation: %s %s", innerString, outerString);
+                System.out.println();
+                // Accessing instance method
+                System.out.printf("Accessing instance method from anonymous class: %s", test2());
+                System.out.println();
+                // We can re-declare the variables inside anonymous class. This will shadow the original variable.
+                System.out.printf("Accessing shadow variable: %s", shadowTest);
+            }
+        };
+
+        ai.print();
+    }
+}
+
 ------------------------------------------------------------------------------------------------
 
 Static Inner Class:
