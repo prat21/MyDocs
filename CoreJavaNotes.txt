@@ -998,8 +998,8 @@ https://www.javatpoint.com/java-9-try-with-resources
 https://www.javatpoint.com/java-9-anonymous-classes
 https://www.javatpoint.com/java-9-factory-methods
 Difference between Arrays.asList() and List.of():
-The method asList() returns a fixed-size list. Therefore, adding and removing new elements throws an UnsupportedOperationException, although the list returned by Arrays.asList() is mutable. That is, we can change the individual elements of the list. Also, We should note that the list doesn’t create a copy of the input array. Instead, it wraps the original array with the List interface. Therefore, changes to the array reflect on the list too.
-In contrast to Arrays.asList(), Java 9 introduced a more convenient method, List.of(). This creates instances of unmodifiable List objects. The main difference from Arrays.asList() is that List.of() returns an immutable list that is a copy of the provided input array. For this reason, changes to the original array aren’t reflected on the returned list.
+Both Arrays.asList() and List.of() returns immutable lists, ie adding and removing new elements throws an UnsupportedOperationException, but individual elements of the list are modifiable.
+The main difference from Arrays.asList() is that List.of() returns an immutable list that is a copy of the provided input array. For this reason, changes to the original array aren’t reflected on the returned list. Whereas, Arrays.asList() doesn’t create a copy of the input array, instead it wraps the original array with the List interface. Therefore, changes to the array reflect on the list too.
 ------------------------------------------------------------------------------------------------
 Java 10 new features:
 https://www.baeldung.com/java-10-overview
@@ -1371,6 +1371,9 @@ Intercepting filter pattern
 Difference between put, post and patch:
 https://www.baeldung.com/cs/http-put-vs-patch
 https://www.quora.com/What-is-the-difference-between-PUT-POST-and-PATCH-for-RESTful-APIs
+
+Why patch is non-idempotent:
+https://medium.com/@pankaj_rawal/why-patch-is-considered-non-idempotent-1dfd4ca9a2
 ------------------------------------------------------------------------------------------------
 Java memory leak:
 https://www.baeldung.com/java-memory-leaks
@@ -1385,3 +1388,7 @@ https://www.baeldung.com/java-memory-management-interview-questions
 ------------------------------------------------------------------------------------------------
 Custom Exception:
 https://www.baeldung.com/java-new-custom-exception
+
+-----------------------------------------------------------------------------------------------
+Difference between ASCII and Base64 encoding and their utility:
+https://www.redhat.com/en/blog/base64-encoding#:~:text=ASCII%20uses%208%20bits%20to,up%20into%206%2Dbit%20chunks.
