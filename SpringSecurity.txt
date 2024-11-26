@@ -1,1 +1,34 @@
 Watch Java Brains.
+-------------------------------------------------------
+Check what is JWT in java brains.
+JWT is an authorization(and not authentication) mechanism, ie after the user has been authenticated using a proper authentication mechanism(example authentication using username/password where the repository of username/password maybe in-memory, database, ldap etc) a jwt token(similar to session token) is handed to the user as an authorization token which can be used in further calls to the server.
+-------------------------------------------------------
+https://docs.spring.io/spring-security/reference/servlet/oauth2/index.html#oauth2-overview
+-------------------------------------------------------
+https://docs.spring.io/spring-security/reference/servlet/oauth2/index.html#oauth2-client-access-protected-resources-current-user
+Unlike the previous example, notice that we do not need to tell Spring Security about the clientRegistrationId we’d like to use. This is because it can be derived from the currently logged in user.
+
+this.restClient.get()
+				.uri("http://localhost:8090/messages")
+				.attributes(clientRegistrationId("my-oauth2-client"))
+				.retrieve()
+				.body(Message[].class);
+Here "clientRegistrationId" is used to tell restclient which client credentials to use to fetch the access token as there can be multiple client credentials configured in a spring boot app.
+----------------------------------------------------------
+If using Spring Boot with no additional customizations, we can actually omit the SecurityFilterChain bean entirely.
+----------------------------------------------------------
+https://docs.spring.io/spring-security/reference/servlet/oauth2/client/core.html#oauth2Client-client-registration
+This link has useful explanation of the client-registration object params.
+----------------------------------------------------------
+https://docs.spring.io/spring-security/reference/servlet/oauth2/client/authorized-clients.html#oauth2-client-rest-client
+In authorization code flow,
+1) The resource owner authenticates to the authorization server.
+2) The authorization server sends an authorization code to the client.
+3) The client uses this auth code and sends it back, alongwith its client credentials(ie client id and secret), to the authorization server. In this way client authenticates itself.
+4) The authorization server then returns an access token to the client, which the client uses for accessing a protected resource in resource server.
+
+In Implicit Flow,
+The third step is omitted, hence bypassing the need for client verification. Hence it is unsecure.
+
+In Client credentials flow,
+The client directly requests access token from the authorization server with its client credentials. Since the client is the owner of the resource being requested.
