@@ -1,6 +1,6 @@
 Watch Java Brains.
+Especially JWT and OAuth part.
 -------------------------------------------------------
-Check what is JWT in java brains.
 JWT is an authorization(and not authentication) mechanism, ie after the user has been authenticated using a proper authentication mechanism(example authentication using username/password where the repository of username/password maybe in-memory, database, ldap etc) a jwt token(similar to session token) is handed to the user as an authorization token which can be used in further calls to the server.
 -------------------------------------------------------
 https://docs.spring.io/spring-security/reference/servlet/oauth2/index.html#oauth2-overview
@@ -21,6 +21,10 @@ https://docs.spring.io/spring-security/reference/servlet/oauth2/client/core.html
 This link has useful explanation of the client-registration object params.
 ----------------------------------------------------------
 https://docs.spring.io/spring-security/reference/servlet/oauth2/client/authorized-clients.html#oauth2-client-rest-client
+"If an existing OAuth2AccessToken is expired, it is refreshed (or renewed)"
+
+"The following example uses the default OAuth2AuthorizedClientManager to configure a RestClient capable of accessing protected resources by placing Bearer tokens in the Authorization header of each request"
+
 In authorization code flow,
 1) The resource owner authenticates to the authorization server.
 2) The authorization server sends an authorization code to the client.
@@ -32,3 +36,10 @@ The third step is omitted, hence bypassing the need for client verification. Hen
 
 In Client credentials flow,
 The client directly requests access token from the authorization server with its client credentials. Since the client is the owner of the resource being requested.
+--------------------------------------------------------------
+https://docs.spring.io/spring-security/reference/servlet/oauth2/client/authorized-clients.html#oauth2-client-rest-client-registration-id
+--------------------------------------------------------------
+https://docs.spring.io/spring-security/reference/servlet/oauth2/login/core.html#oauth2login-common-oauth2-provider
+CommonOAuth2Provider pre-defines a set of default client properties for a number of well known providers: Google, GitHub, Facebook, and Okta.
+For example, the authorization-uri, token-uri, and user-info-uri do not change often for a provider. Therefore, it makes sense to provide default values, to reduce the required configuration.
+As demonstrated previously, when we configured a Google client, only the client-id and client-secret properties are required.
