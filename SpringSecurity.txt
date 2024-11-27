@@ -1,5 +1,7 @@
 Watch Java Brains.
 Especially JWT and OAuth part.
+Note: The WebSecurityConfigurerAdapter is deprecated. Instead beans needs to registered(for example SecurityFilterChain).
+Please check https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter
 -------------------------------------------------------
 JWT is an authorization(and not authentication) mechanism, ie after the user has been authenticated using a proper authentication mechanism(example authentication using username/password where the repository of username/password maybe in-memory, database, ldap etc) a jwt token(similar to session token) is handed to the user as an authorization token which can be used in further calls to the server.
 -------------------------------------------------------
@@ -43,3 +45,35 @@ https://docs.spring.io/spring-security/reference/servlet/oauth2/login/core.html#
 CommonOAuth2Provider pre-defines a set of default client properties for a number of well known providers: Google, GitHub, Facebook, and Okta.
 For example, the authorization-uri, token-uri, and user-info-uri do not change often for a provider. Therefore, it makes sense to provide default values, to reduce the required configuration.
 As demonstrated previously, when we configured a Google client, only the client-id and client-secret properties are required.
+---------------------------------------------------------------
+https://docs.spring.io/spring-security/reference/servlet/authorization/authorize-http-requests.html
+By default, Spring Security requires that every request be authenticated. That said, any time you use an HttpSecurity instance, it’s necessary to declare your authorization rules.
+Whenever you have an HttpSecurity instance, you should at least do:
+http.authorizeHttpRequests((authorize) -> authorize.anyRequest().authenticated())
+----------------------------------------------------------------
+https://docs.spring.io/spring-security/reference/servlet/authorization/authorize-http-requests.html#authorizing-endpoints
+AuthorizationFilter processes these pairs in the order listed, applying only the first match to the request.
+@Bean
+public SecurityFilterChain web(HttpSecurity http) throws Exception {
+    http
+        .authorizeHttpRequests((authorize) -> authorize
+	    .requestMatchers("/endpoint").hasAuthority("USER")
+            .anyRequest().authenticated()
+        )
+        // ...
+
+    return http.build();
+}
+The way to read the above rules is "if the request is /endpoint, then require the USER authority; else, only require authentication".
+-----------------------------------------------------------------
+https://docs.spring.io/spring-security/reference/servlet/authorization/authorize-http-requests.html#match-requests
+Spring Security supports two languages for URI pattern-matching: Ant (as seen above) and Regular Expressions.
+You can also match rules by HTTP method. One place where this is handy is when authorizing by permissions granted, like being granted a read or write privilege.
+http
+    .authorizeHttpRequests((authorize) -> authorize
+        .requestMatchers(HttpMethod.GET).hasAuthority("read")
+        .requestMatchers(HttpMethod.POST).hasAuthority("write")
+        .anyRequest().denyAll()
+    )
+-----------------------------------------------------------------
+https://docs.spring.io/spring-security/reference/servlet/authorization/authorize-http-requests.html#authorize-requests
