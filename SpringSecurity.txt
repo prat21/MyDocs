@@ -77,3 +77,6 @@ http
     )
 -----------------------------------------------------------------
 https://docs.spring.io/spring-security/reference/servlet/authorization/authorize-http-requests.html#authorize-requests
+-----------------------------------------------------------------
+Sample projects for spring security:
+https://github.com/spring-projects/spring-security-samples
