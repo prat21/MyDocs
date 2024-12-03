@@ -1,5 +1,0 @@
-Check the udemy course
-----------------------------------------------------
-Tutorial 5:
-Explains why vmWare is expensive in terms of resources. Each VM has its own copy of OS, sometimes the same OS(ex: Linux). So it eats up space in the hard disk drive,because each VM have its own copy of OS say Linux, hence duplicating the OS in HDD.
-----------------------------------------------------
