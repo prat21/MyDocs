@@ -78,5 +78,12 @@ http
 -----------------------------------------------------------------
 https://docs.spring.io/spring-security/reference/servlet/authorization/authorize-http-requests.html#authorize-requests
 -----------------------------------------------------------------
+https://www.baeldung.com/spring-security-oauth-resource-server
+If we need to start it independently, then we can supply the jwk-set-uri property instead to point to the authorization server’s endpoint exposing public keys:
+
+https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/jwt.html#_startup_expectations
+Check the flow of how resource server works. Also check about "provider configuration".
+
+-----------------------------------------------------------------
 Sample projects for spring security:
 https://github.com/spring-projects/spring-security-samples
