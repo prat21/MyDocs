@@ -1,5 +1,5 @@
 Watch Java Brains.
-Especially JWT and OAuth part.
+Just watch JWT and OAuth part. Do not follow the coding videos. Just know the concept. Coding videos are outdated.
 Note: The WebSecurityConfigurerAdapter is deprecated. Instead beans needs to registered(for example SecurityFilterChain).
 Please check https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter
 -------------------------------------------------------
