@@ -1392,3 +1392,6 @@ https://www.baeldung.com/java-new-custom-exception
 -----------------------------------------------------------------------------------------------
 Difference between ASCII and Base64 encoding and their utility:
 https://www.redhat.com/en/blog/base64-encoding#:~:text=ASCII%20uses%208%20bits%20to,up%20into%206%2Dbit%20chunks.
+
+Why do we need base64 encoding:
+https://www.youtube.com/watch?v=MI0W6FdDjTY
