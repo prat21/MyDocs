@@ -1,0 +1,9 @@
+https://www.geeksforgeeks.org/transaction-isolation-levels-dbms/
+--------------------------------------------------------------------------------------
+https://medium.com/@bubu.tripathy/managing-concurrent-database-updates-eaf2fe161c48
+--------------------------------------------------------------------------------------
+REPEATABLE READ ISOLATION:
+https://www.postgresql.org/docs/current/transaction-iso.html#XACT-REPEATABLE-READ
+Note: Because a repeatable read transaction cannot modify or lock rows changed by other transactions after the repeatable read transaction began.
+
+https://www.youtube.com/watch?v=WjgbghMh50A
