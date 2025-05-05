@@ -458,14 +458,19 @@ https://cloud.google.com/kubernetes-engine/docs/concepts/cluster-autoscaler
 https://cloud.google.com/kubernetes-engine/docs/concepts/deployment
 https://cloud.google.com/kubernetes-engine/docs/how-to/scaling-apps#autoscaling-deployments
 https://cloud.google.com/kubernetes-engine/docs/concepts/service
+https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-autoscaler
 https://kubernetes.io/docs/concepts/services-networking/service/
+https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
+https://kubernetes.io/docs/concepts/services-networking/ingress/
 https://cloud.google.com/sdk/gcloud/reference/container/clusters/get-credentials
 https://cloud.google.com/stackdriver/docs/solutions/gke
 https://cloud.google.com/stackdriver/docs/solutions/gke/managing-logs
 Kubernetes containers collect logs for your workloads, written to STDOUT and STDERR.
 https://cloud.google.com/blog/products/management-tools/using-logging-your-apps-running-kubernetes-engine
 https://cloud.google.com/kubernetes-engine/docs/concepts/node-pools
+https://cloud.google.com/kubernetes-engine/docs/concepts/persistent-volumes
 Note: ClusterIP service creates a static common IP for the backend pods and clusterIP can only be accessed within the cluster and not externally.
+Container-native load balancing: https://cloud.google.com/kubernetes-engine/docs/concepts/container-native-load-balancing, https://cloud.google.com/kubernetes-engine/docs/how-to/container-native-load-balancing
 
 
 BigQuery:
