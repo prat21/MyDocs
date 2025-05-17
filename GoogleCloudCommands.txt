@@ -823,6 +823,19 @@ gcloud container clusters update [CLUSTER_NAME] \
   --zone=[ZONE]  \
   --enable-stackdriver-kubernetes
 
+https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-access-for-kubectl
+To view list of all clusters in kubeconfig:
+kubectl config view
+
+To view the current context(ie current cluster) against which kubectl is running:
+kubectl config current-context
+
+To authenticate the cluster (and create a kubeconfig entry). Also this can be used to switch context:
+gcloud container clusters get-credentials [CLUSTER-NAME] \
+  --location=[CONTROL_PLANE_LOCATION]
+
+Running commands against a specific cluster, run kubectl with flag --cluster=[CLUSTER_NAME]
+
 --------------------------------------------------------------------
 How to create managed load-balanced instance group:
 
