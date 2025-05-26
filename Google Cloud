@@ -587,6 +587,7 @@ Changing the default storage class of a bucket does not affect any of the object
 Archive Storage also has higher costs for data access and operations.
 https://cloud.google.com/storage/docs/domain-name-verification
 https://cloud.google.com/storage/docs/key-terms#geo-redundant
+https://cloud.google.com/storage/docs/access-control/lists#behavior-with-iam
 https://cloud.google.com/storage/docs/moving-buckets
 Moving data between locations incurs network usage costs.
 In addition, moving data between buckets may incur retrieval and early deletion fees,

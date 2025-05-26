@@ -489,7 +489,7 @@ To create health check:
 gcloud compute health-checks create http http-basic-check --port 80
 
 -------------------------------------------------------------------------
-Google Cloud Storage:
+Google Cloud Storage: [Replace gsutil with "gcloud storage"]
 
 To create a bucket:
 gsutil mb gs://BUCKET_NAME
