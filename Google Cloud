@@ -694,6 +694,7 @@ Note the IP address associated with the load balancer: for example, 30.90.80.100
 To point your domain to your load balancer, create an "A" record using your domain registration service.
 https://cloud.google.com/storage/docs/hosting-static-website-http
 To connect your domain to Cloud Storage, create a CNAME record through your domain registration service.
+https://cloud.google.com/storage/pricing-examples#early-delete
 
 Storage Transfer Service:
 https://cloud.google.com/storage-transfer/docs/overview
