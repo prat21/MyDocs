@@ -46,6 +46,8 @@ As a general rule, the default load factor (.75) offers a good tradeoff between 
 https://www.baeldung.com/java-hashmap#capacity-load-factor
 To avoid having many buckets with multiple values, the capacity is doubled if 75% (the load factor) of the buckets become non-empty. The default value for the load factor is 75%, and the default initial capacity is 16. Both can be set in the constructor.
 
+The keyset() method creates a set of keys of the hashmap backed by the map itself, ie any changes in the map is reflected in the keyset and vice-versa.
+
 3. How LinkedHashMap works?
 
 The LinkedHashMap class is very similar to HashMap in most aspects. However, the linked hash map is based on both hash table and linked list to enhance the functionality of hash map.
@@ -67,6 +69,10 @@ And so, building a Least Recently Used (LRU) cache is quite easy and practical w
 The difference with HashMap lies in what entails a structural modification. In access-ordered (in which access-order is the ordering mechanism) linked hash maps, merely calling the get API results in a structural modification. Alongside this, are operations like put and remove.
 
 Naturally, iteration over a view of the map does’t affect the order of iteration of the backing map; only explicit access operations on the map will affect the order.
+
+Iteration over collection views of LinkedHashMap also takes linear time O(n) similar to that of HashMap. On the flip side, LinkedHashMap‘s linear time performance during iteration is better than HashMap‘s linear time.
+
+This is because, for LinkedHashMap, n in O(n) is only the number of entries in the map regardless of the capacity. Whereas, for HashMap, n is capacity and the size summed up, O(size+capacity).
 
 http://www.baeldung.com/java-linked-hashmap
 
