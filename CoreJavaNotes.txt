@@ -282,6 +282,43 @@ https://docs.oracle.com/javase/8/docs/api/java/lang/ClassLoader.html
 Class objects for array classes are not created by class loaders, but are created automatically as required by the Java runtime. The class loader for an array class, as returned by Class.getClassLoader() is the same as the class loader for its element type; if the element type is a primitive type, then the array class has no class loader.
 
 Check the documentation in the source code of Classloader.java.
+
+Check the doc of "loadClass(String name, boolean resolve)" method in Classloader.java. It explains the steps on how a class is loaded in memory.
+"Loads the class with the specified binary name. The default implementation of this method searches for classes in the following order:
+1. Invoke findLoadedClass(String) to check if the class has already been loaded.
+2. Invoke the loadClass method on the parent class loader. If the parent is null the class loader built into the virtual machine is used, instead.
+3. Invoke the findClass(String) method to find the class."
+
+CHATGPT:
+What is a ClassLoader?
+In Java, a ClassLoader is a part of the Java Runtime Environment (JRE) responsible for loading classes into memory at runtime.
+Java programs are compiled into bytecode, which is stored in .class files. The ClassLoader loads these .class files when they're needed by the Java Virtual Machine (JVM).
+
+🔧 Key Responsibilities:
+1. Loading classes from the file system, network, or other sources.
+2. Defining the namespace for classes (i.e., separating classes loaded by different class loaders).
+3. Delegation – ClassLoaders typically follow a parent-delegation model to avoid class conflicts and ensure consistency.
+
+🔄 Types of ClassLoaders in Java:
+ClassLoader	Description
+1. Bootstrap ClassLoader:	Loads core Java classes (from rt.jar, e.g., java.lang.*). Part of JVM, written in native code.
+2. Extension ClassLoader:	Loads classes from JAVA_HOME/lib/ext or any extension directories.
+3. System/Application ClassLoader:	Loads classes from the application classpath (e.g., your own .class files or libraries).
+4. Custom ClassLoaders:	You can create your own by extending ClassLoader. Useful for modular applications or plugin systems.
+
+🧠 How it Works: Parent Delegation Model
+When a ClassLoader is asked to load a class:
+1. It first delegates the request to its parent.
+2. If the parent cannot find the class, the current ClassLoader attempts to load it.
+This ensures:
+1. Core Java classes aren’t overridden.
+2. Class consistency across the JVM.
+
+Use Cases for Custom ClassLoaders:
+1. Dynamic loading of plugins or modules.
+2. Hot reloading classes at runtime.
+3. Isolation of different components (e.g., in app servers or IDEs).
+
 -----------------------------------------------------------------------------------------------------------------
 Ways to create objects in java:
 https://www.geeksforgeeks.org/different-ways-create-objects-java/
