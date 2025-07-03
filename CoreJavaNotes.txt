@@ -48,6 +48,8 @@ To avoid having many buckets with multiple values, the capacity is doubled if 75
 
 The keyset() method creates a set of keys of the hashmap backed by the map itself, ie any changes in the map is reflected in the keyset and vice-versa.
 
+One of the practical example of abstract class is HashIterator in HashMap(check source code of hashmap). The HashIterator is extended by KeyIterator,ValueIterator and EntryIterator.
+
 3. How LinkedHashMap works?
 
 The LinkedHashMap class is very similar to HashMap in most aspects. However, the linked hash map is based on both hash table and linked list to enhance the functionality of hash map.
@@ -269,12 +271,17 @@ https://stackoverflow.com/questions/10977992/difference-between-iterator-and-lis
 https://docs.oracle.com/javase/7/docs/api/java/util/ListIterator.html
 
 -----------------------------------------------------------------------------------------------------------------
-
 Classloader:
 
 http://www.baeldung.com/java-classloaders
 
 https://www.journaldev.com/349/java-classloader
+
+https://docs.oracle.com/javase/8/docs/api/java/lang/ClassLoader.html
+
+Class objects for array classes are not created by class loaders, but are created automatically as required by the Java runtime. The class loader for an array class, as returned by Class.getClassLoader() is the same as the class loader for its element type; if the element type is a primitive type, then the array class has no class loader.
+
+Check the documentation in the source code of Classloader.java.
 -----------------------------------------------------------------------------------------------------------------
 Ways to create objects in java:
 https://www.geeksforgeeks.org/different-ways-create-objects-java/
