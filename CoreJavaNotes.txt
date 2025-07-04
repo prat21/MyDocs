@@ -289,7 +289,7 @@ Check the doc of "loadClass(String name, boolean resolve)" method in Classloader
 2. Invoke the loadClass method on the parent class loader. If the parent is null the class loader built into the virtual machine is used, instead.
 3. Invoke the findClass(String) method to find the class."
 
-CHATGPT:
+CHATGPT for what is classloader:
 What is a ClassLoader?
 In Java, a ClassLoader is a part of the Java Runtime Environment (JRE) responsible for loading classes into memory at runtime.
 Java programs are compiled into bytecode, which is stored in .class files. The ClassLoader loads these .class files when they're needed by the Java Virtual Machine (JVM).
@@ -310,14 +310,28 @@ ClassLoader	Description
 When a ClassLoader is asked to load a class:
 1. It first delegates the request to its parent.
 2. If the parent cannot find the class, the current ClassLoader attempts to load it.
-This ensures:
-1. Core Java classes aren’t overridden.
-2. Class consistency across the JVM.
+Why:
+1. Security
+Prevents malicious or accidental overriding of core Java classes (like java.lang.String) by custom classes.
+For example, a user-defined class named java.lang.String won't be loaded because the Bootstrap ClassLoader (the top parent) loads Java core libraries first.
+
+2. Avoids Duplication
+Ensures classes are loaded only once in the JVM by the most appropriate loader.
+Prevents ClassCastException and ClassNotFoundException due to multiple copies of the same class.
+
+3. Maintains Consistency
+Core Java classes are always loaded by trusted system class loaders.
+Ensures uniform behavior across all Java applications.
+
+4. Performance Optimization
+Delegating to a parent avoids redundant disk or network lookups if a class has already been loaded higher up the chain.
 
 Use Cases for Custom ClassLoaders:
 1. Dynamic loading of plugins or modules.
 2. Hot reloading classes at runtime.
 3. Isolation of different components (e.g., in app servers or IDEs).
+
+Check CHATGPT on Custom classloader example:
 
 -----------------------------------------------------------------------------------------------------------------
 Ways to create objects in java:
@@ -334,6 +348,8 @@ For cloning and deserialization, JVM does not use constructor.
  https://www.journaldev.com/1034/java-blockingqueue-example
  
 A BlockingQueue may be capacity bounded. At any given time it may have a remainingCapacity beyond which no additional elements can be put without blocking. A BlockingQueue without any intrinsic capacity constraints always reports a remaining capacity of Integer.MAX_VALUE.
+
+Check the implementation logic of ArrayBlockingQueue, especially put and take methods. Also check the reentrantLock and Condition objects.
  
 -----------------------------------------------------------------------------------------------------------------
  
