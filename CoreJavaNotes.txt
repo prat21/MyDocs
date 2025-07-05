@@ -360,23 +360,38 @@ Check the implementation logic of ArrayBlockingQueue, especially put and take me
 
 From Java 8, interfaces can have default and static methods with concrete implementations.From Java 9, interfaces can also have private methods.
 Variables declared in an interface are by default public, static, and final (constants).
+
+One of the practical example of abstract class is HashIterator in HashMap(check source code of hashmap). The HashIterator is extended by KeyIterator,ValueIterator and EntryIterator.
+
+Look in ChatGPT as well.
  
 -----------------------------------------------------------------------------------------------------------------
 Types of memory space allocated in java:
 https://www.baeldung.com/java-stack-heap
 https://www.geeksforgeeks.org/how-many-types-of-memory-areas-are-allocated-by-jvm/
+
+Note: The "method area" is same as permgen/metaspace.
+Method Area (MetaSpace in Java 8+)
+1. Purpose: Stores class metadata, static variables, method bytecode, etc.
+2. Was part of PermGen in Java ≤7, replaced by MetaSpace in Java 8.
+3. Shared across all threads.
+
+Check in ChatGPT for summary.
 -----------------------------------------------------------------------------------------------------------------
 Garbage Collection in Java:
 
 https://www.geeksforgeeks.org/garbage-collection-java/
+1. finalize() method is deprecated since Java 9 because it is unpredictable and can cause performance issues.
+2. Alternatives like try-with-resources or explicit cleanup methods are preferred.
+3. The garbage collector calls finalize() at most once per object.
+4. Exceptions thrown in finalize() are ignored.
 
 Island of isolation:
-
 https://www.geeksforgeeks.org/island-of-isolation-in-java/
 
 Garbage Collection Process:
-
 https://www.oracle.com/webfolder/technetwork/tutorials/obe/java/gc01/index.html (See "Describing Garbage Collection" and "The Generational Garbage Collection Process")
+(Also check the JVM architecture)
 
 "The Permanent generation contains metadata required by the JVM to describe the classes and methods used in the application. The permanent generation is populated by the JVM at runtime based on classes in use by the application. In addition, Java SE library classes and methods may be stored here."
 
@@ -385,12 +400,17 @@ https://www.baeldung.com/java-string-immutable
 https://www.baeldung.com/java-string-interview-questions
 https://www.baeldung.com/java-9-compact-string
 
+https://docs.oracle.com/javase/8/docs/technotes/guides/vm/enhancements-7.html
+Area: HotSpot
+Standard/Platform: JDK 7
+Synopsis: In JDK 7, interned strings are no longer allocated in the permanent generation of the Java heap, but are instead allocated in the main part of the Java heap (known as the young and old generations), along with the other objects created by the application. This change will result in more data residing in the main Java heap, and lessw data in the permanent generation, and thus may require heap sizes to be adjusted. Most applications will see only relatively small differences in heap usage due to this change, but larger applications that load many classes or make heavy use of the String.intern() method will see more significant differences.
+RFE: 6962931
+
 Before Java 7, the JVM placed the Java String Pool in the PermGen space, which has a fixed size — it can’t be expanded at runtime and is not eligible for garbage collection.
 
 The risk of interning Strings in the PermGen (instead of the Heap) is that we can get an OutOfMemory error from the JVM if we intern too many Strings.
 
-From Java 7 onwards, the Java String Pool is stored in the Heap space, which is garbage collected by the JVM. The advantage of this approach is the reduced risk of OutOfMemory error because unreferenced Strings will be removed from the pool, thereby releasing memory.
-
+From Java 7 onwards, the Java String Pool is stored in the main heap space(not in permgen or metaspace), which is garbage collected by the JVM. The advantage of this approach is the reduced risk of OutOfMemory error because unreferenced Strings will be removed from the pool, thereby releasing memory.
 
 -----------------------------------------------------------------------------------------------------------------
 
@@ -421,6 +441,9 @@ https://www.geeksforgeeks.org/jdbc-drivers/
 Q: Why we use Class.forName() while connecting to a database?
 A: https://stackoverflow.com/questions/20078586/why-we-use-class-forname-oracle-jdbc-driver-oracledriver-while-connecting-to
 
+Q: Difference between class.forname and new keyword?
+A: https://stackoverflow.com/questions/4612386/what-is-the-difference-between-the-new-operator-and-class-newinstance
+Also check chatGPT.
 
 Java Database Connectivity with 5 Steps:
 
@@ -1449,6 +1472,8 @@ https://www.baeldung.com/java-memory-leaks
 PermGen vs MetaSpace:
 https://www.baeldung.com/java-permgen-metaspace
 Starting with Java 8, the Metaspace replaces the PermGen bringing some substantial changes.
+Check ChatGPT.
+https://chatgpt.com/c/6868bd96-fe4c-8005-9b83-0e9d13b0a6a9 (See archived chats)
 
 Java memory management:
 https://www.linkedin.com/learning/java-memory-management-values-and-references/make-beautiful-stack-overflow-errors?dApp=53239054&leis=LAA&resume=false&u=2113185
