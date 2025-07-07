@@ -390,8 +390,15 @@ Island of isolation:
 https://www.geeksforgeeks.org/island-of-isolation-in-java/
 
 Garbage Collection Process:
-https://www.oracle.com/webfolder/technetwork/tutorials/obe/java/gc01/index.html (See "Describing Garbage Collection" and "The Generational Garbage Collection Process")
-(Also check the JVM architecture)
+1. https://www.oracle.com/webfolder/technetwork/tutorials/obe/java/gc01/index.html
+(See "Describing Garbage Collection" and "The Generational Garbage Collection Process")
+(Also check the JVM architecture, "Performance Basics" and "Java Garbage Collectors")
+"Performance Basics" explains latency and throughput.
+Basically the lower the GC pause, the lower is the latency. High GC pauses(for example Serial and Parallel GCs) means high latency.
+Throughput is measured by the time spent doing garbage collection versus the time spent outside of garbage collection, referred to as application time. Parallel GC is called throughput GC because it takes much less time to do garbage collection(during GC pauses) since it uses multiple threads.
+2. Also See: https://www.youtube.com/watch?v=5wkzEy_BXdA (It has good explanation of garbage collectors)
+3. https://docs.oracle.com/en/java/javase/21/gctuning/parallel-collector1.html
+4. https://www.baeldung.com/jvm-garbage-collectors
 
 "The Permanent generation contains metadata required by the JVM to describe the classes and methods used in the application. The permanent generation is populated by the JVM at runtime based on classes in use by the application. In addition, Java SE library classes and methods may be stored here."
 
