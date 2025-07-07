@@ -400,6 +400,38 @@ Throughput is measured by the time spent doing garbage collection versus the tim
 3. https://docs.oracle.com/en/java/javase/21/gctuning/parallel-collector1.html
 4. https://www.baeldung.com/jvm-garbage-collectors
 
+Garbage Collectors:
+1. G1 garbage collector:
+Some operations are always performed in stop-the-world pauses to improve throughput. Other operations that would take more time with the application stopped such as whole-heap operations like global marking are performed in parallel and concurrently with the application.
+
+2. Z garbage collector:
+The Z garbage collector is a scalable, low latency garbage collector. ZGC performs all expensive work concurrently, without stopping the execution of application threads for more than a millisecond.
+ZGC provides max pause times under millisecond, but at the cost of same throughput. It is intended for applications, which required low latency. Pause times are independent of heap size that is being used. ZGC works well for heap sizes from a few hundred megabytes to 16TB.
+
+GC Command line options:
+The minimum and maximum heap sizes that the garbage collector can use can be set using -Xms and -Xmx respectively.
+Command line options:
+-Xms
+-Xmx
+-XX:+UseParallelGC
+-XX:ParallelGCThreads
+The maximum pause time goal is specified with the command-line option -XX:MaxGCPauseMillis
+Specify throughput goal -XX:GCTimeRatio
+-XX:+UseG1GC
+Example: java -Xmx12m -Xms3m -XX:+UseParallelGC -jar <JAR_FILE>
+
+Achieve high GC throughput:
+https://medium.com/@RamLakshmanan/how-to-achieve-high-gc-throughput-2a5405417d95 (Check "Reasons for poor garbage collection throughput", along with the rest)
+
+https://stackoverflow.com/questions/39687702/why-g1-gives-better-pause-time-but-lower-throughput
+G1 garbage collector uses concurrently marking live objects but stop-the-world cleanup dead objects. So, the pause time is shorter than stop-the-world GC (e.g. Parallel Scavenge), but longer time to do GC as less resources to do concurrent marking live objects and additional time needed to do remarking live objects (the objects changed during the concurrent marking phase).
+
+https://stackoverflow.com/questions/72290017/when-not-to-use-g1gc-garbage-collector
+1. If you have absolutely no interest in GC pause times, then use the serial collector (if you only have one core) or the parallel collector (if you have more than one core).
+2. If you need low pause times (with high probability), then use the G1 collector.
+3. If you need ultra-low pause times, and/or you have an extremely large heap, use the Z collector.
+4. The old CMS collector has been removed as of Java 14.
+-----------------------------------------------------------------------------------------------------------------
 "The Permanent generation contains metadata required by the JVM to describe the classes and methods used in the application. The permanent generation is populated by the JVM at runtime based on classes in use by the application. In addition, Java SE library classes and methods may be stored here."
 
 https://www.baeldung.com/java-string-pool (It has good explanation of String pool and garbage collection)
