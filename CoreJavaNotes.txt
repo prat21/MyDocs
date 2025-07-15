@@ -592,16 +592,19 @@ https://www.baeldung.com/java-composition-aggregation-association (Note how to m
 https://www.baeldung.com/java-inheritance-composition
 
 See - Composition is also very much preferred in object-oriented design over inheritance
-
 https://javarevisited.blogspot.com/2013/06/why-favor-composition-over-inheritance-java-oops-design.html
 
-The below link has very nice explanation on how java inheritance is fragile.
+The below link has very nice explanation on how java inheritance is fragile::
 https://blogs.oracle.com/javamagazine/post/java-inheritance-composition
+"This is also known as the Decorator pattern because the InstrumentedSet class “decorates” a set by adding instrumentation."
+"Inheritance is appropriate only in circumstances where the subclass really is a subtype of the superclass. In other words, a class B should extend a class A only if an “is-a” relationship exists between the two classes."
+"There are a number of violations of this principle in the Java platform libraries."
 -----------------------------------------------------------------------------------------------------------------
 
 Reflection:
 https://www.geeksforgeeks.org/reflection-in-java/
 https://www.oracle.com/technical-resources/articles/java/javareflection.html
+"Primitive types also has a class corresponding class object. Class c = int.class"
 Note: Protecting a constructor prevents the users from creating the instance of the class, outside the package.
 https://docs.oracle.com/javase/tutorial/reflect/index.html
 
@@ -1542,3 +1545,11 @@ When we need to share common state across all the instances of a class, say for 
 -----------------------------------------------------------------------------------------------
 Check Date comparison operations.
 -----------------------------------------------------------------------------------------------
+Java cannot have dangling pointer:
+https://stackoverflow.com/questions/4976668/creating-a-dangling-pointer-in-java
+-----------------------------------------------------------------------------------------------
+Why Class.newInstance() is deprecated from java 9? Class.newInstance vs Constructor.newInstance().
+1. Class.newInstance() can only invoke the zero-argument constructor, while Constructor.newInstance() may invoke any constructor, regardless of the number of parameters.
+2. Class.newInstance() throws any exception thrown by the constructor, regardless of whether it is checked or unchecked. Use of this method effectively bypasses the compile-time exception checking that would otherwise be performed by the compiler. Constructor.newInstance() always wraps the thrown exception with an (checked)InvocationTargetException.
+3. Class.newInstance() requires that the constructor be visible; Constructor.newInstance() may invoke private constructors under certain circumstances.
+https://docs.oracle.com/javase/tutorial/reflect/member/ctorInstance.html
