@@ -401,12 +401,16 @@ Throughput is measured by the time spent doing garbage collection versus the tim
 4. https://www.baeldung.com/jvm-garbage-collectors
 
 Garbage Collectors:
-1. G1 garbage collector:
-Some operations are always performed in stop-the-world pauses to improve throughput. Other operations that would take more time with the application stopped such as whole-heap operations like global marking are performed in parallel and concurrently with the application.
+1. Parallel collector:
+The Parallel collector is also called a throughput collector. Since it can use multilple CPUs to speed up application throughput. This collector should be used when a lot of work need to be done and long pauses are acceptable. For example, batch processing like printing reports or bills or performing a large number of database queries. Default collector up until java 8.
 
-2. Z garbage collector:
+2. G1 garbage collector:
+Some operations are always performed in stop-the-world pauses to improve throughput. Other operations that would take more time with the application stopped such as whole-heap operations like global marking are performed in parallel and concurrently with the application. Default collector from java 9.
+
+3. Z garbage collector:
 The Z garbage collector is a scalable, low latency garbage collector. ZGC performs all expensive work concurrently, without stopping the execution of application threads for more than a millisecond.
 ZGC provides max pause times under millisecond, but at the cost of same throughput. It is intended for applications, which required low latency. Pause times are independent of heap size that is being used. ZGC works well for heap sizes from a few hundred megabytes to 16TB.
+ZGC Generational collection is possible since java 21. But still not the default collector. Default is still G1.
 
 GC Command line options:
 The minimum and maximum heap sizes that the garbage collector can use can be set using -Xms and -Xmx respectively.
@@ -439,10 +443,13 @@ https://www.baeldung.com/java-string-immutable
 https://www.baeldung.com/java-string-interview-questions
 https://www.baeldung.com/java-9-compact-string
 
+Whenever we create a string  if "all" the characters of the string can be represented using a byte - LATIN-1 representation, a byte array will be used internally, such that one byte is given for one character.
+In other cases, if "any" character requires more than 8-bits to represent it, all the characters are stored using two bytes for each - UTF-16 representation.
+
 https://docs.oracle.com/javase/8/docs/technotes/guides/vm/enhancements-7.html
 Area: HotSpot
 Standard/Platform: JDK 7
-Synopsis: In JDK 7, interned strings are no longer allocated in the permanent generation of the Java heap, but are instead allocated in the main part of the Java heap (known as the young and old generations), along with the other objects created by the application. This change will result in more data residing in the main Java heap, and lessw data in the permanent generation, and thus may require heap sizes to be adjusted. Most applications will see only relatively small differences in heap usage due to this change, but larger applications that load many classes or make heavy use of the String.intern() method will see more significant differences.
+Synopsis: In JDK 7, interned strings are no longer allocated in the permanent generation of the Java heap, but are instead allocated in the main part of the Java heap (known as the young and old generations), along with the other objects created by the application. This change will result in more data residing in the main Java heap, and less data in the permanent generation, and thus may require heap sizes to be adjusted. Most applications will see only relatively small differences in heap usage due to this change, but larger applications that load many classes or make heavy use of the String.intern() method will see more significant differences.
 RFE: 6962931
 
 Before Java 7, the JVM placed the Java String Pool in the PermGen space, which has a fixed size — it can’t be expanded at runtime and is not eligible for garbage collection.
@@ -588,6 +595,8 @@ See - Composition is also very much preferred in object-oriented design over inh
 
 https://javarevisited.blogspot.com/2013/06/why-favor-composition-over-inheritance-java-oops-design.html
 
+The below link has very nice explanation on how java inheritance is fragile.
+https://blogs.oracle.com/javamagazine/post/java-inheritance-composition
 -----------------------------------------------------------------------------------------------------------------
 
 Reflection:
