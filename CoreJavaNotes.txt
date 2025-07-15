@@ -602,7 +602,6 @@ https://blogs.oracle.com/javamagazine/post/java-inheritance-composition
 -----------------------------------------------------------------------------------------------------------------
 
 Reflection:
-https://www.geeksforgeeks.org/reflection-in-java/
 https://www.oracle.com/technical-resources/articles/java/javareflection.html
 "Primitive types also has a class corresponding class object. Class c = int.class"
 Note: Protecting a constructor prevents the users from creating the instance of the class, outside the package.
@@ -624,6 +623,11 @@ Reflection requires a runtime permission which may not be present when running u
 
 3. Exposure of Internals
 Since reflection allows code to perform operations that would be illegal in non-reflective code, such as accessing private fields and methods, the use of reflection can result in unexpected side-effects, which may render code dysfunctional and may destroy portability. Reflective code breaks abstractions and therefore may change behavior with upgrades of the platform.
+
+Difference between getconstructor vs getdeclaredconstructor::
+https://stackoverflow.com/questions/8249173/what-is-the-difference-between-getdeclaredconstructors-and-getconstructors-in-th
+
+See archived chatgpt "java reflection use cases". It has good DI example.
 -----------------------------------------------------------------------------------------------------------------
 
 Varargs:
