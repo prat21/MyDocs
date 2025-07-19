@@ -3,6 +3,11 @@ New Features in Java 1.8:
 1. Lambda expression − Adds functional processing capability to Java.
 2. Method references − Referencing functions by their names instead of invoking them directly. Using functions as parameter.
 3. Default method − Interface to have default method implementation.
+https://docs.oracle.com/javase/tutorial/java/IandI/defaultmethods.html
+See sections: "Extending Interfaces That Contain Default Methods"
+https://www.baeldung.com/java-interface-default-method-vs-abstract-class
+"The original motivation behind introducing the default method was to provide backward compatibility to the Collection Framework with the new lambda functions."
+
 4. New tools − New compiler tools and utilities are added like ‘jdeps’ to figure out dependencies.
 5. Stream API − New stream API to facilitate pipeline processing.
 6. Date Time API − Improved date time API.
@@ -10,9 +15,10 @@ New Features in Java 1.8:
 8. Nashorn, JavaScript Engine − A Java-based engine to execute JavaScript code.
 
 --------------------------------------------------------------------------------------------
-LAMDA EXPRESSION:
+LAMBDA EXPRESSION:
 
 https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html
+"The compiler generates the error "Lambda expression's parameter x cannot redeclare another local variable defined in an enclosing scope" because the lambda expression does not introduce a new level of scoping."
 
 "There are no runtime benefits of using lambda expressions, so I will use it cautiously because I don’t mind writing few extra lines of code." 
 SEE:
@@ -20,6 +26,9 @@ https://www.journaldev.com/2389/java-8-features-with-examples#java8-collection
 A default interface method cannot override a method from java.lang.Object
 https://www.baeldung.com/java-8-new-features
 
+Advantages of using lambda: See archived chatgpt chat "Lambda expressions in java"
+https://stackoverflow.com/questions/33492203/what-are-the-advantages-of-using-lambda-expressions-in-java-8
+Also see archived chat "Lambda expression class creation."
 --------------------------------------------------------------------------------------------
 Method Reference:
 https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html
@@ -27,12 +36,36 @@ https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html
 STREAM:
 
 https://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html
+Streams differ from collections in several ways:
+1) No storage. A stream is not a data structure that stores elements; instead, it conveys elements from a source such as a data structure, an array, a generator function, or an I/O channel, through a pipeline of computational operations.
+2) Functional in nature. An operation on a stream produces a result, but does not modify its source. For example, filtering a Stream obtained from a collection produces a new Stream without the filtered elements, rather than removing elements from the source collection.
+3) Laziness-seeking. Many stream operations, such as filtering, mapping, or duplicate removal, can be implemented lazily, exposing opportunities for optimization. For example, "find the first String with three consecutive vowels" need not examine all the input strings. Stream operations are divided into intermediate (Stream-producing) operations and terminal (value- or side-effect-producing) operations. Intermediate operations are always lazy.
+4) Possibly unbounded. While collections have a finite size, streams need not. Short-circuiting operations such as limit(n) or findFirst() can allow computations on infinite streams to complete in finite time.
+
+Streams can be obtained in a number of ways. Some examples include:
+1. From a Collection via the stream() and parallelStream() methods;
+2. From an array via Arrays.stream(Object[]);
+3. From static factory methods on the stream classes, such as Stream.of(Object[]), IntStream.range(int, int) or Stream.iterate(Object, UnaryOperator);
+
+Go through the tutorial regarding stream reduce vs collect. It has good explanation:
+https://youtu.be/oWlWEKNM5Aw?si=Z2Ye9Q4zfprhegpn
+https://youtu.be/H7VbRz9aj7c?si=uSVAZK8sulqovDFm
+
 https://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html
 https://docs.oracle.com/javase/tutorial/collections/streams/reduction.html
 https://docs.oracle.com/javase/8/docs/api/java/util/stream/Collectors.html
 https://www.baeldung.com/java-8-streams
 ParallelStream: When the source of a stream is a Collection or an array, it can be achieved with the help of the parallelStream() method. If the source of a stream is something other than a Collection or an array, the parallel() method should be used.
 IntStream intStreamParallel = IntStream.range(1, 150).parallel();
+
+Some Important points regarding stream reduce vs collect:
+1) Stream reduce is meant to work with immutable objects(or primitives). Hence the accumulator ideally should return new value/object every time instead of mutating an object. This is crucial when reduce is used with parallel streams. Since in parallel streams, for every thread, the same initial object is used (as compared to collect where for each thread a new object is created and in the end the objects are combined using combiner), hence the accumulator should return new object instead of mutating the same object for thread safety.
+2) Stream reduce is an immutable reduction, ie reduction ideally should produce new value/object(using accumulator). Known for functional programming.
+3) Stream collect is a mutable reduction which was introduced in stream api because most java types are mutable.
+4) The identity and associativity are prerequisites for using the reduce function with parallelstream. This ensures that the output of reduce is consistent under multi-thread environment.
+5) Adding lambdas and streams does not make java a functional programming language. Class or Objects are still the first-class citizen in java whereas in functional programming functions are first class citizens. Java treats lambdas as an object only.
+6) Primitive streams like IntStream, DoubleStream are streams of primitive types and were introduced to improve performance(for example, eliminating boxing and unboxing overheads) while working with primitive type streams. See difference between IntStream and Stream<integer>.
+7) Collectors.groupingByConcurrent is useful for parallelstreams where a thread safe variant of Map is used to be accessed by multiple threads. The return type is typically concurrentHashMap or subclass of it. For these types of concurrent variant of collect the same identity object is used by all the threads( normally in non-concurrent versions of collect, for each thread a new identity object is created), since the identity object is thread safe and supports concurrent modification.
 
 https://www.baeldung.com/java-groupingby-collector
 https://www.geeksforgeeks.org/stream-sorted-in-java/
@@ -56,6 +89,8 @@ When to use parallelStream:
 https://www.linkedin.com/learning/advanced-java-programming-2/implementing-parallel-streams?autoSkip=true&dApp=53239054&leis=LAA&resume=false&u=2113185
 
 https://www.baeldung.com/java-8-comparator-comparing
+
+Findany vs findfirst: see corresponding archived chatgpt. Collectors collectingAndThen: see archived chatgpt.
 ---------------------------------------------------------------------------------------------
 OPTIONAL:
 
