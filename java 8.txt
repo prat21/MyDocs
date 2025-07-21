@@ -128,7 +128,7 @@ https://www.youtube.com/watch?v=W6s7RZo06nA
 My assumption on method binding:
 1) Method binding happens in two stages: compile time and run time. During compile time the binding of a particular method call happens using Class Type reference. Later during run time, JVM attempts to bind the method again using Object types.
 2) For static methods only compile time method binding is done and no additional run time binding is performed. Hence, static method always gets called by type reference rather than Object type.
-3) For instance methods, first compile time binding happens which takes care of method overloading also if any. Later, during run time again for that particular instance method binding happens using the Object type, hence taking care of method overriding.
+3) For instance methods, first compile time binding happens which takes care of method overloading if any. Later, during run time again for that particular instance method, binding happens using the Object type, hence taking care of method overriding.
 
 https://www.geeksforgeeks.org/java/static-vs-dynamic-binding-in-java/
 "During compilation, the compiler has no idea as to which print has to be called since the compiler goes only by referencing variable not by the type of object, and therefore the binding would be delayed to runtime and therefore the corresponding version of the print will be called based on type on an object."
