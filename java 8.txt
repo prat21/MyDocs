@@ -78,12 +78,13 @@ The combiner is necessary in parallel reductions. We only call combiner in a par
 
 Difference between Stream.of and Arrays.stream:
 https://www.techiedelight.com/difference-stream-of-arrays-stream-java/
+Check archived chatgpt "Stream.of vs Arrays.stream"
 
 Practice link:
 https://blog.devgenius.io/15-practical-exercises-help-you-master-java-stream-api-3f9c86b1cf82
 
 Disadvantage of manual iteration vs stream:
-https://www.linkedin.com/learning/advanced-java-programming-2/understanding-streams-in-java?autoSkip=true&dApp=53239054&leis=LAA&resume=false&u=2113185
+Check archived chatgpt "Iterator vs Stream comparison"
 
 When to use parallelStream:
 https://www.linkedin.com/learning/advanced-java-programming-2/implementing-parallel-streams?autoSkip=true&dApp=53239054&leis=LAA&resume=false&u=2113185
@@ -95,7 +96,18 @@ Findany vs findfirst: see corresponding archived chatgpt. Collectors collectingA
 OPTIONAL:
 
 https://www.oracle.com/technical-resources/articles/java/java8-optional.html
+"The purpose of Optional is not to replace every single null reference in your codebase but rather to help design better APIs in which just by reading the signature of a method—users can tell whether to expect an optional value."
 https://www.baeldung.com/java-optional
+
+When not to use optional:
+https://medium.com/javarevisited/4-reasons-why-you-should-use-java-optional-or-not-4e44d51a9645
+1) Do not use optional in fields or method parameters, it's designed for return value.
+2) Avoid doing Optional.get() without checking isPresent() first.
+
+Optional forces you to think about the case when value is not present.
+
+Difference between orElse() and orElseGet():
+Check archived chatgpt.
 
 ---------------------------------------------------------------------------------------------
 Interface default methods:
@@ -105,5 +117,30 @@ https://docs.oracle.com/javase/tutorial/java/IandI/override.html
 
 Note: Static methods in interfaces are never inherited.
 ---------------------------------------------------------------------------------------------
+Static binding vs Dynamic binding:
+https://www.baeldung.com/java-static-dynamic-binding
+https://www.youtube.com/watch?v=W6s7RZo06nA
+
+1) Static binding uses Type information for binding while Dynamic binding uses Objects to resolve binding.
+2) Binding of all the static, private and final methods and overloaded methods are done at compile time.
+3) Binding of all the non-static instance methods and overridden methods are done at run time.
+
+My assumption on method binding:
+1) Method binding happens in two stages: compile time and run time. During compile time the binding of a particular method call happens using Class Type reference. Later during run time, JVM attempts to bind the method again using Object types.
+2) For static methods only compile time method binding is done and no additional run time binding is performed. Hence, static method always gets called by type reference rather than Object type.
+3) For instance methods, first compile time binding happens which takes care of method overloading also if any. Later, during run time again for that particular instance method binding happens using the Object type, hence taking care of method overriding.
+
+https://www.geeksforgeeks.org/java/static-vs-dynamic-binding-in-java/
+"During compilation, the compiler has no idea as to which print has to be called since the compiler goes only by referencing variable not by the type of object, and therefore the binding would be delayed to runtime and therefore the corresponding version of the print will be called based on type on an object."
+
+"Now the question arises why binding of static, final, and private methods is always static binding?
+Static binding is better performance-wise (no extra overhead is required). The compiler knows that all such methods cannot be overridden and will always be accessed by objects of the type reference class. That’s the reason binding for such methods is static."
+
+---------------------------------------------------------------------------------------------
 Permgen vs Metaspace:
 https://www.baeldung.com/java-permgen-metaspace
+---------------------------------------------------------------------------------------------
+Collections.sort is only applicable for sorting list interface.
+Signature: public static <T extends Comparable<? super T>> void sort(List<T> list)
+List.sort was introduced in java 8 and takes comparator as a mandatory argument. If comparator is supplied as null, then natural ordering applies.
+default void sort(Comparator<? super E> c)
