@@ -779,6 +779,8 @@ https://www.javatpoint.com/is-java-interpreted-or-compiled
 6. Now, our program will perform the functionality and gives the desired output.
 https://www.baeldung.com/java-compiled-interpreted
 It is the JVM that is built and customized for each platform that supports Java, rather than our programs or libraries.
+
+Compiled code is portable as the compiled bytecode (.class in java for instance) can be run anywhere as long as it gets the appropriate runtime environment(JRE for instance). Interpreting a compiled code(low-level language) is faster as it is already pre-optimized, syntactically and semantically checked, rather than interpreting a high-level language directly into machine-code.
 ------------------------------------------------------------------------------------------------
 JIT Compiler
 https://stackoverflow.com/questions/95635/what-does-a-just-in-time-jit-compiler-do
