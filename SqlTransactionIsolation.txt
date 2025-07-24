@@ -1,4 +1,5 @@
 https://www.geeksforgeeks.org/transaction-isolation-levels-dbms/
+"Transaction isolation means that a transaction should take place in a system in such a way that it is the only transaction that is accessing the resources in a database system."
 --------------------------------------------------------------------------------------
 https://medium.com/@bubu.tripathy/managing-concurrent-database-updates-eaf2fe161c48
 --------------------------------------------------------------------------------------
@@ -7,3 +8,7 @@ https://www.postgresql.org/docs/current/transaction-iso.html#XACT-REPEATABLE-REA
 Note: Because a repeatable read transaction cannot modify or lock rows changed by other transactions after the repeatable read transaction began.
 
 https://www.youtube.com/watch?v=WjgbghMh50A
+--------------------------------------------------------------------------------------
+"Isolation level and concurrency are inversely related. A lower isolation level enables greater concurrency, but with greater risk of data inconsistencies. A higher isolation level provides a higher degree of data consistency, but at the expense of concurrency."
+--------------------------------------------------------------------------------------
+https://medium.com/nerd-for-tech/understanding-database-isolation-levels-c4ebcd55c6b9

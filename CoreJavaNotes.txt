@@ -781,10 +781,11 @@ https://www.baeldung.com/java-compiled-interpreted
 It is the JVM that is built and customized for each platform that supports Java, rather than our programs or libraries.
 
 Compiled code is portable as the compiled bytecode (.class in java for instance) can be run anywhere as long as it gets the appropriate runtime environment(JRE for instance). Interpreting a compiled code(low-level language) is faster as it is already pre-optimized, syntactically and semantically checked, rather than interpreting a high-level language directly into machine-code.
+
+Also check the archived chatgpt.
 ------------------------------------------------------------------------------------------------
 JIT Compiler
 https://stackoverflow.com/questions/95635/what-does-a-just-in-time-jit-compiler-do
-289
 
 In the beginning, a compiler was responsible for turning a high-level language (defined as higher level than assembler) into object code (machine instructions), which would then be linked (by a linker) into an executable.
 
@@ -792,6 +793,11 @@ At one point in the evolution of languages, compilers would compile a high-level
 Note: Basically bytecode is nothing but pseudocode which is interpreted by platform dependent JVM.
 
 A Just-In-Time (JIT) compiler is a feature of the run-time interpreter, that instead of interpreting bytecode every time a method is invoked, will compile the bytecode into the machine code instructions of the running machine, and then invoke this object code instead. Ideally the efficiency of running object code will overcome the inefficiency of recompiling the program every time it runs.
+
+https://www.baeldung.com/java-compiled-interpreted#4-just-in-time-compiler
+https://www.baeldung.com/java-compiled-interpreted#performance-comparison
+
+Also check the archived chatgpt.
 ------------------------------------------------------------------------------------------------
 Can a constructor be made final?
 
