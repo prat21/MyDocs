@@ -3,12 +3,42 @@ https://www.geeksforgeeks.org/transaction-isolation-levels-dbms/
 --------------------------------------------------------------------------------------
 https://medium.com/@bubu.tripathy/managing-concurrent-database-updates-eaf2fe161c48
 --------------------------------------------------------------------------------------
+READ COMMITTED ISOLATION:
+https://www.postgresql.org/docs/current/transaction-iso.html#XACT-READ-COMMITTED
+"Read Committed is the default isolation level in PostgreSQL. When a transaction uses this isolation level, a SELECT query (without a FOR UPDATE/SHARE clause) sees only data committed before the query began; it never sees either uncommitted data or changes committed by concurrent transactions during the query's execution. In effect, a SELECT query sees a snapshot of the database as of the instant the query begins to run. However, SELECT does see the effects of previous updates executed within its own transaction, even though they are not yet committed.
+Also note that two successive SELECT commands can see different data, even though they are within a single transaction, if other transactions commit changes after the first SELECT starts and before the second SELECT starts."
+
+In essence a SELECT query within a transaction will always see the latest committed value.
+--------------------------------------------------------------------------------------
 REPEATABLE READ ISOLATION:
 https://www.postgresql.org/docs/current/transaction-iso.html#XACT-REPEATABLE-READ
 Note: Because a repeatable read transaction cannot modify or lock rows changed by other transactions after the repeatable read transaction began.
+"The Repeatable Read isolation level only sees data committed before the transaction began; it never sees either uncommitted data or changes committed by concurrent transactions during the transaction's execution.
+Successive SELECT commands within a single transaction see the same data, i.e., they do not see changes made by other transactions that committed after their own transaction started."
+
+In essence a SELECT query within a transaction will always see the same snapshot data.
 
 https://www.youtube.com/watch?v=WjgbghMh50A
+--------------------------------------------------------------------------------------
+Serializable Isolation Level:
+https://www.postgresql.org/docs/current/transaction-iso.html#XACT-SERIALIZABLE
 --------------------------------------------------------------------------------------
 "Isolation level and concurrency are inversely related. A lower isolation level enables greater concurrency, but with greater risk of data inconsistencies. A higher isolation level provides a higher degree of data consistency, but at the expense of concurrency."
 --------------------------------------------------------------------------------------
 https://medium.com/nerd-for-tech/understanding-database-isolation-levels-c4ebcd55c6b9
+--------------------------------------------------------------------------------------
+Database locks:
+https://medium.com/inspiredbrilliance/what-are-database-locks-1aff9117c290  (Check Optimistic vs pessimistic locking, Problems associated with locks)
+https://medium.com/nerd-for-tech/understanding-database-isolation-levels-c4ebcd55c6b9  (This has good explanation of transaction isolation vs locking)
+--------------------------------------------------------------------------------------
+Optimistic vs pessimistic locking:
+See archived chatgpt "Locking strategies comparison".
+https://www.baeldung.com/java-jpa-transaction-locks
+--------------------------------------------------------------------------------------
+Transactions are high-level mechanism to handle concurrent access to data.
+Locking is a low-level mechanism used by databases to control concurrent access to data. Most time developers doesn't need to worry about it. Managed by the DBMS engine internally, often hidden from the developer.
+---------------------------------------------------------------------------------------
+MVCC:
+https://nagvekar.medium.com/understanding-multi-version-concurrency-control-mvcc-in-postgresql-a-comprehensive-guide-9b4f82153860
+Locks and MVCC are two different strategies of achieving database concurrency. These are low-level DBMS concepts. Snapshot isolation is a characteristic of MVCC.
+https://www.postgresql.org/docs/7.1/mvcc.html
