@@ -848,13 +848,12 @@ Java main() method is always static, so that compiler can call it without the cr
 
 ------------------------------------------------------------------------------------------------
 Can we execute a program without main() method?
-Ans) No, one of the ways was the static block, but it was possible till JDK 1.6. Since JDK 1.7, it is not possible to execute a Java class without the
+Ans) No, one of the ways was the static block, but it was possible till JDK 1.6. Since JDK 1.7, it is not possible to execute a Java class without the main method.
 
 ------------------------------------------------------------------------------------------------
 
 Main method concepts:
-https://www.javatpoint.com/java-main-method
-
+See archived chatgpt "java main method concepts".
 ------------------------------------------------------------------------------------------------
 
 48) Can we make constructors static?
@@ -869,7 +868,6 @@ public class AbstractStaticTest {
         abst.test();
     }
 }
-
 
 abstract class abst{
     static void test(){
@@ -1001,6 +999,8 @@ There are many rules if we talk about methodoverriding with exception handling. 
 If SuperClass does not declare an exception, then the SubClass can only declare unchecked exceptions, but not the checked exceptions.
 If SuperClass declares an exception, then the SubClass can only declare the same or child exceptions of the exception declared by the SuperClass and any new Runtime Exceptions, just not any new checked exceptions at the same level or higher.
 If SuperClass declares an exception, then the SubClass can declare without exception.
+
+Check archived chatgpt "method overriding exceptions" to check why this rule is there in java (Liskov substitution).
 ------------------------------------------------------------------------------------------------
 70) Can you use this() and super() both in a constructor?
 
@@ -1008,7 +1008,6 @@ No, because this() and super() must be the first statement in the class construc
 ------------------------------------------------------------------------------------------------
 Cloning:
 
-https://www.javatpoint.com/object-cloning
 https://howtodoinjava.com/java/cloning/a-guide-to-object-cloning-in-java/
 No constructor is called on the object being cloned.
 "Object.clone() is protected, so we have to provide our own clone() and indirectly call Object.clone() from it."
@@ -1016,6 +1015,13 @@ The question may come into mind that if all classes in java extends Object class
 method, then why not call the inherited clone() method of the child class(while making a clone), rather than overriding the clone method just to call the Object.clone?
 The answer is, since Object.clone is protected, hence it cannot be called from outside generally, hence the clone method is overridden in the child class,
 the access scope is changed to public(in child class) and Object.clone is called from there.
+
+So deep cloning requires satisfaction of following rules –
+1. No need to separately copy primitives.
+2. All the member classes in original class should support cloning and in clone method of original class in context should call super.clone() on all member classes.
+3. If any member class does not support cloning then in clone method, one must create a new instance of that member class and copy all its attributes one by one to new member class object. This new member class object will be set in cloned object.
+
+See archived chatgpt "Clone method issues", "Copy constructor vs cloning".
 ------------------------------------------------------------------------------------------------
 Covariant Return Type:
 
@@ -1113,6 +1119,8 @@ Methods in an interface, that are not declared as default or static are implicit
 
 An example of an abstract class in the JDK is AbstractMap, which is part of the Collections Framework. Its subclasses (which include HashMap, TreeMap, and ConcurrentHashMap) share many methods (including get, put, isEmpty, containsKey, and containsValue) that AbstractMap defines.
 
+Another example is "HashIterator" abstract class inside the HashMap class. All the iterators(KeyIterator, ValueIterator, EntryIterator) of the hashmap extends this abstract class.
+
 Note: Check the section "Abstract Classes Compared to Interfaces" in the above link. It has good comparison.
 ------------------------------------------------------------------------------------------------
 Difference between abstraction and encapsulation:
@@ -1123,15 +1131,25 @@ https://javarevisited.blogspot.com/2017/04/difference-between-abstraction-and-en
 SOLID prinicple:
 https://www.baeldung.com/solid-principles
 https://www.baeldung.com/java-single-responsibility-principle
+Check also archived chatgpt "Single Responsibility Principle", "Cohesion and coupling principles"
 https://www.baeldung.com/java-open-closed-principle
+Check also archived chatgpt "Open/Closed Principle"
 https://www.baeldung.com/java-liskov-substitution-principle (Has good example of both OCP and Liskov principal. Use this as example.)
 The BankingAppWithdrawalService no longer depends on concrete account classes. Because it now depends only on the abstract class, it need not be changed when a new account type is introduced.
 Consequently, the BankingAppWithdrawalService is open for the extension with new account types, but closed for modification, in that the new types don’t require it to change in order to integrate.
 For the Open/Closed Principle to work well, all subtypes must be substitutable for their supertype without ever having to modify the client code. Adhering to the Liskov Substitution Principle ensures this substitutability.
 Basically Liskov substitution helps in achieving open-closed principal.
 If the client code needs to use instanceof or downcasting, then the chances are that both the Open/Closed Principle and the Liskov Substitution Principle have been violated.
-https://www.baeldung.com/java-liskov-substitution-principle#3-signature-rule---exceptions (Important to understand the overridden method exception declaration rule)
-
+https://www.baeldung.com/java-liskov-substitution-principle#3-signature-rule---exceptions
+(Important to understand the overridden method exception declaration rule)
+https://www.baeldung.com/java-liskov-substitution-principle#4-properties-rule---class-invariants
+Check archived chatgpt "Class invariant explanation".
+https://www.baeldung.com/java-liskov-substitution-principle#5-properties-rule---history-constraint
+"Similarly, if the base class has an immutable property, the subclass should not permit this property to be modified. This is why immutable classes should be final."
+https://www.baeldung.com/java-liskov-substitution-principle#6-methods-rule---preconditions
+"A subtype can weaken (but not strengthen) the precondition for a method it overrides."
+https://www.baeldung.com/java-liskov-substitution-principle#7-methods-rule---postconditions
+"The subtype can strengthen (but not weaken) the postcondition for a method it overrides."
 https://www.baeldung.com/java-interface-segregation
 One way to refactor a code which does not comply with open-closed principal is by segregating the interfaces into more fine grained interface (Interface segregation).
 We can leverage the concept of interface segregation to design our interfaces in such a way that the implementing subtypes can adhere to Liskov's substitution easily. And thus as a whole open-closed principal is achieved.
@@ -1567,3 +1585,16 @@ Why Class.newInstance() is deprecated from java 9? Class.newInstance vs Construc
 2. Class.newInstance() throws any exception thrown by the constructor, regardless of whether it is checked or unchecked. Use of this method effectively bypasses the compile-time exception checking that would otherwise be performed by the compiler. Constructor.newInstance() always wraps the thrown exception with an (checked)InvocationTargetException.
 3. Class.newInstance() requires that the constructor be visible; Constructor.newInstance() may invoke private constructors under certain circumstances.
 https://docs.oracle.com/javase/tutorial/reflect/member/ctorInstance.html
+-----------------------------------------------------------------------------------------------
+Immutable class:
+https://medium.com/javarevisited/immutable-class-in-java-88c50030f153
+https://stackoverflow.com/questions/12306651/why-would-one-declare-an-immutable-class-final-in-java
+"The method that you pass the Mutable object into won't change the object. The concern is that that method might assume that the object is immutable when it really isn't. For example, the method might assume that, since it thinks the object is immutable, it can be used as the key in a HashMap. I could then break that function by passing in a Mutable, waiting for it to store the object as a key, then changing the Mutable object. Now, lookups in that HashMap will fail, because I changed the key associated with the object."
+
+My Note: Kindly note that in these examples, the subclass is overriding the getters that return the so-called immutable property. The subclass maintains a second mutable property which gets initialized using the same value as the immutable property(using constructor) and then returns the value of the mutable property instead from the overridden getter method.
+
+"Don't mark the entire class final.
+ There are valid reasons for allowing an immutable class to be extended as stated in some of the other answers so marking the class as final is not always a good idea.
+ It's better to mark your properties private and final and if you want to protect the "contract" mark your getters as final.
+ In this way you can allow the class to be extended (yes possibly even by a mutable class) however the immutable aspects of your class are protected. Properties are private and can't be accessed, getters for these properties are final and cannot be overridden.
+ Any other code that uses an instance of your immutable class will be able to rely on the immutable aspects of your class even if the sub class it is passed is mutable in other aspects. Of course, since it takes an instance of your class it wouldn't even know about these other aspects."
