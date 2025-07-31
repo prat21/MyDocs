@@ -1153,8 +1153,9 @@ https://www.baeldung.com/java-liskov-substitution-principle#7-methods-rule---pos
 https://www.baeldung.com/java-interface-segregation
 One way to refactor a code which does not comply with open-closed principal is by segregating the interfaces into more fine grained interface (Interface segregation).
 We can leverage the concept of interface segregation to design our interfaces in such a way that the implementing subtypes can adhere to Liskov's substitution easily. And thus as a whole open-closed principal is achieved.
-
+Check also archived chatgpt "Interface Segregation principle".
 https://www.baeldung.com/java-dependency-inversion-principle
+Check also archived chatgpt "DIP vs DI".
 https://medium.com/@inzuael/solid-dependency-inversion-principle-part-5-f5bec43ab22e
 
 https://stackify.com/solid-design-liskov-substitution-principle/#:~:text=The%20Liskov%20Substitution%20Principle%20in,the%20objects%20of%20your%20superclass. (Liskov substitution)
@@ -1166,7 +1167,11 @@ Java 9 introduced modular system.
 https://www.youtube.com/watch?v=5xDoo-PcZ7g&list=PLsyeobzWxl7qjvpYOxlLYYQF4QbQRTwTF (Telusko)
 https://www.youtube.com/watch?v=UqnwQp1uHuY (See up until "New Abstraction" segment in the seek bar)
 https://www.oracle.com/in/corporate/features/understanding-java-9-modules.html (See "What Is a Module?" and "Goals")
-https://www.baeldung.com/java-modularity (Optional read)
+"By default all types, even public ones, are only accessible inside a module. To give code outside of a module access to a type, the package containing the type needs to be either exported or opened. This is achieved by using the exports and opens directives.
+1) public types and members in 'exported' packages are available at compile and run time
+2) all types and members in 'open' packages can be accessed at run time via reflection"
+https://www.baeldung.com/java-modularity
+"We need to list all packages we want to be public because by default all packages are module private."
 https://www.javatpoint.com/java-9-features
 https://www.javatpoint.com/java-9-try-with-resources
 https://www.javatpoint.com/java-9-anonymous-classes
@@ -1598,3 +1603,9 @@ My Note: Kindly note that in these examples, the subclass is overriding the gett
  It's better to mark your properties private and final and if you want to protect the "contract" mark your getters as final.
  In this way you can allow the class to be extended (yes possibly even by a mutable class) however the immutable aspects of your class are protected. Properties are private and can't be accessed, getters for these properties are final and cannot be overridden.
  Any other code that uses an instance of your immutable class will be able to rely on the immutable aspects of your class even if the sub class it is passed is mutable in other aspects. Of course, since it takes an instance of your class it wouldn't even know about these other aspects."
+------------------------------------------------------------------------------------------------
+ Class access specifiers in java:
+ Check archived chatgpt with the same name.
+------------------------------------------------------------------------------------------------
+ServiceLoader pattern:
+https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/ServiceLoader.html
