@@ -1166,19 +1166,26 @@ Java 9 introduced java shell REPL tool (jshell).
 Java 9 introduced modular system.
 https://www.youtube.com/watch?v=5xDoo-PcZ7g&list=PLsyeobzWxl7qjvpYOxlLYYQF4QbQRTwTF (Telusko)
 https://www.youtube.com/watch?v=UqnwQp1uHuY (See up until "New Abstraction" segment in the seek bar)
-https://www.oracle.com/in/corporate/features/understanding-java-9-modules.html (See "What Is a Module?" and "Goals")
+Check archived chatgpt "java module dependency missing."
+https://www.oracle.com/in/corporate/features/understanding-java-9-modules.html (See "Introduction to Modules in Java" and "Decoupling Modules with Services" and "Optional Dependencies with requires static")
 "By default all types, even public ones, are only accessible inside a module. To give code outside of a module access to a type, the package containing the type needs to be either exported or opened. This is achieved by using the exports and opens directives.
 1) public types and members in 'exported' packages are available at compile and run time
 2) all types and members in 'open' packages can be accessed at run time via reflection"
+"A JAR containing a module descriptor is called a modular JAR and is ready to be used as a module - JARs without a descriptor are plain JARs."
+"There's one module to rule them all: java.base, the so-called base module. It contains classes like Class and ClassLoader, packages like java.lang and java.util, and the entire module system."
+"No need to put requires java.base in a module declaration - a dependency on the base module comes for free."
+
 https://www.baeldung.com/java-modularity
 "We need to list all packages we want to be public because by default all packages are module private."
-https://www.javatpoint.com/java-9-features
-https://www.javatpoint.com/java-9-try-with-resources
-https://www.javatpoint.com/java-9-anonymous-classes
-https://www.javatpoint.com/java-9-factory-methods
-Difference between Arrays.asList() and List.of():
-Both Arrays.asList() and List.of() returns immutable lists, ie adding and removing new elements throws an UnsupportedOperationException, but individual elements of the list are modifiable.
-The main difference from Arrays.asList() is that List.of() returns an immutable list that is a copy of the provided input array. For this reason, changes to the original array aren’t reflected on the returned list. Whereas, Arrays.asList() doesn’t create a copy of the input array, instead it wraps the original array with the List interface. Therefore, changes to the array reflect on the list too.
+"If a module JAR is placed on the module path (see below), it becomes a module at run time."
+https://www.baeldung.com/new-java-9
+"try-with-resources, factory-methods"
+
+Difference between Arrays.asList() and List.of() and Collections.unmodifiableList():
+1) Arrays.asList() returns a list backed by the original array, ie any changes to the array is reflected to the list and vice-versa. But we cannot change the size of the list(Because by default changing the size of an array is resource consuming). It does not support addition, deletion but do support modification of elements in place.
+2) List.of() returns an immutable list and it is not backed by the original array, rather its a copy. No addition, deletion or modification(ie setting elements in place) of the list is allowed(throws an UnsupportedOperationException). But individual elements of the list are modifiable. Any changes to the original array is not reflected to this list.
+3) Collections.unmodifiableList() returns an "unmodifiable" list backed by the original list, it does not support addition, deletion or modification of the list.
+
 ------------------------------------------------------------------------------------------------
 Java 10 new features:
 https://www.baeldung.com/java-10-overview
@@ -1193,7 +1200,7 @@ https://www.baeldung.com/java-10-overview#time-based-release-versioning
 Java 11 new features:
 1. A major change in this version is that we don’t need to compile the Java source files with javac explicitly anymore. Instead, we can directly run the file using the java command.
 2. Local-Variable Syntax for Lambda Parameters.
-3. Not Predicate
+3. Not Predicate (Watch archived chatgpt "Not vs Negate in Java")
 4. Collection toArray() method.
 5. Http client.
 "The new HTTP client from the java.net.http package was introduced in Java 9. It has now become a standard feature in Java 11."
