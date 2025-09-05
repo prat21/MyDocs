@@ -1193,7 +1193,7 @@ https://www.baeldung.com/java-10-overview
 2. java.util.stream.Collectors get additional methods to collect a Stream into unmodifiable List, Map or Set. Example: collect(Collectors.unmodifiableList()).
 
 https://www.baeldung.com/java-10-local-variable-type-inference
-This feature is available only for local variables with the initializer.
+This feature is available only for local variables with the initializer. It cannot be used for member variables, method parameters, return types.
 There is no runtime overhead in using var nor does it make Java a dynamically typed language. The type of the variable is still inferred at compile time and cannot be changed later.
 https://www.baeldung.com/java-10-overview#time-based-release-versioning
 ------------------------------------------------------------------------------------------------
@@ -1220,6 +1220,7 @@ Let's take the example of the Cloneable interface. If we try to clone an object 
 
 In the same way, when calling the ObjectOutputStream.writeObject() method, the JVM checks if the object implements the Serializable marker interface. When it's not the case, a NotSerializableException is thrown. Therefore, the object isn't serialized to the output stream.
 
+Check archived chatgpt "Marker interface in java"
 ------------------------------------------------------------------------------------------------
 Exception:
 
@@ -1461,17 +1462,23 @@ public class Runtime1{
 Serialization:
 
 https://www.baeldung.com/java-serialization
+https://www.geeksforgeeks.org/java/customized-serialization-and-deserialization-in-java/
 https://www.oracle.com/technical-resources/articles/java/serializationapi.html
 The class file must be accessible from the system in which the restoration occurs(ie java class file should be present). In other words, the object's class file and methods are not saved; only the object's state is saved.
 Serialization does not care about access modifiers such as private -- all nontransient fields are considered part of an object's persistent state and are eligible for persistence.
+
 See: "Customize the Default Protocol" section
+By using a built-in feature of the serialization mechanism, developers can enhance the normal process by providing two methods inside their class files. Those methods are:
+    private void writeObject(ObjectOutputStream out) throws IOException;
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException;
+Notice that both methods are (and must be) declared private, proving that neither method is inherited and overridden or overloaded. The trick here is that the virtual machine will automatically check to see if either method is declared during the corresponding method call. The virtual machine can call private methods of your class whenever it wants but no other objects can.
+
 Use of custom serialization: Encryption could be added to the output and decryption to the input. They could be used to add extra data to the stream, perhaps a company versioning code. They can be used to stop the serialization of child class whose parent class implements serialization, by throwing the NotSerializableException from overridden writeObject() and readObject() methods.
 See: "Caching Objects in the Stream" section
 
 Static fields are not serializable.
 See NotSerializableException and InvalidClassException and SerialVersionUID.
 https://www.baeldung.com/java-serial-version-uid
-
 
 ------------------------------------------------------------------------------------------------
 Externalizable in java
