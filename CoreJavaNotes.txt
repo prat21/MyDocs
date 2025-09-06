@@ -1238,6 +1238,7 @@ https://docs.oracle.com/javase/tutorial/java/javaOO/nested.html
 Non-static nested classes (inner classes) have access to other members of the enclosing class, even if they are declared private.
 Inner classes cannot declare any static variables or methods, but can access the static method of the outer class, using syntax like "OuterClass.statMeth()", whereas accessing normal instance methods of the outer class from inner class requires syntax like "OuterClass.this.statMeth()".
 
+As a member of the OuterClass, a nested class can be declared private, public, protected, or package private. (Recall that outer classes can only be declared public or package private.)
 ------------------------------------------------------------------------------------------------
 
 Why Use Nested Classes?
@@ -1251,15 +1252,7 @@ It can lead to more readable and maintainable code: Nesting small classes within
 
 ------------------------------------------------------------------------------------------------
 We declare inner classes if a class is necessary for the working of the outer class. 
-Like in the Linked List Data Structure, we have a Node inner class.
-
-public class LinkedList{
-	class Node{
-		int data;
-		Node next;
-	}
-
-}
+Like iterators that are defined inside the classes(for example linkedlist, hashmap). These iterators would need to access the data of their outer classes to iterate through the data structure.
 
 https://www.youth4work.com/Talent/Core-Java/Forum/120658-why-did-we-use-inner-classes-in-java-tell-me-the-real-answer
 ------------------------------------------------------------------------------------------------
@@ -1380,7 +1373,6 @@ class OuterClass3 {
 }
 
 ------------------------------------------------------------------------------------------------
-
 Static Inner Class:
 
 A static class i.e. created inside a class is called static nested class in java. It cannot access non-static data members and methods directly. It can use them only through object reference.
@@ -1388,6 +1380,8 @@ Static Inner class can be accessed by outer class name.
 
 It can access static data members of outer class including private.
 
+Example: LinkedList.Node class
+Check archived chatgpt "static nested class usage"
 ------------------------------------------------------------------------------------------------
 
 Static Inner Class example:
@@ -1448,6 +1442,7 @@ Nested interface:
 https://www.javatpoint.com/nested-interface
 In the collection framework, the sun microsystem has provided a nested interface Entry. Entry is the subinterface of Map, i.e., accessed by Map.Entry.
 
+Check archived chatgpt "nested interface in java"
 ------------------------------------------------------------------------------------------------
 188) How will you invoke any external process in Java?
 By Runtime.getRuntime().exec(?) method. Consider the following example.
@@ -1481,6 +1476,10 @@ See NotSerializableException and InvalidClassException and SerialVersionUID.
 https://www.baeldung.com/java-serial-version-uid
 
 ------------------------------------------------------------------------------------------------
+Check archived chatgpt "Why serialization is needed"
+------------------------------------------------------------------------------------------------
+Check archived chatgpt "ClassNotFoundException vs NoClassDefFoundError"
+------------------------------------------------------------------------------------------------
 Externalizable in java
 https://www.oracle.com/technical-resources/articles/java/serializationapi.html
 See: "Create Your Own Protocol: the Externalizable Interface" section
@@ -1502,13 +1501,13 @@ It can occur whenever a wrapper class object is expected, and primitive data typ
 4. When a primitive type is assigned to an object type.
 
 https://docs.oracle.com/javase/tutorial/java/data/autoboxing.html
+Check archived chatgpt "autoboxing and unboxing" for interview trick questions.
 ------------------------------------------------------------------------------------------------
-
 Anonymous block:
-https://www.codesarray.com/view/Anonymous-and-Static-blocks-in-java/
+Check archived chatgpt "anonymous block java".
 ------------------------------------------------------------------------------------------------
-
-Important practice link: https://javaconceptoftheday.com/java-inheritance-practice-coding-questions/
+Important practice link:
+https://javaconceptoftheday.com/java-inheritance-practice-coding-questions/
 ------------------------------------------------------------------------------------------------
 Java design patterns:
 https://www.journaldev.com/1827/java-design-patterns-example-tutorial
@@ -1516,19 +1515,22 @@ https://www.journaldev.com/1827/java-design-patterns-example-tutorial
 1) CREATIONAL DESIGN PATTERNS:
 Factory design pattern:
 https://www.journaldev.com/1392/factory-design-pattern-in-java
-https://www.geeksforgeeks.org/factory-method-for-designing-pattern/
 Example: valueOf() method in wrapper classes like Boolean, Integer etc.
 
 Abstract factory design pattern:
+https://www.geeksforgeeks.org/factory-method-for-designing-pattern/
 https://www.digitalocean.com/community/tutorials/abstract-factory-design-pattern-in-java
+Note: Abstract factory is different from "normal" factory design pattern is that, "normal" factory pattern uses if-else blocks and this is contradiction of Open-Closed logic of SOLID, ie whenever we implement a new class we have to introduce an additional if-else block. Abstract factory mitigates this issue, ie we create a separate factory class for each newly created sub-class and no need to modify the existing factory classes.
 
 Singleton design pattern:
 https://www.journaldev.com/1377/java-singleton-design-pattern-best-practices-examples
+Check archived chatgpt "java singleton pattern" and "enum in java"
 Example: java.lang.RunTime.getRuntime
 
 Builder design pattern:
 https://www.journaldev.com/1425/builder-design-pattern-in-java
 Example: java.lang.StringBuilder#append()
+Check archived chatgpt "builder pattern java" for advantages of builder pattern. Also check "builder pattern in jdk" for existing builder pattern examples in JDK.
 
 2) STRUCTURAL DESIGN PATTERNS:
 Adapter design pattern:
@@ -1623,3 +1625,6 @@ My Note: Kindly note that in these examples, the subclass is overriding the gett
 ------------------------------------------------------------------------------------------------
 ServiceLoader pattern:
 https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/ServiceLoader.html
+------------------------------------------------------------------------------------------------
+Why interface variables are public static final:
+Check archived chatgpt "Variables in interface"
