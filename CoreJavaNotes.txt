@@ -1536,6 +1536,7 @@ Check archived chatgpt "builder pattern java" for advantages of builder pattern.
 Adapter design pattern:
 https://www.geeksforgeeks.org/adapter-pattern/
 Example: java.util.Arrays#asList()
+Check archived chatgpt "adapter pattern java"
 
 Composite design pattern:
 https://www.geeksforgeeks.org/composite-design-pattern/
@@ -1547,11 +1548,22 @@ The flyweight pattern is best suited for immutable objects.
 Note: Set of Intrinsic properties determine the unique category of objects we need to store in the cache map.
 https://www.geeksforgeeks.org/flyweight-design-pattern/
 https://www.journaldev.com/1562/flyweight-design-pattern-java
-Example: String pool, valueOf() of wrapper classes in java
+Example: String pool, Integer.valueOf() (for values from -128 to 127) in java
 
 Decorator design pattern:
 https://www.journaldev.com/1540/decorator-design-pattern-in-java-example
 Decorator pattern is used a lot in Java IO classes, such as FileReader, BufferedReader etc.
+Check archived chatgpt "decorator pattern java"
+
+Facade design pattern:
+https://www.digitalocean.com/community/tutorials/facade-design-pattern-in-java
+Check archived chatgpt "facade design pattern java"
+
+3) STRUCTURAL DESIGN PATTERNS:
+Chain of Responsibility pattern:
+https://www.digitalocean.com/community/tutorials/chain-of-responsibility-design-pattern-in-java
+Check archived chatgpt "Chain of responsibility java"
+
 
 ------------------------------------------------------------------------------------------------
 J2EE design patterns:
