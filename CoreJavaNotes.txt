@@ -147,7 +147,6 @@ Priority queue is implemented by an array (see algorithms book).
 LinkedList implements Queue interface and applies FIFO rule. Also it implements Dequeue interface, since elements can be accessed from both ends.
 
 
-
 7) Dequeue interface:
 
 A linear collection that supports element insertion and removal at both ends. This interface defines methods to access the elements at both ends of the deque. Methods are provided to insert, remove, and examine the element. Each of these methods exists in two forms: one throws an exception if the operation fails, the other returns a special value (either null or false, depending on the operation).
@@ -1564,7 +1563,9 @@ Chain of Responsibility pattern:
 https://www.digitalocean.com/community/tutorials/chain-of-responsibility-design-pattern-in-java
 Check archived chatgpt "Chain of responsibility java"
 
-
+Observer design pattern:
+https://www.digitalocean.com/community/tutorials/observer-design-pattern-in-java
+Example: Publish-subscribe models. Java Message Service (JMS) uses Observer design pattern along with Mediator pattern.javax.servlet.http.HttpSessionBindingListener. javax.servlet.http.HttpSessionAttributeListener
 ------------------------------------------------------------------------------------------------
 J2EE design patterns:
 https://stackabuse.com/java-j2ee-design-patterns/#dataaccessobjectpattern
@@ -1594,6 +1595,7 @@ https://chatgpt.com/c/6868bd96-fe4c-8005-9b83-0e9d13b0a6a9 (See archived chats)
 Java memory management:
 https://www.linkedin.com/learning/java-memory-management-values-and-references/make-beautiful-stack-overflow-errors?dApp=53239054&leis=LAA&resume=false&u=2113185
 https://www.baeldung.com/java-memory-management-interview-questions
+Check archived chatgpt "new string in java"
 ------------------------------------------------------------------------------------------------
 Custom Exception:
 https://www.baeldung.com/java-new-custom-exception
@@ -1609,7 +1611,17 @@ When to use static variables:
 When we need to share common state across all the instances of a class, say for an employee class if we want to maintain the number of employees created.
 -----------------------------------------------------------------------------------------------
 Check Date comparison operations.
+https://www.baeldung.com/java-8-date-time-intro
+Check "Issues With the Existing Date/Time APIs".
 -----------------------------------------------------------------------------------------------
+Strong, soft and weak reference:
+https://www.baeldung.com/java-reference-types
+"Soft references can be used to make our code more resilient to errors connected to insufficient memory. For example, we could create a memory-sensitive cache that automatically evicts objects when memory is scarce. We wouldn’t need to manage the memory manually, as the garbage collector would do it for us."
+
+https://www.geeksforgeeks.org/java/hashmap-vs-weakhashmap-java/
+Note: WeakHashMap is used for caching and storing metadata, since entries should be removed when keys are no longer in use(ie not strong referenced). For example Classloader caches in framework. This means that an entry from the weakhashmap should be removed if the corresponding key is not referenced elsewhere in the code, ie not in active use anymore. Note that this is not the case or normal hashmap, ie even though a key is not strongly referenced, it will not be removed by the GC.
+Check archived chatgpt "strong weak soft references"
+
 Java cannot have dangling pointer:
 https://stackoverflow.com/questions/4976668/creating-a-dangling-pointer-in-java
 -----------------------------------------------------------------------------------------------
@@ -1637,6 +1649,7 @@ My Note: Kindly note that in these examples, the subclass is overriding the gett
 ------------------------------------------------------------------------------------------------
 ServiceLoader pattern:
 https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/ServiceLoader.html
+Check archived chatgpt "serviceloader pattern java"
 ------------------------------------------------------------------------------------------------
 Why interface variables are public static final:
 Check archived chatgpt "Variables in interface"
