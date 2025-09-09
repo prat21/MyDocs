@@ -261,7 +261,7 @@ Difference between iterator and listiterator:
 
 Here are the differences between them:
 
-With iterator you can move only forward, but with ListIterator you can move backword also while reading the elements.
+With iterator you can move only forward, but with ListIterator you can move backward also while reading the elements.
 With ListIterator you can obtain the index at any point while traversing, which is not possible with iterators.
 With iterator you can check only for next element available or not, but in listiterator you can check previous and next elements.
 With listiterator you can add new element at any point of time, while traversing. Not possible with iterator.
@@ -330,8 +330,8 @@ Use Cases for Custom ClassLoaders:
 2. Hot reloading classes at runtime.
 3. Isolation of different components (e.g., in app servers or IDEs).
 
-Check CHATGPT on Custom classloader example:
-
+Check CHATGPT on Custom classloader example
+Also check chatgpt "jvm classloader hierarchy". It describes how jvm decides which classloader to call to load class dynamically.
 -----------------------------------------------------------------------------------------------------------------
 Ways to create objects in java:
 https://www.geeksforgeeks.org/different-ways-create-objects-java/
@@ -592,6 +592,11 @@ https://www.baeldung.com/java-inheritance-composition
 
 See - Composition is also very much preferred in object-oriented design over inheritance
 https://javarevisited.blogspot.com/2013/06/why-favor-composition-over-inheritance-java-oops-design.html
+Advantages of composition vs inheritance:
+1. Composition supports multiple inheritance gap.
+2. Easily testable using Mock objects
+3. Inheritance breaks encapsulation in some cases which can be mitigated using composition.
+4. Supports coding for interfaces rather than implementation. In inheritance the subclass is tightly bound with its superclass(as the superclass will be one concrete or abstract class), whereas in composition, the class mostly contains the interface rather than concrete class, giving the flexibility to plugin any implementation at runtime.
 
 The below link has very nice explanation on how java inheritance is fragile::
 https://blogs.oracle.com/javamagazine/post/java-inheritance-composition
@@ -609,6 +614,8 @@ https://docs.oracle.com/javase/tutorial/reflect/index.html
 https://stackoverflow.com/questions/37628/what-is-reflection-and-why-is-it-useful
 
 One very common use case in Java is the usage with annotations. JUnit 4, for example, will use reflection to look through your classes for methods tagged with the @Test annotation, and will then call them when running the unit test. (Maybe, using getDeclaredAnnotations() of Class class)
+JVM also uses reflection for its internal working. For example it can use reflection in case of serialization where a particular class has overridden the "readObject" and "writeObject" methods privately. The JVM will then call these private methods while serializing an instance of that class.
+Spring framework also uses reflection for its DI framework and many more.
 
 Drawbacks of Reflection
 
@@ -993,7 +1000,7 @@ The default methods cannot accessed from outside package,even if it is a sub-pac
 ------------------------------------------------------------------------------------------------
 ExceptionHandling with MethodOverriding in Java:--
 
-There are many rules if we talk about methodoverriding with exception handling. The Rules are as follows:
+There are many rules if we talk about method overriding with exception handling. The Rules are as follows:
 
 If SuperClass does not declare an exception, then the SubClass can only declare unchecked exceptions, but not the checked exceptions.
 If SuperClass declares an exception, then the SubClass can only declare the same or child exceptions of the exception declared by the SuperClass and any new Runtime Exceptions, just not any new checked exceptions at the same level or higher.
