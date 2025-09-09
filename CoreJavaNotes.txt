@@ -1660,3 +1660,6 @@ Check archived chatgpt "serviceloader pattern java"
 ------------------------------------------------------------------------------------------------
 Why interface variables are public static final:
 Check archived chatgpt "Variables in interface"
+------------------------------------------------------------------------------------------------
+https://www.java67.com/2020/05/15-java-serialization-interview-questions-answers.html
+Check the link for interview questions on different topics at the bottom of this page.

@@ -457,6 +457,9 @@ Configures the LocalContainerEntityManagerFactoryBean to to scan for entity clas
 This annotation provides an alternative to manually setting LocalContainerEntityManagerFactoryBean#setPackagesToScan(String...) and is particularly useful if you want to configure entity scanning in a type-safe way, or if your LocalContainerEntityManagerFactoryBean is auto-configured.
 Furthermore, any existing packagesToScan setting will be replaced.
 
+--------------------------------------------------------------------------------------------------
+https://javarevisited.blogspot.com/2013/05/10-hibernate-interview-questions-answers-java-j2ee-senior.html
+
 
 
 
