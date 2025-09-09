@@ -29,6 +29,7 @@ https://www.baeldung.com/java-8-new-features
 Advantages of using lambda: See archived chatgpt chat "Lambda expressions in java"
 https://stackoverflow.com/questions/33492203/what-are-the-advantages-of-using-lambda-expressions-in-java-8
 Also see archived chat "Lambda expression class creation."
+JVM creates an implementation of the functional interface dynamically during runtime using "invokedynamic" JVM bytecode instruction(introduced in java 7).
 --------------------------------------------------------------------------------------------
 Method Reference:
 https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html
@@ -77,7 +78,6 @@ https://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html
 The combiner is necessary in parallel reductions. We only call combiner in a parallel mode to reduce the results of accumulators from different threads.
 
 Difference between Stream.of and Arrays.stream:
-https://www.techiedelight.com/difference-stream-of-arrays-stream-java/
 Check archived chatgpt "Stream.of vs Arrays.stream"
 
 Practice link:
@@ -87,7 +87,8 @@ Disadvantage of manual iteration vs stream:
 Check archived chatgpt "Iterator vs Stream comparison"
 
 When to use parallelStream:
-https://www.linkedin.com/learning/advanced-java-programming-2/implementing-parallel-streams?autoSkip=true&dApp=53239054&leis=LAA&resume=false&u=2113185
+https://www.baeldung.com/java-when-to-use-parallel-stream
+https://medium.com/@jadhavsid1101/java-parallel-streams-when-to-use-them-and-when-not-to-211d92ac9e38
 
 https://www.baeldung.com/java-8-comparator-comparing
 
