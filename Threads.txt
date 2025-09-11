@@ -1,22 +1,27 @@
 Reference:
 https://docs.oracle.com/javase/tutorial/essential/concurrency/threads.html
 
-Important: https://docs.oracle.com/javase/tutorial/essential/concurrency/locksync.html
+https://docs.oracle.com/javase/tutorial/essential/concurrency/locksync.html
 See Synchronized statements and Reentrant Synchronization and their advantages.
+"But a thread can acquire a lock that it already owns. Allowing a thread to acquire the same lock more than once enables reentrant synchronization. This describes a situation where synchronized code, directly or indirectly, invokes a method that also contains synchronized code, and both sets of code use the same lock. Without reentrant synchronization, synchronized code would have to take many additional precautions to avoid having a thread cause itself to block."
 "Synchronized statements are also useful for improving concurrency with fine-grained synchronization."
 
 --------------------------------------------------------------------------------
 Volatile:
 https://www.geeksforgeeks.org/volatile-keyword-in-java/
 Synchronized keyword provides both atomicity and memory consistency.
-Volatile keyword provides only memory consistency.
+Volatile keyword provides only memory consistency and not atomicity. Hence, volatile does not prevent race condition(atomicity). For example changing a shared counter by multiple threads. Because incrementing counter involves multiple steps(read from main memory, modify, write to main memory). All volatile does is ensure that a thread writes directly to main memory after modifying, rather than keeping the modified value in CPU cache. Same goes for read operation also, ie any value is read directly from main memory.
+But volatile does not guarantee that when a particular thread is doing "read, modify, write(to main memory)", other thread won't be doing the same set of operations simultaneously, and thus creating a race condition.
+Volatile can be used for flags across threads. Als0 double-checked locking in singleton pattern.
+
+Check archived chatgpt "volatile in multithreading"
 -------------------------------------------------------------------------------------
 
 Difference between reentrantlock and synchronized:
 
-1) Significant difference between ReentrantLock and synchronized keyword is fairness. synchronized keyword doesn't support fairness. Any thread can acquire lock once released, no preference can be specified, on the other hand you can make ReentrantLock fair by specifying fairness property, while creating instance of ReentrantLock. Fairness property provides lock to longest waiting thread, in case of contention.
+1) Significant difference between ReentrantLock and synchronized keyword is fairness. synchronized keyword doesn't support fairness. Any thread can acquire lock once released, no preference can be specified, on the other hand you can make ReentrantLock fair by specifying fairness property, while creating instance of ReentrantLock. Fairness property provides lock to the longest waiting thread, in case of contention.
 
-2) Second difference between synchronized and Reentrant lock is tryLock() method. ReentrantLock provides convenient tryLock() method, which acquires lock only if its available or not held by any other thread. This reduce blocking of thread waiting for lock in Java application.
+2) Second difference between synchronized and Reentrant lock is tryLock() method. ReentrantLock provides convenient tryLock() method, which acquires lock only if it's available or not held by any other thread. This reduces blocking of thread waiting for lock in Java application.
 
 3) One more worth noting difference between ReentrantLock and synchronized keyword in Java is, ability to interrupt Thread while waiting for Lock. In case of synchronized keyword, a thread can be blocked waiting for lock, for an indefinite period of time and there was no way to control that. ReentrantLock provides a method called lockInterruptibly(), which can be used to interrupt thread when it is waiting for lock. Similarly tryLock() with timeout can be used to timeout if lock is not available in certain time period.
 
@@ -26,7 +31,7 @@ When a thread calls lockInterruptibly(), it may be interrupted while it is waiti
 
 Read more: https://javarevisited.blogspot.com/2013/03/reentrantlock-example-in-java-synchronized-difference-vs-lock.html
 
-Note about tryLock: Even when this lock has been set to use a fair ordering policy, a call to tryLock() will immediately acquire the lock if it is available, whether or not other threads are currently waiting for the lock. This "barging" behavior can be useful in certain circumstances, even though it breaks fairness.
+Note about tryLock: Even when this lock has been set to use a fair ordering policy, a call to tryLock() will immediately acquire the lock if it is available, whether other threads are currently waiting for the lock or not. This "barging" behavior can be useful in certain circumstances, even though it breaks fairness.
 
 https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/locks/ReentrantLock.html#tryLock()
 
