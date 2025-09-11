@@ -1170,9 +1170,14 @@ https://stackify.com/solid-design-liskov-substitution-principle/#:~:text=The%20L
 (Liskov substitution)
 
 ------------------------------------------------------------------------------------------------
-Since java 9, interface can have private methods.
-Java 9 introduced java shell REPL tool (jshell).
-Java 9 introduced modular system.
+Java 9 new feature:
+1. Since java 9, interface can have private methods.
+2. Java 9 introduced java shell REPL tool (jshell).
+3. Java 9 introduced modular system.
+4. try-with-resources variable declaration
+5. ".of()" factory methods, like Set.of()
+6. HTTP2 client.
+
 https://www.youtube.com/watch?v=5xDoo-PcZ7g&list=PLsyeobzWxl7qjvpYOxlLYYQF4QbQRTwTF (Telusko)
 https://www.youtube.com/watch?v=UqnwQp1uHuY (See up until "New Abstraction" segment in the seek bar)
 Check archived chatgpt "java module dependency missing."
@@ -1216,6 +1221,8 @@ Java 11 new features:
 
 https://howtodoinjava.com/java11/features-enhancements/#4-collection-toarrayintfunction
 https://www.baeldung.com/java-11-new-features
+
+JAVA LTS releases are java 8, 11, 17, 21.
 ------------------------------------------------------------------------------------------------
 Marker Interface:
 
