@@ -355,11 +355,12 @@ In order for spring to inject a property into an object, one of the following ha
 
 Even if the property is public, it cannot be injected if it does not have a setter and it is not a constructor argument of the object.
 
-While using @Autowired annotation though, a property does not necessarily need to have a setter if it is marked by @autowired, spring can inject the property reagardless of whether the setter is present or not. Spring uses reflection in case of private fields having no setters or constructor args.
+While using @Autowired annotation though, a property does not necessarily need to have a setter if it is marked by @autowired, spring can inject the property regardless of whether the setter is present or not. Spring uses reflection in case of private fields having no setters or constructor args.
 
 @Autowired can be applied on top of a field, setter method (not getter, since properties are injected via setter) or on top of constructor(for autowire by constructor).
 https://www.baeldung.com/constructor-injection-in-spring
 
+Check archived chatgpt "Spring autowiring process"
 ---------------------------------------------------------------------------------------------
 1. Triangle.java:
 
@@ -426,7 +427,6 @@ public class App
 
 Output: Could not instantiate bean class [com.spring.spring1.Triangle]: No default constructor found;
 Uncomment the default constructor above and re-run,the program will run successfully.
-
 
 ---------------------------------------------------------------------------------------------
 The above example with spring.xml changed as:
@@ -562,19 +562,15 @@ Output: equilateral triangle of height 20 is drawn.
 Autowiring:
 
 1. byname - autowires using the names (id) of the beans.
-2. bytype - autowirews using the type of the bean and the property. If there are multiple beans of the same type defined in the spring.xml then it will fail.
+2. bytype - autowires using the type of the bean and the property. If there are multiple beans of the same type defined in the spring.xml then it will fail.
 3. constructor - same as autowire bytype, but instead of injecting the beans using setter methods it uses constructors to inject the beans. But again, the argument types of the constructor has to be different. If there are more than one argument of same type in constructor and more than one bean with same type in spring.xml, then autowiring by constructor will fail.
 
 ---------------------------------------------------------------------------------------------
-
-
 Singleton Pattern in java:
 
 https://www.journaldev.com/1377/java-singleton-design-pattern-best-practices-examples
 
-
 ---------------------------------------------------------------------------------------------
-
 Spring bean scopes:
 
 1. Singleton: If the bean scope is singleton, then spring creates the instance of that bean while intialization of the spring container (ie ApplicationContext). It does not wait for the getBean method call by an object.
@@ -960,7 +956,6 @@ destroy-method destroy
 If we apply both the "init-method", "destroy-method" methods and the "default-init-method", "default-destroy-method" methods, then the "init-method", "destroy-method" will take priority and the default methods will not execute at all.
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------
-
 BeanPostProcessor interface:
 
 If a common set of code is to be executed after each bean initialization, then this interface can be used. (Note that there is no similar interface for destroy.)
@@ -1156,7 +1151,7 @@ PointC:-100,-20
 
 BeanFactoryPostProcessor and PropertyPlaceHolderConfigurer:
 
-BeanFactoryPostProcessor is an interface which provides methods to be called when the BeanFactory is initialized (Note that ApplicationContext is essentialy a BeanFactory). This method is called even before the beans are intialized or spring.xml is read by the BeanFactory.
+BeanFactoryPostProcessor is an interface which provides methods to be called when the BeanFactory is initialized (Note that ApplicationContext is essentialy a BeanFactory). This method is called even before the beans are initialized or spring.xml is read by the BeanFactory.
 
 1. Triangle.java (same as before)
 2. spring.xml:
@@ -1463,7 +1458,6 @@ https://www.linkedin.com/pulse/difference-between-inject-vs-autowire-resource-pa
 
 "@Resource: annotation based on JSR-250. @Resource is quite similar to @Autowired and @Inject (JSR-330 annotation), but the main difference is the execution paths taken to find out the required bean to inject. @Resource will narrow down the search first by name then by type and finally by Qualifiers (ignored if match is found by name). @Autowired and @Inject will narrow down the search first by type then by qualifier and finally by the name."
 
-
 Since @Resource first matches the beans byname, what if the name is same but the type is different:
 
 1. Triangle.java:
@@ -1545,9 +1539,7 @@ public class Triangle{
 Output: org.springframework.beans.factory.BeanNotOfRequiredTypeException: Bean named 'pointA' must be of type [com.spring.coreSpring.Point], but was actually of type [com.spring.coreSpring.App]
 
 
-
 There are two more JSR-250 annotations @PostConstruct and @PreDestroy,which are similar to init-method and destroy-method of spring.xml.
-
 -----------------------------------------------------------------------------------------------------------------------------------------------------
 
 @Component: This annotation is used to register a bean using the class definition itself, rather than declaring the bean in spring.xml.

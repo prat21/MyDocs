@@ -19,7 +19,7 @@
 ------------------------------------------------------------------------------------------------------------------------------
 When we have a value object inside an entity object:
 
-10. @Embeddable: is used to annotate an object as a value object. Hibernate will not create a seperate table for an @Embeddable object. A value object is marked as @Embedded inside an minity object. SEE : Hibernate Tutorial 08 - Value Types and Embedding Objects (8.10 min)
+10. @Embeddable: is used to annotate an object as a value object. Hibernate will not create a separate table for an @Embeddable object. A value object is marked as @Embedded inside an minity object. SEE : Hibernate Tutorial 08 - Value Types and Embedding Objects (8.10 min)
 
 
 11. @ElementCollection: is used to store a collection of objects into a seperate table. The list or set of objects (say list of addresses) is stored in a seperate table with the primary key of the entity class as foreign key. SEE : Hibernate Tutorial 10 - Saving Collections.
@@ -137,7 +137,7 @@ INSERT INTO USER_DETAILS (userId,userName).
 INSERT INTO Vehicle (vehicleId,vehicleName).
 INSERT INTO USER_VEHICLE (USER_ID , VEHICLE_ID).
 
-We can also do the mapping from vehicle to user,ie a many-to-one relationship. So, that given a vehicle, we can fetch the corresponnding user.
+We can also do the mapping from vehicle to user,ie a many-to-one relationship. So, that given a vehicle, we can fetch the corresponding user.
 
 
 @Entity
@@ -163,7 +163,7 @@ Class User{
 	private int userId;
 	private String userName;
 	
-	@OneToMany(mappedBy="user")									//"user" is the bean property on the other class(private User user), ie Vehicle, which defines the mapping
+	@OneToMany(mappedBy="user")							//"user" is the bean property on the other class(private User user), ie Vehicle, which defines the mapping
 	private List<Vehicle> vehicle = new ArrayList<Vehicle>();
 }
 
@@ -246,7 +246,7 @@ Class Vehicle{
 	private int vehicleId;
 	private String vehicleName;
 	
-	@ManyToMany(mappedBy="vehicle")							//This tells hibernate that the mapping is maintained by the "vehicle" property of the other class, ie User class
+	@ManyToMany(mappedBy="vehicle")						//This tells hibernate that the mapping is maintained by the "vehicle" property of the other class, ie User class
 	private List<User> users = new ArrayList<User>();
 }
 
@@ -265,7 +265,7 @@ SEE: Hibernate Tutorial 15 - Many To Many Mapping
 
 ------------------------------------------------------------------------------------------------------------------------------
 
-18. Cascade: is an sttribute of @OneToMany. Previously we used to save the entity objects like this:
+18. Cascade: is an attribute of @OneToMany. Previously we used to save the entity objects like this:
 
 User user = new User();
 user.setUserName("First User);
@@ -283,9 +283,9 @@ session.save(User);
 session.save(Vehicle1);
 session.save(Vehicle2);
 
-That is we had to save the vehicle objects seperately. Since vehicle are entities, hence it can exist independently. If it were a value object, like "Address"(explained previously), then it would have to be associated with a User object and it would have no existence without a User object. So, in that case saving a user object would have saved the Address object as well, we dont need to save Address object seperately.
+That is we had to save the vehicle objects separately. Since vehicle are entities, hence it can exist independently. If it were a value object, like "Address"(explained previously), then it would have to be associated with a User object and it would have no existence without a User object. So, in that case saving a user object would have saved the Address object as well, we dont need to save Address object separately.
 
-But Since Vehicle are entity themselves, hence it is an independent obejct and saving the User object is not enough to save the Vehicle objects, hibernate cannot make the decision to save the Vehicle objects when a User object is saved. So, in order to tell hibernate to save the Vehicle object while saving the User object, we use Cascade.
+But Since Vehicle are entity themselves, hence it is an independent object and saving the User object is not enough to save the Vehicle objects, hibernate cannot make the decision to save the Vehicle objects when a User object is saved. So, in order to tell hibernate to save the Vehicle object while saving the User object, we use Cascade.
 
 @Entity
 @Table(name="USER_DETAILS")
@@ -298,7 +298,7 @@ Class User{
 	private List<Vehicle> vehicle = new ArrayList<Vehicle>();
 }
 
-Hence when we persist a User object,all the vehicles in the list of vehicles are saved as well. In this case we have to use
+Hence, when we persist a User object,all the vehicles in the list of vehicles are saved as well. In this case we have to use
 
 session.persist(User);
 
@@ -422,12 +422,9 @@ query.setInteger("userId",5);
 query.setString("userName","Second User");
 List<String> users = (List<String>)query.list();
 
-
-
 ------------------------------------------------------------------------------------------------------------------------------
 
-26. Second Level Cache and @Cacheable and @Cache annotations: SEE: (Hibernate Tutorial 32 - Cacheing in Hibernate) AND (Hibernate Tutorial 33 - Configuring Second Level Cache) AND (Hibernate Tutorial 34 - Using Query Cache)
-
+26. Second Level Cache and @Cacheable and @Cache annotations: SEE: (Hibernate Tutorial 32 - Caching in Hibernate) AND (Hibernate Tutorial 33 - Configuring Second Level Cache) AND (Hibernate Tutorial 34 - Using Query Cache)
 
 ------------------------------------------------------------------------------------------------------------------------------
 

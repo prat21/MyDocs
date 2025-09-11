@@ -3,7 +3,7 @@ https://docs.oracle.com/javase/tutorial/essential/concurrency/threads.html
 
 Important: https://docs.oracle.com/javase/tutorial/essential/concurrency/locksync.html
 See Synchronized statements and Reentrant Synchronization and their advantages.
-
+"Synchronized statements are also useful for improving concurrency with fine-grained synchronization."
 
 --------------------------------------------------------------------------------
 Volatile:
@@ -30,7 +30,7 @@ Note about tryLock: Even when this lock has been set to use a fair ordering poli
 
 https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/locks/ReentrantLock.html#tryLock()
 
-
+Check the implementation logic of ArrayBlockingQueue, especially put and take methods. Also check the reentrantLock and Condition objects.
 -------------------------------------------------------------------------------------------------------------------------------------------------
 
 CountDownLatch :
