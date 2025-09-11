@@ -1575,6 +1575,10 @@ Facade design pattern:
 https://www.digitalocean.com/community/tutorials/facade-design-pattern-in-java
 Check archived chatgpt "facade design pattern java"
 
+Proxy design pattern:
+https://www.digitalocean.com/community/tutorials/proxy-design-pattern
+Check archived chatgpt "proxy design pattern"
+
 3) STRUCTURAL DESIGN PATTERNS:
 Chain of Responsibility pattern:
 https://www.digitalocean.com/community/tutorials/chain-of-responsibility-design-pattern-in-java
