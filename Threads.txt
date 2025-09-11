@@ -35,9 +35,16 @@ Note about tryLock: Even when this lock has been set to use a fair ordering poli
 
 https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/locks/ReentrantLock.html#tryLock()
 
-Check the implementation logic of ArrayBlockingQueue, especially put and take methods. Also check the reentrantLock and Condition objects.
--------------------------------------------------------------------------------------------------------------------------------------------------
+Condition:
+https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/locks/Condition.html
 
+Check the implementation logic of ArrayBlockingQueue, especially put and take methods.
+-------------------------------------------------------------------------------------------------------------------------------------------------
+Why wait, notify and notifyAll are defined in Object class rather than Thread class:
+Check archived chatgpt "Why wait notify in Object" and "Condition vs wait in java"
+"If wait() were in Thread, the API would look confusing. Because it's not the thread you wait on, it's the object you synchronized on."
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
 CountDownLatch :
 https://www.baeldung.com/java-countdown-latch
 
@@ -84,7 +91,6 @@ A CyclicBarrier can be used again and again once all the threads in a barriers i
 
 
 -------------------------------------------------------------------------------------------------------------------------------------------------
-
 Mutex is the Semaphore with an access count of 1.
 
 See differnce between mutex,semaphore and binary semaphore.
