@@ -22,6 +22,14 @@ Difference between reentrantlock and synchronized:
 1) Significant difference between ReentrantLock and synchronized keyword is fairness. synchronized keyword doesn't support fairness. Any thread can acquire lock once released, no preference can be specified, on the other hand you can make ReentrantLock fair by specifying fairness property, while creating instance of ReentrantLock. Fairness property provides lock to the longest waiting thread, in case of contention.
 
 2) Second difference between synchronized and Reentrant lock is tryLock() method. ReentrantLock provides convenient tryLock() method, which acquires lock only if it's available or not held by any other thread. This reduces blocking of thread waiting for lock in Java application.
+TryLock is useful to:
+a) avoid deadlocks
+b) when you want a non-blocking attempt to try a lock
+c) for time-out based waiting.
+Check archived chatgpt "lock trylock java explained"
+https://www.baeldung.com/java-deadlock-livelock#livelock
+"TryLock may result in livelock situation where two active threads are handing over the control to other thread repeatedly without being able to complete the task."
+"A great example of livelock is a messaging system where, when an exception occurs, the message consumer rolls back the transaction and puts the message back to the head of the queue. Then the same message is repeatedly read from the queue, only to cause another exception and be put back on the queue. The consumer will never pick up any other message from the queue."
 
 3) One more worth noting difference between ReentrantLock and synchronized keyword in Java is, ability to interrupt Thread while waiting for Lock. In case of synchronized keyword, a thread can be blocked waiting for lock, for an indefinite period of time and there was no way to control that. ReentrantLock provides a method called lockInterruptibly(), which can be used to interrupt thread when it is waiting for lock. Similarly tryLock() with timeout can be used to timeout if lock is not available in certain time period.
 
@@ -39,11 +47,13 @@ Condition:
 https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/locks/Condition.html
 
 Check the implementation logic of ArrayBlockingQueue, especially put and take methods.
+
 -------------------------------------------------------------------------------------------------------------------------------------------------
 Why wait, notify and notifyAll are defined in Object class rather than Thread class:
 Check archived chatgpt "Why wait notify in Object" and "Condition vs wait in java"
 "If wait() were in Thread, the API would look confusing. Because it's not the thread you wait on, it's the object you synchronized on."
-
+"wait() -> related to intrinsic lock(object lock) and one wait set per object.
+Condition -> Related to extrinsic lock(ReentrantLock). Supports multiple wait set per lock"
 -------------------------------------------------------------------------------------------------------------------------------------------------
 CountDownLatch :
 https://www.baeldung.com/java-countdown-latch
@@ -93,7 +103,7 @@ A CyclicBarrier can be used again and again once all the threads in a barriers i
 -------------------------------------------------------------------------------------------------------------------------------------------------
 Mutex is the Semaphore with an access count of 1.
 
-See differnce between mutex,semaphore and binary semaphore.
+See difference between mutex,semaphore and binary semaphore.
 
 --------------------------------------------------------------------------------------------------------------------------------------------------
 
