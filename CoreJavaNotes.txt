@@ -163,12 +163,15 @@ While Deque implementations are not strictly required to prohibit the insertion 
 
 https://docs.oracle.com/javase/7/docs/api/java/util/Deque.html
 
-
+8) ConcurrentLinkedQueue:
+Check archived chatgpt "ConcurrentLinkedQueue java"
+Difference between concurrentLinkedQueue vs ArrayBlockingQueue:
+Check archived chatgpt "Queue comparison"
 
 -----------------------------------------------------------------------------------------------------------------
 
 
-8) Arraylist:
+9) Arraylist:
 
 Resizable-array implementation of the List interface. Implements all optional list operations, and permits all elements, including null. In addition to implementing the List interface, this class provides methods to manipulate the size of the array that is used internally to store the list. (This class is roughly equivalent to Vector, except that it is unsynchronized.)
 
@@ -176,7 +179,7 @@ The size, isEmpty, get, set, iterator, and listIterator operations run in consta
 
 What is amortized constant time: https://stackoverflow.com/questions/200384/constant-amortized-time
 
-9) LinkedList:
+10) LinkedList:
 
 Doubly-linked list implementation of the List and Deque interfaces. Implements all optional list operations, and permits all elements (including null).
 All of the operations perform as could be expected for a doubly-linked list. Operations that index into the list will traverse the list from the beginning or the end, whichever is closer to the specified index.

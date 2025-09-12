@@ -47,7 +47,9 @@ Condition:
 https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/locks/Condition.html
 
 Check the implementation logic of ArrayBlockingQueue, especially put and take methods.
+Check archived chatgpt "Reentrantlock consequences in java"
 
+A ReentrantLock lock remembers which thread acquired it. ReentrantLock knows the current owning thread. Only the owner can call unlock(). If another thread tries to unlock, it throws IllegalMonitorStateException.
 -------------------------------------------------------------------------------------------------------------------------------------------------
 Why wait, notify and notifyAll are defined in Object class rather than Thread class:
 Check archived chatgpt "Why wait notify in Object" and "Condition vs wait in java"
@@ -104,6 +106,23 @@ A CyclicBarrier can be used again and again once all the threads in a barriers i
 Mutex is the Semaphore with an access count of 1.
 
 See difference between mutex,semaphore and binary semaphore.
+
+Check archived chatgpt "semaphore in java", "semaphore and connection pool", "binary semaphore vs reentrantlock"
+
+A semaphore is not reentrant in the sense that, a thread cannot acquire a single permit more than once. If it does "acquire()" repeatedly it will gain new permits(if available).
+
+Check archived chatgpt "semaphore ownership in java"
+A Semaphore is just a counter of available permits.
+1) When a thread calls acquire(), it decrements the counter.
+2) When a thread calls release(), it increments the counter.
+3) It does not care which thread acquired or released the permit.
+
+This design makes sense because:
+1) Semaphores are meant for resource management (like limiting access to a pool of DB connections or printers), not just mutual exclusion.
+2) Ownership would restrict usage — for example:
+Thread A acquires a permit (starts using a resource).
+Thread B, after finishing the work, should be able to release it.
+With ownership, this pattern wouldn’t work.
 
 --------------------------------------------------------------------------------------------------------------------------------------------------
 
