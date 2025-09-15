@@ -155,7 +155,8 @@ ExecutorService:
 
 https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/ExecutorService.html
 http://www.baeldung.com/java-executor-service-tutorial
-https://medium.com/codex/executorservice-internal-working-in-java-7b286882f54e (Has internal working logic of thread pool)
+https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ThreadPoolExecutor.html
+(Has explanation about corepoolsize, maxpoolsize, keepAliveTime, Unbounded/Bounded queue)
 
 a. If fewer than CorePoolSize threads are running, the Executor always prefers creating a new thread rather than queuing.
 b. If CorePoolSize or more threads are running, the Executor always prefers queuing a request rather than creating a new thread.
@@ -163,7 +164,11 @@ c. If a request cannot be queued, a new thread is created unless this would exce
 
 https://howtodoinjava.com/java/multi-threading/how-to-use-blockingqueue-and-threadpoolexecutor-in-java/
 
-Note: ExecutorService abstracts away the thread management and lifecycle overheads. We just create a thread pool with desried pool size and submit the tasks that we want to execute. ExecutorService takes care of the rest.
+Note: ExecutorService abstracts away the thread management and lifecycle overheads. We just create a thread pool with desired pool size and submit the tasks that we want to execute. ExecutorService takes care of the rest.
+
+Check archived chatgpt "thread pool types"
+Check archived chatgpt "CorePoolSize vs MaxPoolsize" to check how corepoolsize and maxpoolsize relate to different thread pools.
+Check chatgpt "Executor.shutdown explanation"
 --------------------------------------------------------------------------------------------------------------------------------------------------
 
 Callable: Main difference between Runnable and Callable is that Runnable cannot return any value back to caller but Callable can return value. Another difference is that call() method from Callable can also throw checked exception which was not possible by run() method of Runnable interface. 
@@ -203,14 +208,28 @@ When multiple threads attempt to update the same value through CAS, one of them 
 However, unlike in the case of locks, no other thread gets suspended; instead, they're simply informed that they did not manage to update the value.
 The threads can then proceed to do further work and context switches are completely avoided.
 https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/atomic/package-summary.html
+Note: For "compareAndSet()" to work, we first need to get the current value of the variable using "get()" method and then use that value(as the value to compare with) in compareAndSet(). For the method "getAndIncrement()" this sequence of operations happens automatically.
+
+long getAndTransform(AtomicLong var) {
+   long prev, next;
+   do {
+     prev = var.get();
+     next = transform(prev);
+   } while (!var.compareAndSet(prev, next));
+   return prev; // return next; for transformAndGet
+}
 --------------------------------------------------------------------------------------------------------------------------------------------------
 Race Condition:
 http://tutorials.jenkov.com/java-concurrency/race-conditions-and-critical-sections.html
 --------------------------------------------------------------------------------------------------------------------------------------------------
 CompletableFuture:
 https://forums.oracle.com/ords/apexds/post/completablefuture-for-asynchronous-programming-in-java-8-8539
+"If no ExecutorService is supplied(to the completableFuture), the tasks will be executed in the common fork/join pool, the same pool that is used for the parallel execution of streams."
+"All these methods(thenApply, thenAccept, thenRun) execute their tasks in the same thread as the upstream task. If we want these tasks to be executed in a separate thread then we have to use the "async" variants. These methods can take a further suffix: async(thenRunAsync for example). An async method executes its task in the default fork/join pool, unless it takes an Executor, in which case, the task will be executed in this Executor."
+
 https://www.baeldung.com/java-completablefuture-threadpool
 https://medium.com/javarevisited/completablefuture-usage-and-best-practises-4285c4ceaad4
+
 Why completableFuture was introduced even though Future interface was there:
 1. There was no way to make get() call non-blocking in Future.
 2. No support for exception handling.
@@ -218,4 +237,7 @@ Why completableFuture was introduced even though Future interface was there:
 4. There was no way to explicitly complete the task.
 https://www.callicoder.com/java-8-completablefuture-tutorial/
 The join() method is similar to get(). The only difference is that it throws an unchecked exception if the underlying CompletableFuture completes exceptionally.
-
+Check archived chatgpt "get vs join completablefuture"
+Check archived chatgpt "completable future in java" (Especially check the section explaining different states of completionstage)
+--------------------------------------------------------------------------------------------------------------------------------------------------
+Check threadLocal and fork/join pool.

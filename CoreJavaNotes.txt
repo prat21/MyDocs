@@ -165,9 +165,13 @@ https://docs.oracle.com/javase/7/docs/api/java/util/Deque.html
 
 8) ConcurrentLinkedQueue:
 Check archived chatgpt "ConcurrentLinkedQueue java"
-Difference between concurrentLinkedQueue vs ArrayBlockingQueue:
+Difference between ConcurrentLinkedQueue vs ArrayBlockingQueue:
 Check archived chatgpt "Queue comparison"
 
+Check archived chatgpt "linked vs arrayblockingqueue"
+LinkedBlockingQueue can be unbounded whereas ArrayBlockingQueue is bounded.
+ArrayBlockingQueue uses a single lock for both put and take. Can cause more contention in highly concurrent scenarios.
+LinkedBlockingQueue uses two separate locks (one for put, one for take). Allows higher concurrency when producers and consumers work in parallel.
 -----------------------------------------------------------------------------------------------------------------
 
 
@@ -690,6 +694,7 @@ Exception:
 
 In order to create a custom exception, we need to extend either Exception or RunTimeException. We extend RuntimeException when we want to create an unchecked exception. If we extend Exception, then it becomes checked exception. (Write a program to verify the same)
 
+Check archived chatgpt "unchecked exception benefits"
 -----------------------------------------------------------------------------------------------------------------
 
 Autoboxing/Unboxing:
