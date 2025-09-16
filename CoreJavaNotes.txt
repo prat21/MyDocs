@@ -2,7 +2,7 @@ In comparable docs of oracle:-
 
 All other things being equal, immutable types are the way to go, especially for objects that will be used as elements in Sets or as keys in Maps. These collections will break if you modify their elements or keys while they're in the collection.
 
-See: https://docs.oracle.com/javase/tutorial/collections/interfaces/order.html
+https://docs.oracle.com/javase/tutorial/collections/interfaces/order.html
 
 If you try to sort a list, the elements of which do not implement Comparable, Collections.sort(list) will throw a ClassCastException. Similarly, Collections.sort(list, comparator) will throw a ClassCastException if you try to sort a list whose elements cannot be compared to one another using the comparator.
 
@@ -108,6 +108,7 @@ Just like hash map and linked hash map, a tree map is not synchronized and there
 
 Important: Since treemap is red-black tree, iterating over treemap means printing the elements of the red-black tree in sorted order. This takes O(nlogn) time which is more than the iteration time of hashmap which is O(n). On the other side, the time taken for the operations like containsKey takes O(logn) time which less than that of the hashmap (Wrong, containsKey is just another get() operation which takes O(1) time to run). The only reason we would want to have treemap instead of hashmap, is when we want the keys to be in a sorted order. Otherwise runtime of all the operations is better in hashmap.
 
+Check archived chatgpt "Map comparison in java" (For real-world use case of each map)
 
 5. LinkedHashSet:
 
@@ -138,7 +139,7 @@ See Queue Interface first
 
 A priority queue does not permit null elements. The head of this queue is the least element with respect to the specified ordering. If multiple elements are tied for least value, the head is one of those elements -- ties are broken arbitrarily. The queue retrieval operations poll, remove, peek, and element access the element at the head of the queue.
 
-Implementation note: this implementation provides O(log(n)) time for the enqueing and dequeing methods (Since enqueing and dequeing of a binary heap takes O(logn) time) (offer, poll, remove() and add); linear time for the remove(Object) and contains(Object) methods; and constant time for the retrieval methods (peek, element, and size).
+Implementation note: this implementation provides O(log(n)) time for the enqueuing and dequeuing methods (Since enqueuing and dequeing of a binary heap takes O(logn) time) (offer, poll, remove() and add); linear time for the remove(Object) and contains(Object) methods; and constant time for the retrieval methods (peek, element, and size).
 
 https://docs.oracle.com/javase/7/docs/api/java/util/PriorityQueue.html
 
@@ -174,7 +175,6 @@ ArrayBlockingQueue uses a single lock for both put and take. Can cause more cont
 LinkedBlockingQueue uses two separate locks (one for put, one for take). Allows higher concurrency when producers and consumers work in parallel.
 -----------------------------------------------------------------------------------------------------------------
 
-
 9) Arraylist:
 
 Resizable-array implementation of the List interface. Implements all optional list operations, and permits all elements, including null. In addition to implementing the List interface, this class provides methods to manipulate the size of the array that is used internally to store the list. (This class is roughly equivalent to Vector, except that it is unsynchronized.)
@@ -191,6 +191,7 @@ All of the operations perform as could be expected for a doubly-linked list. Ope
 Arraylist vs linkedlist
 https://stackoverflow.com/questions/322715/when-to-use-linkedlist-over-arraylist-in-java
 
+Check archived chatgpt "ArrayList vs LinkedList examples"
 -----------------------------------------------------------------------------------------------------------------
 List vs Queue:
 
@@ -495,7 +496,7 @@ A: https://stackoverflow.com/questions/20078586/why-we-use-class-forname-oracle-
 
 Q: Difference between class.forname and new keyword?
 A: https://stackoverflow.com/questions/4612386/what-is-the-difference-between-the-new-operator-and-class-newinstance
-Also check chatGPT.
+Also check chatGPT "class.forname vs new keyword".
 
 Java Database Connectivity with 5 Steps:
 
@@ -1231,6 +1232,13 @@ https://howtodoinjava.com/java11/features-enhancements/#4-collection-toarrayintf
 https://www.baeldung.com/java-11-new-features
 
 JAVA LTS releases are java 8, 11, 17, 21.
+------------------------------------------------------------------------------------------------
+Java 21 new features:
+1) Record pattern
+2) Pattern matching for switch
+3) String literal
+4) Virtual threads
+https://www.baeldung.com/java-lts-21-new-features
 ------------------------------------------------------------------------------------------------
 Marker Interface:
 

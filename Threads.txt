@@ -12,7 +12,7 @@ https://www.geeksforgeeks.org/volatile-keyword-in-java/
 Synchronized keyword provides both atomicity and memory consistency.
 Volatile keyword provides only memory consistency and not atomicity. Hence, volatile does not prevent race condition(atomicity). For example changing a shared counter by multiple threads. Because incrementing counter involves multiple steps(read from main memory, modify, write to main memory). All volatile does is ensure that a thread writes directly to main memory after modifying, rather than keeping the modified value in CPU cache. Same goes for read operation also, ie any value is read directly from main memory.
 But volatile does not guarantee that when a particular thread is doing "read, modify, write(to main memory)", other thread won't be doing the same set of operations simultaneously, and thus creating a race condition.
-Volatile can be used for flags across threads. Als0 double-checked locking in singleton pattern.
+Volatile can be used for flags across threads. Also double-checked locking in singleton pattern.
 
 Check archived chatgpt "volatile in multithreading"
 -------------------------------------------------------------------------------------
