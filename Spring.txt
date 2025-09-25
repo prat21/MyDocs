@@ -68,9 +68,19 @@ https://community.sap.com/t5/application-development-blog-posts/why-not-to-use-f
 Field injection makes your beans mutable post-construction. With constructor injection, once an object is constructed, its dependencies remain unchanged.
 An @Autowired annotated constructor, setter or field does not have to be public.
 ---------------------------------------------------------------------------------------------
+https://docs.spring.io/spring-framework/reference/core/beans/dependencies/factory-lazy-init.html
 https://docs.spring.io/spring-framework/reference/core/beans/dependencies/factory-method-injection.html
 ---------------------------------------------------------------------------------------------
+https://docs.spring.io/spring-framework/reference/core/beans/dependencies/factory-autowire.html
+
+limitations and disadvantages of autowiring:
+1. Explicit dependencies in property and constructor-arg settings always override autowiring. You cannot autowire simple properties such as primitives, Strings, and Classes (and arrays of such simple properties). This limitation is by-design.
+2. Autowiring is less exact than explicit wiring. Although, as noted in the earlier table, Spring is careful to avoid guessing in case of ambiguity that might have unexpected results. The relationships between your Spring-managed objects are no longer documented explicitly.
+3. Multiple bean definitions within the container may match the type specified by the setter method or constructor argument to be autowired. For arrays, collections, or Map instances, this is not necessarily a problem. However, for dependencies that expect a single value, this ambiguity is not arbitrarily resolved. If no unique bean definition is available, an exception is thrown.
+---------------------------------------------------------------------------------------------
 https://docs.spring.io/spring-framework/reference/core/beans/factory-scopes.html
+As a rule, you should use the prototype scope for all stateful beans and the singleton scope for stateless beans.
+
 Spring does not manage the complete lifecycle of a prototype bean. The container instantiates, configures, and otherwise assembles a prototype object and hands it to the client, with no further record of that prototype instance. Thus, although initialization lifecycle callback methods are called on all objects regardless of scope, in the case of prototypes, configured destruction lifecycle callbacks are not called. The client code must clean up prototype-scoped objects and release expensive resources that the prototype beans hold.
 https://docs.spring.io/spring-framework/reference/core/beans/factory-scopes.html#beans-factory-scopes-sing-prot-interaction
 ---------------------------------------------------------------------------------------------
