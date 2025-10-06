@@ -83,16 +83,29 @@ As a rule, you should use the prototype scope for all stateful beans and the sin
 
 Spring does not manage the complete lifecycle of a prototype bean. The container instantiates, configures, and otherwise assembles a prototype object and hands it to the client, with no further record of that prototype instance. Thus, although initialization lifecycle callback methods are called on all objects regardless of scope, in the case of prototypes, configured destruction lifecycle callbacks are not called. The client code must clean up prototype-scoped objects and release expensive resources that the prototype beans hold.
 https://docs.spring.io/spring-framework/reference/core/beans/factory-scopes.html#beans-factory-scopes-sing-prot-interaction
+
+Check archived chatgpt "bean scopes in spring"
+
+https://docs.spring.io/spring-framework/reference/core/beans/factory-scopes.html#beans-factory-scopes-other-injection
 ---------------------------------------------------------------------------------------------
 https://docs.spring.io/spring-framework/reference/core/beans/factory-nature.html
 When an ApplicationContext creates an object instance that implements the org.springframework.context.ApplicationContextAware interface, the instance is provided with a reference to that ApplicationContext.
 Autowiring is another alternative to obtain a reference to the ApplicationContext.
+
+Check archived chatgpt "spring singleton thread safety", "spring postconstruct predestroy use"
 ---------------------------------------------------------------------------------------------
 https://docs.spring.io/spring-framework/reference/core/beans/factory-extension.html
 for each bean instance that is created by the container, the post-processor gets a callback from the container both before container initialization methods (such as InitializingBean.afterPropertiesSet() or any declared init method) are called, and after any bean initialization callbacks.
 An ApplicationContext automatically detects any beans that are defined in the configuration metadata that implement the BeanPostProcessor interface. The ApplicationContext registers these beans as post-processors so that they can be called later, upon bean creation.
+An example is the AutowiredAnnotationBeanPostProcessor, which processes the @Autowired annotation. This post processor is used to autowire annotated fields, setter methods, but not autowiring constructors, since this is a BeanPostProcessor which comes into action after a particular bean has been created(using constructor) and before/after initialization.
 
-BeanFactoryPostProcessor operates on the bean configuration metadata. That is, the Spring IoC container lets a BeanFactoryPostProcessor read the configuration metadata and potentially change it before the container instantiates any beans
+https://medium.com/@ByteCodeBlogger/bean-there-done-that-internal-working-of-autowired-annotation-907e7d8943a1
+"Lifecycle Events When @Autowired is Declared"
+https://medium.com/@AlexanderObregon/how-spring-boot-handles-bean-post-processing-863b62ef88cc
+https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/beans/factory/config/BeanPostProcessor.html
+Typically, post-processors that populate beans via marker interfaces or the like will implement postProcessBeforeInitialization(java.lang.Object, java.lang.String), while post-processors that wrap beans with proxies will normally implement postProcessAfterInitialization(java.lang.Object, java.lang.String).
+
+BeanFactoryPostProcessor operates on the bean configuration metadata. That is, the Spring IoC container lets a BeanFactoryPostProcessor read the configuration metadata and potentially change it before the container instantiates any beans.
 Spring includes a number of predefined bean factory post-processors, such as PropertyOverrideConfigurer and PropertySourcesPlaceholderConfigurer.
 You can use the PropertySourcesPlaceholderConfigurer to externalize property values from a bean definition in a separate file by using the standard Java Properties format. Doing so enables the person deploying an application to customize environment-specific properties, such as database URLs and passwords.
 ---------------------------------------------------------------------------------------------
@@ -122,13 +135,24 @@ public class MovieRecommender {
 
 A non-required method will not be called at all if its dependency (or one of its dependencies, in case of multiple arguments) is not available. A non-required field will not get populated at all in such cases, leaving its default value in place.
 
+Only one constructor of any given bean class may declare @Autowired with the required attribute set to true, indicating the constructor to autowire when used as a Spring bean. As a consequence, if the required attribute is left at its default value true, only a single constructor may be annotated with @Autowired. If multiple constructors declare the annotation, they will all have to declare required=false.
+
+Alternatively, you can express the non-required nature of a particular dependency through Java 8’s java.util.Optional, as the following example shows:
+
+public class SimpleMovieLister {
+
+	@Autowired
+	public void setMovieFinder(Optional<MovieFinder> movieFinder) {
+		...
+	}
+}
 ---------------------------------------------------------------------------------------------
 https://docs.spring.io/spring-framework/reference/core/beans/annotation-config/autowired-primary.html
 @Primary indicates that a particular bean should be given preference when multiple beans are candidates to be autowired to a single-valued dependency.
 ---------------------------------------------------------------------------------------------
 https://docs.spring.io/spring-framework/reference/core/beans/annotation-config/autowired-qualifiers.html
 Qualifiers do not have to be unique. For example, you can define multiple MovieCatalog beans with the same qualifier value “action”, all of which are injected into a Set<MovieCatalog> annotated with @Qualifier("action").
-JSR-250 @Resource annotation which is semantically defined to identify a specific target component by its unique name, with the declared type being irrelevant for the matching process.
+JSR-250 @Resource annotation which is semantically defined to identify a specific target component by its unique name, with the declared type being irrelevant for the matching process. @Autowired has rather different semantics: after selecting candidate beans by type, the specified String qualifier value is considered within those type-selected candidates only.
 @Autowired applies to fields, constructors, and multi-argument methods, allowing for narrowing through qualifier annotations at the parameter level. In contrast, @Resource is supported only for fields and bean property setter methods with a single argument.
 ---------------------------------------------------------------------------------------------
 https://docs.spring.io/spring-framework/reference/core/beans/annotation-config/resource.html
@@ -148,10 +172,17 @@ public class MovieRecommender {
 	public MovieRecommender() {
 	}
 }
+
+@Autowired annotation first tries to inject by type and then by name if more than one bean of the same type is found.
+@Resource annotation first tries to inject by name and then by type if no bean with the specified name is found.
 ---------------------------------------------------------------------------------------------
 https://docs.spring.io/spring-framework/reference/core/beans/annotation-config/value-annotations.html
 
 When configuring a PropertySourcesPlaceholderConfigurer using JavaConfig, the @Bean method must be static. Note: Maybe because the PropertySourcesPlaceholderConfigurer is a BeanFactoryPostProcessor which gets invoked before bean creation.
+
+Spring Boot configures by default a PropertySourcesPlaceholderConfigurer bean that will get properties from application.properties and application.yml files.
+
+Built-in converter support provided by Spring allows simple type conversion (to Integer or int for example) to be automatically handled. Multiple comma-separated values can be automatically converted to String array without extra effort.
 
 Note: Like @Resource, the @PostConstruct and @PreDestroy annotation types were a part of the standard Java libraries from JDK 6 to 8. However, the entire javax.annotation package got separated from the core Java modules in JDK 9 and eventually removed in JDK 11. As of Jakarta EE 9, the package lives in jakarta.annotation now. If needed, the jakarta.annotation-api artifact needs to be obtained via Maven Central now, simply to be added to the application’s classpath like any other library.
 ---------------------------------------------------------------------------------------------
@@ -161,6 +192,7 @@ You can annotate your component classes with @Component, but, by annotating them
 @Repository is already supported as a marker for automatic exception translation in your persistence layer.
 The @RestController annotation from Spring MVC is composed of @Controller and @ResponseBody.
 To autodetect these classes and register the corresponding beans, you need to add @ComponentScan to your @Configuration class, with the basePackages attribute.
+Furthermore, the AutowiredAnnotationBeanPostProcessor and CommonAnnotationBeanPostProcessor are both implicitly included when you use the component-scan element.
 By default, classes annotated with @Component, @Repository, @Service, @Controller, @Configuration, or a custom annotation that itself is annotated with @Component are the only detected candidate components. However, you can modify and extend this behavior by applying custom filters. Add them as includeFilters or excludeFilters attributes of the @ComponentScan annotation.
 Spring components can also contribute bean definition metadata to the container. You can do this with the same @Bean annotation used to define bean metadata within @Configuration annotated classes.
 Autowired fields and methods are supported, as previously discussed, with additional support for autowiring of @Bean methods.
@@ -252,6 +284,8 @@ public class AppConfig {
 	}
 }
 
+By default, beans defined with Java configuration that have a public close or shutdown method are automatically enlisted with a destruction callback. If you have a public close or shutdown method and you do not wish for it to be called when the container shuts down, you can add @Bean(destroyMethod = "") to your bean definition to disable the default (inferred) mode.
+
 By default, configuration classes use a @Bean method’s name as the name of the resulting bean. This functionality can be overridden, however, with the name attribute.
 @Configuration
 public class AppConfig {
@@ -283,12 +317,38 @@ public class AppConfig {
 
 This method of declaring inter-bean dependencies works only when the @Bean method is declared within a @Configuration class. You cannot declare inter-bean dependencies by using plain @Component classes.
 
+@Configuration
+public class AppConfig {
+
+	@Bean
+	public ClientService clientService1() {
+		ClientServiceImpl clientService = new ClientServiceImpl();
+		clientService.setClientDao(clientDao());
+		return clientService;
+	}
+
+	@Bean
+	public ClientService clientService2() {
+		ClientServiceImpl clientService = new ClientServiceImpl();
+		clientService.setClientDao(clientDao());
+		return clientService;
+	}
+
+	@Bean
+	public ClientDao clientDao() {
+		return new ClientDaoImpl();
+	}
+}
+clientDao() has been called once in clientService1() and once in clientService2(). Since this method creates a new instance of ClientDaoImpl and returns it, you would normally expect to have two instances (one for each service). That definitely would be problematic: In Spring, instantiated beans have a singleton scope by default. This is where the magic comes in: All @Configuration classes are subclassed at startup-time with CGLIB. In the subclass, the child method checks the container first for any cached (scoped) beans before it calls the parent method and creates a new instance.
+
 There are a few restrictions due to the fact that CGLIB dynamically adds features at startup-time. In particular, configuration classes must not be final.
 All @Configuration classes are subclassed at startup-time with CGLIB. In the subclass, the child method checks the container first for any cached (scoped) beans before it calls the parent method and creates a new instance.
 ---------------------------------------------------------------------------------------------
 https://docs.spring.io/spring-framework/reference/core/beans/java/composing-configuration-classes.html
 
 The @Import annotation allows for loading @Bean definitions from another configuration class.
+
+The @Profile annotation is actually implemented by using a much more flexible annotation called @Conditional. The @Conditional annotation indicates specific org.springframework.context.annotation.Condition implementations that should be consulted before a @Bean is registered.
 ---------------------------------------------------------------------------------------------
 https://docs.spring.io/spring-framework/reference/core/beans/environment.html
 
