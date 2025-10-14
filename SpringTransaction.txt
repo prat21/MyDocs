@@ -14,7 +14,12 @@ https://docs.spring.io/spring-framework/reference/data-access/transaction/declar
 
 In its default configuration, the Spring Framework’s transaction infrastructure code marks a transaction for rollback only in the case of runtime, unchecked exceptions(Error instances also, by default, result in a rollback).
 Checked exceptions that are thrown from a transactional method do not result in a rollback in the default configuration. You can configure exactly which Exception types mark a transaction for rollback, including checked exceptions by specifying rollback rules.
+----------------------------------------------------------------------------------------------
+https://docs.spring.io/spring-framework/reference/core/aop/proxying.html
 
+Spring AOP uses either JDK dynamic proxies or CGLIB to create the proxy for a given target object. JDK dynamic proxies are built into the JDK, whereas CGLIB is a common open-source class definition library (repackaged into spring-core).
+
+If the target object to be proxied implements at least one interface, a JDK dynamic proxy is used, and all of the interfaces implemented by the target type are proxied. If the target object does not implement any interfaces, a CGLIB proxy is created which is a runtime-generated subclass of the target type.
 --------------------------------------------------------------------------------------------------------------
 https://docs.spring.io/spring-framework/reference/data-access/transaction/declarative/annotations.html
 
