@@ -52,6 +52,10 @@ https://docs.spring.io/spring-framework/reference/data-access/transaction/declar
 
 Most Spring applications need only a single transaction manager, but there may be situations where you want multiple independent transaction managers in a single application. You can use the value or transactionManager attribute of the @Transactional annotation to optionally specify the identity of the TransactionManager to be used. This can either be the bean name or the qualifier value of the transaction manager bean.
 --------------------------------------------------------------------------------------------------------------
+https://docs.spring.io/spring-framework/reference/data-access/orm/jpa.html#orm-jpa-jta
+
+As an alternative to JpaTransactionManager, Spring also allows for multi-resource transaction coordination through JTA, either in a Jakarta EE environment or with a stand-alone transaction coordinator, such as Atomikos
+--------------------------------------------------------------------------------------------------------------
 https://www.youtube.com/watch?v=SUQxXg229Xg
 https://www.youtube.com/watch?v=95kxPSbHzVg
 https://www.baeldung.com/transaction-configuration-with-jpa-and-spring

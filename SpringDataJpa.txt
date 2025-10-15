@@ -1,3 +1,11 @@
+https://docs.spring.io/spring-framework/reference/data-access/orm/general.html
+
+When you use Hibernate or JPA in a DAO, you must decide how to handle the persistence technology’s native exception classes. The DAO throws a subclass of a HibernateException or PersistenceException, depending on the technology. These exceptions are all runtime exceptions and do not have to be declared or caught. You may also have to deal with IllegalArgumentException and IllegalStateException. This means that callers can only treat exceptions as being generally fatal, unless they want to depend on the persistence technology’s own exception structure. Catching specific causes (such as an optimistic locking failure) is not possible without tying the caller to the implementation strategy. This trade-off might be acceptable to applications that are strongly ORM-based or do not need any special exception treatment (or both). However, Spring lets exception translation be applied transparently through the @Repository annotation.
+--------------------------------------------------------------------------------------
+https://docs.spring.io/spring-framework/reference/data-access/orm/jpa.html#orm-jpa-jta
+
+As an alternative to JpaTransactionManager, Spring also allows for multi-resource transaction coordination through JTA, either in a Jakarta EE environment or with a stand-alone transaction coordinator, such as Atomikos
+---------------------------------------------------------------------------------------
 https://docs.spring.io/spring-data/jpa/reference/jpa.html
 
 Advantage of using spring data jpa(alongwith hibernate as a jpa provider) over spring+hibernate:
