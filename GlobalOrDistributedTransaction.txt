@@ -1,2 +1,9 @@
 https://docs.spring.io/spring-framework/reference/data-access/transaction/motivation.html
+--------------------------------------------------------------------------------------
+What is XA protocol
+https://en.wikipedia.org/wiki/X/Open_XA
+https://docs.oracle.com/cd/E19509-01/820-5892/ref_xatrans/index.html
+--------------------------------------------------------------------------------------
 https://www.baeldung.com/java-transactions
+--------------------------------------------------------------------------------------
+Check archived chatgpt "two-phase commit explanation"
