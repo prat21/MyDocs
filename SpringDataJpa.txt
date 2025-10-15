@@ -36,9 +36,18 @@ CompletableFuture<User> findOneByFirstname(String firstname);
 https://docs.spring.io/spring-data/jpa/reference/repositories/query-methods-details.html#repositories.special-parameters
 A Page knows about the total number of elements and pages available. It does so by the infrastructure triggering a count query to calculate the overall number. As this might be expensive (depending on the store used), you can instead return a Slice. A Slice knows only about whether a next Slice is available, which might be sufficient when walking through a larger result set.
 
+https://docs.spring.io/spring-data/jpa/reference/jpa/query-methods.html#jpa.query-methods.named-queries
+Spring Data tries to resolve a call to these methods to a named query, starting with the simple name of the configured domain class, followed by the method name separated by a dot. So the preceding example would use the named queries defined earlier instead of trying to create a query from the method name.
+
 https://docs.spring.io/spring-data/jpa/reference/jpa/query-methods.html#jpa.query-methods.at-query
-Using named queries to declare queries for entities is a valid approach and works fine for a small number of queries. As the queries themselves are tied to the Java method that runs them, you can actually bind them directly by using the Spring Data JPA @Query annotation rather than annotating them to the domain class.
+Using named queries to declare queries for entities is a valid approach and works fine for a small number of queries. As the queries themselves are tied to the Java method that runs them, you can actually bind them directly by using the Spring Data JPA @Query annotation rather than annotating them to the domain class. This frees the domain class from persistence specific information and co-locates the query to the repository interface.
 Queries annotated to the query method take precedence over queries defined using @NamedQuery.
+
+https://docs.spring.io/spring-data/jpa/reference/jpa/query-methods.html#jpa.query-methods.at-query.native
+The @NativeQuery annotation is mostly a composed annotation for @Query(nativeQuery=true).
+
+https://docs.spring.io/spring-data/jpa/reference/jpa/query-methods.html#jpa.query-methods.sorting
+Sorting can be done by either providing a PageRequest or by using Sort directly.
 
 https://docs.spring.io/spring-data/jpa/reference/jpa/query-methods.html#jpa.named-parameters
 You can use @Param annotation to give a method parameter a concrete name and bind the name in the query, as shown in the following example:
@@ -48,6 +57,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
   User findByLastnameOrFirstname(@Param("lastname") String lastname,
                                  @Param("firstname") String firstname);
 }
+As of version 4, Spring fully supports Java 8’s parameter name discovery based on the -parameters compiler flag. By using this flag in your build as an alternative to debug information, you can omit the @Param annotation for named parameters.
 
 https://docs.spring.io/spring-data/jpa/reference/jpa/query-methods.html#jpa.query-methods.query-creation
 Note: Check the different naming conventions of repository methods.
@@ -62,6 +72,12 @@ A repository using an interface based projection with a query method:
 interface PersonRepository extends Repository<Person, UUID> {
   Collection<NamesOnly> findByLastname(String lastname);
 }
+
+https://docs.spring.io/spring-data/jpa/reference/repositories/projections.html#projections.dtos
+Another way of defining projections is by using value type DTOs (Data Transfer Objects) that hold properties for the fields that are supposed to be retrieved. These DTO types can be used in exactly the same way projection interfaces are used, except that no proxying happens and no nested projections can be applied.
+
+https://docs.spring.io/spring-data/jpa/reference/jpa/specifications.html
+https://docs.spring.io/spring-data/jpa/reference/auditin.html
 
 https://www.baeldung.com/spring-data-jpa-query
 
