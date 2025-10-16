@@ -3,6 +3,16 @@ https://docs.spring.io/spring-framework/reference/data-access/transaction/motiva
 What is XA protocol
 https://en.wikipedia.org/wiki/X/Open_XA
 https://docs.oracle.com/cd/E19509-01/820-5892/ref_xatrans/index.html
+------------------------------------------------------------------------------
+Two phase commit:
+https://www.baeldung.com/cs/two-phase-commit-vs-saga-pattern
+https://en.wikipedia.org/wiki/Two-phase_commit_protocol
+--------------------------------------------------------------------------------
+Saga:
+https://www.baeldung.com/cs/saga-pattern-microservices
+--------------------------------------------------------------------------------
+Atomikos:
+https://www.baeldung.com/java-atomikos
 --------------------------------------------------------------------------------------
 https://www.baeldung.com/java-transactions
 --------------------------------------------------------------------------------------
