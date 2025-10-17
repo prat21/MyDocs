@@ -58,6 +58,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
                                  @Param("firstname") String firstname);
 }
 As of version 4, Spring fully supports Java 8’s parameter name discovery based on the -parameters compiler flag. By using this flag in your build as an alternative to debug information, you can omit the @Param annotation for named parameters.
+check archived chatgpt "java 8 parameter names"
 
 https://docs.spring.io/spring-data/jpa/reference/jpa/query-methods.html#jpa.query-methods.query-creation
 Note: Check the different naming conventions of repository methods.

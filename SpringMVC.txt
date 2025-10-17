@@ -227,6 +227,18 @@ Note: Before Spring 5: we had to use the "WebMvcConfigurerAdapter" class instead
 
 After Spring 5: With the introduction of default methods in Java 8, "WebMvcConfigurer" interface has now default methods and can be implemented directly without the need for "WebMvcConfigurerAdapter" class. The class that is implementing the WebMvcConfigurer interface need only give implementations of the method that is required and all the other methods are default in the interface.
 ----------------------------------------------------------------------------------------------------------------------------------------------------
+https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-controller/ann-requestmapping.html
+You can explicitly name URI variables (for example, @PathVariable("customId")), but you can leave that detail out if the names are the same and your code is compiled with the -parameters compiler flag.
+--------------------------------------------------------------------------------------------------
+https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-controller/ann-requestmapping.html#mvc-ann-requestmapping-consumes
+https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-controller/ann-requestmapping.html#mvc-ann-requestmapping-produces
+----------------------------------------------------------------------------------------------------------------------------------------------------
+https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-controller/ann-methods/requestparam.html
+By default, method parameters that use this annotation are required, but you can specify that a method parameter is optional by setting the @RequestParam annotation’s required flag to false or by declaring the argument with a java.util.Optional wrapper.
+----------------------------------------------------------------------------------------------------------------------------------------------------
+https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-controller/ann-methods/multipart-forms.html
+Check archived chatgpt "RequestParam vs RequestPart"
+------------------------------------------------------------------------------------------------
 
 HttpMessageConverter and Content-Negotiation:
 
@@ -253,7 +265,6 @@ When receiving a new request, Spring will use of the “Accept” header to dete
 It will then try to find a registered converter that is capable of handling that specific media type – and it will use it to convert the entity and send back the response.
 The process is similar for receiving a request which contains JSON information – the framework will use the “Content-Type” header to determine the media type of the request body.
 It will then search for a HttpMessageConverter that can convert the body sent by the client to a Java Object.
-
 
 https://www.baeldung.com/spring-httpmessageconverter-rest
 
