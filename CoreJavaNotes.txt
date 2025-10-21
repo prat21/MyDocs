@@ -1569,6 +1569,8 @@ Adapter design pattern:
 https://www.geeksforgeeks.org/adapter-pattern/
 Example: java.util.Arrays#asList()
 Check archived chatgpt "adapter pattern java"
+https://docs.spring.io/spring-framework/reference/integration/rest-clients.html#rest-request-factories
+Example: "ClientRequestFactory" interface in spring adapts different client libraries like apache httpclient, okhttp etc to a common interface. For example the implementation "HttpComponentsClientHttpRequestFactory" adapts Apache HTTP Components HttpClient.
 
 Composite design pattern:
 https://www.geeksforgeeks.org/composite-design-pattern/

@@ -239,7 +239,33 @@ By default, method parameters that use this annotation are required, but you can
 https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-controller/ann-methods/multipart-forms.html
 Check archived chatgpt "RequestParam vs RequestPart"
 ------------------------------------------------------------------------------------------------
+https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-controller/ann-methods/requestbody.html
+You can use @RequestBody in combination with jakarta.validation.Valid or Spring’s @Validated annotation, both of which cause Standard Bean Validation to be applied.
 
+@PostMapping("/accounts")
+public void handle(@Valid @RequestBody Account account, Errors errors) {
+	// ...
+}
+------------------------------------------------------------------------------------------------
+https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-controller/ann-methods/responseentity.html
+ResponseEntity is like @ResponseBody but with status and headers. For example:
+
+@GetMapping("/something")
+public ResponseEntity<String> handle() {
+	String body = ... ;
+	String etag = ... ;
+	return ResponseEntity.ok().eTag(etag).body(body);
+}
+----------------------------------------------------------------------------------------------------------
+https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-uri-building.html#uricomponents
+
+Check archived chatgpt "UriComponentsBuilder usage"
+Why Use UriComponentsBuilder?
+1. Avoids manual string concatenation (less error-prone)
+2. Properly encodes path and query params
+3. Automatically adapts to current request context if injected by Spring
+4. Makes your code cleaner and testable
+----------------------------------------------------------------------------------------------------------------------------------
 HttpMessageConverter and Content-Negotiation:
 
 Message converters are used to marshall and unmarshall Java Objects to and from JSON, XML, etc – over HTTP.
@@ -274,21 +300,39 @@ Async Spring MVC:
 
 Async Servlet Processing:
 https://docs.oracle.com/javaee/7/tutorial/servlets012.htm
+
 DeferredResult:
 https://www.baeldung.com/spring-deferred-result
+"Although the other thread will take some resources for computation, the worker threads are not blocked in the meantime and can handle incoming client requests. This is especially useful when the application has to deal with long-running requests, as it can serve more clients with the same number of threads."
+"The connection will remain open by the container(servlet 3.0 or later) until the response arrives or times out. This way, the client does not have to poll the server for the result, and the server does not have to keep a thread occupied while waiting for the result to be ready."
+
 Asynchronous Requests:
 https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-ann-async.html
 https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-ann-async.html#mvc-ann-async-vs-webflux
+
 Non-blocking IO:
 https://stackoverflow.com/questions/25099640/non-blocking-io-vs-async-io-and-implementation-in-java
 https://anmolsehgal.medium.com/non-blocking-io-java-nio-b18e53a92bad (Optional Read. Has explanation of how a traditional server handles requests)
 https://docs.oracle.com/javaee/7/tutorial/servlets013.htm (Optional Read)
+------------------------------------------------------------------------------------------------------------
+https://docs.spring.io/spring-framework/reference/web/webmvc-cors.html
+For security reasons, browsers prohibit AJAX calls to resources outside the current origin. For example, you could have your bank account in one tab and evil.com in another. Scripts from evil.com should not be able to make AJAX requests to your bank API with your credentials — for example withdrawing money from your account!
+
+Cross-Origin Resource Sharing (CORS) is a W3C specification implemented by most browsers that lets you specify what kind of cross-domain requests are authorized.
+
+Check archived chatgpt "CORS explanation"
+-------------------------------------------------------------------------------------------------------------
+Check archived chatgpt "cache control overview"
 -------------------------------------------------------------------------------------------------------------
 RestClient and RestTemplate:
 
 https://docs.spring.io/spring-framework/reference/integration/rest-clients.html
+https://docs.spring.io/spring-framework/reference/integration/rest-clients.html#rest-request-factories
 If no request factory is specified when the RestClient was built, it will use the Apache or Jetty HttpClient if they are available on the classpath.
 RestTemplate uses the same HTTP library abstraction as RestClient. By default, it uses the SimpleClientHttpRequestFactory, but this can be changed via the constructor.
+Once the request has been set up, it can be sent by chaining method calls after retrieve(). For example, the response body can be accessed by using retrieve().body(Class) or retrieve().body(ParameterizedTypeReference) for parameterized types like lists.
+The response can also be converted into a ResponseEntity, giving access to the response headers as well as the body, with retrieve().toEntity(Class)
+https://docs.spring.io/spring-framework/reference/integration/rest-clients.html#_multipart
 RestTemplate: https://baeldung.com/rest-template
 RestClient: https://www.baeldung.com/spring-boot-restclient
 RestTemplate, as the name suggests, is built on a template design pattern. It’s a behavioral design pattern that defines the skeleton of an algorithm in a method, allowing subclasses to provide specific implementations for certain steps. While it’s a powerful pattern, it creates a need for overloading, which can be inconvenient.
