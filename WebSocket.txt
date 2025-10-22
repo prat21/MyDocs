@@ -1,0 +1,11 @@
+https://datatracker.ietf.org/doc/html/rfc6455#section-1.1
+https://docs.spring.io/spring-framework/reference/web/websocket.html
+"A WebSocket interaction begins with an HTTP request that uses the HTTP Upgrade header to upgrade or, in this case, to switch to the WebSocket protocol. If the server supports WebSocket, it responds with an HTTP 101 (Switching Protocols) status code and agrees to the protocol upgrade. After the handshake is complete, the connection is established and both client and server can send WebSocket messages at any time until the connection is closed by either party."
+------------------------------------------------------------------------
+https://docs.spring.io/spring-framework/reference/web/websocket.html#http-versus-websocket
+------------------------------------------------------------------------
+https://docs.spring.io/spring-framework/reference/web/websocket.html#when-to-use-websockets
+"WebSockets can make a web page be dynamic and interactive. However, in many cases, a combination of AJAX and HTTP streaming or long polling can provide a simple and effective solution.
+ For example, news, mail, and social feeds need to update dynamically, but it may be perfectly okay to do so every few minutes. Collaboration, games, and financial apps, on the other hand, need to be much closer to real-time."
+ --------------------------------------------------------------------------
+ https://www.oracle.com/technical-resources/articles/java/jsr356.html

@@ -1,0 +1,3 @@
+Check archived chatgpt "MockMvc overview".
+
+https://www.baeldung.com/spring-boot-testing
