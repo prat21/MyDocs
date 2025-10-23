@@ -15,3 +15,71 @@ https://docs.spring.io/spring-framework/reference/integration/jms/annotated.html
 MessageListenerAdapter: An adapter that implements the MessageListener interface, delegating the handling of messages to target listener methods via reflection. This is an example of adapter design pattern.
 https://docs.spring.io/spring-framework/reference/integration/jms/receiving.html#jms-receiving-async-message-listener-adapter
 https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/jms/listener/adapter/MessageListenerAdapter.html
+-----------------------------------------------------------------------------------------------
+https://docs.spring.io/spring-framework/reference/integration/jms/receiving.html#jms-tx-participation
+"You can activate local resource transactions through the sessionTransacted flag on the listener container definition. Each message listener invocation then operates within an active JMS transaction, with message receipt rolled back in case of listener execution failure."
+
+"To configure a message listener container for XA transaction participation, you want to configure a JtaTransactionManager (which, by default, delegates to the Jakarta EE server’s transaction subsystem). Note that the underlying JMS ConnectionFactory needs to be XA-capable and properly registered with your JTA transaction coordinator. This lets message receipt as well as (for example) database access be part of the same transaction."
+
+@Bean
+DefaultMessageListenerContainer jmsContainer(ConnectionFactory connectionFactory, Destination destination,
+		ExampleListener messageListener) {
+
+	DefaultMessageListenerContainer jmsContainer = new DefaultMessageListenerContainer();
+	jmsContainer.setConnectionFactory(connectionFactory);
+	jmsContainer.setDestination(destination);
+	jmsContainer.setMessageListener(messageListener);
+	jmsContainer.setSessionTransacted(true);
+	return jmsContainer;
+}
+
+Note: See distributed transaction management for more information on JTA and XA transactions.
+-----------------------------------------------------------------------------------------------
+https://docs.spring.io/spring-framework/reference/integration/jms/annotated.html
+"To enable support for @JmsListener annotations, you can add @EnableJms to one of your @Configuration classes, as the following example shows:"
+
+@Configuration
+@EnableJms
+public class JmsConfiguration {
+
+	@Bean
+	public DefaultJmsListenerContainerFactory jmsListenerContainerFactory(ConnectionFactory connectionFactory,
+			DestinationResolver destinationResolver) {
+
+		DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
+		factory.setConnectionFactory(connectionFactory);
+		factory.setDestinationResolver(destinationResolver);
+		factory.setSessionTransacted(true);
+		factory.setConcurrency("3-10");
+		return factory;
+	}
+}
+
+https://docs.spring.io/spring-framework/reference/integration/jms/annotated.html#jms-annotated-response
+"The existing support in MessageListenerAdapter already lets your method have a non-void return type. When that is the case, the result of the invocation is encapsulated in a jakarta.jms.Message, sent either in the destination specified in the JMSReplyTo header of the original message or in the default destination configured on the listener. You can now set that default destination by using the @SendTo annotation of the messaging abstraction."
+
+@JmsListener(destination = "myDestination")
+@SendTo("status")
+public OrderStatus processOrder(Order order) {
+	// order processing
+	return status;
+}
+
+"Finally, if you need to specify some QoS values for the response such as the priority or the time to live, you can configure the JmsListenerContainerFactory accordingly, as the following example shows:"
+
+@Configuration
+@EnableJms
+public class AppConfig {
+
+	@Bean
+	public DefaultJmsListenerContainerFactory jmsListenerContainerFactory() {
+		DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
+		factory.setConnectionFactory(connectionFactory());
+		QosSettings replyQosSettings = new QosSettings();
+		replyQosSettings.setPriority(2);
+		replyQosSettings.setTimeToLive(10000);
+		factory.setReplyQosSettings(replyQosSettings);
+		return factory;
+	}
+}
+-----------------------------------------------------------------------------------------------
