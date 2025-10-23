@@ -11,3 +11,7 @@ A JMS client can consume messages either synchronously or asynchronously.
 The MessagePostProcessor interface gives you access to the message after it has been converted but before it is sent
 -----------------------------------------------------------------------------------------------
 https://docs.spring.io/spring-framework/reference/integration/jms/annotated.html#jms-annotated-response
+-----------------------------------------------------------------------------------------------
+MessageListenerAdapter: An adapter that implements the MessageListener interface, delegating the handling of messages to target listener methods via reflection. This is an example of adapter design pattern.
+https://docs.spring.io/spring-framework/reference/integration/jms/receiving.html#jms-receiving-async-message-listener-adapter
+https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/jms/listener/adapter/MessageListenerAdapter.html

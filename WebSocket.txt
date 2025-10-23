@@ -9,3 +9,9 @@ https://docs.spring.io/spring-framework/reference/web/websocket.html#when-to-use
  For example, news, mail, and social feeds need to update dynamically, but it may be perfectly okay to do so every few minutes. Collaboration, games, and financial apps, on the other hand, need to be much closer to real-time."
  --------------------------------------------------------------------------
  https://www.oracle.com/technical-resources/articles/java/jsr356.html
+ ----------------------------------------------------------------------
+ See STOMP and understand:
+ https://docs.spring.io/spring-framework/reference/web/websocket/stomp.html
+
+ Websocket with stomp and spring boot tutorial:
+ https://www.youtube.com/watch?v=TywlS9iAZCM
