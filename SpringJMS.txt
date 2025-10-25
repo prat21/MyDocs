@@ -16,6 +16,9 @@ MessageListenerAdapter: An adapter that implements the MessageListener interface
 https://docs.spring.io/spring-framework/reference/integration/jms/receiving.html#jms-receiving-async-message-listener-adapter
 https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/jms/listener/adapter/MessageListenerAdapter.html
 -----------------------------------------------------------------------------------------------
+Message Listener Containers:
+https://docs.spring.io/spring-framework/reference/integration/jms/using.html#jms-mdp
+-----------------------------------------------------------------------------------------------
 https://docs.spring.io/spring-framework/reference/integration/jms/receiving.html#jms-tx-participation
 "You can activate local resource transactions through the sessionTransacted flag on the listener container definition. Each message listener invocation then operates within an active JMS transaction, with message receipt rolled back in case of listener execution failure."
 
