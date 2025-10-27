@@ -1,5 +1,6 @@
-SEE:https://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/#getting-started-first-application and java brains
+SEE: java brains
 https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#deployment
+https://docs.spring.io/spring-boot/index.html
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 
@@ -76,7 +77,7 @@ From: https://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/#gettin
 
 10.3.3 The main method
 
-The final part of our application is the main method. This is just a standard method that follows the Java convention for an application entry point. Our main method delegates to Spring Bootâ€™s SpringApplication class by calling run. SpringApplication will bootstrap our application, starting Spring which will in turn start the auto-configured Tomcat web server. We need to pass Example.class as an argument to the run method to tell SpringApplication which is the primary Spring component. The args array is also passed through to expose any command-line arguments.
+The final part of our application is the main method. This is just a standard method that follows the Java convention for an application entry point. Our main method delegates to Spring Boot's SpringApplication class by calling run. SpringApplication will bootstrap our application, starting Spring which will in turn start the auto-configured Tomcat web server. We need to pass Example.class as an argument to the run method to tell SpringApplication which is the primary Spring component. The args array is also passed through to expose any command-line arguments.
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 
@@ -88,7 +89,6 @@ Note that spring boot automatically registers and maps the DispatcherServlet to 
 Check the logs once when boot starts.
 
 ----------------------------------------------------------------------------------------------------------------------------------------
-
 
 Check how spring boot does the component scan. Whether we need to put the @Controller annotated classes on the same package hierarchy as the main() class or not.- Checked, the annotated classes has to be in the same package hierarchy as the main() class. This is the default configuration that spring boot configures(convention over configuration).
 
@@ -251,12 +251,43 @@ A downside of lazy initialization is that it can delay the discovery of a proble
 It can be enabled using the spring.main.lazy-initialization property as shown in the following example:
 spring.main.lazy-initialization=true
 If you want to disable lazy initialization for certain beans while using lazy initialization for the rest of the application, you can explicitly set their lazy attribute to false using the @Lazy(false) annotation.
+-----------------------------------------------------------------------------------------------------------------------
+https://docs.spring.io/spring-boot/reference/features/spring-application.html#features.spring-application.command-line-runner
+If you need to run some specific code once the SpringApplication has started, you can implement the ApplicationRunner or CommandLineRunner interfaces. Both interfaces work in the same way and offer a single run method, which is called just before SpringApplication.run(…) completes.
+This contract is well suited for tasks that should run after application startup but before it starts accepting traffic.
+
+@Component
+public class MyCommandLineRunner implements CommandLineRunner {
+
+	@Override
+	public void run(String... args) {
+		// Do something...
+	}
+
+}
+----------------------------------------------------------------------------------------------------------------------------
+https://docs.spring.io/spring-boot/reference/features/spring-application.html#features.spring-application.application-exit
+Each SpringApplication registers a shutdown hook with the JVM to ensure that the ApplicationContext closes gracefully on exit. All the standard Spring lifecycle callbacks (such as the DisposableBean interface or the @PreDestroy annotation) can be used.
 ----------------------------------------------------------------------------------------------------------------------------------------
 https://docs.spring.io/spring-boot/reference/features/external-config.html
 
 It is recommended to stick with one format for your entire application. If you have configuration files with both .properties and YAML format in the same location, .properties takes precedence.
 
+Environment variables and system properties often have restrictions that mean some property names cannot be used. To help with this, Spring Boot allows you to encode a block of properties into a single JSON structure.
+When your application starts, any spring.application.json or SPRING_APPLICATION_JSON properties will be parsed and added to the Environment.
+
+spring.config.name, spring.config.location, and spring.config.additional-location are used very early to determine which files have to be loaded. They must be defined as an environment property (typically an OS environment variable, a system property, or a command-line argument).
+If you prefer to add additional locations, rather than replacing them, you can use spring.config.additional-location. Properties loaded from additional locations can override those in the default locations.
+
+If several profiles are specified, a last-wins strategy applies. For example, if profiles prod,live are specified by the spring.profiles.active property, values in application-prod.properties can be overridden by those in application-live.properties.
+
 if no profiles are explicitly activated, then properties from application-default are considered.
+
+Multi-document property files are often used in conjunction with activation properties such as spring.config.activate.on-profile
+
+To use configuration property scanning, add the @ConfigurationPropertiesScan annotation to your application. Typically, it is added to the main application class that is annotated with @SpringBootApplication but it can be added to any @Configuration class. By default, scanning will occur from the package of the class that declares the annotation.
+
+As well as using @ConfigurationProperties to annotate a class, you can also use it on public @Bean methods. Doing so can be particularly useful when you want to bind properties to third-party components that are outside of your control.
 
 https://docs.spring.io/spring-boot/reference/features/external-config.html#features.external-config.typesafe-configuration-properties.enabling-annotated-types
 
