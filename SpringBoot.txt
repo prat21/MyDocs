@@ -294,7 +294,14 @@ https://docs.spring.io/spring-boot/reference/features/external-config.html#featu
 Spring Boot attempts to validate @ConfigurationProperties classes whenever they are annotated with Spring’s @Validated annotation.
 To ensure that validation is always triggered for nested properties, the associated field must be annotated with @Valid.
 ----------------------------------------------------------------------------------------------------------------------------------------
+https://docs.spring.io/spring-boot/reference/features/profiles.html
+
+Sometimes, it is useful to have properties that add to the active profiles rather than replace them. The spring.profiles.include property can be used to add active profiles on top of those activated by the spring.profiles.active property. The SpringApplication entry point also has a Java API for setting additional profiles. See the setAdditionalProfiles() method in SpringApplication. Included profiles are added before any spring.profiles.active profiles(and hence maybe "active profile" properties has precedence over "included profile" properties).
+
+-------------------------------------------------------------------------------------------------------------------------------------------
 https://docs.spring.io/spring-boot/reference/features/logging.html
+
+Spring Boot uses Commons Logging for all internal logging but leaves the underlying log implementation open. Default configurations are provided for Java Util Logging, Log4j2, and Logback. In each case, loggers are pre-configured to use console output with optional file output also available. By default, if you use the starters, Logback is used for logging.
 
 If you want to write log files in addition to the console output, you need to set a logging.file.name or logging.file.path property (for example, in your application.properties). If both properties are set, logging.file.path is ignored and only logging.file.name is used.
 Log files rotate when they reach 10 MB and, as with console output, ERROR-level, WARN-level, and INFO-level messages are logged by default.
@@ -307,7 +314,44 @@ logging.level.root=warn
 logging.level.org.springframework.web=debug
 logging.level.org.hibernate=error
 
-You can force Spring Boot to use a particular logging system by using the org.springframework.boot.logging.LoggingSystem system property.
+The various logging systems can be activated by including the appropriate libraries on the classpath and can be further customized by providing a suitable configuration file in the root of the classpath or in a location specified by the following Spring Environment property: logging.config. You can force Spring Boot to use a particular logging system by using the org.springframework.boot.logging.LoggingSystem system property.
+----------------------------------------------------------------------------------------------------------------------------------------
+https://docs.spring.io/spring-boot/reference/features/json.html
+When Jackson is on the classpath an ObjectMapper bean is automatically configured.
+
+If you use Jackson to serialize and deserialize JSON data, you might want to write your own JsonSerializer and JsonDeserializer classes. Custom serializers are usually registered with Jackson through a module, but Spring Boot provides an alternative @JsonComponent annotation that makes it easier to directly register Spring Beans.
+
+You can use the @JsonComponent annotation directly on JsonSerializer, JsonDeserializer or KeyDeserializer implementations. You can also use it on classes that contain serializers/deserializers as inner classes, as shown in the following example:
+
+@JsonComponent
+public class MyJsonComponent {
+
+	public static class Serializer extends JsonSerializer<MyObject> {
+
+		@Override
+		public void serialize(MyObject value, JsonGenerator jgen, SerializerProvider serializers) throws IOException {
+			jgen.writeStartObject();
+			jgen.writeStringField("name", value.getName());
+			jgen.writeNumberField("age", value.getAge());
+			jgen.writeEndObject();
+		}
+	}
+
+	public static class Deserializer extends JsonDeserializer<MyObject> {
+
+		@Override
+		public MyObject deserialize(JsonParser jsonParser, DeserializationContext ctxt) throws IOException {
+			ObjectCodec codec = jsonParser.getCodec();
+			JsonNode tree = codec.readTree(jsonParser);
+			String name = tree.get("name").textValue();
+			int age = tree.get("age").intValue();
+			return new MyObject(name, age);
+		}
+	}
+}
+
+https://docs.spring.io/spring-boot/how-to/spring-mvc.html#howto.spring-mvc.customize-jackson-objectmapper
+Spring MVC (client and server side) uses HttpMessageConverters to negotiate content conversion in an HTTP exchange. If Jackson is on the classpath, you already get the default converter(s) provided by Jackson2ObjectMapperBuilder, an instance of which is auto-configured for you.
 ----------------------------------------------------------------------------------------------------------------------------------------
 https://docs.spring.io/spring-boot/reference/features/task-execution-and-scheduling.html
 In the absence of an Executor bean in the context, Spring Boot auto-configures an AsyncTaskExecutor. When virtual threads are enabled (using Java 21+ and spring.threads.virtual.enabled set to true) this will be a SimpleAsyncTaskExecutor that uses virtual threads. Otherwise, it will be a ThreadPoolTaskExecutor with sensible defaults. In either case, the auto-configured executor will be automatically used for:
@@ -323,11 +367,23 @@ spring.task.execution.pool.queue-capacity=100
 spring.task.execution.pool.keep-alive=10s
 ---------------------------------------------------------------------------------------------------------------------------------------
 https://docs.spring.io/spring-boot/reference/features/developing-auto-configuration.html#features.developing-auto-configuration.locating-auto-configuration-candidates
-https://www.baeldung.com/spring-boot-custom-auto-configuration
 
 Classes that implement auto-configuration are annotated with @AutoConfiguration. This annotation itself is meta-annotated with @Configuration, making auto-configurations standard @Configuration classes.
 
 Spring Boot checks for the presence of a META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports file within your published jar. The file should list your configuration classes.
+
+When placed on a @Bean method, the target type(of @ConditionalOnMissingBean) defaults to the return type of the method, as shown in the following example:
+
+@AutoConfiguration
+public class MyAutoConfiguration {
+
+	@Bean
+	@ConditionalOnMissingBean
+	public SomeService someService() {
+		return new SomeService();
+	}
+
+}
 
 We could add the @EnableAutoConfiguration annotation with exclude or excludeName attribute to a configuration class to disable a particular autoconfiguration.
 @Configuration
@@ -336,6 +392,8 @@ We could add the @EnableAutoConfiguration annotation with exclude or excludeName
 public class AutoconfigurationApplication {
     //...
 }
+
+https://www.baeldung.com/spring-boot-custom-auto-configuration
 ----------------------------------------------------------------------------------------------------------------------------------------
 https://docs.spring.io/spring-boot/reference/web/servlet.html
 
