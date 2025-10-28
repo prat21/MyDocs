@@ -396,8 +396,27 @@ public class AutoconfigurationApplication {
 https://www.baeldung.com/spring-boot-custom-auto-configuration
 ----------------------------------------------------------------------------------------------------------------------------------------
 https://docs.spring.io/spring-boot/reference/web/servlet.html
-
 Spring Boot provides auto-configuration for Spring MVC that works well with most applications. It replaces the need for @EnableWebMvc and the two(ie @SpringBootApplication and @EnableWebMvc) cannot be used together.
+
+https://docs.spring.io/spring-boot/reference/web/servlet.html#web.servlet.spring-mvc.message-converters
+Spring MVC uses the HttpMessageConverter interface to convert HTTP requests and responses. Sensible defaults are included out of the box. For example, objects can be automatically converted to JSON (by using the Jackson library) or XML (by using the Jackson XML extension, if available, or by using JAXB if the Jackson XML extension is not available).
+
+https://docs.spring.io/spring-boot/reference/web/servlet.html#web.servlet.spring-mvc.cors
+As of version 4.2, Spring MVC supports CORS. Using controller method CORS configuration with @CrossOrigin annotations in your Spring Boot application does not require any specific configuration. Global CORS configuration can be defined by registering a WebMvcConfigurer bean with a customized addCorsMappings(CorsRegistry) method, as shown in the following example:
+
+@Configuration(proxyBeanMethods = false)
+public class MyCorsConfiguration {
+
+	@Bean
+	public WebMvcConfigurer corsConfigurer() {
+		return new WebMvcConfigurer() {
+			@Override
+			public void addCorsMappings(CorsRegistry registry) {
+				registry.addMapping("/api/**");
+			}
+		};
+	}
+}
 ----------------------------------------------------------------------------------------------------------------------------------------
 SEE: https://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/#getting-started-first-application-properties
 If you don't like application.properties as the configuration file name you can switch to another by specifying a spring.config.name environment property. You can also refer to an explicit location using the spring.config.location environment property (comma-separated list of directory locations, or file paths).
