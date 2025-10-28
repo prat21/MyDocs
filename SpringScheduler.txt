@@ -4,3 +4,21 @@ To enable support for @Scheduled and @Async annotations, you can add @EnableSche
 
 @Scheduled can be used as a repeatable annotation. If several scheduled declarations are found on the same method, each of them will be processed independently, with a separate trigger firing for each of them. As a consequence, such co-located schedules may overlap and execute multiple times in parallel or in immediate succession. Please make sure that your specified cron expressions etc do not accidentally overlap.
 
+----------------------------------------------------------------------------------------------
+https://docs.spring.io/spring-framework/reference/integration/scheduling.html#scheduling-annotation-support-async
+
+You can provide the @Async annotation on a method so that invocation of that method occurs asynchronously. In other words, the caller returns immediately upon invocation, while the actual execution of the method occurs in a task that has been submitted to a Spring TaskExecutor.
+
+Even methods that return a value can be invoked asynchronously. However, such methods are required to have a Future-typed return value. This still provides the benefit of asynchronous execution so that the caller can perform other tasks prior to calling get() on that Future.
+
+@Async
+Future<String> returnSomething(int i) {
+	// this will be run asynchronously
+}
+
+However, you can use the value attribute of the @Async annotation when you need to indicate that an executor other than the default should be used when executing a given method. The following example shows how to do so:
+
+@Async("otherExecutor")
+void doSomething(String s) {
+	// this will be run asynchronously by "otherExecutor"
+}

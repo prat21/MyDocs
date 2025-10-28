@@ -10,6 +10,7 @@ https://en.wikipedia.org/wiki/Two-phase_commit_protocol
 --------------------------------------------------------------------------------
 Saga:
 https://www.baeldung.com/cs/saga-pattern-microservices
+check archived chatgpt "saga pattern explanation"
 --------------------------------------------------------------------------------
 Atomikos:
 https://www.baeldung.com/java-atomikos
