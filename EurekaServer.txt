@@ -4,6 +4,50 @@ https://cloud.spring.io/spring-cloud-netflix/multi/multi__service_discovery_eure
 https://www.youtube.com/watch?v=jhvJg4tDrpw&list=PLqq-6Pq4lTTZSKAFG6aCDVDP86Qx4lNas&index=20 (Follow JavaBrains tutorial)
 https://stackoverflow.com/questions/33921557/understanding-spring-cloud-eureka-server-self-preservation-and-renew-threshold/41775757
 https://stackoverflow.com/questions/32616329/eureka-never-unregisters-a-service
+--------------------------------------------------------------------------------------
+Eureka Client:
+
+Eureka receives heartbeat messages from each instance belonging to a service. If the heartbeat fails over a configurable timetable, the instance is normally removed from the registry.
+
+By default, Eureka uses the client heartbeat to determine if a client is up. Unless specified otherwise, the Discovery Client does not propagate the current health check status of the application, per the Spring Boot Actuator. Consequently, after successful registration, Eureka always announces that the application is in 'UP' state. This behavior can be altered by enabling Eureka health checks, which results in propagating application status to Eureka.
+eureka:
+  client:
+    healthcheck:
+      enabled: true
+When enabled, Eureka will call the /actuator/health endpoint of the application to determine its health status. If the status is anything other than 'UP', Eureka will mark the instance as unavailable.
+
+Spring cloud eureka provides sensible default for eureka instance ID as follows:
+${spring.cloud.client.hostname}:${spring.application.name}:${spring.application.instance_id:${server.port}}
+Here "spring.cloud.client.hostname" is the hostname of the machine where the application is running, "spring.application.name" is the name of the application and "server.port" is the port on which the application is running.
+An example is myhost:myappname:8080
+
+You can override this value by providing a unique identifier in eureka.instance.instanceId, as shown in the following example:
+eureka:
+  instance:
+    instanceId: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
+Note: To test this out start SpringCloudEurekaServer, SpringCloudEurekaClient and SpringCloudEurekaClient2 applications. Then hit the URL: http://localhost:8761/ in browser to see the registered instances with unique instance ids.
+------------------------------------------------------------------
+Eureka Server:
+
+Clients also have an in-memory cache of Eureka registrations (so they do not have to go to the registry for every request to a service).
+
+By default, every Eureka server is also a Eureka client and requires (at least one) service URL to locate a peer(another eureka server). If you do not provide it, the service runs and works, but it fills your logs with a lot of noise about not being able to register with the peer.
+
+In standalone mode, you might prefer to switch off the client side behavior so that it does not keep trying and failing to reach its peers.
+server:
+  port: 8761
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+
+In some cases, it is preferable for Eureka to advertise the IP addresses of services rather than the hostname. Set eureka.instance.preferIpAddress to true and, when the application registers with eureka, it uses its IP address rather than its hostname.
+
+
 ------------------------------------------------------------------
 Spring cloud eureka server peer awareness:
 
@@ -26,3 +70,7 @@ https://thepracticaldeveloper.com/spring-boot-service-discovery-eureka/
 Eureka Self Preservation:
 
 https://www.baeldung.com/eureka-self-preservation-renewal#:~:text=lease%2Drenewal%2Dinterval%2Din%2Dseconds%20indicates%20the%20interval,one%20heartbeat%20every%2030%20seconds.
+
+-------------------------------------------------------------------
+https://www.baeldung.com/spring-cloud-load-balancer#load-balancing
+Check types of load balancing strategies.

@@ -8,6 +8,8 @@ Note: An ESB is single point of communication like JMS or AMQP so if the JMS ser
 
 https://aws.amazon.com/compare/the-difference-between-soa-microservices/
 1. While each SOA service is a full business capability, each microservice is a much smaller software component that specializes in a single task only.
+
+Check archived chatgpt "SOA vs microservices", "microservice vs monolith"
 ------------------------------------------------------------------------------------------------------------------
 What is an ESB:
 https://www.ibm.com/topics/esb
