@@ -451,6 +451,53 @@ public class MyService {
 		return this.restTemplate.getForObject("/{name}/details", Details.class, name);
 	}
 }
+
+https://docs.spring.io/spring-boot/reference/io/rest-client.html#io.rest-client.clienthttprequestfactory
+Spring Boot will auto-detect which HTTP client to use with RestClient and RestTemplate depending on the libraries available on the application classpath. In order of preference, the following clients are supported:
+1. Apache HttpClient
+2. Jetty HttpClient
+3. Reactor Netty HttpClient
+4. JDK client (java.net.http.HttpClient)
+5. Simple JDK client (java.net.HttpURLConnection)
+-----------------------------------------------------------------------------------------------------------------------------------------
+https://docs.spring.io/spring-boot/reference/messaging/jms.html
+The embedded broker will also be disabled if you configure the broker URL, as shown in the following example:
+
+spring:
+  activemq:
+    broker-url: "tcp://192.168.1.210:9876"
+    user: "admin"
+    password: "secret"
+
+https://docs.spring.io/spring-boot/reference/messaging/jms.html#messaging.jms.sending
+Spring’s JmsTemplate is auto-configured, and you can autowire it directly into your own beans, as shown in the following example:
+
+@Component
+public class MyBean {
+
+	private final JmsTemplate jmsTemplate;
+
+	public MyBean(JmsTemplate jmsTemplate) {
+		this.jmsTemplate = jmsTemplate;
+	}
+
+	public void someMethod() {
+		this.jmsTemplate.convertAndSend("hello");
+	}
+}
+
+https://docs.spring.io/spring-boot/reference/messaging/jms.html#messaging.jms.receiving
+When the JMS infrastructure is present, any bean can be annotated with @JmsListener to create a listener endpoint. If no JmsListenerContainerFactory has been defined, a default one is configured automatically.
+
+@Component
+public class MyBean {
+
+	@JmsListener(destination = "someQueue")
+	public void processMessage(String content) {
+		// ...
+	}
+
+}
 ----------------------------------------------------------------------------------------------------------------------------------------
 SEE: https://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/#getting-started-first-application-properties
 If you don't like application.properties as the configuration file name you can switch to another by specifying a spring.config.name environment property. You can also refer to an explicit location using the spring.config.location environment property (comma-separated list of directory locations, or file paths).
