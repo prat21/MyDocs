@@ -5,7 +5,6 @@ See JAVA Brains also.
 https://cloud.spring.io/spring-cloud-static/spring-cloud-config/2.2.0.M1/#_quick_start
 https://www.baeldung.com/spring-cloud-configuration
 https://howtodoinjava.com/spring-cloud/spring-cloud-config-server-git/
-https://www.baeldung.com/spring-cloud-bootstrapping
 
 2. Difference between bootstrap.properties and application.properties:
 
@@ -126,6 +125,16 @@ spring:
           uri: file:///path/to/walter/git/repo
 
 Using this configuration, precedence is determined by the order in which repositories are listed under the composite key. In the above example, the Subversion repository is listed first, so a value found in the Subversion repository will override values found for the same property in one of the Git repositories. A value found in the rex Git repository will be used before a value found for the same property in the walter Git repository.
+-----------------------------------------------------------------------------------------------------
+Spring Boot 2.4 introduced a new way to import configuration data via the spring.config.import property. This is now the default way to bind to Config Server.
+
+To optionally connect to config server set the following in application.properties:
+spring.config.import=optional:configserver:
+This will connect to the Config Server at the default location of "http://localhost:8888"
+-------------------------------------------------------------------------------------
+In some cases, you may want to fail startup of a service if it cannot connect to the Config Server. If this is the desired behavior, set the bootstrap configuration property spring.cloud.config.fail-fast=true to make the client halt with an Exception.
+
+To get similar functionality using spring.config.import, simply omit the optional: prefix.
 
 -----------------------------------------------------------------------------------------------------
 Config client dynamic loading of changes in git repo(RefreshScope):

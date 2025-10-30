@@ -13,6 +13,9 @@ https://www.baeldung.com/spring-boot-resilience4j
 We’ll need the "resilience4j-spring-boot2" and "spring-boot-starter-aop" and "spring-boot-started-actuator" dependencies in order to use the features from the Resilience-4j library using annotations in Spring Boot application.
 
 Helpful youtube tutorials:
-https://www.youtube.com/watch?v=Z_viIJSGXJw&list=PLq3uEqRnr_2GlhVSqltfLtpO8GF4VIICY&index=1
 https://www.youtube.com/watch?v=LefFKbIFyjQ&list=PL4TnYdea-xTLGklgQfWW8ZgpQXm8-FOHt&index=1
 https://reflectoring.io/retry-with-resilience4j/
+
+Ratelimiter vs Bulkhead:
+https://itsallbinary.com/resilience4j-bulkhead-vs-rate-limiter/
+Note: RateLimiter limits the total number of calls(parallel or non parallel) in a given time period. Bulkhead limits the number of concurrent calls at any given point of time.
