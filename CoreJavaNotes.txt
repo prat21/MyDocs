@@ -337,6 +337,7 @@ Use Cases for Custom ClassLoaders:
 1. Dynamic loading of plugins or modules.
 2. Hot reloading classes at runtime.
 3. Isolation of different components (e.g., in app servers or IDEs).
+4. Helping to modify the existing bytecode, e.g. weaving agents
 
 Check CHATGPT on Custom classloader example
 Also check chatgpt "jvm classloader hierarchy". It describes how jvm decides which classloader to call to load class dynamically.
@@ -347,12 +348,11 @@ https://www.geeksforgeeks.org/different-ways-create-objects-java/
 For cloning and deserialization, JVM does not use constructor.
 
 -----------------------------------------------------------------------------------------------------------------
+BlockingQueue:
  
- BlockingQueue:
+https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/BlockingQueue.html
  
- https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/BlockingQueue.html
- 
- https://www.journaldev.com/1034/java-blockingqueue-example
+https://www.journaldev.com/1034/java-blockingqueue-example
  
 A BlockingQueue may be capacity bounded. At any given time it may have a remainingCapacity beyond which no additional elements can be put without blocking. A BlockingQueue without any intrinsic capacity constraints always reports a remaining capacity of Integer.MAX_VALUE.
 

@@ -36,6 +36,7 @@ https://www.baeldung.com/java-deadlock-livelock#livelock
 When a thread calls lockInterruptibly(), it may be interrupted while it is waiting for the lock, so, that it does not wait for the lock indefinitely.
 
 4) ReentrantLock also provides convenient method to get List of all threads waiting for lock.
+5) One more difference (my point of view) is that we have to explicitly release lock in ReentrantLock by calling unlock() method in finally block, whereas with synchronized keyword lock is released automatically once synchronized block is exited. This makes synchronized keyword less error prone.
 
 Read more: https://javarevisited.blogspot.com/2013/03/reentrantlock-example-in-java-synchronized-difference-vs-lock.html
 

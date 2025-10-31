@@ -371,7 +371,8 @@ session.saveOrUpdate(person);
 
 We can think of this method as a universal tool for making an object persistent regardless of its state, whether it’s transient or detached.
 
-
+IMPORTANT: Starting with hibernate 6 the following methods was marked as deprecated and is not encouraged to use:
+save, update, saveOrUpdate
 ------------------------------------------------------------------------------------------------------------------------------
 
 19. @Inheritance(strategy=InheritanceType.SINGLE_TABLE): is used to define what type of strategy is to be used to save objects that inherit from the same parent, in database. One strategy is SINGLE_TABLE. This strategy saves all the objects inherited from a parent (including the parent itself into a single table). The syntax is:
