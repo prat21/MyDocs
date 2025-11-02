@@ -46,6 +46,7 @@ https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/locks/ReentrantLo
 
 Condition:
 https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/locks/Condition.html
+check archived chatgpt "multiple wait sets utility"
 
 Check the implementation logic of ArrayBlockingQueue, especially put and take methods.
 Check archived chatgpt "Reentrantlock consequences in java"
