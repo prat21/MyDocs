@@ -1218,6 +1218,9 @@ https://www.baeldung.com/java-11-new-features
 
 JAVA LTS releases are java 8, 11, 17, 21.
 ------------------------------------------------------------------------------------------------
+Sealed class (finalized in java 17):
+https://docs.oracle.com/en/java/javase/17/language/sealed-classes-and-interfaces.html
+------------------------------------------------------------------------------------------------
 Java 21 new features:
 1) Record pattern destructuring (Record classes were introduced in java 16 as standard feature)
 public static int afterRecordPattern(Object obj) {
@@ -1226,10 +1229,23 @@ public static int afterRecordPattern(Object obj) {
     }
     return 0;
 }
+
 2) Pattern matching for switch
+Check archived chatgpt "switch expression java" and "java switch pattern matching"
+https://docs.oracle.com/en/java/javase/17/language/pattern-matching.html
+https://www.baeldung.com/java-switch-pattern-matching
+
+From Java 14, switch expressions were introduced (with yield).
+From Java 17, pattern matching for instanceof came.
+And from Java 21 (finalized in Java 21), pattern matching for switch was added.
+
 3) String literal
 4) Virtual threads
+
 https://www.baeldung.com/java-lts-21-new-features
+------------------------------------------------------------------------------------------------
+InstanceOf pattern matching:
+https://www.baeldung.com/java-pattern-matching-instanceof
 ------------------------------------------------------------------------------------------------
 Record class:
 https://docs.oracle.com/en/java/javase/17/language/records.html
