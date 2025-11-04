@@ -1125,7 +1125,7 @@ Difference between abstraction and encapsulation:
 https://javarevisited.blogspot.com/2017/04/difference-between-abstraction-and-encapsulation-in-java-oop.html
 
 ------------------------------------------------------------------------------------------------
-SOLID prinicple: (Check the practical examples of SOLID from archived chatgpts)
+SOLID principle: (Check the practical examples of SOLID from archived chatgpts)
 https://www.baeldung.com/solid-principles
 https://www.baeldung.com/java-single-responsibility-principle
 Check also archived chatgpt "Single Responsibility Principle", "Cohesion and coupling principles"
@@ -1162,7 +1162,7 @@ https://stackify.com/solid-design-liskov-substitution-principle/#:~:text=The%20L
 
 ------------------------------------------------------------------------------------------------
 Java 9 new feature:
-1. Since java 9, interface can have private methods.
+1. Since java 9, interface can have private methods, which can be used to split lengthy default methods.
 2. Java 9 introduced java shell REPL tool (jshell).
 3. Java 9 introduced modular system.
 4. try-with-resources variable declaration
@@ -1189,13 +1189,16 @@ https://www.baeldung.com/new-java-9
 Difference between Arrays.asList() and List.of() and Collections.unmodifiableList():
 1) Arrays.asList() returns a list backed by the original array, ie any changes to the array is reflected to the list and vice-versa. But we cannot change the size of the list(Because by default changing the size of an array is resource consuming). It does not support addition, deletion but do support modification of elements in place.
 2) List.of() returns an immutable list and it is not backed by the original array, rather its a copy. No addition, deletion or modification(ie setting elements in place) of the list is allowed(throws an UnsupportedOperationException). But individual elements of the list are modifiable. Any changes to the original array is not reflected to this list.
-3) Collections.unmodifiableList() returns an "unmodifiable" list backed by the original list, it does not support addition, deletion or modification of the list.
+3) Collections.unmodifiableList() returns an "unmodifiable" list "backed by the original list", it does not support addition, deletion or modification of the list.
 
 ------------------------------------------------------------------------------------------------
 Java 10 new features:
 https://www.baeldung.com/java-10-overview
 1. List, Map, Set now has copyOf() method which returns unmodifiable copy.
 2. java.util.stream.Collectors get additional methods to collect a Stream into unmodifiable List, Map or Set. Example: collect(Collectors.unmodifiableList()).
+3. JVMs are now aware of being run in a Docker container and can limit resource usage accordingly.
+Check "java 10 container awareness" from archived chatgpt.
+4. Local-Variable Type Inference using "var" keyword.
 
 https://www.baeldung.com/java-10-local-variable-type-inference
 This feature is available only for local variables with the initializer. It cannot be used for member variables, method parameters, return types.
@@ -1216,11 +1219,77 @@ https://www.baeldung.com/java-11-new-features
 JAVA LTS releases are java 8, 11, 17, 21.
 ------------------------------------------------------------------------------------------------
 Java 21 new features:
-1) Record pattern
+1) Record pattern destructuring (Record classes were introduced in java 16 as standard feature)
+public static int afterRecordPattern(Object obj) {
+    if(obj instanceof Point(int x, int y)) {
+        return x+y;
+    }
+    return 0;
+}
 2) Pattern matching for switch
 3) String literal
 4) Virtual threads
 https://www.baeldung.com/java-lts-21-new-features
+------------------------------------------------------------------------------------------------
+Record class:
+https://docs.oracle.com/en/java/javase/17/language/records.html
+A record declaration specifies in a header a description of its contents; the appropriate accessors, constructor, equals, hashCode, and toString methods are created automatically. A record's fields are final because the class is intended to serve as a simple "data carrier".
+
+For example, here is a record class with two fields:
+record Rectangle(double length, double width) { }
+
+This concise declaration of a rectangle is equivalent to the following normal class:
+public final class Rectangle {
+    private final double length;
+    private final double width;
+
+    public Rectangle(double length, double width) {
+        this.length = length;
+        this.width = width;
+    }
+
+    double length() { return this.length; }
+    double width()  { return this.width; }
+
+    // Implementation of equals() and hashCode(), which specify
+    // that two record objects are equal if they
+    // are of the same type and contain equal field values.
+    public boolean equals...
+    public int hashCode...
+
+    // An implementation of toString() that returns a string
+    // representation of all the record class's fields,
+    // including their names.
+    public String toString() {...}
+}
+
+Repeating the record class's components in the signature of the canonical constructor can be tiresome and error-prone. To avoid this, you can declare a compact constructor whose signature is implicit (derived from the components automatically).
+
+record Rectangle(double length, double width) {
+    public Rectangle {
+        if (length <= 0 || width <= 0) {
+            throw new java.lang.IllegalArgumentException(
+                String.format("Invalid dimensions: %f, %f", length, width));
+        }
+    }
+}
+
+This succinct form of constructor declaration is only available in a record class. Note that the statements this.length = length; and this.width = width; which appear in the canonical constructor do not appear in the compact constructor. At the end of a compact constructor, its implicit formal parameters are assigned to the record class's private fields corresponding to its components.
+
+You can explicitly declare any of the members derived from the header, such as the public accessor methods that correspond to the record class's components, for example:
+record Rectangle(double length, double width) {
+
+    // Public accessor method
+    public double length() {
+        System.out.println("Length is " + length);
+        return length;
+    }
+}
+If you implement your own accessor methods, then ensure that they have the same characteristics as implicitly derived accessors (for example, they're declared public and have the same return type as the corresponding record class component).
+
+You can declare static fields, static initializers, and static methods in a record class, and they behave as they would in a normal class.
+
+You cannot declare instance variables (non-static fields) or instance initializers in a record class. You can declare instance methods in a record class, independent of whether you implement your own accessor methods.
 ------------------------------------------------------------------------------------------------
 Marker Interface:
 
