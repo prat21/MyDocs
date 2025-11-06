@@ -1673,7 +1673,7 @@ Proxy design pattern:
 https://www.digitalocean.com/community/tutorials/proxy-design-pattern
 Check archived chatgpt "proxy design pattern"
 
-3) STRUCTURAL DESIGN PATTERNS:
+3) BEHAVIORAL DESIGN PATTERNS:
 Chain of Responsibility pattern:
 https://www.digitalocean.com/community/tutorials/chain-of-responsibility-design-pattern-in-java
 Check archived chatgpt "Chain of responsibility java"
@@ -1697,6 +1697,10 @@ https://www.quora.com/What-is-the-difference-between-PUT-POST-and-PATCH-for-REST
 
 Why patch is non-idempotent:
 https://medium.com/@pankaj_rawal/why-patch-is-considered-non-idempotent-1dfd4ca9a2
+
+Http status codes:
+https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status#successful_responses
+Check status codes 200(OK), 201(CREATED), 204(NO CONTENT), 400(BAD REQUEST), 401(UNAUTHORIZED), 403(FORBIDDEN), 404(NOT FOUND), 405(METHOD NOT ALLOWED), 500(INTERNAL SERVER ERROR), 502(BAD GATEWAY), 503(SERVICE UNAVAILABLE)
 ------------------------------------------------------------------------------------------------
 Java memory leak:
 https://www.baeldung.com/java-memory-leaks
@@ -1704,13 +1708,12 @@ https://www.baeldung.com/java-memory-leaks
 PermGen vs MetaSpace:
 https://www.baeldung.com/java-permgen-metaspace
 Starting with Java 8, the Metaspace replaces the PermGen bringing some substantial changes.
-Check ChatGPT.
-https://chatgpt.com/c/6868bd96-fe4c-8005-9b83-0e9d13b0a6a9 (See archived chats)
+Check archived chatgpt "PermGen vs MetaSpace"
 
 Java memory management:
-https://www.linkedin.com/learning/java-memory-management-values-and-references/make-beautiful-stack-overflow-errors?dApp=53239054&leis=LAA&resume=false&u=2113185
 https://www.baeldung.com/java-memory-management-interview-questions
 Check archived chatgpt "new string in java"
+Note: After the introduction of compact strings in java 9, strings with only latin-1 characters are stored using byte[] internally instead of char[] to save memory. Before java 9, all strings were stored using char[] internally.
 ------------------------------------------------------------------------------------------------
 Custom Exception:
 https://www.baeldung.com/java-new-custom-exception
