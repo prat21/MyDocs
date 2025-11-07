@@ -173,7 +173,7 @@ From: https://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/#gettin
 
 10.5 Creating an executable jar:
 
-Letâ€™s finish our example by creating a completely self-contained executable jar file that we could run in production. Executable jars (sometimes called â€œfat jarsâ€�) are archives containing your compiled classes along with all of the jar dependencies that your code needs to run.
+Letâ€™s finish our example by creating a completely self-contained executable jar file that we could run in production. Executable jars (sometimes called fat jars) are archives containing your compiled classes along with all of the jar dependencies that your code needs to run.
 
 To create an executable jar we need to add the spring-boot-maven-plugin to our pom.xml. Insert the following lines just below the dependencies section:
 
@@ -228,7 +228,7 @@ Since we have used the spring-boot-starter-parent POM we have a useful run goal 
 ----------------------------------------------------------------------------------------------------------------------------------------
 
 SEE: https://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/#getting-started-first-application
-spring-boot-starter-data-jpa : Support for the â€œJava Persistence APIâ€� including spring-data-jpa, spring-orm and Hibernate.
+spring-boot-starter-data-jpa : Support for the Java Persistence API including spring-data-jpa, spring-orm and Hibernate.
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 SEE: https://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/#getting-started-first-application
@@ -536,7 +536,7 @@ Profile specific properties are loaded from the same locations as standard appli
 
 5. Properties with Spring Boot (https://www.baeldung.com/properties-with-spring)
 
-5.1. application.properties â€“ the Default Property File
+5.1. application.properties: the Default Property File
 Boot applies itâ€™s typical convention over configuration approach to property files. This means that we can simply put an â€œapplication.propertiesâ€� file in our â€œsrc/main/resourcesâ€� directory, and it will be auto-detected. We can then inject any loaded properties from it as normal.
 
 So, by using this default file, we donâ€™t have to explicitly register a PropertySource, or even provide a path to a property file.
@@ -773,6 +773,7 @@ Saga microservice architecture pattern:
 https://microservices.io/patterns/data/saga.html
 https://chrisrichardson.net/post/sagas/2019/08/15/developing-sagas-part-3.html
 check archived chatgpt "saga pattern explanation"
+Also check "GlobalOrDistributedTransaction.txt"
 ----------------------------------------------------------------------------------------------------------------------------------------
 Create your own auto-configuration:
 https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#features.developing-auto-configuration

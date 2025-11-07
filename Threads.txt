@@ -225,10 +225,11 @@ Race Condition:
 http://tutorials.jenkov.com/java-concurrency/race-conditions-and-critical-sections.html
 --------------------------------------------------------------------------------------------------------------------------------------------------
 CompletableFuture:
-https://forums.oracle.com/ords/apexds/post/completablefuture-for-asynchronous-programming-in-java-8-8539
+
 "If no ExecutorService is supplied(to the completableFuture), the tasks will be executed in the common fork/join pool, the same pool that is used for the parallel execution of streams."
 "All these methods(thenApply, thenAccept, thenRun) execute their tasks in the same thread as the upstream task. If we want these tasks to be executed in a separate thread then we have to use the "async" variants. These methods can take a further suffix: async(thenRunAsync for example). An async method executes its task in the default fork/join pool, unless it takes an Executor, in which case, the task will be executed in this Executor."
 
+https://www.callicoder.com/java-8-completablefuture-tutorial/
 https://www.baeldung.com/java-completablefuture-threadpool
 https://medium.com/javarevisited/completablefuture-usage-and-best-practises-4285c4ceaad4
 
@@ -237,7 +238,7 @@ Why completableFuture was introduced even though Future interface was there:
 2. No support for exception handling.
 3. Chaining of callbacks was not supported.
 4. There was no way to explicitly complete the task.
-https://www.callicoder.com/java-8-completablefuture-tutorial/
+
 The join() method is similar to get(). The only difference is that it throws an unchecked exception if the underlying CompletableFuture completes exceptionally.
 Check archived chatgpt "get vs join completablefuture"
 Check archived chatgpt "completable future in java" (Especially check the section explaining different states of completionstage)
