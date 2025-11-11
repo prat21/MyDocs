@@ -2,10 +2,10 @@ https://cloud.spring.io/spring-cloud-netflix/reference/html/
 https://cloud.spring.io/spring-cloud-netflix/multi/multi_spring-cloud-eureka-server.html
 https://cloud.spring.io/spring-cloud-netflix/multi/multi__service_discovery_eureka_clients.html
 https://www.youtube.com/watch?v=jhvJg4tDrpw&list=PLqq-6Pq4lTTZSKAFG6aCDVDP86Qx4lNas&index=20 (Follow JavaBrains tutorial)
-https://stackoverflow.com/questions/33921557/understanding-spring-cloud-eureka-server-self-preservation-and-renew-threshold/41775757
-https://stackoverflow.com/questions/32616329/eureka-never-unregisters-a-service
 --------------------------------------------------------------------------------------
 Eureka Client:
+
+To include the Eureka Client in your project, use the starter with a group ID of org.springframework.cloud and an artifact ID of "spring-cloud-starter-netflix-eureka-client".
 
 Eureka receives heartbeat messages from each instance belonging to a service. If the heartbeat fails over a configurable timetable, the instance is normally removed from the registry.
 
@@ -29,6 +29,8 @@ Note: To test this out start SpringCloudEurekaServer, SpringCloudEurekaClient an
 ------------------------------------------------------------------
 Eureka Server:
 
+To include Eureka Server in your project, use the starter with a group ID of org.springframework.cloud and an artifact ID of "spring-cloud-starter-netflix-eureka-server".
+
 Clients also have an in-memory cache of Eureka registrations (so they do not have to go to the registry for every request to a service).
 
 By default, every Eureka server is also a Eureka client and requires (at least one) service URL to locate a peer(another eureka server). If you do not provide it, the service runs and works, but it fills your logs with a lot of noise about not being able to register with the peer.
@@ -47,11 +49,10 @@ eureka:
 
 In some cases, it is preferable for Eureka to advertise the IP addresses of services rather than the hostname. Set eureka.instance.preferIpAddress to true and, when the application registers with eureka, it uses its IP address rather than its hostname.
 
-
 ------------------------------------------------------------------
 Spring cloud eureka server peer awareness:
 
-https://medium.com/swlh/spring-cloud-high-availability-for-eureka-b5b7abcefb32
+https://cloud.spring.io/spring-cloud-netflix/reference/html/#spring-cloud-eureka-server-peer-awareness
 
 ------------------------------------------------------------------
 Eureka’s Peer Awareness: Concepts:

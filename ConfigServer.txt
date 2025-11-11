@@ -2,7 +2,7 @@ See JAVA Brains also.
 
 1. Spring cloud config server:
 
-https://cloud.spring.io/spring-cloud-static/spring-cloud-config/2.2.0.M1/#_quick_start
+https://docs.spring.io/spring-cloud-config/docs/current/reference/html/
 https://www.baeldung.com/spring-cloud-configuration
 https://howtodoinjava.com/spring-cloud/spring-cloud-config-server-git/
 
@@ -19,6 +19,9 @@ https://www.baeldung.com/spring-boot-actuators#boot-2x-actuator
 4. Spring and Spring boot externalized configuration:
 
 https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-external-config.html
+
+For config server starter is: "spring-cloud-config-server"
+For client starter is: "spring-cloud-starter-config"
 
 ---------------------------------------------------------------------------------------------------------------
 
