@@ -6,6 +6,38 @@ See Synchronized statements and Reentrant Synchronization and their advantages.
 "But a thread can acquire a lock that it already owns. Allowing a thread to acquire the same lock more than once enables reentrant synchronization. This describes a situation where synchronized code, directly or indirectly, invokes a method that also contains synchronized code, and both sets of code use the same lock. Without reentrant synchronization, synchronized code would have to take many additional precautions to avoid having a thread cause itself to block."
 "Synchronized statements are also useful for improving concurrency with fine-grained synchronization."
 
+Check archived chatgpt "Thread interrupt use case"
+"Thread.interrupt() only interrupts operations that are designed to be interruptible — like sleep(), wait(), and join().
+ But most I/O operations (like InputStream.read() or Socket.read()) are not interruptible in plain Java I/O (java.io).
+ So even if you call interrupt(), the thread may remain blocked."
+
+For example you may have to check whether a thread is interrupted or like below:
+class Task implements Runnable {
+    @Override
+    public void run() {
+        try {
+            while (!Thread.currentThread().isInterrupted()) {
+                // do some work
+                System.out.println("Working...");
+                Thread.sleep(500);
+            }
+        } catch (InterruptedException e) {
+            // handle cleanup or rollback
+            System.out.println("Task interrupted, cleaning up...");
+        }
+    }
+}
+
+public class Example {
+    public static void main(String[] args) throws InterruptedException {
+        Thread worker = new Thread(new Task());
+        worker.start();
+
+        Thread.sleep(2000); // Let it work for a while
+        worker.interrupt(); // Request stop
+    }
+}
+
 --------------------------------------------------------------------------------
 Volatile:
 https://www.geeksforgeeks.org/volatile-keyword-in-java/
@@ -47,6 +79,7 @@ https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/locks/ReentrantLo
 Condition:
 https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/locks/Condition.html
 check archived chatgpt "multiple wait sets utility"
+Note: "signal" wakes up one waiting thread.
 
 Check the implementation logic of ArrayBlockingQueue, especially put and take methods.
 Check archived chatgpt "Reentrantlock consequences in java"
@@ -103,7 +136,7 @@ Difference between a CyclicBarrier and a CountDownLatch
 A CountDownLatch can be used only once in a program(until it’s count reaches 0).
 A CyclicBarrier can be used again and again once all the threads in a barriers is released.
 
-
+Check chatgpt "semaphore vs countdownlatch vs cyclicbarrier"
 -------------------------------------------------------------------------------------------------------------------------------------------------
 Mutex is the Semaphore with an access count of 1.
 
@@ -171,6 +204,7 @@ Note: ExecutorService abstracts away the thread management and lifecycle overhea
 Check archived chatgpt "thread pool types"
 Check archived chatgpt "CorePoolSize vs MaxPoolsize" to check how corepoolsize and maxpoolsize relate to different thread pools.
 Check chatgpt "Executor.shutdown explanation"
+Note: You can also check the different internal ThreadPoolExecutor for different pool types by directly going to the source code for say "Executors.newFixedThreadPool".
 --------------------------------------------------------------------------------------------------------------------------------------------------
 
 Callable: Main difference between Runnable and Callable is that Runnable cannot return any value back to caller but Callable can return value. Another difference is that call() method from Callable can also throw checked exception which was not possible by run() method of Runnable interface. 
@@ -243,4 +277,13 @@ The join() method is similar to get(). The only difference is that it throws an 
 Check archived chatgpt "get vs join completablefuture"
 Check archived chatgpt "completable future in java" (Especially check the section explaining different states of completionstage)
 --------------------------------------------------------------------------------------------------------------------------------------------------
-Check threadLocal and fork/join pool.
+Fork/Join pool:
+https://docs.oracle.com/javase/tutorial/essential/concurrency/forkjoin.html
+https://www.baeldung.com/java-fork-join
+
+In Java 8, the most convenient way to get access to the instance of the ForkJoinPool is to use its static method commonPool(). This will provide a reference to the common pool, which is a default thread pool for every ForkJoinTask.
+According to Oracle’s documentation, using the predefined common pool reduces resource consumption since this discourages the creation of a separate thread pool per task.
+ForkJoinPool commonPool = ForkJoinPool.commonPool();
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+Check threadLocal.

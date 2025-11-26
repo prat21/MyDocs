@@ -77,6 +77,7 @@ Iteration over collection views of LinkedHashMap also takes linear time O(n) sim
 This is because, for LinkedHashMap, n in O(n) is only the number of entries in the map regardless of the capacity. Whereas, for HashMap, n is capacity and the size summed up, O(size+capacity).
 
 http://www.baeldung.com/java-linked-hashmap
+Check chatgpt "lru cache use cases"
 
 4. How TreeMap works?
 

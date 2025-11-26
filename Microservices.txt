@@ -16,3 +16,8 @@ https://www.ibm.com/topics/esb
 1. It is possible to implement a SOA without an ESB architecture, but this would be equivalent to just having a bunch of services. Each application owner would need to directly connect to any service it needs and perform the necessary data transformations to meet each of the service interfaces. This is a lot of work.
 2. A centralized ESB offers the potential to standardize—and dramatically simplify—communication, messaging, and integration between services across the enterprise. Hardware and software costs can be shared, provisioning the servers as needed for the combined usage, providing a scalable centralized solution.
 Software applications simply connect (‘talk’) to the ESB and leave it to the ESB to transform the protocols, route the messages, and transform into the data formats as required providing the interoperability to get the transactions executed.
+--------------------------------------------------------------------------------------------------------------
+What is backpressure architecture:
+https://medium.com/@jayphelps/backpressure-explained-the-flow-of-data-through-software-2350b3e77ce7
+https://www.geeksforgeeks.org/computer-networks/back-pressure-in-distributed-systems/
+Chatgpt "Reactive streams non-blocking explanation"
