@@ -1,0 +1,6 @@
+How to fetch millions of records from database efficiently:
+https://www.youtube.com/watch?v=OoD0OiOMfHc
+Chatgpt "Fetching large datasets in java"
+----------------------------------------------------------------------
+Offset vs Cursor Based Pagination:
+https://www.youtube.com/watch?v=zwDIN04lIpc

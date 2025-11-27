@@ -585,7 +585,6 @@ This means that when the PreparedStatement is executed, the DBMS can just run th
 https://docs.oracle.com/javase/tutorial/jdbc/basics/prepared.html
 https://stackoverflow.com/questions/3271249/difference-between-statement-and-preparedstatement
 
-
 -----------------------------------------------------------------------------------------------------------------
 
 See difference between association, composition and aggregation in java
@@ -701,18 +700,6 @@ Difference between "new Integer()" and "Integer.valueOf()":
 https://stackoverflow.com/questions/9030817/differences-between-new-integer123-integer-valueof123-and-just-123#:~:text=new%20Integer(123)%20will%20create,call%20it%20more%20than%20once.
 
 -----------------------------------------------------------------------------------------------------------------
-New Features in Java 1.7:
-
-1. Binary Literals
-2. Strings in switch Statement
-3. Try with Resources or ARM (Automatic Resource Management)
-4. Multiple Exception Handling
-5. Suppressed Exceptions
-6. underscore in literals
-7. Type Inference for Generic Instance Creation using Diamond Syntax
-
-
-https://stackoverflow.com/questions/213958/new-features-in-java-7
 
 New Features in Java 1.8:
 
