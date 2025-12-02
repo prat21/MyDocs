@@ -1471,7 +1471,7 @@ Static Inner class can be accessed by outer class name.
 
 It can access static data members of outer class including private.
 
-Example: LinkedList.Node class
+Example: LinkedList.Node class, HashMap.Node class(which implements Map.Entry nested interface)
 Check archived chatgpt "static nested class usage"
 We need to use static inner class when we dont need to access the state of the outerclass from innerclass, using OuterClass.this
 ------------------------------------------------------------------------------------------------
