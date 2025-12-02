@@ -1209,6 +1209,9 @@ JAVA LTS releases are java 8, 11, 17, 21.
 Sealed class (finalized in java 17):
 https://docs.oracle.com/en/java/javase/17/language/sealed-classes-and-interfaces.html
 Check chatgpt "sealed classes in java"
+
+Enforcing immutability:
+Sealed classes can be combined with final subclasses to enforce immutability.By restricting subclasses, sealed classes ensure that no mutable or unsafe subclass can be introduced. 
 ------------------------------------------------------------------------------------------------
 Java 21 new features:
 1) Record pattern destructuring (Record classes were introduced in java 16 as standard feature)
