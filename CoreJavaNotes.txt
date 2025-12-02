@@ -1473,6 +1473,7 @@ It can access static data members of outer class including private.
 
 Example: LinkedList.Node class
 Check archived chatgpt "static nested class usage"
+We need to use static inner class when we dont need to access the state of the outerclass from innerclass, using OuterClass.this
 ------------------------------------------------------------------------------------------------
 
 Static Inner Class example:
