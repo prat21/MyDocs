@@ -766,11 +766,11 @@ https://www.baeldung.com/java-compiled-interpreted
 It is the JVM that is built and customized for each platform that supports Java, rather than our programs or libraries.
 
 Compiled code is portable as the compiled bytecode (.class in java for instance) can be run anywhere as long as it gets the appropriate runtime environment(JRE for instance). Interpreting a compiled code(low-level language) is faster as it is already pre-optimized, syntactically and semantically checked, rather than interpreting a high-level language directly into machine-code.
+Interpreting compiled code is faster than interpreting high-level language directly into machine-code.
 
 Also check the archived chatgpt.
 ------------------------------------------------------------------------------------------------
 JIT Compiler
-https://stackoverflow.com/questions/95635/what-does-a-just-in-time-jit-compiler-do
 
 In the beginning, a compiler was responsible for turning a high-level language (defined as higher level than assembler) into object code (machine instructions), which would then be linked (by a linker) into an executable.
 
@@ -1674,6 +1674,10 @@ Check archived chatgpt "Chain of responsibility java"
 Observer design pattern:
 https://www.digitalocean.com/community/tutorials/observer-design-pattern-in-java
 Example: Publish-subscribe models. Java Message Service (JMS) uses Observer design pattern along with Mediator pattern.javax.servlet.http.HttpSessionBindingListener. javax.servlet.http.HttpSessionAttributeListener
+
+Strategy Design Pattern:
+https://medium.com/@eshikashah2001/understanding-the-strategy-design-pattern-in-software-engineering-8774086a1895
+Example: java.util.Comparator interface and its implementations like Collections.sort(list, comparator)
 ------------------------------------------------------------------------------------------------
 J2EE design patterns:
 https://stackabuse.com/java-j2ee-design-patterns/#dataaccessobjectpattern
