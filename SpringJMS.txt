@@ -9,15 +9,45 @@ A JMS client can consume messages either synchronously or asynchronously.
 
 -----------------------------------------------------------------------------------------------
 The MessagePostProcessor interface gives you access to the message after it has been converted but before it is sent
+
+public class JmsSenderWithConversion {
+
+	private JmsTemplate jmsTemplate;
+
+	public void sendWithConversion() {
+		Map<String, Object> map = new HashMap<>();
+		map.put("Name", "Mark");
+		map.put("Age", 47);
+		jmsTemplate.convertAndSend("testQueue", map, new MessagePostProcessor() {
+			public Message postProcessMessage(Message message) throws JMSException {
+				message.setIntProperty("AccountID", 1234);
+				message.setJMSCorrelationID("123-00001");
+				return message;
+			}
+		});
+	}
+
+}
+-----------------------------------------------------------------------------------------------
+JmsClient:
+https://docs.spring.io/spring-framework/reference/integration/jms/sending.html#jms-sending-jmsclient
+-----------------------------------------------------------------------------------------------
+Synchronous Message Consumption:
+https://docs.spring.io/spring-framework/reference/integration/jms/receiving.html#jms-receiving-sync
+While JMS is typically associated with asynchronous processing, you can consume messages synchronously. The receive(..) methods on JmsTemplate and JmsClient provide this functionality. During a synchronous receive, the calling thread blocks until a message becomes available.
 -----------------------------------------------------------------------------------------------
 https://docs.spring.io/spring-framework/reference/integration/jms/annotated.html#jms-annotated-response
 -----------------------------------------------------------------------------------------------
 MessageListenerAdapter: An adapter that implements the MessageListener interface, delegating the handling of messages to target listener methods via reflection. This is an example of adapter design pattern.
 https://docs.spring.io/spring-framework/reference/integration/jms/receiving.html#jms-receiving-async-message-listener-adapter
 https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/jms/listener/adapter/MessageListenerAdapter.html
+Notice how the message handling method is actually called "receive" (the name of the message handling method in a MessageListenerAdapter defaults to "handleMessage"), but it is configurable.
 -----------------------------------------------------------------------------------------------
 Message Listener Containers:
 https://docs.spring.io/spring-framework/reference/integration/jms/using.html#jms-mdp
+-----------------------------------------------------------------------------------------------
+Asynchronous Message Consumption:
+https://docs.spring.io/spring-framework/reference/integration/jms/receiving.html#jms-receiving-async
 -----------------------------------------------------------------------------------------------
 https://docs.spring.io/spring-framework/reference/integration/jms/receiving.html#jms-tx-participation
 "You can activate local resource transactions through the sessionTransacted flag on the listener container definition. Each message listener invocation then operates within an active JMS transaction, with message receipt rolled back in case of listener execution failure."
@@ -58,8 +88,22 @@ public class JmsConfiguration {
 	}
 }
 
+By default, the infrastructure looks for a bean named jmsListenerContainerFactory as the source for the factory to use to create message listener containers. In this case, you can invoke the processOrder method with a core pool size of three threads and a maximum pool size of ten threads.
+
+So far, we have been injecting a simple String in our endpoint, but it can actually have a very flexible method signature. In the following example, we rewrite it to inject the Order with a custom header:
+
+@Component
+public class MyService {
+
+	@JmsListener(destination = "myDestination")
+	public void processOrder(Order order, @Header("order_type") String orderType) {
+		...
+	}
+}
+
 https://docs.spring.io/spring-framework/reference/integration/jms/annotated.html#jms-annotated-response
 "The existing support in MessageListenerAdapter already lets your method have a non-void return type. When that is the case, the result of the invocation is encapsulated in a jakarta.jms.Message, sent either in the destination specified in the JMSReplyTo header of the original message or in the default destination configured on the listener. You can now set that default destination by using the @SendTo annotation of the messaging abstraction."
+"The annotated endpoint infrastructure creates a message listener container behind the scenes for each annotated method,by using a JmsListenerContainerFactory."
 
 @JmsListener(destination = "myDestination")
 @SendTo("status")

@@ -1759,8 +1759,8 @@ My Note: Kindly note that in these examples, the subclass is overriding the gett
  In this way you can allow the class to be extended (yes possibly even by a mutable class) however the immutable aspects of your class are protected. Properties are private and can't be accessed, getters for these properties are final and cannot be overridden.
  Any other code that uses an instance of your immutable class will be able to rely on the immutable aspects of your class even if the sub class it is passed is mutable in other aspects. Of course, since it takes an instance of your class it wouldn't even know about these other aspects."
 ------------------------------------------------------------------------------------------------
- Class access specifiers in java:
- Check archived chatgpt with the same name.
+Class access specifiers in java:
+Check archived chatgpt with the same name.
 ------------------------------------------------------------------------------------------------
 ServiceLoader pattern:
 https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/ServiceLoader.html
