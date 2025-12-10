@@ -60,7 +60,7 @@ SEE: https://dzone.com/articles/ioc-vs-di for Dependency Injection and IOC (it i
 
 --------------------------------------------------------------------------------------------
 Since you can mix constructor-based and setter-based DI, it is a good rule of thumb to use constructors for mandatory dependencies and setter methods or configuration methods for optional dependencies.
-Setter injection overrides the constructor injection. If we use both constructor and setter injection, IOC container will use the setter injection.
+Setter injection overrides the constructor injection.
 Setter Injection: IoC Container first creates the dependent object then the Target Class Object
 Constructor Injection: IoC Container first create the target class object then the dependent object
 Constructor based injection helps to implement immutable objects.
@@ -69,6 +69,15 @@ Field injection makes your beans mutable post-construction. With constructor inj
 An @Autowired annotated constructor, setter or field does not have to be public.
 
 check archived chatgpt "spring bean name vs qualifier"
+---------------------------------------------------------------------------------------------
+Important note on how spring does bean initialization:
+1. First spring uses constructor and constructor injection to create a bean. Any autowire candidate that is part of the constructor parameters has to be created before the bean itself is created using constructor.
+2. After the bean is created then spring tries to do setter based/factory method based/field based injection. These are for optional dependencies(we can use required=false attribute of autowired annotation to mark a dependency as optional). So after the main bean is created then only the beans that are required for setter based(etc) injections are created by spring. The setter based injection can be used to resolve circular dependency also.
+3. Order of bean creation steps are:
+- Constructor base injection
+- Setter based injection(using autowire, including @value annotation)
+- @postconstruct
+
 ---------------------------------------------------------------------------------------------
 https://docs.spring.io/spring-framework/reference/core/beans/dependencies/factory-dependson.html
 check archived chatgpt "@DependsOn annotation usage"
@@ -94,6 +103,13 @@ You cannot dependency-inject a prototype-scoped bean into your singleton bean, b
 Check archived chatgpt "bean scopes in spring"
 
 https://docs.spring.io/spring-framework/reference/core/beans/factory-scopes.html#beans-factory-scopes-other-injection
+By default, when the Spring container creates a proxy for a bean that is marked up with the <aop:scoped-proxy/> element, a CGLIB-based class proxy is created.
+Alternatively, you can configure the Spring container to create standard JDK interface-based proxies for such scoped beans, by specifying false for the value of the proxy-target-class attribute of the <aop:scoped-proxy/> element. Using JDK interface-based proxies means that you do not need additional libraries in your application classpath to affect such proxying. However, it also means that the class of the scoped bean must implement at least one interface and that all collaborators into which the scoped bean is injected must reference the bean through one of its interfaces.
+
+https://docs.spring.io/spring-framework/reference/core/aop/proxying.html
+Spring AOP uses either JDK dynamic proxies or CGLIB to create the proxy for a given target object. JDK dynamic proxies are built into the JDK, whereas CGLIB is a common open-source class definition library (repackaged into spring-core).
+
+ If the target object to be proxied implements at least one interface, a JDK dynamic proxy is used, and all of the interfaces implemented by the target type are proxied. If the target object does not implement any interfaces, a CGLIB proxy is created which is a runtime-generated subclass of the target type.
 
 check archived chatgpt "spring scoped proxies"
 ---------------------------------------------------------------------------------------------
@@ -122,13 +138,11 @@ An example is the AutowiredAnnotationBeanPostProcessor, which processes the @Aut
 
 check archived chatgpt "BeanPostProcessor proxy creation"
 
-https://medium.com/@ByteCodeBlogger/bean-there-done-that-internal-working-of-autowired-annotation-907e7d8943a1
-"Lifecycle Events When @Autowired is Declared"
-https://medium.com/@AlexanderObregon/how-spring-boot-handles-bean-post-processing-863b62ef88cc
 https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/beans/factory/config/BeanPostProcessor.html
 Typically, post-processors that populate beans via marker interfaces or the like will implement postProcessBeforeInitialization(java.lang.Object, java.lang.String), while post-processors that wrap beans with proxies will normally implement postProcessAfterInitialization(java.lang.Object, java.lang.String).
 
 check archived chatgpt "spring post-processor beans"
+Check "High-level spring Bean lifecycle"
 
 BeanFactoryPostProcessor operates on the bean configuration metadata. That is, the Spring IoC container lets a BeanFactoryPostProcessor read the configuration metadata and potentially change it before the container instantiates any beans.
 Spring includes a number of predefined bean factory post-processors, such as PropertyOverrideConfigurer and PropertySourcesPlaceholderConfigurer.
@@ -258,6 +272,7 @@ https://docs.spring.io/spring-framework/reference/core/beans/java/basic-concepts
 @Configuration classes let inter-bean dependencies be defined by calling other @Bean methods in the same class(Same class because this is achieved by proxy).
 
 When @Bean methods are declared within classes that are not annotated with @Configuration, they are referred to as being processed in a "lite" mode. In such scenarios, @Bean methods are effectively a general-purpose factory method mechanism without special runtime processing (that is, without generating a CGLIB subclass for it). A custom Java call to such a method will not get intercepted by the container and therefore behaves just like a regular method call, creating a new instance every time rather than reusing an existing singleton (or scoped) instance for the given bean.
+As a consequence, @Bean methods on classes without runtime proxying are not meant to declare inter-bean dependencies at all.
 ---------------------------------------------------------------------------------------------
 https://docs.spring.io/spring-framework/reference/core/beans/java/instantiating-container.html
 
@@ -313,6 +328,16 @@ public class AppConfig {
 
 By default, beans defined with Java configuration that have a public close or shutdown method are automatically enlisted with a destruction callback. If you have a public close or shutdown method and you do not wish for it to be called when the container shuts down, you can add @Bean(destroyMethod = "") to your bean definition to disable the default (inferred) mode.
 
+The @Bean annotation supports specifying arbitrary initialization and destruction callback methods, much like Spring XML’s init-method and destroy-method attributes on the bean element, as the following example shows:
+
+@Configuration
+public class AppConfig {
+    @Bean(initMethod = "init", destroyMethod = "cleanup")
+    public Thing thing() {
+        return new Thing();
+    }
+}
+
 By default, configuration classes use a @Bean method’s name as the name of the resulting bean. This functionality can be overridden, however, with the name attribute.
 @Configuration
 public class AppConfig {
@@ -322,6 +347,8 @@ public class AppConfig {
 		return new Thing();
 	}
 }
+
+Note: @qualifier is more like a filter to choose a bean among multiple beans of same type. But @bean name is the actual name of the bean in the spring container. Multiple beans can have same qualifier but bean names have to be unique.
 
 It is sometimes desirable to give a single bean multiple names, otherwise known as bean aliasing. The name attribute of the @Bean annotation accepts a String array for this purpose.
 ---------------------------------------------------------------------------------------------
@@ -380,6 +407,8 @@ The @Profile annotation is actually implemented by using a much more flexible an
 https://docs.spring.io/spring-framework/reference/core/beans/environment.html
 
 The @Profile annotation lets you indicate that a component is eligible for registration when one or more specified profiles are active.
+@Profile({"p1", "p2"}), that class is not registered or processed unless profiles 'p1' or 'p2' have been activated.
+
 @Profile can also be declared at the method level.
 You can activate multiple profiles at once.
 -Dspring.profiles.active="profile1,profile2"
@@ -1854,7 +1883,7 @@ https://www.baeldung.com/the-persistence-layer-with-spring-and-jpa
 Advantage of using spring data jpa(alongwith hibernate as a jpa provider) over spring+hibernate:
 https://stackoverflow.com/questions/23862994/what-is-the-difference-between-hibernate-and-spring-data-jpa
 https://dzone.com/articles/what-is-the-difference-between-hibernate-and-sprin-1
-Let's say you are using spring + hibernate for your application. Now you need to have dao interface and implementation where you will be writing crud operation using SessionFactory of hibernate. Let say you are writing dao class for Employee class, tomorrow in your application you might need to write similiar crud operation for any other entity. So there is lot of boilerplate code we can see here.
+Let's say you are using spring + hibernate for your application. Now you need to have dao interface and implementation where you will be writing crud operation using SessionFactory of hibernate. Let say you are writing dao class for Employee class, tomorrow in your application you might need to write similar crud operation for any other entity. So there is lot of boilerplate code we can see here.
 Now Spring data jpa allow us to define dao interfaces by extending its repositories(crudrepository, jparepository) so it provide you dao implementation at runtime. You don't need to write dao implementation anymore.Thats how spring data jpa makes your life easy.
 So, basically spring jpa is another layer of abstraction on top of hibernate to avoid boilerplate code.
 
@@ -1865,19 +1894,13 @@ SessionFactory and Session are hibernate-specific. The EntityManager invokes the
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 Transaction management in spring:
-
 https://www.baeldung.com/transaction-configuration-with-jpa-and-spring
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 Spring Boot with multiple datasources:
 https://www.baeldung.com/spring-data-jpa-multiple-databases
 https://stackoverflow.com/questions/30337582/spring-boot-configure-and-use-two-datasources
 ------------------------------------------------------------------------------------------------------------------------------------------------------
-
 SEE: https://www.baeldung.com/spring-interview-questions
-------------------------------------------------------------------------------------------------------------------------------------------------------
-Just an optional read of how j2ee became jakarta ee.
-https://blogs.oracle.com/javamagazine/post/transition-from-java-ee-to-jakarta-ee
-
 
 
 
