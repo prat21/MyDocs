@@ -72,7 +72,7 @@ check archived chatgpt "spring bean name vs qualifier"
 ---------------------------------------------------------------------------------------------
 Important note on how spring does bean initialization:
 1. First spring uses constructor and constructor injection to create a bean. Any autowire candidate that is part of the constructor parameters has to be created before the bean itself is created using constructor.
-2. After the bean is created then spring tries to do setter based/factory method based/field based injection. These are for optional dependencies(we can use required=false attribute of autowired annotation to mark a dependency as optional). So after the main bean is created then only the beans that are required for setter based(etc) injections are created by spring. The setter based injection can be used to resolve circular dependency also.
+2. After the bean is created then spring tries to do setter based/factory method based/field based injection. These are for optional dependencies(we can use required=false attribute of autowired annotation to mark a dependency as optional, ie spring will not execute the setter if no autowired candidate is found.). So after the main bean is created then only the beans that are required for setter based(etc) injections are created by spring. The setter based injection can be used to resolve circular dependency also.
 3. Order of bean creation steps are:
 - Constructor base injection
 - Setter based injection(using autowire, including @value annotation)
@@ -96,6 +96,9 @@ https://docs.spring.io/spring-framework/reference/core/beans/factory-scopes.html
 As a rule, you should use the prototype scope for all stateful beans and the singleton scope for stateless beans.
 
 Spring does not manage the complete lifecycle of a prototype bean. The container instantiates, configures, and otherwise assembles a prototype object and hands it to the client, with no further record of that prototype instance. Thus, although initialization lifecycle callback methods are called on all objects regardless of scope, in the case of prototypes, configured destruction lifecycle callbacks are not called. The client code must clean up prototype-scoped objects and release expensive resources that the prototype beans hold.
+
+Why spring does not manage destroy callback for prototype?
+Spring relinquishes control over prototype instances once they're handed to the client. The container has no way to track when a prototype instance is no longer needed, since it doesn't retain references to individual prototype instances.
 
 https://docs.spring.io/spring-framework/reference/core/beans/factory-scopes.html#beans-factory-scopes-sing-prot-interaction
 You cannot dependency-inject a prototype-scoped bean into your singleton bean, because that injection occurs only once, when the Spring container instantiates the singleton bean and resolves and injects its dependencies. If you need a new instance of a prototype bean at runtime more than once, see Method Injection.
@@ -1889,7 +1892,7 @@ So, basically spring jpa is another layer of abstraction on top of hibernate to 
 
 Difference between sessionFactory and entityManagerFactory:
 https://stackoverflow.com/questions/5640778/hibernate-sessionfactory-vs-jpa-entitymanagerfactory
-Prefer EntityManagerFactory and EntityManager. They are defined by the JPA standard.
+Prefer EntityManagerFactory and EntityManager. They are defined by the JPA standard and vendor independent. So if you decide to switch from Hibernate to another JPA provider (EclipseLink, OpenJPA, etc.) you won't have to change your code.
 SessionFactory and Session are hibernate-specific. The EntityManager invokes the hibernate session under the hood.
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
