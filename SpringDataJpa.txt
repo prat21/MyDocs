@@ -74,9 +74,6 @@ interface PersonRepository extends Repository<Person, UUID> {
   Collection<NamesOnly> findByLastname(String lastname);
 }
 
-https://docs.spring.io/spring-data/jpa/reference/repositories/projections.html#projections.dtos
-Another way of defining projections is by using value type DTOs (Data Transfer Objects) that hold properties for the fields that are supposed to be retrieved. These DTO types can be used in exactly the same way projection interfaces are used, except that no proxying happens and no nested projections can be applied.
-
 https://docs.spring.io/spring-data/jpa/reference/jpa/specifications.html
 https://docs.spring.io/spring-data/jpa/reference/auditin.html
 

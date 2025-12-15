@@ -287,7 +287,7 @@ By default, the following HttpMessageConverters instances are pre-enabled:
 High Level Content Negotiation:
 
 Each HttpMessageConverter implementation has one or several associated MIME Types.
-When receiving a new request, Spring will use of the “Accept” header to determine the media type that it needs to respond with.
+When receiving a new request, Spring use the “Accept” header to determine the media type that it needs to respond with.
 It will then try to find a registered converter that is capable of handling that specific media type – and it will use it to convert the entity and send back the response.
 The process is similar for receiving a request which contains JSON information – the framework will use the “Content-Type” header to determine the media type of the request body.
 It will then search for a HttpMessageConverter that can convert the body sent by the client to a Java Object.
@@ -327,6 +327,22 @@ Check archived chatgpt "cache control overview"
 RestClient and RestTemplate:
 
 https://docs.spring.io/spring-framework/reference/integration/rest-clients.html
+String result = restClient.get()
+	.uri("https://example.com")
+	.retrieve()
+	.body(String.class);
+
+System.out.println(result);
+
+ResponseEntity<String> result = restClient.get()
+	.uri("https://example.com")
+	.retrieve()
+	.toEntity(String.class);
+
+System.out.println("Response status: " + result.getStatusCode());
+System.out.println("Response headers: " + result.getHeaders());
+System.out.println("Contents: " + result.getBody());
+
 https://docs.spring.io/spring-framework/reference/integration/rest-clients.html#rest-request-factories
 
 If no request factory is specified when the RestClient was built, it will use the Apache or Jetty HttpClient if they are available on the classpath.
