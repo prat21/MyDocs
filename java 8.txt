@@ -139,9 +139,6 @@ https://www.geeksforgeeks.org/java/static-vs-dynamic-binding-in-java/
 Static binding is better performance-wise (no extra overhead is required). The compiler knows that all such methods cannot be overridden and will always be accessed by objects of the type reference class. That’s the reason binding for such methods is static."
 
 ---------------------------------------------------------------------------------------------
-Permgen vs Metaspace:
-https://www.baeldung.com/java-permgen-metaspace
----------------------------------------------------------------------------------------------
 Collections.sort is only applicable for sorting list interface.
 Signature: public static <T extends Comparable<? super T>> void sort(List<T> list)
 List.sort was introduced in java 8 and takes comparator as a mandatory argument. If comparator is supplied as null, then natural ordering applies.
