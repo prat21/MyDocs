@@ -68,14 +68,28 @@ kubectl rollout undo deployment/nginx-deployment --to-revision=2
 Rolling update strategy:
 By default, a Deployment uses the RollingUpdate strategy to replace old Pods with new ones. This strategy ensures that some Pods are always available during the update process.
 You can customize the rolling update behavior by specifying the maxUnavailable and maxSurge parameters in the rollingUpdate section of the Deployment spec.
+Advantage: No downtime during the update process.
+Disadvantage: Some users may still be accessing the old version of the application while others are accessing the new version.
 
 Recreate strategy:
 All existing Pods are killed before new ones are created when .spec.strategy.type==Recreate.
+Advantage: All users will gain access to the new version of the application at the same time.
+Disadvantage: There will be a downtime during the update process.
+
+Blue-Green Deployment:
+Blue-green deployments are a deployment strategy that reduces downtime and risk by running two identical production environments.
+Blue environment: the live environment that serves all production traffic.
+Green environment: the idle environment where the new version of the application is deployed and tested.
+Once the green environment is verified to be working correctly, the traffic is switched from the blue environment to the green environment.
+Advantage: Minimal downtime during the switch.
+Disadvantage: Requires double the resources during the deployment process.
 
 Canary Deployment:
 Canary deployments are a deployment strategy that releases an application to a small subset of users before rolling it out to the entire infrastructure and user base.
 Kubernetes does not have built-in support for canary deployments, but you can implement them using a combination of Deployments, Services, and labels.
 https://kubernetes.io/docs/concepts/workloads/management/#canary-deployments
+Advantage: Allows for testing the new version with a small group of users before a full rollout.
+Disadvantage: It is slower and may require additional tooling, such as service mesh, to manage traffic routing.
 
 ---
 apiVersion: apps/v1
@@ -105,3 +119,9 @@ spec:
      maxSurge: 1
      maxUnavailable: 1
 ---
+-------------------------------------------------------------------------------------------------
+Pod requests and limits:
+https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+Requests: Minimum amount of CPU or memory that a container requires. The scheduler uses this information to decide on which node to place the Pod. If you specify a CPU or memory value that is larger than the node's available resources, the Pod will not be scheduled.
+Limits: Sets the upper bound on the amount of CPU or memory that a container can use. Prevents a container from consuming too many resources and affecting other containers on the same node.
+Kube-scheduler uses requests to schedule pods onto nodes, while the kubelet enforces limits at runtime.
