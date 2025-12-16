@@ -77,7 +77,7 @@ Iteration over collection views of LinkedHashMap also takes linear time O(n) sim
 This is because, for LinkedHashMap, n in O(n) is only the number of entries in the map regardless of the capacity. Whereas, for HashMap, n is capacity and the size summed up, O(size+capacity).
 
 http://www.baeldung.com/java-linked-hashmap
-Check chatgpt "lru cache use cases"
+Check chatgpt "lru cache use cases", "lru cache with linkedhashmap"
 
 4. How TreeMap works?
 
@@ -1211,7 +1211,9 @@ https://docs.oracle.com/en/java/javase/17/language/sealed-classes-and-interfaces
 Check chatgpt "sealed classes in java"
 
 Enforcing immutability:
-Sealed classes can be combined with final subclasses to enforce immutability.By restricting subclasses, sealed classes ensure that no mutable or unsafe subclass can be introduced. 
+Sealed classes can be combined with final subclasses to enforce immutability.By restricting subclasses, sealed classes ensure that no mutable or unsafe subclass can be introduced.
+Final classes are too restrictive, sometimes you want limited but not zero inheritance.
+Normal classes without final or sealed can be extended by any class, which may lead to unintended behavior or security vulnerabilities.
 ------------------------------------------------------------------------------------------------
 Java 21 new features:
 1) Record pattern destructuring (Record classes were introduced in java 16 as standard feature)
@@ -1226,10 +1228,6 @@ public static int afterRecordPattern(Object obj) {
 Check archived chatgpt "switch expression java" and "java switch pattern matching"
 https://docs.oracle.com/en/java/javase/17/language/pattern-matching.html
 https://www.baeldung.com/java-switch-pattern-matching
-
-From Java 14, switch expressions were introduced (with yield).
-From Java 17, pattern matching for instanceof came.
-And from Java 21 (finalized in Java 21), pattern matching for switch was added.
 
 3) String literal
 4) Virtual threads
@@ -1473,6 +1471,7 @@ It can access static data members of outer class including private.
 
 Example: LinkedList.Node class, HashMap.Node class(which implements Map.Entry nested interface)
 Check archived chatgpt "static nested class usage"
+One advantage of using static nested class is that it does not hold the reference of outer class object, hence it can be used to avoid memory leaks in certain cases.
 We need to use static inner class when we dont need to access the state of the outerclass from innerclass, using OuterClass.this
 ------------------------------------------------------------------------------------------------
 
@@ -1572,6 +1571,9 @@ https://www.baeldung.com/java-serial-version-uid
 
 ------------------------------------------------------------------------------------------------
 Check archived chatgpt "Why serialization is needed"
+One scenario:
+When an object needs to be sent over the network from one JVM to another JVM, the object needs to be converted into a byte stream. This process is called serialization. The byte stream can then be transmitted over the network and reconstructed back into an object on the receiving end through deserialization. Without serialization, it would not be possible to send objects over the network.
+For example when we need real time data transfer, say for trading platforms, over socket connection.
 ------------------------------------------------------------------------------------------------
 Check archived chatgpt "ClassNotFoundException vs NoClassDefFoundError"
 ------------------------------------------------------------------------------------------------
@@ -1629,6 +1631,7 @@ https://www.journaldev.com/1425/builder-design-pattern-in-java
 Example: java.lang.StringBuilder#append()
 Check archived chatgpt "builder pattern java" for advantages of builder pattern. Also check "builder pattern in jdk" for existing builder pattern examples in JDK.
 Builder pattern is used to avoid too many overloaded constructors. Just check the thread class and how many different combination of constructors it has.
+Builder pattern is also used to create immutable objects with many optional parameters.
 
 2) STRUCTURAL DESIGN PATTERNS:
 Adapter design pattern:

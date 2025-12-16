@@ -1,4 +1,4 @@
-SEE: java brains
+
 https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#deployment
 https://docs.spring.io/spring-boot/index.html
 
@@ -6,7 +6,7 @@ https://docs.spring.io/spring-boot/index.html
 
 The ideal way to setup spring boot application is to create a maven project and add the spring boot dependency into it. For example when we create the spring mvc using spring boot, we add the spring-boot-starter-web dependency. When maven encounters this dependency, it downloads all the jars related to that dependency and adds them to classpath. In this case maven downloads all the jars related to spring mvc (like spring-web and spring-web-mvc etc.) and add them to classpath.
 
-When SpringApplication.run() runs, it scans the classpath and according to the jars present in the classpath, it takes necessary configuration steps. For example in this case, when springboot encounters the spring mvc jars in the classpath, it intializes a DsiaptcherServlet and takes other steps necessary for bootstrapping spring mvc project.
+When SpringApplication.run() runs, it scans the classpath and according to the jars present in the classpath, it takes necessary configuration steps. For example in this case, when springboot encounters the spring mvc jars in the classpath, it intializes a DispatcherServlet and takes other steps necessary for bootstrapping spring mvc project.
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 Starter POMs and Auto-Configuration
@@ -41,7 +41,7 @@ https://www.techopedia.com/definition/27478/convention-over-configuration
 https://facilethings.com/blog/en/convention-over-configuration
 
 3. Stand alone 
-(It does not need a servlet container. It embeds a container of its own and while bootstraping the application using spring application context, it intializes the container and starts it. Hence it is stand alone.)
+(It does not need a servlet container. It embeds a container of its own and while bootstraping the application using spring application context, it initializes the container and starts it. Hence it is stand alone.)
 
 4. Production ready 
 (ie, we do not have to configure anything extra,just package the application as jar and run it in production. No extra config needed.)

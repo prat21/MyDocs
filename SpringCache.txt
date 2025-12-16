@@ -1,1 +1,2 @@
 https://docs.spring.io/spring-framework/reference/integration/cache.html
+Check the use of @Cacheable, @CachePut, @CacheEvict annotations from chatgpt.
