@@ -12,3 +12,96 @@ A ReplicaSet's purpose is to maintain a stable set of replica Pods running at an
 A ReplicaSet ensures that a specified number of pod replicas are running at any given time. However, a Deployment is a higher-level concept that manages ReplicaSets and provides declarative updates to Pods along with a lot of other useful features.
 
 Check chatgpt "ReplicaSet vs Deployment"
+-------------------------------------------------------------------------------------------------
+Horizontal Pod Autoscaler:
+https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
+In Kubernetes, a HorizontalPodAutoscaler automatically updates a workload resource (such as a Deployment or StatefulSet), with the aim of automatically scaling the workload to match demand.
+If the load decreases, and the number of Pods is above the configured minimum, the HorizontalPodAutoscaler instructs the workload resource (the Deployment, StatefulSet, or other similar resource) to scale back down.
+The horizontal pod autoscaling controller, running within the Kubernetes control plane, periodically adjusts the desired scale of its target (for example, a Deployment) to match observed metrics such as average CPU utilization, average memory utilization, or any other custom metric you specify.
+Kubernetes implements horizontal pod autoscaling as a control loop that runs intermittently (it is not a continuous process).
+
+-------------------------------------------------------------------------------------------------
+Horizontal Pod Autoscaler Example:
+https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/
+
+Create an autoscaler for a deployment called php-apache, with a target CPU utilization of 50 percent, a minimum of 1 pod, and a maximum of 10 pods:
+kubectl autoscale deployment php-apache --cpu-percent=50 --min=1 --max=10
+
+The yaml definition of the HorizontalPodAutoscaler created would look like this:
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: php-apache
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: php-apache
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 50
+---
+You can check the current status of the newly-made HorizontalPodAutoscaler, by running:
+kubectl get hpa
+-------------------------------------------------------------------------------------------------
+Deployment:
+https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+Kubernetes deployments are used to manage stateless applications.
+While updating a deployment, if the image tag is not changed, Kubernetes will not pull the new image by default. To force Kubernetes to pull the new image, you can set the imagePullPolicy to Always in the deployment manifest.
+
+Rollout a Deployment:
+A Deployment's rollout is triggered if and only if the Deployment's Pod template (that is, .spec.template) is changed, for example if the labels or container images of the template are updated. Other updates, such as scaling the Deployment, do not trigger a rollout.
+
+Rollback a Deployment:
+Sometimes, you may want to rollback a Deployment; for example, when the Deployment is not stable, such as crash looping. By default, all of the Deployment's rollout history is kept in the system so that you can rollback anytime you want (you can change that by modifying revision history limit).
+A Deployment's revision is created when a Deployment's rollout is triggered. This means that the new revision is created if and only if the Deployment's Pod template (.spec.template) is changed.
+kubectl rollout undo deployment/nginx-deployment
+kubectl rollout undo deployment/nginx-deployment --to-revision=2
+
+Rolling update strategy:
+By default, a Deployment uses the RollingUpdate strategy to replace old Pods with new ones. This strategy ensures that some Pods are always available during the update process.
+You can customize the rolling update behavior by specifying the maxUnavailable and maxSurge parameters in the rollingUpdate section of the Deployment spec.
+
+Recreate strategy:
+All existing Pods are killed before new ones are created when .spec.strategy.type==Recreate.
+
+Canary Deployment:
+Canary deployments are a deployment strategy that releases an application to a small subset of users before rolling it out to the entire infrastructure and user base.
+Kubernetes does not have built-in support for canary deployments, but you can implement them using a combination of Deployments, Services, and labels.
+https://kubernetes.io/docs/concepts/workloads/management/#canary-deployments
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ name: nginx-deployment
+ labels:
+   app: nginx
+spec:
+ replicas: 3
+ selector:
+   matchLabels:
+     app: nginx
+ template:
+   metadata:
+     labels:
+       app: nginx
+   spec:
+     containers:
+     - name: nginx
+       image: nginx:1.14.2
+       ports:
+       - containerPort: 80
+ strategy:
+   type: RollingUpdate
+   rollingUpdate:
+     maxSurge: 1
+     maxUnavailable: 1
+---
