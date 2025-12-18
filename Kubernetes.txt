@@ -158,3 +158,104 @@ Pod Anti-Affinity separates pods for availability
 Required = hard constraint
 Preferred = best-effort
 topologyKey defines the level (node, zone, region)
+-------------------------------------------------------------------------------------------------
+Services:
+https://docs.cloud.google.com/kubernetes-engine/docs/concepts/service
+ClusterIP: When you create a Service of type ClusterIP, Kubernetes creates a stable IP address that is accessible from nodes in the cluster. This is the default ServiceType.
+
+NodePort: When you create a Service of type NodePort, Kubernetes allocates a port from a range (default: 30000-32767) on each node to the Service. You can access the Service using <NodeIP>:<NodePort>.
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-np-service
+spec:
+  selector:
+    app: products
+    department: sales
+  # Kubernetes allocates a nodePort between 30000 and 32767 for external traffic
+  # that reaches the node IP address. Additionally, Kubernetes dynamically
+  # allocates a clusterIP IP address for internal traffic.
+  type: NodePort
+  ports:
+  - protocol: TCP
+    port: 80 # Route internal traffic that reaches the clusterIP IP address on this port.
+    targetPort: 8080
+---
+For example, suppose the external IP address of one of the cluster nodes is 203.0.113.2. Then the external client calls the Service at 203.0.113.2 on TCP port 32675(node port assigned by kubernetes). The request is forwarded to one of the member Pods on TCP port 8080(using clusterIP). The member Pod must have a container listening on TCP port 8080.
+----------------------------------------------------------------------------
+LoadBalancer Service in GKE:
+https://docs.cloud.google.com/kubernetes-engine/docs/concepts/service-load-balancer
+LoadBalancer: When you create a Service of type LoadBalancer, Kubernetes provisions a network load balancer for your Service in the cloud provider. The load balancer routes external traffic to the Service's NodePort and ClusterIP addresses.
+When you create a LoadBalancer Service in GKE, you specify whether the load balancer has an internal or external address:
+1) External LoadBalancer Services are implemented by using external passthrough Network Load Balancers. Clients located outside your VPC network and Google Cloud VMs with internet access can access an external LoadBalancer Service.
+2) Internal LoadBalancer Services are implemented by using internal passthrough Network Load Balancers. Clients located in the same VPC network or in a network connected to the cluster's VPC network can access an internal LoadBalancer Service.
+-----------------------------------------------------------------------------------
+Optional Read: https://docs.cloud.google.com/kubernetes-engine/docs/concepts/explore-gke-networking-docs-use-cases
+-----------------------------------------------------------------------------------
+Ingress:
+https://kubernetes.io/docs/concepts/services-networking/ingress/
+Make your HTTP (or HTTPS) network service available using a protocol-aware configuration mechanism, that understands web concepts like URIs, hostnames, paths, and more. The Ingress concept lets you map traffic to different backends based on rules you define via the Kubernetes API.
+Ingress may provide load balancing, SSL termination and name-based virtual hosting.
+You must have an Ingress controller to satisfy an Ingress. Only creating an Ingress resource has no effect.
+An Ingress with no rules sends all traffic to a single default backend and .spec.defaultBackend is the backend that should handle requests in that case.
+
+Ingress in GKE:
+https://docs.cloud.google.com/kubernetes-engine/docs/concepts/ingress#multiple_backend_services
+Google Kubernetes Engine (GKE) provides a built-in and managed Ingress controller called GKE Ingress. When you create an Ingress resource in GKE, the controller automatically configures an HTTPS load balancer that allows HTTP or HTTPS traffic to reach your Services.
+An Ingress object is associated with one or more Service objects, each of which is associated with a set of Pods.
+When you create an Ingress object, the GKE Ingress controller creates a Google Cloud HTTP(S) Load Balancer. This internet-facing load balancer is deployed globally across Google's edge network as a managed and scalable pool of load balancing resources.
+You must use the kubernetes.io/ingress.class annotation to what type ingress controller to use(for example, "gce" for external application load balancer, "gce-internal" for internal application load balancer).
+You can configure the load balancer to route requests to different backend services depending on the URL path. Requests sent to your-store.example could be routed to a backend service that displays full-price items, and requests sent to your-store.example/discounted could be routed to a backend service that displays discounted items.
+You can also configure the load balancer to route requests according to the hostname. Requests sent to your-store.example could go to one backend service, and requests sent to your-experimental-store.example could go to another backend service.
+If you want to configure GKE Ingress with multiple backends for the same host, you must have a single rule with a single host and multiple paths.
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: my-ingress
+spec:
+ rules:
+  - host: your-store.example
+    http:
+      paths:
+      - path: /products
+        backend:
+          service:
+            name: my-products
+            port:
+              number: 60000
+      - path: /discounted-products
+        backend:
+          service:
+            name: my-discounted-products
+            port:
+              number: 80
+---
+In the preceding example, assume you have associated the load balancer's IP address with the domain name your-store.example. Requests sent to your-store.example/products are routed to the my-products Service, and requests sent to your-store.example/discounted-products are routed to the my-discounted-products Service.
+
+https://docs.cloud.google.com/kubernetes-engine/docs/tutorials/http-balancer#optional_configuring_a_static_ip_address
+You can reserve a static external IP address and configure your Ingress resource to use that static IP address. Reserving a static IP address ensures that the IP address of your load balancer does not change if you delete and recreate the Ingress resource.
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: basic-ingress
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: "web-static-ip"
+spec:
+  defaultBackend:
+    service:
+      name: web
+      port:
+        number: 8080
+---
+Here the annotation kubernetes.io/ingress.global-static-ip-name is set to the name of the reserved static IP address(web-static-ip).
+
+(Optional Read for WebSocket support in GKE Ingress)
+https://docs.cloud.google.com/kubernetes-engine/docs/concepts/ingress-xlb#support_for_websocket
+------------------------------------------------------------------------------------
+Container native load balancing:
+Without container-native load balancing, load balancer traffic travels to the node instance groups and gets routed using iptables rules to Pods which might or might not be in the same node. With container-native load balancing, load balancer traffic is distributed directly to the Pods which should receive the traffic, eliminating the extra network hop.
+For container-native load balancing, GKE clusters should be in VPC-native mode and use alias IPs.
+Also use the annotation cloud.google.com/neg: '{"ingress": true}' in the Service manifest to enable container-native load balancing for the Service.
