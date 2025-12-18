@@ -278,12 +278,31 @@ Check archived chatgpt "get vs join completablefuture"
 Check archived chatgpt "completable future in java" (Especially check the section explaining different states of completionstage)
 --------------------------------------------------------------------------------------------------------------------------------------------------
 Fork/Join pool:
+
 https://docs.oracle.com/javase/tutorial/essential/concurrency/forkjoin.html
+The fork/join framework is distinct because it uses a work-stealing algorithm. Worker threads that run out of things to do can steal tasks from other threads that are still busy.
+
+if (my portion of the work is small enough)
+  do the work directly
+else
+  split my work into two pieces
+  invoke the two pieces and wait for the results
+
+Example: In Java SE 8, the java.util.Arrays class and its parallelSort() methods. These methods are similar to sort(), but leverage concurrency via the fork/join framework. Parallel sorting of large arrays is faster than sequential sorting when run on multiprocessor systems. Another implementation of the fork/join framework is used by methods in the java.util.streams package, which is part of Project Lambda scheduled for the Java SE 8 release.
+
 https://www.baeldung.com/java-fork-join
+ForkJoinPool doesn’t create a separate thread for every single subtask. Instead, each thread in the pool has its own double-ended queue (or deque, pronounced “deck”) that stores tasks. By default, a worker thread gets tasks from the head of its own deque. When it is empty, the thread takes a task from the tail of the deque of another busy thread.
 
 In Java 8, the most convenient way to get access to the instance of the ForkJoinPool is to use its static method commonPool(). This will provide a reference to the common pool, which is a default thread pool for every ForkJoinTask.
 According to Oracle’s documentation, using the predefined common pool reduces resource consumption since this discourages the creation of a separate thread pool per task.
 ForkJoinPool commonPool = ForkJoinPool.commonPool();
 
+Use "RecursiveAction" for void tasks and the "RecursiveTask<V>" for tasks that return a value.
+
+Difference between Executorservice and ForkJoin:
+See chatgpt "Executorservice vs forkjoinpool"
+Executorservice is best where the tasks are independent, I/O bound (like external API calls, DB calls, File write/read).
+ForkJoin is best when we can split the tasks recursively, work is CPU-intensive and we have multi cores.
 --------------------------------------------------------------------------------------------------------------------------------------------------
+
 Check threadLocal.
