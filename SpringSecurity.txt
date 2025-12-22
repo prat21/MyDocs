@@ -1,6 +1,6 @@
 Watch Java Brains.
 Just watch JWT and OAuth part. Do not follow the coding videos. Just know the concept. Coding videos are outdated.
-Note: The WebSecurityConfigurerAdapter is deprecated. Instead beans needs to registered(for example SecurityFilterChain).
+Note: The WebSecurityConfigurerAdapter is deprecated. Instead, beans needs to registered(for example SecurityFilterChain).
 Please check https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter
 -------------------------------------------------------
 JWT is an authorization(and not authentication) mechanism, ie after the user has been authenticated using a proper authentication mechanism(example authentication using username/password where the repository of username/password maybe in-memory, database, ldap etc) a jwt token(similar to session token) is handed to the user as an authorization token which can be used in further calls to the server.

@@ -1,4 +1,32 @@
-REVIEW THIS QWIKLABS COURSE FOR AN IN-DEPTH KNOWLEDGE ON KUBERNETES AND GKE: https://googlecourses.qwiklabs.com/course_templates/34
+REVIEW THIS QWIKLABS COURSE FOR AN IN-DEPTH KNOWLEDGE ON KUBERNETES AND GKE:
+Architecting with Google Kubernetes Engine:Foundations
+https://partner.skills.google/course_templates/32
+Architecting with Google Kubernetes Engine:Workloads
+https://partner.skills.google/course_templates/34
+---------------------------------------------------------------------------------------------------
+Difference between GKE and Cloud Run:
+
+Google Kubernetes Engine (GKE) is a managed environment for deploying, managing, and scaling containerized applications using Google infrastructure. GKE is based on Kubernetes, an open-source container orchestration system that automates the deployment, scaling, and management of containerized applications.
+"Running a single-container workload on something as large and complex as Kubernetes is probably overkill."
+"Better for steady, high traffic."
+
+Cloud Run is a fully managed compute platform that automatically scales your stateless containers. Cloud Run abstracts away all infrastructure management, allowing you to focus solely on writing code. Cloud Run is built on Knative, an open-source project that extends Kubernetes to provide a serverless experience.
+Generally speaking, Cloud Run tends to be really useful for synchronous, event-driven applications and microservices.
+Use Case: Deploy stateless containers that listen for HTTP requests or events. Better for spiky, unpredictable traffic.
+---------------------------------------------------------------------------------------------------
+Kubernetes Architecture:
+https://partner.skills.google/course_templates/32/video/450908
+The key components of Kubernetes architecture are:
+1) Master Node (Control Plane): The master node is responsible for managing the Kubernetes cluster. It consists of several components, including:
+   - kube-apiserver : The API server is the front-end of the Kubernetes control plane. It exposes the Kubernetes API and serves as the entry point for all administrative tasks. Kubectl communicates with the API server to manage the cluster.
+   - etcd: etcd is a distributed key-value store that stores all cluster data, including configuration data, state information, and metadata.
+   - Controller Manager: The controller manager is responsible for managing various controllers that ensure the desired state of the cluster is maintained. Controllers tries to move the current cluster state closer to the desired state with the help of control loops and kube-apiserver. Examples of built-in controllers include the deployment controller and job controller.
+   - Scheduler: The scheduler is responsible for assigning Pods to nodes based on resource availability and other constraints. Constraints can include things like node affinity, taints, and tolerations. The job of the scheduler to assign Pods to nodes, but it does not actually create the Pods on the nodes. That is the job of the kubelet running on each node.
+   - kube-cloud-manager: The kube-cloud-manager is responsible for managing the integration between Kubernetes and the underlying cloud provider. It handles tasks such as load balancing, storage provisioning, and networking.
+2) Worker Nodes: Worker nodes are the machines that run the containerized applications. Each worker node contains several components, including:
+    - Kubelet: The kubelet is an agent that runs on each worker node and communicates with the master node. It ensures that the containers are running in the desired state. Kubelet uses container runtime to run the containers. GKE uses containerd as the default container runtime.
+    - Kube-proxy: The kube-proxy is responsible for managing network communication between Pods and services within the cluster.
+    - Container Runtime: The container runtime is responsible for running the containers on the worker nodes. Kubernetes supports several container runtimes, including Docker, containerd, and CRI-O.
 --------------------------------------------------------------------------------------------------
 Controllers:
 https://kubernetes.io/docs/concepts/architecture/controller/
