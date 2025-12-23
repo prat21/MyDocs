@@ -52,6 +52,14 @@ The resource owner password credentials (i.e., username and password) can be use
 In Client credentials flow,
 The client directly requests access token from the authorization server with its client credentials. Since the client is the owner of the resource being requested.
 -------------------------------------------------------
+https://datatracker.ietf.org/doc/html/rfc6749#section-2
+Before initiating the protocol, the client registers with the authorization server.
+-------------------------------------------------------
+https://datatracker.ietf.org/doc/html/rfc6749#section-3
+The authorization process utilizes two authorization server endpoints (HTTP resources):
+   o  Authorization endpoint - used by the client to obtain authorization from the resource owner via user-agent redirection.
+   o  Token endpoint - used by the client to exchange an authorization grant for an access token, typically with client authentication.
+-------------------------------------------------------
 https://docs.spring.io/spring-security/reference/servlet/oauth2/index.html#oauth2-overview
 -------------------------------------------------------
 https://docs.spring.io/spring-security/reference/servlet/oauth2/index.html#oauth2-client-access-protected-resources-current-user
