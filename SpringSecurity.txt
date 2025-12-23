@@ -62,6 +62,74 @@ The authorization process utilizes two authorization server endpoints (HTTP reso
 -------------------------------------------------------
 https://docs.spring.io/spring-security/reference/servlet/oauth2/index.html#oauth2-overview
 -------------------------------------------------------
+OAUTH2 RESOURCE SERVER (This is basically the setup of the resource server, where resource server needs the authorization server path using which it can validate the oauth tokens.
+):
+https://docs.spring.io/spring-security/reference/servlet/oauth2/index.html#oauth2-resource-server-access-token
+Just check this link for oauth(jwt based) resource server(the section named "Protect Access with an OAuth2 Access Token" -> "JWT support"). No need to see "Opaque Token support" or "Protect Access with a custom JWT".
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://my-auth-server.com
+-------------------------------------------------------
+OAUTH2 CLIENT WITH CLIENT_CREDENTIALS GRANT (This is the setup of oauth client which will use the client credentials grant type to obtain access token directly from the auth server. There is no resource owner here.):
+https://docs.spring.io/spring-security/reference/servlet/oauth2/index.html#oauth2-client-access-protected-resources
+The application requires at least one ClientRegistration to be configured.
+
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          okta:
+            client-id: okta-client-id
+            client-secret: okta-client-secret
+            authorization-grant-type: client_credentials
+            scope: read, write
+        provider:
+          okta:
+            token-uri: https://dev-1234.oktapreview.com/oauth2/v1/token
+
+The following example uses the default OAuth2AuthorizedClientManager to configure a RestClient capable of accessing protected resources by placing Bearer tokens in the Authorization header of each request:
+
+@Configuration
+public class RestClientConfig {
+	@Bean
+	public RestClient restClient(OAuth2AuthorizedClientManager authorizedClientManager) {
+		OAuth2ClientHttpRequestInterceptor requestInterceptor =
+				new OAuth2ClientHttpRequestInterceptor(authorizedClientManager);
+		return RestClient.builder()
+				.requestInterceptor(requestInterceptor)
+				.build();
+	}
+}
+
+This configured RestClient can be used as in the following example, to access protected resource:
+import static org.springframework.security.oauth2.client.web.client.RequestAttributeClientRegistrationIdResolver.clientRegistrationId;
+
+@RestController
+public class MessagesController {
+	private final RestClient restClient;
+
+	public MessagesController(RestClient restClient) {
+		this.restClient = restClient;
+	}
+
+	@GetMapping("/messages")
+	public ResponseEntity<List<Message>> messages() {
+		Message[] messages = this.restClient.get()
+				.uri("http://localhost:8090/messages")
+				.attributes(clientRegistrationId("my-oauth2-client"))
+				.retrieve()
+				.body(Message[].class);
+		return ResponseEntity.ok(Arrays.asList(messages));
+	}
+
+	public record Message(String message) {
+	}
+}
+-------------------------------------------------------
 https://docs.spring.io/spring-security/reference/servlet/oauth2/index.html#oauth2-client-access-protected-resources-current-user
 Unlike the previous example, notice that we do not need to tell Spring Security about the clientRegistrationId we’d like to use. This is because it can be derived from the currently logged in user.
 
