@@ -3,8 +3,44 @@ Just watch JWT and OAuth part. Do not follow the coding videos. Just know the co
 Note: The WebSecurityConfigurerAdapter is deprecated. Instead, beans needs to registered(for example SecurityFilterChain).
 Please check https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter
 -------------------------------------------------------
+OAuth is an auth framework that defines how a client application can get limited access to a user's resource(s) without sharing the user's credentials with client.
 OAuth is an authorization(and not authentication) mechanism, ie after the user has been authenticated using a proper authentication mechanism(example authentication using username/password where the repository of username/password maybe in-memory, database, ldap etc) a jwt token(similar to session token) is handed to the user as an authorization token which can be used in further calls to access protected resource in resource server.
 OAuth is an authorization flow whereas as JWT is about token format(alternate being Opaque token).
+-------------------------------------------------------
+https://datatracker.ietf.org/doc/html/rfc6749#section-1.1
+
+Access tokens are issued to third-party clients by an authorization server with the approval of the resource owner.  The client uses the access token to access the protected resources hosted by the resource server.
+For example, an end-user (resource owner) can grant a printing service (client) access to her protected photos stored at a photo-sharing service (resource server), without sharing her username and password with the printing service. This specification is designed for use with HTTP. The use of OAuth over any protocol other than HTTP is out of scope.
+
+resource owner:
+      An entity capable of granting access to a protected resource.
+resource server:
+      The server hosting the protected resources, capable of accepting and responding to protected resource requests using access tokens.
+client:
+      An application making protected resource requests on behalf of the resource owner and with its authorization. The term "client" does not imply any particular implementation characteristics (e.g., whether the application executes on a server, a desktop, or other devices).
+
+authorization server:
+      The server issuing access tokens to the client after successfully authenticating the resource owner and obtaining authorization.
+
+The authorization server may be the same server as the resource server or a separate entity. A single authorization server may issue access tokens accepted by multiple resource servers.
+----------------------------------------------------------
+In authorization code flow,
+1) The client requests authorization from the resource owner. The authorization request can be made directly to the resource owner, or preferably indirectly via the authorization server as an intermediary.
+2) The resource owner authenticates to the authorization server. The client receives an authorization grant, which is a credential representing the resource owner's authorization.
+3) The client uses this auth code(authorization grant) and sends it back, alongwith its client credentials(ie client id and secret), to the authorization server. In this way client authenticates itself.
+4) The authorization server authenticates the client and validates the authorization grant, and if valid, issues an access token, which the client uses for accessing a protected resource in resource server.
+5) The Resource server validates the access token with the authorization server. If valid, it responds with the requested resource.
+----------------------------------------------------------
+https://datatracker.ietf.org/doc/html/rfc6749#section-1.1
+
+Authorization Grant:
+An authorization grant is a credential representing the resource owner's authorization (to access its protected resources) used by the client to obtain an access token. This specification defines four grant types -- authorization code, implicit, resource owner password credentials, and client credentials.
+
+In Implicit Flow,
+The third step is omitted, hence bypassing the need for client verification. Hence it is unsecure.
+
+In Client credentials flow,
+The client directly requests access token from the authorization server with its client credentials. Since the client is the owner of the resource being requested.
 -------------------------------------------------------
 https://docs.spring.io/spring-security/reference/servlet/oauth2/index.html#oauth2-overview
 -------------------------------------------------------
@@ -27,18 +63,6 @@ https://docs.spring.io/spring-security/reference/servlet/oauth2/client/authorize
 "If an existing OAuth2AccessToken is expired, it is refreshed (or renewed)"
 
 "The following example uses the default OAuth2AuthorizedClientManager to configure a RestClient capable of accessing protected resources by placing Bearer tokens in the Authorization header of each request"
-
-In authorization code flow,
-1) The resource owner authenticates to the authorization server.
-2) The authorization server sends an authorization code to the client.
-3) The client uses this auth code and sends it back, alongwith its client credentials(ie client id and secret), to the authorization server. In this way client authenticates itself.
-4) The authorization server then returns an access token to the client, which the client uses for accessing a protected resource in resource server.
-
-In Implicit Flow,
-The third step is omitted, hence bypassing the need for client verification. Hence it is unsecure.
-
-In Client credentials flow,
-The client directly requests access token from the authorization server with its client credentials. Since the client is the owner of the resource being requested.
 --------------------------------------------------------------
 https://docs.spring.io/spring-security/reference/servlet/oauth2/client/authorized-clients.html#oauth2-client-rest-client-registration-id
 --------------------------------------------------------------
