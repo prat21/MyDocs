@@ -215,6 +215,7 @@ For example, suppose the external IP address of one of the cluster nodes is 203.
 LoadBalancer Service in GKE:
 https://docs.cloud.google.com/kubernetes-engine/docs/concepts/service-load-balancer
 LoadBalancer: When you create a Service of type LoadBalancer, Kubernetes provisions a network load balancer for your Service in the cloud provider. The load balancer routes external traffic to the Service's NodePort and ClusterIP addresses.
+In GKE, LoadBalancer Services are implemented by using passthrough Network Load Balancers, which are layer 4 regional load balancers.
 When you create a LoadBalancer Service in GKE, you specify whether the load balancer has an internal or external address:
 1) External LoadBalancer Services are implemented by using external passthrough Network Load Balancers. Clients located outside your VPC network and Google Cloud VMs with internet access can access an external LoadBalancer Service.
 2) Internal LoadBalancer Services are implemented by using internal passthrough Network Load Balancers. Clients located in the same VPC network or in a network connected to the cluster's VPC network can access an internal LoadBalancer Service.
@@ -291,6 +292,45 @@ Application Load Balancer(Http/Https):
 https://docs.cloud.google.com/load-balancing/docs/application-load-balancer
 The Application Load Balancer is a proxy-based Layer 7 load balancer that lets you run and scale your services. The Application Load Balancer distributes HTTP and HTTPS traffic to backends hosted on a variety of Google Cloud platforms—such as Compute Engine, Google Kubernetes Engine (GKE), Cloud Storage, and Cloud Run.
 ------------------------------------------------------------------------------------
+Difference between L4 and L7 Load Balancer(Taken from Google search AI):
+
+L4 (Transport Layer) load balancers distribute traffic based on IP/Port (TCP/UDP), focusing on speed and efficiency by forwarding packets without deep inspection, ideal for basic, high-volume tasks. L7 (Application Layer) load balancers inspect request content (HTTP headers, URLs, cookies) for intelligent, context-aware routing, offering advanced features like SSL termination, content caching, and security but with more overhead. Think L4 as fast mail delivery (address/port) and L7 as a smart concierge reading your request (URL/cookie) to direct you perfectly.
+Layer 4 Load Balancer (L4)
+
+• OSI Layer: Transport Layer (Layer 4).
+• Decision Basis: IP addresses, port numbers, and protocols (TCP/UDP).
+• How it Works: Forwards packets without opening them, making it fast and simple.
+• Pros: High speed, low latency, efficient for simple distribution.
+• Cons: No content awareness, limited routing intelligence.
+• Use Case: Basic traffic distribution, simple high-performance needs, database sharding.
+
+Layer 7 Load Balancer (L7)
+
+• OSI Layer: Application Layer (Layer 7).
+• Decision Basis: Application-level data like URLs, HTTP headers, cookies, user agents, content.
+• How it Works: Terminates the connection, reads the message, makes smart decisions, then creates a new connection to the server.
+• Pros: Content-based routing, SSL offloading, caching, WAF integration, user persistence via cookies.
+• Cons: More complex, higher resource usage, potential for increased latency due to inspection.
+• Use Case: Microservices, personalized content delivery, complex web applications.
+
+Key Difference Summary
+
+• Awareness: L4 is network-focused (IP/Port); L7 is content-focused (HTTP/URL).
+• Performance: L4 is faster; L7 offers more features but with more processing.
+• Functionality: L4 is basic forwarding; L7 provides intelligent routing and security.
+
+AI responses may include mistakes.
+
+https://www.f5.com/glossary/layer-7-load-balancing
+https://www.linkedin.com/posts/prachi-agarwal-01_l4-vs-l7-load-balancing-whats-the-difference-activity-7351864440394338304-lf_i
+https://freeloadbalancer.com/load-balancing-layer-4-and-layer-7
+https://medium.com/@harishramkumar/difference-between-layer-4-vs-layer-7-load-balancing-57464e29ed9f
+https://www.a10networks.com/glossary/how-do-layer-4-and-layer-7-load-balancing-differ/
+https://www.linkedin.com/pulse/understanding-layer-4-vs-7-why-matters-hosting-michiel-grotenhuis-6whpe
+https://www.youtube.com/shorts/Zt4ItDjFibQ
+https://www.geeksforgeeks.org/system-design/layer-4-load-balancing-vs-layer-7-load-balancing/
+
+----------------------------------------------------------------------------------------
 Container native load balancing:
 Without container-native load balancing, load balancer traffic travels to the node instance groups and gets routed using iptables rules to Pods which might or might not be in the same node. With container-native load balancing, load balancer traffic is distributed directly to the Pods which should receive the traffic, eliminating the extra network hop.
 For container-native load balancing, GKE clusters should be in VPC-native mode and use alias IPs.
