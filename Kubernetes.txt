@@ -288,6 +288,20 @@ Here the annotation kubernetes.io/ingress.global-static-ip-name is set to the na
 (Optional Read for WebSocket support in GKE Ingress)
 https://docs.cloud.google.com/kubernetes-engine/docs/concepts/ingress-xlb#support_for_websocket
 ----------------------------------------------------------------------------
+Ingress health checks in GKE:
+
+For ingress to work properly, the backend services must have a health check configured. By default, GKE Ingress configures an HTTP health check that sends requests to the root path (/) of the backend service.
+If the backend service responds with a 200 OK status code, the health check is considered successful, and the backend service is marked as healthy. If the backend service responds with any other status code or does not respond at all, the health check is considered failed, and the backend service is marked as unhealthy.
+If the backend service is marked as unhealthy, the load balancer will stop sending traffic to that backend service until it becomes healthy again.
+
+https://docs.cloud.google.com/kubernetes-engine/docs/concepts/ingress#health_checks
+GKE creates health checks based on one of the following methods:
+
+1) BackendConfig CRD: A custom resource definition (CRD) that gives you precise control over how your Services interact with the load balancer. BackendConfig CRDs allow you to specify custom settings for the health check associated with the corresponding backend service. These custom settings provide greater flexibility and control over health checks for both the classic Application Load Balancer and internal Application Load Balancer created by an Ingress.
+2) Readiness probe: A diagnostic check that determines if a container within a Pod is ready to serve traffic. The GKE Ingress controller creates the health check for the Service's backend service based on the readiness probe used by that Service's serving Pods. You can derive the health check parameters such as path, port, and protocol from the readiness probe definition. (Not reliable, tried and tested myself)
+3) Default values: The parameters used when you don't configure a BackendConfig CRD or define attributes for the readiness probe(the "/" path as mentioned above).
+
+-----------------------------------------------------------------------------------
 Application Load Balancer(Http/Https):
 https://docs.cloud.google.com/load-balancing/docs/application-load-balancer
 The Application Load Balancer is a proxy-based Layer 7 load balancer that lets you run and scale your services. The Application Load Balancer distributes HTTP and HTTPS traffic to backends hosted on a variety of Google Cloud platforms—such as Compute Engine, Google Kubernetes Engine (GKE), Cloud Storage, and Cloud Run.
