@@ -198,3 +198,22 @@ Check the flow of how resource server works. Also check about "provider configur
 -----------------------------------------------------------------
 Sample projects for spring security:
 https://github.com/spring-projects/spring-security-samples
+-----------------------------------------------------------------
+Components of JWT token:
+A JSON Web Token (JWT) is a single string of data composed of three parts, separated by dots (), which are the Header, the Payload, and the Signature.
+Here is a breakdown of each component:
+
+• Header: This is a JSON object containing metadata, such as the token type () and the signing algorithm (e.g., HS256, RS256). The header is then Base64url encoded.
+• Payload: This JSON object, also called the JWT Claims Set, holds the data being transmitted. Claims can be registered (like issuer, subject, expiration), public (custom but collision-resistant), or private (custom for agreed-upon parties). The payload is Base64url encoded. Since it's only encoded and not encrypted, sensitive data should not be stored here.
+• Signature: This part ensures the token's integrity and authenticity. It's generated using the encoded header, encoded payload, a secret key, and the specified algorithm. The signature is also Base64url encoded.
+
+The final JWT is formed by combining these encoded parts with periods: . You can use tools like the one at jwt.io to explore JWT components.
+
+-----------------------------------------------------------------
+Jwt signature verification:
+https://www.jwt.io/introduction#difference-decoding-encoding-jwt
+
+Signature Verification: This is the primary aspect of verification where the signature part of the JWT is checked against the header and payload. This is done using the algorithm specified in the header (like HMAC, RSA, or ECDSA) with a secret key or public key. If the signature doesn't match what's expected, the token might have been tampered with or is not from a trusted source.
+
+
+
