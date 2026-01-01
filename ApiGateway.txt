@@ -1,0 +1,49 @@
+Mine:
+An api gateway provides a single source of entry. Client does not need to know or remember multiple service locations. They just need to know the api gateway location. The particular details(or business domain) that the client is interested in can be included in the request path.
+For example, in an e-commerce application, if the client wants to access product related information, it can send the request to "api-gateway/products/..." endpoint. The api gateway will route the request to the appropriate microservice that handles product related operations. Similarly, for order related operations, the client can send the request to "api-gateway/orders/..." endpoint. The api gateway will route the request to the appropriate microservice that handles order related operations.
+---------------------------------------------------------------
+https://microservices.io/patterns/apigateway.html
+
+Using an API gateway has the following benefits:
+
+1. Insulates the clients from how the application is partitioned into microservices
+2. Insulates the clients from the problem of determining the locations of service instances
+3. Provides the optimal API for each client
+4. Reduces the number of requests/roundtrips. For example, the API gateway enables clients to retrieve data from multiple services with a single round-trip. Fewer requests also means less overhead and improves the user experience. An API gateway is essential for mobile applications.
+5. Simplifies the client by moving logic for calling multiple services from the client to API gateway
+
+The API gateway pattern has some drawbacks:
+
+1. Increased complexity - the API gateway is yet another moving part that must be developed, deployed and managed
+2. Increased response time due to the additional network hop through the API gateway - however, for most applications the cost of an extra roundtrip is insignificant.
+---------------------------------------------------------------
+Key responsibilities of an API gateway:
+1. Routing: Directs incoming requests to the appropriate microservice based on the URL, headers, or business logic.
+2. Security: Handles authentication (JWT, OAuth), authorization, and SSL termination, offloading these tasks from individual services.
+3. Traffic Management: Implements rate limiting to prevent abuse, load balancing, and caching for faster responses.
+4. Request Composition (Fan-out): Can invoke multiple microservices for a single client request and combine their responses (e.g., product details with reviews).
+5. Observability: Provides centralized logging, monitoring, and tracing for better insights.
+6. Error Handling & Resilience: Manages faults, retries, and implements circuit breakers to prevent cascading failures.
+---------------------------------------------------------------
+Fan-out pattern:
+API gateway fan out is a design pattern where a single client request to the API gateway results in multiple, parallel requests to different backend services. The API gateway then aggregates the results from all the services into a single, unified response for the original client, which is also known as the "fan-in" part of the pattern.
+
+How It Works:
+1. Client Request: A single request (e.g., fetching a user's complete profile, which includes order history, billing info, and preferences) is sent to the API gateway.
+2. Fan-out: The API gateway, acting as an orchestrator, concurrently sends requests to the various independent backend microservices (e.g., Order Service, Billing Service, Profile Service).
+3. Parallel Processing: Each backend service processes its part of the request simultaneously.
+4. Fan-in/Aggregation: The API gateway waits for all (or a defined set of) responses to return. It then combines, processes, or transforms this data into a single, cohesive payload.
+5. Single Response: The unified response is returned to the client application (e.g., a mobile app or website).
+
+Key Benefits:
+1. Reduced Latency: By making parallel calls instead of sequential ones, the overall response time for composite data retrieval is significantly reduced.
+2. Simplified Client Code: The client application doesn't need to manage multiple endpoints or complex data aggregation logic, as the API gateway handles that responsibility.
+3. Decoupling: Clients are insulated from the underlying microservices architecture, allowing backend services to evolve or be refactored without breaking the client interface.
+
+API Aggregation Implementation Approaches:
+1. Gateway-level aggregation (recommended)
+Aggregation logic is placed inside the API gateway. Easier to manage, observable, and centralized.
+2. Middleware/BFF approach
+Separate service acts as an aggregator. More flexible logic, but introduces a new component.
+---------------------------------------------------------------
+
