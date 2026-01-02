@@ -47,3 +47,28 @@ Aggregation logic is placed inside the API gateway. Easier to manage, observable
 Separate service acts as an aggregator. More flexible logic, but introduces a new component.
 ---------------------------------------------------------------
 Check archived chatgpt "gcp ingress vs api gateway"
+---------------------------------------------------------------
+Check archived chatgpt "gcp apigee overview" for an overview of apigee and also difference between apigee and kong api gateway.
+
+Apigee is Google Cloud's enterprise platform for building, securing, managing, and scaling APIs, acting as a proxy to connect apps to backend services.
+Key Functions & Features
+1) API Proxying: Creates a consistent interface for backend services, isolating apps from changes.
+2) Security: Enforces policies, authenticates, authorizes, and protects against threats (bots, attacks).
+3) Traffic Management: Throttles, caches, and balances traffic to maintain performance.
+4) Developer Portal: Provides documentation, onboarding, and self-service for developers.
+5) Analytics & Monitoring: Offers real-time insights into API performance, usage, and errors.
+6) Monetization: Allows creating API products with various pricing models for revenue generation.
+7) Support for Multiple Styles: Manages REST, SOAP, GraphQL, gRPC APIs.
+-----------------------------------------------------------------------
+Quick nginx tutorial:
+https://www.youtube.com/watch?v=q8OleYuqntY
+--------------------------------------------------------
+What is a worker process in nginx?
+
+In NGINX, a worker process is a separate operating system process that handles the actual processing of client requests. NGINX uses a master-worker architecture, where the master process is responsible for managing the worker processes. The master process reads and evaluates configuration files, and then spawns multiple worker processes to handle incoming requests.
+Each worker process is single-threaded and can handle multiple connections simultaneously using an event-driven, asynchronous architecture. This design allows NGINX to efficiently manage a large number of concurrent connections with minimal resource consumption.
+
+The number of worker processes can be configured in the NGINX configuration file (nginx.conf) using the "worker_processes" directive. The optimal number of worker processes typically depends on the number of CPU cores available on the server, with a common recommendation being to set it equal to the number of CPU cores.
+
+-----------------------------------------------------------------------
+Check archived chatgpt "apigee vs gcp load balancer"
