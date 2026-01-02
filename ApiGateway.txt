@@ -46,4 +46,4 @@ Aggregation logic is placed inside the API gateway. Easier to manage, observable
 2. Middleware/BFF approach
 Separate service acts as an aggregator. More flexible logic, but introduces a new component.
 ---------------------------------------------------------------
-
+Check archived chatgpt "gcp ingress vs api gateway"

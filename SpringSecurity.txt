@@ -214,6 +214,8 @@ Jwt signature verification:
 https://www.jwt.io/introduction#difference-decoding-encoding-jwt
 
 Signature Verification: This is the primary aspect of verification where the signature part of the JWT is checked against the header and payload. This is done using the algorithm specified in the header (like HMAC, RSA, or ECDSA) with a secret key or public key. If the signature doesn't match what's expected, the token might have been tampered with or is not from a trusted source.
+----------------------------------------------------------
+Check archived chatgpt "Oauth scopes vs claims"
 
 
 
