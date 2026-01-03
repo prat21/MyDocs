@@ -60,6 +60,16 @@ Key Functions & Features
 6) Monetization: Allows creating API products with various pricing models for revenue generation.
 7) Support for Multiple Styles: Manages REST, SOAP, GraphQL, gRPC APIs.
 -----------------------------------------------------------------------
+Apigee vs GCP Load Balancer:
+
+You don't typically choose between Apigee and a GCP load balancer; they are different components that work together in a modern application architecture.
+1) A GCP Load Balancer is focused on distributing network traffic across multiple backend instances to ensure high availability and prevent server overload. It is a fundamental networking component that operates at lower levels of the network stack.
+2) Apigee is an API Management platform that provides a central point for managing, securing, analyzing, and scaling API programs. It sits logically behind the external load balancer and in front of your backend services.
+
+How they work together:
+A typical architecture involves an external GCP Load Balancer receiving internet traffic, which then directs HTTP(S) requests to the Apigee cluster. Apigee processes the API-specific logic (security checks, rate limits, etc.) and then uses its own internal load balancing capabilities to distribute requests across your backend application servers.
+In summary: use a GCP load balancer for network traffic distribution and use Apigee for sophisticated API management and governance. You'll likely need both if you are running a substantial API program on Google Cloud.
+-----------------------------------------------------------------------
 Quick nginx tutorial:
 https://www.youtube.com/watch?v=q8OleYuqntY
 --------------------------------------------------------
