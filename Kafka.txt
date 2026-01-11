@@ -4,7 +4,8 @@ https://www.youtube.com/watch?v=QkdkLdMBuL0
 Kafka Partitions and Offsets:
 https://www.youtube.com/watch?v=8L-1HSTf97E
 --------------------------------------------------------------------------------------
-https://www.youtube.com/watch?v=B5j3uNBH8X4
+Check the playlist(1-4):
+https://www.youtube.com/playlist?list=PLa7VYi0yPIH2PelhRHoFR5iQgflg-y6JA
 --------------------------------------------------------------------------------------
 Partition replication:
 In kafka, each partition can have multiple replicas(in distinct brokers) for fault tolerance. One replica is designated as the leader, and the others are followers. So when a producer sends data to a partition, it actually sends it to the leader replica. It's the job of the brokers with follower replicas to replicate the data from the leader.
@@ -51,4 +52,9 @@ Idempotent producers in Kafka ensure that duplicate messages are not written to 
 To enable idempotent producers, the producer must set the "enable.idempotence" configuration property to true. When this property is set, the producer will automatically assign sequence numbers to messages and handle retries in a way that ensures idempotency.
 Idempotent producers are particularly useful in scenarios where the producer may experience transient failures or timeouts, as they help to prevent duplicate messages from being written to the log.
 Check archived chatgpt "idempotent producers in kafka"
+--------------------------------------------------------------------------------------
+Kafka Security:
+1. SSL/TLS Encryption: Kafka supports SSL/TLS encryption to secure data in transit between clients and brokers. This ensures that sensitive data is protected from eavesdropping and tampering.
+2. Authentication and Authorization: Kafka supports various authentication mechanisms, including SSL client authentication, SASL (Simple Authentication and Security Layer), and Kerberos. Additionally, Kafka provides authorization capabilities through Access Control Lists (ACLs) to control which users or applications can access specific topics or perform certain operations.
+3. No encryption at rest by default: Kafka does not provide built-in encryption for data at rest. However, you can implement encryption at the file system or disk level using third-party tools or services.
 --------------------------------------------------------------------------------------
