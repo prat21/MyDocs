@@ -58,3 +58,12 @@ Kafka Security:
 2. Authentication and Authorization: Kafka supports various authentication mechanisms, including SSL client authentication, SASL (Simple Authentication and Security Layer), and Kerberos. Additionally, Kafka provides authorization capabilities through Access Control Lists (ACLs) to control which users or applications can access specific topics or perform certain operations.
 3. No encryption at rest by default: Kafka does not provide built-in encryption for data at rest. However, you can implement encryption at the file system or disk level using third-party tools or services.
 --------------------------------------------------------------------------------------
+https://aws.amazon.com/compare/the-difference-between-rabbitmq-and-kafka/
+
+Difference between Kafka and RabbitMQ:
+1. Architecture: Kafka is designed as a distributed streaming platform with a focus on high throughput and scalability. It uses a publish-subscribe model with topics and partitions. RabbitMQ, on the other hand, is a traditional message broker that uses a queue-based model with exchanges and queues.
+2. Message Delivery: Kafka provides at-most-once, at-least-once and exactly-once delivery semantics, while RabbitMQ primarily provides at-least-once delivery semantics.
+3. Performance: Kafka is known for its high throughput and low latency, making it suitable for real-time data streaming applications. RabbitMQ is generally slower than Kafka but provides more advanced messaging features, such as message routing and complex message patterns.
+4. Persistence: Kafka is designed for long-term storage of messages, allowing consumers to read messages at their own pace. RabbitMQ, on the other hand, is primarily designed for short-term message storage and delivery. A RabbitMQ broker routes the message to the destination queue. Once read, the consumer sends an acknowledgement (ACK) reply to the broker, which then deletes the message from the queue.
+5. Use Cases: Kafka is commonly used for real-time data streaming, event sourcing, and log aggregation. RabbitMQ is often used for traditional messaging scenarios, such as task queues, request-response patterns, and inter-service communication.
+--------------------------------------------------------------------------------------
