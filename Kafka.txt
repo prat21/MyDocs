@@ -6,6 +6,9 @@ https://www.youtube.com/watch?v=8L-1HSTf97E
 --------------------------------------------------------------------------------------
 Check the playlist(1-4):
 https://www.youtube.com/playlist?list=PLa7VYi0yPIH2PelhRHoFR5iQgflg-y6JA
+---------------------------------------------------------------------------------------
+Kafka crash course:
+https://www.youtube.com/watch?v=B7CwU_tNYIE
 --------------------------------------------------------------------------------------
 Partition replication:
 In kafka, each partition can have multiple replicas(in distinct brokers) for fault tolerance. One replica is designated as the leader, and the others are followers. So when a producer sends data to a partition, it actually sends it to the leader replica. It's the job of the brokers with follower replicas to replicate the data from the leader.
@@ -16,6 +19,8 @@ When a consumer subscribes to a topic, Kafka assigns partitions to the consumer 
 Kafka uses a partition assignment strategy to determine how partitions are assigned to consumers. The default strategy is the range assignment strategy, which assigns partitions to consumers in a round-robin fashion. Other strategies include the round-robin assignment strategy and the sticky assignment strategy.
 --------------------------------------------------------------------------------------
 Kafka automatically manages partition assignments when consumers join or leave a consumer group. When a new consumer joins the group, Kafka reassigns partitions to ensure that all partitions are being consumed. When a consumer leaves the group, Kafka reassigns its partitions to the remaining consumers. This process is known as rebalancing.
+----------------------------------------------------------------------------------------
+A consumer group generally consists of multiple instances of the same application.
 --------------------------------------------------------------------------------------
 Partitioning strategy:
 There are several partitioning strategies in Kafka, including:
@@ -66,4 +71,53 @@ Difference between Kafka and RabbitMQ:
 3. Performance: Kafka is known for its high throughput and low latency, making it suitable for real-time data streaming applications. RabbitMQ is generally slower than Kafka but provides more advanced messaging features, such as message routing and complex message patterns.
 4. Persistence: Kafka is designed for long-term storage of messages, allowing consumers to read messages at their own pace. RabbitMQ, on the other hand, is primarily designed for short-term message storage and delivery. A RabbitMQ broker routes the message to the destination queue. Once read, the consumer sends an acknowledgement (ACK) reply to the broker, which then deletes the message from the queue.
 5. Use Cases: Kafka is commonly used for real-time data streaming, event sourcing, and log aggregation. RabbitMQ is often used for traditional messaging scenarios, such as task queues, request-response patterns, and inter-service communication.
+6. Push vs Pull: RabbitMQ primarily uses a push model, where messages are pushed to consumers as they become available. Kafka uses a pull model, where consumers fetch messages from the broker at their own pace.
+--------------------------------------------------------------------------------------
+Kafka log dirs:
+Kafka stores its log data in directories specified by the "log.dirs" configuration property in the broker configuration file (server.properties). This property can be set to a comma-separated list of directories, allowing Kafka to distribute log data across multiple disks for improved performance and fault tolerance.
+By default, Kafka uses the "/tmp/kafka-logs" directory for log storage. However, it is recommended to configure a dedicated directory on a separate disk for Kafka log data to avoid performance issues and data loss in case of disk failures.
+Each topic partition is stored as a separate directory within the log directory, with the partition number as the directory name. Within each partition directory, Kafka stores log segments as files, with each segment containing a fixed number of messages.
+It's important to monitor the disk usage of the log directories and configure appropriate retention policies to prevent disk space exhaustion.
+--------------------------------------------------------------------------------------
+Kafka bootstrap servers:
+In Kafka, the "bootstrap servers" are a list of host/port pairs that the Kafka client uses to establish an initial connection to the Kafka cluster. The bootstrap servers are specified in the client configuration using the "bootstrap.servers" property.
+When a Kafka client (producer or consumer) starts up, it uses the bootstrap servers to connect to one of the brokers in the cluster. Once connected, the client retrieves metadata about the cluster, including the list of available brokers and the partitions for each topic and which broker is the current leader of each partition. This metadata is then used by the client to send or receive messages from the appropriate brokers. The client then communicates to the appropriate brokers directly for subsequent operations.
+The bootstrap servers should include at least two or three brokers(or a single load balancer endpoint) to ensure high availability and fault tolerance. If one of the bootstrap servers is unavailable, the client can still connect to another broker in the list.
+Not all the brokers need to be specified in the bootstrap servers list, as the client will retrieve the full list of brokers from the cluster metadata.
+It's important to note that the bootstrap servers are only used for the initial connection to the cluster. After the initial connection, the client will use the metadata it retrieves to communicate directly with the appropriate brokers.
+--------------------------------------------------------------------------------------
+Is it mandatory to send key-value pair in kafka producer?
+No, it is not mandatory to send key-value pairs in Kafka producer. Kafka allows you to send messages with just a value, without a key. In this case, the message will be sent to a partition based on the default partitioning strategy, which is typically round-robin.
+However, using a key can be beneficial in certain scenarios. When a key is provided, Kafka uses it to determine the partition to which the message will be sent. This can help ensure that messages with the same key are sent to the same partition, which can be useful for maintaining order for messages with the same key.
+Additionally, using a key can also help with load balancing and scalability, as it allows you to control the distribution of messages across partitions.
+In summary, while it is not mandatory to send key-value pairs in Kafka producer, using a key can provide benefits in terms of message ordering and load balancing.
+--------------------------------------------------------------------------------------
+Kafka consumer groups:
+In Kafka, a consumer group is a logical grouping of consumers that work together to consume messages from one or more topics. Each consumer in a consumer group is assigned a subset of the partitions for the topics it is consuming from. This allows for parallel processing of messages and provides fault tolerance in case of consumer failures.
+When a consumer group is created, Kafka assigns partitions to each consumer in the group based on the partition assignment strategy. The default strategy is the range assignment strategy, which assigns partitions to consumers in a round-robin fashion. Other strategies include the round-robin assignment strategy and the sticky assignment strategy.
+Each consumer group has a unique group ID, which is used to identify the group and track the offsets for each partition. When a consumer in the group reads messages from a partition, it updates its offset for that partition. This allows the consumer group to keep track of which messages have been consumed and which messages are still pending.
+If a consumer in the group fails or leaves the group, Kafka automatically reassigns its partitions to the remaining consumers in the group. This process is known as rebalancing.
+Consumer groups are useful for scaling out message consumption and providing fault tolerance. By adding more consumers to a group, you can increase the parallelism of message processing. Additionally, if a consumer fails, the remaining consumers in the group can continue processing messages without interruption.
+--------------------------------------------------------------------------------------
+auto.offset.reset property in Kafka consumer:
+The "auto.offset.reset" property in Kafka consumer configuration determines what happens when a consumer starts reading a partition for which it does not have a valid offset. This can occur in two scenarios:
+1. The consumer is starting for the first time and has no previously committed offsets.
+2. The consumer's committed offset is no longer valid, for example, if the offset has been deleted due to log retention policies.
+The "auto.offset.reset" property can be set to one of the following values:
+1. earliest: The consumer will start reading from the earliest available offset in the partition. This means that the consumer will read all messages in the partition from the beginning.
+2. latest: The consumer will start reading from the latest offset in the partition. This means that the consumer will only read new messages that are produced after the consumer starts.
+3. none: The consumer will throw an exception if there is no valid offset for the partition.
+The default value for "auto.offset.reset" is "latest". The choice of value depends on the specific use case and requirements for message consumption.
+--------------------------------------------------------------------------------------
+Kafka consumer pull strategy:
+In Kafka, consumers use a pull strategy to fetch messages from the broker. This means that the consumer initiates the request to the broker to retrieve messages, rather than the broker pushing messages to the consumer.
+When a consumer wants to read messages from a partition, it sends a fetch request to the broker that is the leader for that partition. The fetch request includes the current offset for the partition, which indicates the position of the last consumed message. The broker responds with a batch of messages starting from the specified offset.
+The pull strategy allows consumers to control the rate at which they consume messages. Consumers can adjust the fetch size and the frequency of fetch requests to optimize performance and resource usage.
+Additionally, the pull strategy allows for better fault tolerance and scalability. If a consumer fails or becomes slow, it can simply stop sending fetch requests, and the broker will not push messages to it. Other consumers in the group can continue consuming messages without being affected.
+Overall, the pull strategy in Kafka provides flexibility and control for consumers, allowing them to efficiently consume messages from the broker.
+--------------------------------------------------------------------------------------
+It is important to gracefully close kafka consumers to ensure that resources are released properly and to avoid potential issues such as memory leaks or uncommitted offsets. When a consumer is closed gracefully, it can complete any ongoing processing, commit offsets, and leave the consumer group cleanly. This helps to maintain the integrity of the consumer group and ensures that other consumers can continue processing messages without disruption.
+To gracefully close a Kafka consumer, you can use the close() method provided by the KafkaConsumer API. This method will close the consumer and release any resources associated with it. It is recommended to call this method in a finally block or use a try-with-resources statement to ensure that the consumer is closed even if an exception occurs during processing.
+Additionally, you may want to implement a shutdown hook to handle termination signals (e.g., SIGINT, SIGTERM) and close the consumer gracefully when the application is shutting down.
+Overall, gracefully closing Kafka consumers is a best practice that helps to ensure the stability and reliability of your Kafka-based applications.
 --------------------------------------------------------------------------------------
