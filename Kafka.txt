@@ -3,6 +3,7 @@ https://www.youtube.com/watch?v=QkdkLdMBuL0
 --------------------------------------------------------------------------------------
 Kafka Partitions and Offsets:
 https://www.youtube.com/watch?v=8L-1HSTf97E
+Kafka does not have global ordering for partitions.
 --------------------------------------------------------------------------------------
 Check the playlist(1-4):
 https://www.youtube.com/playlist?list=PLa7VYi0yPIH2PelhRHoFR5iQgflg-y6JA
