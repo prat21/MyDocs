@@ -936,7 +936,7 @@ public class OverloadingTest2 {
 
     public static void main(String args[]){
         OverloadingTest2 obj=new OverloadingTest2();
-        obj.sum(20,20.23);//complie time error at this line, since float cant be promoted to int
+        obj.sum(20,20.23);//complie time error at this line, since float cant be demoted to int
         obj.sum(20,20,20);
 
     }
